@@ -35,9 +35,10 @@ namespace gfx {
     
     void StackFrame::push(Base *value)
     {
-        gfx_assert_param(value);
-        
-        mStorage->append(value);
+        if(!value)
+            mStorage->append(make<Number>(0));
+        else
+            mStorage->append(value);
     }
     
     Base *StackFrame::pop()
