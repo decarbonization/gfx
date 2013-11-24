@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
+#if GFX_Include_GraphicsStack
+
 #include "graphics.h"
 #include "interpreter.h"
 #include "stackframe.h"
@@ -18,6 +20,7 @@
 #include "color.h"
 #include "path.h"
 #include "context.h"
+
 #include <ImageIO/ImageIO.h>
 
 namespace gfx {
@@ -370,3 +373,5 @@ namespace gfx {
         });
     }
 }
+
+#endif /* GFX_Include_GraphicsStack */

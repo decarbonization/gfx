@@ -9,6 +9,8 @@
 #ifndef __gfx__context__
 #define __gfx__context__
 
+#if GFX_Include_GraphicsStack
+
 #include <CoreGraphics/CoreGraphics.h>
 #include "base.h"
 
@@ -53,5 +55,7 @@ namespace gfx {
         void transaction(std::function<void(Context *context)> transactionFunctor);
     };
 }
+
+#endif /* GFX_Include_GraphicsStack */
 
 #endif /* defined(__gfx__context__) */

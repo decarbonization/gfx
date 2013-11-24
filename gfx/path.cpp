@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
+#if GFX_Include_GraphicsStack
+
 #include "path.h"
 #include "context.h"
 
@@ -195,3 +197,5 @@ namespace gfx {
         });
     }
 }
+
+#endif /* GFX_Include_GraphicsStack */

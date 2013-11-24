@@ -9,6 +9,8 @@
 #ifndef __gfx__graphics__
 #define __gfx__graphics__
 
+#if GFX_Include_GraphicsStack
+
 #include "base.h"
 #include <CoreGraphics/CoreGraphics.h>
 
@@ -27,5 +29,7 @@ namespace gfx {
         static void attachTo(Interpreter *interpreter);
     };
 }
+
+#endif /* GFX_Include_GraphicsStack */
 
 #endif /* defined(__gfx__graphics__) */

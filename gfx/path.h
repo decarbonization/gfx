@@ -9,6 +9,8 @@
 #ifndef __gfx__path__
 #define __gfx__path__
 
+#if GFX_Include_GraphicsStack
+
 #include "base.h"
 #include <CoreGraphics/CoreGraphics.h>
 
@@ -70,5 +72,7 @@ namespace gfx {
         void stroke() const;
     };
 }
+
+#endif /* GFX_Include_GraphicsStack */
 
 #endif /* defined(__gfx__path__) */

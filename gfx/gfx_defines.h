@@ -17,4 +17,8 @@
 ///be exposed to the Gfx language.
 #define GFX_Language_SupportsImport 1
 
+///Whether or not the graphics stack should be
+///compiled and included with the language.
+#define GFX_Include_GraphicsStack   1
+
 #endif

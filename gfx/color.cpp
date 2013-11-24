@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
+#if GFX_Include_GraphicsStack
+
 #include "color.h"
 #include "context.h"
 #include "string.h"
@@ -134,3 +136,5 @@ namespace gfx {
         return CGColorGetAlpha(mColor);
     }
 }
+
+#endif /* GFX_Include_GraphicsStack */

@@ -9,6 +9,8 @@
 #ifndef __gfx__color__
 #define __gfx__color__
 
+#if GFX_Include_GraphicsStack
+
 #include "base.h"
 #include "cf.h"
 #include <CoreGraphics/CoreGraphics.h>
@@ -48,5 +50,7 @@ namespace gfx {
         CGFloat getAlpha() const;
     };
 }
+
+#endif /* GFX_Include_GraphicsStack */
 
 #endif /* defined(__gfx__color__) */

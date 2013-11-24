@@ -67,6 +67,7 @@
 		8B10B91018413EFA00DEB62F /* path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = path.h; sourceTree = "<group>"; };
 		8B10B9121841C09900DEB62F /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = context.cpp; sourceTree = "<group>"; };
 		8B10B9131841C09900DEB62F /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = context.h; sourceTree = "<group>"; };
+		8B10B91518429C0000DEB62F /* gfx_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gfx_prefix.pch; sourceTree = "<group>"; };
 		8B124F02183715D600F255EF /* string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string.cpp; sourceTree = "<group>"; };
 		8B124F03183715D600F255EF /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
 		8B124F0518373F7F00F255EF /* word.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = word.h; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 				8B10B8FE183C953000DEB62F /* Parser */,
 				8B10B8FF183C953C00DEB62F /* Interpreter */,
 				8B124F01183715C900F255EF /* Core Types */,
+				8B10B91518429C0000DEB62F /* gfx_prefix.pch */,
 			);
 			path = gfx;
 			sourceTree = "<group>";
@@ -363,6 +365,8 @@
 		8B42002E183488540020D1D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/gfx/gfx_prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -370,6 +374,8 @@
 		8B42002F183488540020D1D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/gfx/gfx_prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

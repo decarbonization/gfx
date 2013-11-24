@@ -19,6 +19,10 @@
 
 #include "file.h"
 
+#if GFX_Include_GraphicsStack
+#   include "graphics.h"
+#endif /* GFX_Include_GraphicsStack */
+
 namespace gfx {
     
     bool Interpreter::IsTrue(Base *value)
@@ -43,10 +47,14 @@ namespace gfx {
         mImportAllowed(true),
         mUnboundWordHandler()
     {
+#if GFX_Include_GraphicsStack
+        Graphics::attachTo(this);
+#else
         mUnboundWordHandler = [this](Word *word) {
             failForUnboundWord(word);
             return nullptr;
         };
+#endif /* GFX_Include_GraphicsStack */
         
         mRootFrame = make<StackFrame>(nullptr, this);
         CoreFunctions::addTo(mRootFrame);

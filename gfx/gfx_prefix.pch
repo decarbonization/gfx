@@ -1,0 +1,16 @@
+//
+//  gfx_prefix.pch
+//  gfx
+//
+//  Created by Kevin MacWhinnie on 11/24/13.
+//  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
+//
+
+#ifndef gfx_gfx_prefix_pch
+#define gfx_gfx_prefix_pch
+
+#include <CoreFoundation/CoreFoundation.h>
+#include "gfx_defines.h"
+#include "base.h"
+
+#endif

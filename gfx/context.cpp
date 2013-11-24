@@ -6,8 +6,12 @@
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
+#if GFX_Include_GraphicsStack
+
 #include "context.h"
 #include "array.h"
+
+#include <ImageIO/ImageIO.h>
 
 namespace gfx {
     
@@ -137,3 +141,5 @@ namespace gfx {
         restore();
     }
 }
+
+#endif /* GFX_Include_GraphicsStack */
