@@ -96,6 +96,9 @@ namespace gfx {
         template<typename T>
         bool isKindOfClass() const
         {
+            static_assert(std::is_base_of<Base, T>::value, "Base::isKindOfClass requires Base-derived types");
+            static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+            
             return (dynamic_cast<const T *>(this) != nullptr);
         }
         
@@ -156,6 +159,9 @@ namespace gfx {
     template<typename T>
     T *retained(T *object)
     {
+        static_assert(std::is_base_of<Base, T>::value, "retained requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
         if(object)
             object->retain();
         
@@ -173,6 +179,9 @@ namespace gfx {
     template<typename T>
     T *autoreleased(T *object)
     {
+        static_assert(std::is_base_of<Base, T>::value, "autoreleased requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
         if(object)
             object->autorelease();
         
@@ -188,6 +197,9 @@ namespace gfx {
     template<typename T>
     T *retained_autoreleased(T *object)
     {
+        static_assert(std::is_base_of<Base, T>::value, "retained_autoreleased requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
         return autoreleased(retained(object));
     }
     
@@ -200,6 +212,9 @@ namespace gfx {
     template<typename T>
     void released(T *object)
     {
+        static_assert(std::is_base_of<Base, T>::value, "released requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
         if(object)
             object->release();
     }
@@ -218,6 +233,9 @@ namespace gfx {
     template<typename T>
     T *copy(T *object)
     {
+        static_assert(std::is_base_of<Base, T>::value, "copy requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
         if(!object)
             return nullptr;
         
@@ -234,6 +252,9 @@ namespace gfx {
     /// \result A newly constructed instance of T that has been autoreleased.
     template<typename T, typename... Args> T *make(Args... args)
     {
+        static_assert(std::is_base_of<Base, T>::value, "make requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
         return autoreleased(new T(std::forward<Args>(args)...));
     }
 }

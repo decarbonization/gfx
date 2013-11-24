@@ -25,6 +25,9 @@ namespace gfx {
     template<typename T = Base>
     class Array : public Base
     {
+        static_assert(std::is_base_of<Base, T>::value, "Array requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
         ///The storage of the array.
         CFMutableArrayRef mStorage;
         

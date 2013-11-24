@@ -26,6 +26,11 @@ namespace gfx {
     template<typename Key = const String, typename Value = Base>
     class Dictionary : public Base
     {
+        static_assert(std::is_base_of<Base, Key>::value, "Dictionary requires Base-derived key types");
+        static_assert(std::is_base_of<Base, Value>::value, "Dictionary requires Base-derived value types");
+        static_assert(!std::is_pointer<Key>::value, "Key must be a bare type");
+        static_assert(!std::is_pointer<Value>::value, "Value must be a bare type");
+        
         ///The storage of the Dictionary.
         CFMutableDictionaryRef mStorage;
         
