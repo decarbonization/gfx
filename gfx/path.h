@@ -65,6 +65,7 @@ namespace gfx {
         
 #pragma mark - Drawing
         
+        void set() const;
         void fill() const;
         void stroke() const;
     };

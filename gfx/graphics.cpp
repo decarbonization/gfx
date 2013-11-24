@@ -13,6 +13,7 @@
 #include "array.h"
 #include "number.h"
 #include "file.h"
+#include "word.h"
 
 #include "color.h"
 #include "path.h"
@@ -352,5 +353,20 @@ namespace gfx {
         
         Graphics::createFunctionBinding(frame, "path/fill"_gfx, &path_fill);
         Graphics::createFunctionBinding(frame, "path/stroke"_gfx, &path_stroke);
+    }
+    
+#pragma mark -
+    
+    void Graphics::attachTo(Interpreter *interpreter)
+    {
+        Graphics::addTo(interpreter->currentFrame());
+        interpreter->setUnboundWordHandler([interpreter](Word *word) -> Color * {
+            if(word->string()->hasPrefix("#"_gfx)) {
+                return make<Color>(word);
+            } else {
+                interpreter->failForUnboundWord(word);
+                return nullptr;
+            }
+        });
     }
 }

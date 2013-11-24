@@ -43,8 +43,9 @@ namespace gfx {
         mImportAllowed(true),
         mUnboundWordHandler()
     {
-        mUnboundWordHandler = [this](StackFrame *frame, Word *word) {
-            fail((String::Builder() << "unbound word '" << word << "'"), word->offset());
+        mUnboundWordHandler = [this](Word *word) {
+            failForUnboundWord(word);
+            return nullptr;
         };
         
         mRootFrame = make<StackFrame>(nullptr, this);
@@ -86,7 +87,8 @@ namespace gfx {
                 currentFrame->push(make<Word>(rawWord, word->offset()));
             } else {
                 auto value = currentFrame->bindingValue(word->string());
-                if(!value) mUnboundWordHandler(currentFrame, word);
+                if(!value) value = mUnboundWordHandler(word);
+                if(!value) failForUnboundWord(word);
                 
                 if(context != EvalContext::Vector && value->isKindOfClass<Function>())
                     static_cast<Function *>(value)->apply(currentFrame);
@@ -132,6 +134,11 @@ namespace gfx {
     Interpreter::UnboundWordHandler Interpreter::unboundWordHandler() const
     {
         return mUnboundWordHandler;
+    }
+    
+    void Interpreter::failForUnboundWord(const Word *word)
+    {
+        fail((String::Builder() << "unbound word '" << word << "'"), word->offset());
     }
     
 #pragma mark - Stack Frames

@@ -23,7 +23,7 @@ namespace gfx {
     {
     public:
         
-        typedef std::function<void(StackFrame *stackFrame, Word *word)> UnboundWordHandler;
+        typedef std::function<Base *(Word *word)> UnboundWordHandler;
         
     protected:
         
@@ -59,6 +59,7 @@ namespace gfx {
         
         void setUnboundWordHandler(UnboundWordHandler handler);
         UnboundWordHandler unboundWordHandler() const;
+        void failForUnboundWord(const Word *word);
         
 #pragma mark - Stack Frames
         

@@ -9,6 +9,8 @@
 #include "color.h"
 #include "context.h"
 #include "string.h"
+#include "exception.h"
+#include "word.h"
 
 namespace gfx {
     Color::Color(CGColorRef color) :
@@ -30,7 +32,20 @@ namespace gfx {
         Base(),
         mColor(NULL)
     {
+        auto colorString = autoreleased(const_cast<String *>(copy(word->string())));
         
+        if(colorString->hasPrefix("#"_gfx))
+            colorString->deleteRange(CFRangeMake(0, 1));
+        
+        if(colorString->length() == 6) {
+            unsigned long colorCode = strtoul(colorString->getCString(), NULL, 16);
+            auto red = (unsigned char)(colorCode >> 16);
+            auto green = (unsigned char)(colorCode >> 8);
+            auto blue = (unsigned char)(colorCode);
+            mColor = CGColorCreateGenericRGB(red / 255.0, green / 255.0, blue / 255.0, 1.0);
+        } else {
+            throw Exception("malformed HTML color string given"_gfx, nullptr);
+        }
     }
     
     Color::~Color()

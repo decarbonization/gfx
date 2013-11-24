@@ -172,11 +172,16 @@ namespace gfx {
     
 #pragma mark - Drawing
     
+    void Path::set() const
+    {
+        CGContextAddPath(Context::currentContext()->getContext(), getPath());
+    }
+    
     void Path::fill() const
     {
         Context *context = Context::currentContext();
         context->transaction([this](Context *context) {
-            CGContextAddPath(context->getContext(), getPath());
+            set();
             CGContextFillPath(context->getContext());
         });
     }
@@ -185,7 +190,7 @@ namespace gfx {
     {
         Context *context = Context::currentContext();
         context->transaction([this](Context *context) {
-            CGContextAddPath(context->getContext(), getPath());
+            set();
             CGContextStrokePath(context->getContext());
         });
     }

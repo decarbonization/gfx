@@ -17,9 +17,9 @@ int main(int argc, const char * argv[])
     AutoreleasePool pool;
     
     auto interpreter = make<Interpreter>();
-    Graphics::addTo(interpreter->currentFrame());
+    Graphics::attachTo(interpreter);
     
-    auto result = make<Parser>("[100 100] canvas/begin 255 255 0 rgb set-fill [0 0 100 100] path/oval path/fill \"/Users/km/Desktop/test.png\" canvas/save"_gfx)->parse();
+    auto result = make<Parser>("[100 100] canvas/begin #54558f set-fill [0 0 100 100] path/oval path/fill \"/Users/km/Desktop/test.png\" canvas/save"_gfx)->parse();
     interpreter->eval(result);
     
     Base *lastValue = interpreter->lastValue();

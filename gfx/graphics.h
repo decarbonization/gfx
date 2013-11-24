@@ -14,16 +14,17 @@
 
 namespace gfx {
     class StackFrame;
+    class Interpreter;
     
     class Graphics : public Base
     {
-    public:
-        
-#pragma mark - Public Interface
-        
         static void createVariableBinding(StackFrame *frame, const String *name, Base *value);
         static void createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation);
         static void addTo(StackFrame *frame);
+        
+    public:
+        
+        static void attachTo(Interpreter *interpreter);
     };
 }
 
