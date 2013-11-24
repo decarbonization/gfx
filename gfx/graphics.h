@@ -19,18 +19,6 @@ namespace gfx {
     {
     public:
         
-#pragma mark - Context Stack
-        
-        static void pushContext(CGContextRef context);
-        static void popContext();
-        static CGContextRef getCurrentContext();
-        
-#pragma mark -
-        
-        static void beginContext(CGSize size, CGFloat scale = 1.0);
-        static void endContext();
-        static CGImageRef createImageFromCurrentContext();
-        
 #pragma mark - Public Interface
         
         static void createVariableBinding(StackFrame *frame, const String *name, Base *value);

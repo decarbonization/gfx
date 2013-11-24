@@ -12,7 +12,7 @@
 #include "base.h"
 #include "array.h"
 #include "dictionary.h"
-#include <stack>
+#include <tuple>
 
 namespace gfx {
     class Interpreter;
@@ -71,6 +71,38 @@ namespace gfx {
         void setBindingToValue(const String *key, Base *value, bool searchParentScopes = true);
         Base *bindingValue(const String *key, bool searchParentScopes = true) const;
     };
+    
+#pragma mark - Unpacking Pops
+    
+    template<typename T1> std::tuple<T1> popMany(StackFrame *frame)
+    {
+        T1 *val1 = frame->popType<T1>();
+        return std::make_tuple(val1);
+    }
+    
+    template<typename T1, typename T2> std::tuple<T1, T2> popMany(StackFrame *frame)
+    {
+        T2 *val2 = frame->popType<T2>();
+        T1 *val1 = frame->popType<T1>();
+        return std::make_tuple(val1, val2);
+    }
+    
+    template<typename T1, typename T2, typename T3> std::tuple<T1, T2, T3> popMany(StackFrame *frame)
+    {
+        T3 *val3 = frame->popType<T3>();
+        T2 *val2 = frame->popType<T2>();
+        T1 *val1 = frame->popType<T1>();
+        return std::make_tuple(val1, val2, val3);
+    }
+    
+    template<typename T1, typename T2, typename T3, typename T4> std::tuple<T1, T2, T3, T4> popMany(StackFrame *frame)
+    {
+        T4 *val4 = frame->popType<T4>();
+        T3 *val3 = frame->popType<T3>();
+        T2 *val2 = frame->popType<T2>();
+        T1 *val1 = frame->popType<T1>();
+        return std::make_tuple(val1, val2, val3, val4);
+    }
 }
 
 #endif /* defined(__gfx__stackframe__) */

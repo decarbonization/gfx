@@ -18,6 +18,7 @@
 		8B10B90C183DC50100DEB62F /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B90A183DC50100DEB62F /* color.cpp */; };
 		8B10B90E183DC95600DEB62F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B90D183DC90600DEB62F /* ImageIO.framework */; };
 		8B10B91118413EFA00DEB62F /* path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B90F18413EFA00DEB62F /* path.cpp */; };
+		8B10B9141841C09900DEB62F /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B9121841C09900DEB62F /* context.cpp */; };
 		8B124F04183715D600F255EF /* string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F02183715D600F255EF /* string.cpp */; };
 		8B124F08183741F200F255EF /* interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F06183741F200F255EF /* interpreter.cpp */; };
 		8B124F0B1837434E00F255EF /* stackframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F091837434E00F255EF /* stackframe.cpp */; };
@@ -64,6 +65,8 @@
 		8B10B90D183DC90600DEB62F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		8B10B90F18413EFA00DEB62F /* path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = path.cpp; sourceTree = "<group>"; };
 		8B10B91018413EFA00DEB62F /* path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = path.h; sourceTree = "<group>"; };
+		8B10B9121841C09900DEB62F /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = context.cpp; sourceTree = "<group>"; };
+		8B10B9131841C09900DEB62F /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = context.h; sourceTree = "<group>"; };
 		8B124F02183715D600F255EF /* string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string.cpp; sourceTree = "<group>"; };
 		8B124F03183715D600F255EF /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
 		8B124F0518373F7F00F255EF /* word.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = word.h; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				8B10B90B183DC50100DEB62F /* color.h */,
 				8B10B90F18413EFA00DEB62F /* path.cpp */,
 				8B10B91018413EFA00DEB62F /* path.h */,
+				8B10B9121841C09900DEB62F /* context.cpp */,
+				8B10B9131841C09900DEB62F /* context.h */,
 			);
 			name = "Graphics Stack";
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 				8B124F1A1837516A00F255EF /* papertape.cpp in Sources */,
 				8B42003518348B2E0020D1D1 /* parser.cpp in Sources */,
 				8B420028183488540020D1D1 /* main.cpp in Sources */,
+				8B10B9141841C09900DEB62F /* context.cpp in Sources */,
 				8B10B8FB183B251000DEB62F /* file.cpp in Sources */,
 				8B10B8F01838389600DEB62F /* function.cpp in Sources */,
 				8B124F1118374BA500F255EF /* corefunctions.cpp in Sources */,

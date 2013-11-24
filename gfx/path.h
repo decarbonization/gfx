@@ -39,8 +39,8 @@ namespace gfx {
         
 #pragma mark -
         
-        CGMutablePathRef path();
-        CGPathRef path() const;
+        CGMutablePathRef getPath();
+        CGPathRef getPath() const;
         
 #pragma mark - Constructing Paths
         

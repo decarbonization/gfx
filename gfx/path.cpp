@@ -7,7 +7,7 @@
 //
 
 #include "path.h"
-#include "graphics.h"
+#include "context.h"
 
 namespace gfx {
     
@@ -53,7 +53,7 @@ namespace gfx {
     }
     
     Path::Path(const Path *path) :
-        Path(path->path())
+        Path(path->getPath())
     {
         
     }
@@ -73,7 +73,7 @@ namespace gfx {
         if(!other)
             return false;
         
-        return CFEqual(path(), other->path());
+        return CFEqual(getPath(), other->getPath());
     }
     
     bool Path::isEqual(const Base *other) const
@@ -89,17 +89,17 @@ namespace gfx {
     
     CFHashCode Path::hash() const
     {
-        return CFHash(path());
+        return CFHash(getPath());
     }
     
 #pragma mark -
     
-    CGMutablePathRef Path::path()
+    CGMutablePathRef Path::getPath()
     {
         return mPath;
     }
     
-    CGPathRef Path::path() const
+    CGPathRef Path::getPath() const
     {
         return mPath;
     }
@@ -108,89 +108,85 @@ namespace gfx {
     
     void Path::moveToPoint(CGPoint point)
     {
-        CGPathMoveToPoint(path(), &mTransform, point.x, point.y);
+        CGPathMoveToPoint(getPath(), &mTransform, point.x, point.y);
     }
     
     void Path::lineToPoint(CGPoint point)
     {
-        CGPathAddLineToPoint(path(), &mTransform, point.x, point.y);
+        CGPathAddLineToPoint(getPath(), &mTransform, point.x, point.y);
     }
     
     void Path::closePath()
     {
-        CGPathCloseSubpath(path());
+        CGPathCloseSubpath(getPath());
     }
     
     void Path::addPath(const Path *otherPath)
     {
-        CGPathAddPath(this->path(), &otherPath->mTransform, otherPath->path());
+        CGPathAddPath(this->getPath(), &otherPath->mTransform, otherPath->getPath());
     }
     
     void Path::arcToPoint(CGPoint point1, CGPoint point2, CGFloat radius)
     {
-        CGPathAddArcToPoint(path(), &mTransform, point1.x, point1.y, point2.x, point2.y, radius);
+        CGPathAddArcToPoint(getPath(), &mTransform, point1.x, point1.y, point2.x, point2.y, radius);
     }
     
     void Path::curveToPoint(CGPoint point, CGPoint controlPoint1, CGPoint controlPoint2, CGFloat radius)
     {
-        CGPathAddCurveToPoint(path(), &mTransform, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, point.x, point.y);
+        CGPathAddCurveToPoint(getPath(), &mTransform, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, point.x, point.y);
     }
     
 #pragma mark - Getting Information about Paths
     
     CGRect Path::boundingBox() const
     {
-        return CGPathGetBoundingBox(path());
+        return CGPathGetBoundingBox(getPath());
     }
     
     CGRect Path::pathBoundingBox() const
     {
-        return CGPathGetBoundingBox(path());
+        return CGPathGetBoundingBox(getPath());
     }
     
     CGPoint Path::currentPoint() const
     {
-        return CGPathGetCurrentPoint(path());
+        return CGPathGetCurrentPoint(getPath());
     }
     
 #pragma mark -
     
     bool Path::isEmpty() const
     {
-        return CGPathIsEmpty(path());
+        return CGPathIsEmpty(getPath());
     }
     
     bool Path::isRectangle(CGRect *outRect) const
     {
-        return CGPathIsRect(path(), outRect);
+        return CGPathIsRect(getPath(), outRect);
     }
     
     bool Path::containsPoint(CGPoint point) const
     {
-        return CGPathContainsPoint(path(), &mTransform, point, false);
+        return CGPathContainsPoint(getPath(), &mTransform, point, false);
     }
     
 #pragma mark - Drawing
     
     void Path::fill() const
     {
-        CGContextRef context = Graphics::getCurrentContext();
-        CGContextSaveGState(context);
-        {
-            CGContextAddPath(context, path());
-            CGContextFillPath(context);
-        }
-        CGContextRestoreGState(context);
+        Context *context = Context::currentContext();
+        context->transaction([this](Context *context) {
+            CGContextAddPath(context->getContext(), getPath());
+            CGContextFillPath(context->getContext());
+        });
     }
     
     void Path::stroke() const
     {
-        CGContextRef context = Graphics::getCurrentContext();
-        CGContextSaveGState(context);
-        {
-            CGContextAddPath(context, path());
-            CGContextStrokePath(context);
-        }
-        CGContextRestoreGState(context);
+        Context *context = Context::currentContext();
+        context->transaction([this](Context *context) {
+            CGContextAddPath(context->getContext(), getPath());
+            CGContextStrokePath(context->getContext());
+        });
     }
 }

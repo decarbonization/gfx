@@ -7,8 +7,7 @@
 //
 
 #include "color.h"
-#include "graphics.h"
-
+#include "context.h"
 #include "string.h"
 
 namespace gfx {
@@ -85,12 +84,12 @@ namespace gfx {
     
     void Color::setFill()
     {
-        CGContextSetFillColorWithColor(Graphics::getCurrentContext(), mColor);
+        CGContextSetFillColorWithColor(Context::currentContext()->getContext(), mColor);
     }
     
     void Color::setStroke()
     {
-        CGContextSetStrokeColorWithColor(Graphics::getCurrentContext(), mColor);
+        CGContextSetStrokeColorWithColor(Context::currentContext()->getContext(), mColor);
     }
     
 #pragma mark - Introspection

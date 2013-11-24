@@ -16,75 +16,21 @@
 
 #include "color.h"
 #include "path.h"
+#include "context.h"
 #include <ImageIO/ImageIO.h>
 
 namespace gfx {
-    
-#pragma mark - Context Stack
-    
-    static CFMutableArrayRef GetContextStack()
-    {
-        static CFMutableArrayRef array;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            array = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-        });
-        
-        return array;
-    }
-    
-    void Graphics::pushContext(CGContextRef context)
-    {
-        gfx_assert_param(context);
-        
-        CFArrayAppendValue(GetContextStack(), context);
-    }
-    
-    void Graphics::popContext()
-    {
-        CFArrayRemoveValueAtIndex(GetContextStack(), CFArrayGetCount(GetContextStack()) - 1);
-    }
-    
-    CGContextRef Graphics::getCurrentContext()
-    {
-        return (CGContextRef)CFArrayGetValueAtIndex(GetContextStack(), CFArrayGetCount(GetContextStack()) - 1);
-    }
-    
-#pragma mark -
-    
-    void Graphics::beginContext(CGSize size, CGFloat scale)
-    {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        CGContextRef imageContext = CGBitmapContextCreate(/* in data */ NULL,
-                                                          /* in width */ size.width * scale,
-                                                          /* in height */ size.height * scale,
-                                                          /* in bitsPerComponent */ 8,
-                                                          /* in bytesPerRow */ 0,
-                                                          /* in colorSpace */ colorSpace,
-                                                          /* in bitmapInfo */ (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
-        
-        CGContextTranslateCTM(imageContext, 0.0, size.height * scale);
-        CGContextScaleCTM(imageContext, scale, -scale);
-        
-        pushContext(imageContext);
-        
-        CGColorSpaceRelease(colorSpace);
-        CGContextRelease(imageContext);
-    }
-    
-    void Graphics::endContext()
-    {
-        popContext();
-    }
-    
-    CGImageRef Graphics::createImageFromCurrentContext()
-    {
-        return CGBitmapContextCreateImage(Graphics::getCurrentContext());
-    }
-    
 #pragma mark - Utility Functions
     
     namespace {
+        Array<Base> *vectorFromCGSize(CGSize size)
+        {
+            return autoreleased(new Array<Base>{
+                make<Number>(size.width),
+                make<Number>(size.height)
+            });
+        }
+        
         CGSize vectorToCGSize(const Array<Base> *sizeVector)
         {
             gfx_assert_param(sizeVector);
@@ -94,6 +40,14 @@ namespace gfx {
                               dynamic_cast_or_throw<Number *>(sizeVector->at(1))->value());
         }
         
+        Array<Base> *vectorFromCGPoint(CGPoint point)
+        {
+            return autoreleased(new Array<Base>{
+                make<Number>(point.x),
+                make<Number>(point.y)
+            });
+        }
+        
         CGPoint vectorToCGPoint(const Array<Base> *pointVector)
         {
             gfx_assert_param(pointVector);
@@ -101,6 +55,16 @@ namespace gfx {
             
             return CGPointMake(dynamic_cast_or_throw<Number *>(pointVector->at(0))->value(),
                                dynamic_cast_or_throw<Number *>(pointVector->at(1))->value());
+        }
+        
+        Array<Base> *vectorFromCGPoint(CGRect rect)
+        {
+            return autoreleased(new Array<Base>{
+                make<Number>(CGRectGetMinX(rect)),
+                make<Number>(CGRectGetMinY(rect)),
+                make<Number>(CGRectGetWidth(rect)),
+                make<Number>(CGRectGetHeight(rect))
+            });
         }
         
         CGRect vectorToCGRect(const Array<Base> *rectVector)
@@ -121,19 +85,25 @@ namespace gfx {
     {
         auto sizeVector = stack->popType<Array<Base>>();
         CGSize size = vectorToCGSize(sizeVector);
-        Graphics::beginContext(size);
+        Context::pushContext(Context::bitmapContextWith(size));
     }
     
     static void canvas_end(StackFrame *stack)
     {
-        Graphics::endContext();
+        Context::popContext();
+    }
+    
+    static void canvas_size(StackFrame *stack)
+    {
+        auto canvasSize = Context::currentContext()->boundingRect().size;
+        stack->push(vectorFromCGSize(canvasSize));
     }
     
     static void canvas_save(StackFrame *stack)
     {
         String *path = stack->popString();
         
-        cf::AutoRef<CGImageRef> image = Graphics::createImageFromCurrentContext();
+        cf::AutoRef<CGImageRef> image = Context::currentContext()->createImage();
         
         cf::AutoRef<CFMutableDataRef> data = CFDataCreateMutable(kCFAllocatorDefault, 0);
         cf::AutoRef<CGImageDestinationRef> destination = CGImageDestinationCreateWithData(data, CFSTR("public.png"), 1, NULL);
@@ -184,14 +154,14 @@ namespace gfx {
     {
         auto rectVector = stack->popType<Array<Base>>();
         CGRect rect = vectorToCGRect(rectVector);
-        CGContextFillRect(Graphics::getCurrentContext(), rect);
+        CGContextFillRect(Context::currentContext()->getContext(), rect);
     }
     
     static void stroke(StackFrame *stack)
     {
         auto rectVector = stack->popType<Array<Base>>();
         CGRect rect = vectorToCGRect(rectVector);
-        CGContextStrokeRect(Graphics::getCurrentContext(), rect);
+        CGContextStrokeRect(Context::currentContext()->getContext(), rect);
     }
     
 #pragma mark - Paths
@@ -351,6 +321,7 @@ namespace gfx {
         //Canvas Functions
         Graphics::createFunctionBinding(frame, "canvas/begin"_gfx, &canvas_begin);
         Graphics::createFunctionBinding(frame, "canvas/end"_gfx, &canvas_end);
+        Graphics::createFunctionBinding(frame, "canvas/size"_gfx, &canvas_size);
         Graphics::createFunctionBinding(frame, "canvas/save"_gfx, &canvas_save);
         
         //Colors
