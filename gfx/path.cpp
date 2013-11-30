@@ -10,6 +10,7 @@
 
 #include "path.h"
 #include "context.h"
+#include "string.h"
 
 namespace gfx {
     
@@ -50,7 +51,7 @@ namespace gfx {
         
     }
     
-    Path::Path(CGPathRef path) :
+    Path::Path(ConstNativeType path) :
         Base(),
         mPath(CGPathCreateMutableCopy(path)),
         mTransform(CGAffineTransformIdentity),
@@ -132,6 +133,7 @@ namespace gfx {
     void Path::addPath(const Path *otherPath)
     {
         gfx_assert_param(otherPath);
+        
         CGPathAddPath(this->get(), &otherPath->mTransform, otherPath->get());
     }
     
@@ -185,8 +187,8 @@ namespace gfx {
     {
         Context *context = Context::currentContext();
         CGContextAddPath(context->get(), this->get());
-        CGContextSetLineCap(context->get(), lineCapStyle());
-        CGContextSetLineJoin(context->get(), lineJoinStyle());
+        CGContextSetLineCap(context->get(), (CGLineCap)lineCapStyle());
+        CGContextSetLineJoin(context->get(), (CGLineJoin)lineJoinStyle());
         CGContextSetLineWidth(context->get(), lineWidth());
     }
     

@@ -103,7 +103,7 @@ namespace gfx {
         ///
         /// \param  path    The native path.
         ///
-        Path(NativeType path);
+        Path(ConstNativeType path);
         
         ///Constructs a path by copying the contents of another path.
         ///

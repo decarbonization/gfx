@@ -244,12 +244,11 @@ namespace gfx {
     
     static void path_curve(StackFrame *stack)
     {
-        auto radius = stack->popNumber();
         auto controlPoint2 = vectorToPoint(stack->popType<Array<Base>>());
         auto controlPoint1 = vectorToPoint(stack->popType<Array<Base>>());
         auto point = vectorToPoint(stack->popType<Array<Base>>());
         auto path = stack->popType<Path>();
-        path->curveToPoint(point, controlPoint1, controlPoint2, radius->value());
+        path->curveToPoint(point, controlPoint1, controlPoint2);
         stack->push(path);
     }
     

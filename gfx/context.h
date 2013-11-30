@@ -15,32 +15,81 @@
 #include "base.h"
 
 namespace gfx {
+    
+    ///The Context class encapsulates the core 2D drawing destination used by
+    ///the gfx language and drawing stack.
+    ///
+    ///Context instances are drawn to by manipulating the current context stack,
+    ///which is exposed through the static methods `gfx::Context::pushContext`,
+    ///`gfx::Context::popContext`, and `gfx::Context::currentContext`. The stack
+    ///is currently not thread safe, and should only be used from the main thread.
+    ///
+    ///Instances of Context are not thread-safe. Instances may be created on
+    ///non-main threads, but they must never be shared between threads.
+    ///
+    ///The underlying type of Context is platform independent. On iOS and OS X
+    ///it is an instance of the CGContext class-type.
     class Context : public Base
     {
     public:
         
+        ///The underlying object used by the Context for its rendering operations.
         typedef CGContextRef NativeType;
         
     protected:
         
+        ///The underlying context object.
         NativeType mContext;
+        
+        ///Whether or not the context should destroy the context when it is destructed.
         bool mOwnsContext;
         
     public:
         
 #pragma mark - Context Stack
         
+        ///Makes the specified context the current context.
+        ///
+        /// \param  context The context to use for all drawing operations.
+        ///
         static void pushContext(Context *context);
+        
+        ///Removes the current context from the top of the stack,
+        ///making the previous context the current one.
         static void popContext();
+        
+        ///Returns top most context on the stack.
+        ///
+        ///This method raises an exception if the context stack is empty.
+        ///
+        ///The current context is the target of all state-machine
+        ///style operations defined on `gfx::Path`.
         static Context *currentContext();
         
 #pragma mark - Lifecycle
         
+        ///Creates a new bitmap context with a given size and scale.
+        ///
+        /// \param  size    The size of the context to create.
+        /// \param  scale   The number of hardware pixels per point in the returned context.
+        ///
+        /// \result A new autoreleased Context object ready for use.
+        ///
         static Context *bitmapContextWith(Size size, Float scale = 1.0);
         
 #pragma mark -
         
+        ///Constructs a context with a given native object.
+        ///
+        /// \param  context     The native object to construct the context with. Should not be null.
+        /// \param  ownsContext Whether or not the native object should be destroyed
+        ///                     when the Context object is destructed. Default is true.
+        ///
+        ///Context objects are typically created through `gfx::Layer`
+        ///instances, or through `gfx::Context::bitmapContextWith`.
         Context(NativeType context, bool ownsContext = true);
+        
+        ///The destructor.
         virtual ~Context();
         
 #pragma mark - Identity
@@ -51,16 +100,47 @@ namespace gfx {
         
 #pragma mark - Introspection
         
+        ///Returns a bool indicating whether or not the context owns its native object.
         bool ownsContext() const;
+        
+        ///Returns the underlying native object of the context.
         NativeType get() const;
+        
+        ///Creates a new image from the contents of the context.
         CGImageRef createImage() const;
+        
+        ///Returns the bounding rectangle of the context.
         Rect boundingRect() const;
         
 #pragma mark - Saving/Restoring State
         
+        ///Saves the current state of the graphics context, and creates
+        ///a new context identical to the previously current state.
         void save();
+        
+        ///Removes the current state of the graphics context, and restores the
+        ///state that was in place before the last call to `gfx::Context::Save`.
         void restore();
+        
+        ///Saves the state of the graphics context, invokes a given
+        ///functor, and then restores the state to the saved snapshot.
+        ///
+        ///This method guarantees that the graphics state will be rolled
+        ///back to pre-transaction state in the event of an exception. It
+        ///should be preferred over a balanced set of calls to the
+        ///`gfx::Context::save`, and `gfx::Context::restore` methods.
         void transaction(std::function<void(Context *context)> transactionFunctor);
+        
+#pragma mark - Transforms
+        
+        ///Returns the current transformation matrix of the context.
+        Transform2D currentTransformationMatrix() const;
+        
+        ///Concats a given 2D transformation matrix onto the matrix of the receiver.
+        ///
+        /// \param  transform   The transform to concat.
+        ///
+        void concatTransformationMatrix(const Transform2D &transform);
     };
 }
 

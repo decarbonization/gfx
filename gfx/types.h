@@ -57,8 +57,10 @@ namespace gfx {
     typedef CGRect              Rect;
     
     ///An opaque structure for holding an affine transformation matrix.
-    class Transform2D : protected CGAffineTransform
+    struct Transform2D : CGAffineTransform
     {
+        /*! \section    Lifecycle */
+        
         ///Returns a new 2D transform matrix constructed from a provided rotation value.
         static Transform2D makeRotation(Float angleInRadians)
         {
@@ -78,39 +80,28 @@ namespace gfx {
         }
         
         ///The identity transform.
-        static Transform2D const Identity = CGAffineTransformIdentity;
+        static Transform2D const Identity;
         
-#pragma mark -
+        ///Constructs a Transform2D from a native affine transform.
+        Transform2D(const CGAffineTransform &other);
+        
+        
+        /*! \section    Creating New Transformation */
         
         ///Returns a new 2D transform constructed by rotating the receiver.
-        Transform2D rotate(Float angleInRadians) const
-        {
-            return CGAffineTransformRotate(*this, angleInRadians);
-        }
+        Transform2D rotate(Float angleInRadians) const;
         
         ///Returns a new 2D transform constructed by scaling the receiver.
-        Transform2D scale(Float scaleX, Float scaleY) const
-        {
-            return CGAffineTransformScale(*this, scaleX, scaleY);
-        }
+        Transform2D scale(Float scaleX, Float scaleY) const;
         
         ///Returns a new 2D transform constructed by translating the receiver.
-        Transform2D translate(Float translateX, Float translateY) const
-        {
-            return CGAffineTransformTranslate(*this, translateX, translateY);
-        }
+        Transform2D translate(Float translateX, Float translateY) const;
         
         ///Returns a new 2D transform constructed by inverting the receiver.
-        Transform2D invert() const
-        {
-            return CGAffineTransformInvert(*this);
-        }
+        Transform2D invert() const;
         
         ///Returns a new 2D transform constructed by concating the receiver with another given 2D transform.
-        Transform2D concat(const Transform2D &other) const
-        {
-            return CGAffineTransformConcat(*this, other);
-        }
+        Transform2D concat(const Transform2D &other) const;
     };
     
 #endif /* GFX_Include_GraphicsStack */

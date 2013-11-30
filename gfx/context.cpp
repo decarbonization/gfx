@@ -146,6 +146,18 @@ namespace gfx {
         
         restore();
     }
+    
+#pragma mark - Transforms
+    
+    Transform2D Context::currentTransformationMatrix() const
+    {
+        return CGContextGetCTM(get());
+    }
+    
+    void Context::concatTransformationMatrix(const Transform2D &transform)
+    {
+        CGContextConcatCTM(get(), transform);
+    }
 }
 
 #endif /* GFX_Include_GraphicsStack */

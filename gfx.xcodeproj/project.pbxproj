@@ -25,6 +25,7 @@
 		8B124F0B1837434E00F255EF /* stackframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F091837434E00F255EF /* stackframe.cpp */; };
 		8B124F1118374BA500F255EF /* corefunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F0F18374BA500F255EF /* corefunctions.cpp */; };
 		8B124F1A1837516A00F255EF /* papertape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F181837516A00F255EF /* papertape.cpp */; };
+		8B12C64B184A6C0600DBD77C /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64A184A6C0600DBD77C /* types.cpp */; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 		8B420028183488540020D1D1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B420027183488540020D1D1 /* main.cpp */; };
 		8B42002A183488540020D1D1 /* gfx.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B420029183488540020D1D1 /* gfx.1 */; };
@@ -96,6 +97,7 @@
 		8B124F181837516A00F255EF /* papertape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = papertape.cpp; sourceTree = "<group>"; };
 		8B124F191837516A00F255EF /* papertape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = papertape.h; sourceTree = "<group>"; };
 		8B12C64618496DAB00DBD77C /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		8B12C64A184A6C0600DBD77C /* types.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = types.cpp; sourceTree = "<group>"; };
 		8B420021183488540020D1D1 /* gfx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfx; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B420024183488540020D1D1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8B420027183488540020D1D1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				8B10B91018413EFA00DEB62F /* path.h */,
 				8B10B9121841C09900DEB62F /* context.cpp */,
 				8B10B9131841C09900DEB62F /* context.h */,
+				8B12C64A184A6C0600DBD77C /* types.cpp */,
 				8B12C64618496DAB00DBD77C /* types.h */,
 			);
 			name = "Graphics Stack";
@@ -332,6 +335,7 @@
 				8B124F1A1837516A00F255EF /* papertape.cpp in Sources */,
 				8B42003518348B2E0020D1D1 /* parser.cpp in Sources */,
 				8B420028183488540020D1D1 /* main.cpp in Sources */,
+				8B12C64B184A6C0600DBD77C /* types.cpp in Sources */,
 				8B10B9141841C09900DEB62F /* context.cpp in Sources */,
 				8B10B8FB183B251000DEB62F /* file.cpp in Sources */,
 				8B10B8F01838389600DEB62F /* function.cpp in Sources */,
