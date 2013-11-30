@@ -144,6 +144,11 @@ namespace gfx {
         /// \param  transform   The transform to concat.
         ///
         void concatTransformationMatrix(const Transform2D &transform);
+        
+#pragma mark - Clearing
+        
+        ///Clears a given section of the context.
+        void clear(Rect rect);
     };
 }
 

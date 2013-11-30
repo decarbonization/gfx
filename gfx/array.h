@@ -236,6 +236,15 @@ namespace gfx {
             CFArrayRemoveValueAtIndex(mStorage, index);
         }
         
+        void remove(T *value)
+        {
+            gfx_assert_param(value);
+            
+            Index indexOfValue = this->firstIndexOf(CFRangeMake(0, count()), value);
+            if(indexOfValue != kCFNotFound)
+                this->removeAt(indexOfValue);
+        }
+        
         ///Removes the first object contained in the array.
         ///Does nothing if the array is empty.
         void removeFirst()

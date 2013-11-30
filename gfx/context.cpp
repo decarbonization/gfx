@@ -159,6 +159,13 @@ namespace gfx {
     {
         CGContextConcatCTM(get(), transform);
     }
+    
+#pragma mark - Clearing
+    
+    void Context::clear(Rect rect)
+    {
+        CGContextClearRect(get(), rect);
+    }
 }
 
 #endif /* GFX_Include_GraphicsStack */
