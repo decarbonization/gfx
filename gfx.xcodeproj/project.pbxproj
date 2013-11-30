@@ -27,7 +27,7 @@
 		8B124F1A1837516A00F255EF /* papertape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F181837516A00F255EF /* papertape.cpp */; };
 		8B12C64B184A6C0600DBD77C /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64A184A6C0600DBD77C /* types.cpp */; };
 		8B12C64E184A761100DBD77C /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64C184A761100DBD77C /* image.cpp */; };
-		8B12C651184A761600DBD77C /* layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64F184A761600DBD77C /* layer.cpp */; };
+		8B12C651184A761600DBD77C /* layer_cg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64F184A761600DBD77C /* layer_cg.cpp */; };
 		8B12C654184A79C500DBD77C /* blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C652184A79C500DBD77C /* blob.cpp */; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 		8B420028183488540020D1D1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B420027183488540020D1D1 /* main.cpp */; };
@@ -103,7 +103,7 @@
 		8B12C64A184A6C0600DBD77C /* types.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = types.cpp; sourceTree = "<group>"; };
 		8B12C64C184A761100DBD77C /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
 		8B12C64D184A761100DBD77C /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
-		8B12C64F184A761600DBD77C /* layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layer.cpp; sourceTree = "<group>"; };
+		8B12C64F184A761600DBD77C /* layer_cg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layer_cg.cpp; sourceTree = "<group>"; };
 		8B12C650184A761600DBD77C /* layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layer.h; sourceTree = "<group>"; };
 		8B12C652184A79C500DBD77C /* blob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blob.cpp; sourceTree = "<group>"; };
 		8B12C653184A79C500DBD77C /* blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blob.h; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				8B12C64618496DAB00DBD77C /* types.h */,
 				8B12C64C184A761100DBD77C /* image.cpp */,
 				8B12C64D184A761100DBD77C /* image.h */,
-				8B12C64F184A761600DBD77C /* layer.cpp */,
+				8B12C64F184A761600DBD77C /* layer_cg.cpp */,
 				8B12C650184A761600DBD77C /* layer.h */,
 			);
 			name = "Graphics Stack";
@@ -349,7 +349,7 @@
 			files = (
 				8B124F1A1837516A00F255EF /* papertape.cpp in Sources */,
 				8B42003518348B2E0020D1D1 /* parser.cpp in Sources */,
-				8B12C651184A761600DBD77C /* layer.cpp in Sources */,
+				8B12C651184A761600DBD77C /* layer_cg.cpp in Sources */,
 				8B420028183488540020D1D1 /* main.cpp in Sources */,
 				8B12C64B184A6C0600DBD77C /* types.cpp in Sources */,
 				8B10B9141841C09900DEB62F /* context.cpp in Sources */,

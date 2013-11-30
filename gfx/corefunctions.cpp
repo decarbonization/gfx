@@ -673,18 +673,11 @@ frame->push(result); \
 #if GFX_Language_SupportsFiles
 #pragma mark - File Operations
     
-    static void file_forReading(StackFrame *frame)
+    static void file_open(StackFrame *frame)
     {
         /* str -- file */
         String *path = frame->popString();
-        frame->push(make<File>(path, "r"));
-    }
-    
-    static void file_forWriting(StackFrame *frame)
-    {
-        /* str -- file */
-        String *path = frame->popString();
-        frame->push(make<File>(path, "w"));
+        frame->push(make<File>(path, File::Mode::ReadWrite));
     }
     
     static void file_close(StackFrame *frame)
@@ -722,7 +715,7 @@ frame->push(result); \
         /* file num -- str */
         Number *amount = frame->popNumber();
         File *file = frame->popType<File>();
-        frame->push(file->read(amount->value()));
+        frame->push(file->readString(amount->value()));
     }
     
     static void file_readLine(StackFrame *frame)
@@ -737,7 +730,7 @@ frame->push(result); \
         /* file str -- num */
         String *string = frame->popString();
         File *file = frame->popType<File>();
-        size_t amountWritten = file->write(string);
+        size_t amountWritten = file->writeString(string);
         frame->push(make<Number>(amountWritten));
     }
     
@@ -918,8 +911,7 @@ frame->push(result); \
         
 #if GFX_Language_SupportsFiles
         //File Functions
-        CoreFunctions::createFunctionBinding(frame, "file/for-reading"_gfx, &file_forReading);
-        CoreFunctions::createFunctionBinding(frame, "file/for-writing"_gfx, &file_forWriting);
+        CoreFunctions::createFunctionBinding(frame, "file/open"_gfx, &file_open);
         CoreFunctions::createFunctionBinding(frame, "file/close"_gfx, &file_close);
         CoreFunctions::createFunctionBinding(frame, "file/size"_gfx, &file_size);
         CoreFunctions::createFunctionBinding(frame, "file/seek"_gfx, &file_seek);

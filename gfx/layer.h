@@ -9,6 +9,15 @@
 #ifndef __gfx__layer__
 #define __gfx__layer__
 
-#include <iostream>
+#include "base.h"
+#include "types.h"
+
+namespace gfx {
+    class Layer : public Base
+    {
+    public:
+        
+    };
+}
 
 #endif /* defined(__gfx__layer__) */

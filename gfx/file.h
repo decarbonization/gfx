@@ -13,6 +13,8 @@
 #include "base.h"
 
 namespace gfx {
+    class Blob;
+    
     ///The File class is a simple wrapper around the std::FILE
     ///type that provides higher level String operations.
     class File : public Base
@@ -29,6 +31,39 @@ namespace gfx {
         bool mHasOwnership;
         
     public:
+        
+#pragma mark - Modes
+        
+        ///Describes the different modes a File instance may be created with.
+        enum class Mode
+        {
+            ///The File will be used for reading only.
+            Read,
+            
+            ///The File will be used for writing only.
+            Write,
+            
+            ///The File will be used for both reading and writing.
+            ReadWrite,
+        };
+        
+        ///Converts a given `gfx::File::Mode` value into its equivalent
+        ///`const char *` value to pass to `std::fopen`.
+        static const char *ModeToString(Mode mode)
+        {
+            switch (mode) {
+                case Mode::Read:
+                    return "r";
+                    
+                case Mode::Write:
+                    return "w";
+                    
+                case Mode::ReadWrite:
+                    return "rw";
+            }
+        }
+        
+#pragma mark - Convenience
         
         ///Returns a File wrapper around stdin.
         static File *consoleIn();
@@ -59,10 +94,15 @@ namespace gfx {
         ///
         static void writeFileAtPath(const String *path, const String *contents);
         
-#pragma mark -
+#pragma mark - File System
         
         ///Returns a bool indicating whether or not a file exists at a given path.
         static bool exists(const String *path);
+        
+        ///Returns a bool indicating whether or not a given path refers to a directory.
+        ///
+        /// \throws Exception if there is an issue looking up info on the path.
+        static bool isDirectory(const String *path);
         
 #pragma mark - Lifecycle
         
@@ -76,9 +116,9 @@ namespace gfx {
         ///Construct a File by opening a new std::FILE with a given path and mode.
         ///
         /// \param  path    The path to open the file at. Required.
-        /// \param  mode    "r" for reading, "w" for writing. Required.
+        /// \param  mode    The mode to open the file with.
         ///
-        explicit File(const String *path, const char *mode);
+        explicit File(const String *path, File::Mode mode);
         
         ///The destructor.
         virtual ~File();
@@ -123,12 +163,19 @@ namespace gfx {
         ///
         virtual size_t read(UInt8 *outBuffer, size_t bufferSize);
         
+        ///Read a blob of data.
+        ///
+        /// \param  amountToRead    The maximum amount of data to read.
+        ///
+        /// \result A Blob of at max `amountToRead` bytes.
+        virtual Blob *read(size_t amountToRead);
+        
         ///Read a blob of data into a new String instance and return it.
         ///
         /// \param  amountToRead    The maximum amount of data to read.
         ///
         /// \result A String of at max `amountToRead` characters.
-        virtual String *read(size_t amountToRead);
+        virtual String *readString(size_t amountToRead);
         
         ///Read a single line of data into a new String instance and return it.
         virtual String *readLine();
@@ -143,19 +190,26 @@ namespace gfx {
         /// \result The actual amount of data written.
         virtual size_t write(const UInt8 *buffer, size_t bufferSize);
         
+        ///Write a blob of data into the receiver.
+        ///
+        /// \param  blob    The blob of data to write. Required.
+        ///
+        /// \result The amount of data written.
+        virtual size_t write(const Blob *blob);
+        
         ///Write the data contained in a given String into the receiver.
         ///
         /// \param  string  The string to write. Required.
         ///
-        /// \result The actual amount of data written.
+        /// \result The amount of data written.
         ///
-        virtual size_t write(const String *string);
+        virtual size_t writeString(const String *string);
         
         ///Write the data contained in a given String plus a newline into the receiver.
         ///
         /// \param  string  The string to write. Required.
         ///
-        /// \result The actual amount of data written.
+        /// \result The amount of data written.
         ///
         virtual size_t writeLine(const String *string);
     };

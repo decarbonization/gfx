@@ -14,6 +14,7 @@
 
 namespace gfx {
     class Blob;
+    class File;
     
     class Image : public Base
     {
@@ -35,6 +36,10 @@ namespace gfx {
     public:
         
 #pragma mark - Lifecycle
+        
+        static Image *withFile(File *file);
+        
+#pragma mark -
         
         Image(NativeType image, bool ownsImage = true);
         Image(const Image *image);

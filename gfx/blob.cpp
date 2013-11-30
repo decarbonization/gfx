@@ -13,21 +13,22 @@ namespace gfx {
     
 #pragma mark - Lifecycle
     
-    Blob::Blob() :
-        Blob(nullptr, 0)
+    Blob::Blob(Index size) :
+        Blob(nullptr, size)
     {
     }
     
     Blob::Blob(const UInt8 *buffer, Index size) :
         Base(),
-        mData(CFDataCreate(kCFAllocatorDefault, buffer, size))
+        mData(CFDataCreateMutable(kCFAllocatorDefault, size))
     {
-        
+        if(buffer)
+            append(buffer, size);
     }
     
     Blob::Blob(CFDataRef data) :
         Base(),
-        mData((CFDataRef)CFRetain(data))
+        mData(CFDataCreateMutableCopy(kCFAllocatorDefault, CFDataGetLength(data), data))
     {
     }
     
@@ -104,14 +105,24 @@ namespace gfx {
         return mData;
     }
     
+    CFMutableDataRef Blob::getStorage()
+    {
+        return mData;
+    }
+    
     Index Blob::length() const
     {
-        return CFDataGetLength(mData);
+        return CFDataGetLength(getStorage());
     }
     
     const UInt8 *Blob::bytes() const
     {
-        return CFDataGetBytePtr(mData);
+        return CFDataGetBytePtr(getStorage());
+    }
+    
+    UInt8 *Blob::bytes()
+    {
+        return CFDataGetMutableBytePtr(getStorage());
     }
     
     void Blob::getBytes(CFRange range, UInt8 *outBuffer)
@@ -119,6 +130,47 @@ namespace gfx {
         gfx_assert_param(outBuffer);
         gfx_assert(range.location < length() && range.location + range.length < length(), "out of bounds range"_gfx);
         
-        CFDataGetBytes(mData, range, outBuffer);
+        CFDataGetBytes(getStorage(), range, outBuffer);
+    }
+    
+#pragma mark - Modifying The Blob
+    
+    void Blob::append(const UInt8 *buffer, Index length)
+    {
+        CFDataAppendBytes(getStorage(), buffer, length);
+    }
+    
+    void Blob::append(const Blob *other)
+    {
+        append(other->bytes(), other->length());
+    }
+    
+    void Blob::deleteRange(CFRange range)
+    {
+        gfx_assert(range.location < length() && range.location + range.length < length(), "out of bounds range"_gfx);
+        
+        CFDataDeleteBytes(getStorage(), range);
+    }
+    
+    void Blob::replaceRange(CFRange range, const UInt8 *buffer, Index length)
+    {
+        gfx_assert(range.location < this->length() && range.location + range.length < this->length(), "out of bounds range"_gfx);
+        
+        CFDataReplaceBytes(getStorage(), range, buffer, length);
+    }
+    
+    void Blob::replaceRange(CFRange range, const Blob *other)
+    {
+        replaceRange(range, other->bytes(), other->length());
+    }
+    
+    void Blob::increaseLength(Index amount)
+    {
+        CFDataIncreaseLength(getStorage(), amount);
+    }
+    
+    void Blob::setLength(Index length)
+    {
+        CFDataSetLength(getStorage(), length);
     }
 }

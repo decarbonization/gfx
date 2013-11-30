@@ -9,6 +9,10 @@
 #include "file.h"
 #include "string.h"
 #include "exception.h"
+#include "blob.h"
+
+#include <unistd.h>
+#include <sys/stat.h>
 
 namespace gfx {
     
@@ -31,16 +35,16 @@ namespace gfx {
     
     String *File::readFileAtPath(const String *path)
     {
-        auto file = make<File>(path, "r");
-        return file->read(file->length());
+        auto file = make<File>(path, File::Mode::Read);
+        return file->readString(file->length());
     }
     
     void File::writeFileAtPath(const String *path, const String *contents)
     {
         AutoreleasePool pool;
         
-        auto file = make<File>(path, "w");
-        file->write(contents);
+        auto file = make<File>(path, File::Mode::Write);
+        file->writeString(contents);
     }
     
 #pragma mark -
@@ -48,6 +52,16 @@ namespace gfx {
     bool File::exists(const String *path)
     {
         return (access(path->getCString(), F_OK) != -1);
+    }
+    
+    bool File::isDirectory(const String *path)
+    {
+        struct stat info = {};
+        if(lstat(path->getCString(), &info) == 0) {
+            return S_ISDIR(info.st_mode);
+        } else {
+            throw Exception("Could not lookup info on path."_gfx, nullptr);
+        }
     }
     
 #pragma mark - Lifecycle
@@ -58,11 +72,11 @@ namespace gfx {
     {
     }
     
-    File::File(const String *path, const char *mode) :
-        mFile(fopen(path->getCString(), mode)),
+    File::File(const String *path, File::Mode mode) :
+        mFile(std::fopen(path->getCString(), ModeToString(mode))),
         mHasOwnership(true)
     {
-        if(long errorCode = ferror(mFile)) {
+        if(long errorCode = std::ferror(mFile)) {
             throw Exception((String::Builder() << "opening file failed with error " << errorCode), nullptr);
         }
     }
@@ -162,7 +176,15 @@ namespace gfx {
         return amount;
     }
     
-    String *File::read(size_t amountToRead)
+    Blob *File::read(size_t amountToRead)
+    {
+        auto blob = make<Blob>(amountToRead);
+        size_t amountRead = read(blob->bytes(), blob->length());
+        blob->setLength(amountRead);
+        return blob;
+    }
+    
+    String *File::readString(size_t amountToRead)
     {
         UInt8 buffer[amountToRead];
         size_t length = this->read(buffer, amountToRead);
@@ -198,13 +220,18 @@ namespace gfx {
         return amount;
     }
     
-    size_t File::write(const String *string)
+    size_t File::write(const Blob *blob)
+    {
+        return write(blob->bytes(), blob->length());
+    }
+    
+    size_t File::writeString(const String *string)
     {
         return this->write((const UInt8 *)string->getCString(), string->length());
     }
     
     size_t File::writeLine(const String *string)
     {
-        return this->write(String::Builder() << string << "\n"_gfx);
+        return this->writeString(String::Builder() << string << "\n"_gfx);
     }
 }

@@ -155,8 +155,7 @@ The following functions are available for hashes:
 
 Gfx provides a simple file type that can be used for both simple console IO, and for basic string-based file IO. It is currently only possible to open a file readonly, or writeonly. The following functions are available for files:
 
-* `file/for-reading ( str -- file )` – yields a new file for reading at a given path.
-* `file/for-writing` – yields a new file for writing at a given path.
+* `file/open ( str -- file )` – yields a new file for reading and writing at a given path.
 * `file/close ( file -- )` – closes a file. __Important:__ Gfx will only automatically close files if they are popped off the stack.
 * `file/size ( file -- num )` – yields the total number of bytes contained in the file.
 * `file/seek ( file num -- )` – moves the pointer of a file to a given offset.

@@ -122,8 +122,8 @@ namespace gfx {
         Image *image = Context::currentContext()->createImage();
         Blob *data = image->makeRepresentation(Image::RepresentationType::PNG);
         
-        auto file = make<File>(path, "w");
-        file->write(data->bytes(), data->length());
+        auto file = make<File>(path, File::Mode::Write);
+        file->write(data);
     }
     
 #pragma mark - Color Functions

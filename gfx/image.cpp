@@ -9,6 +9,7 @@
 #include "image.h"
 #include "context.h"
 #include "blob.h"
+#include "exception.h"
 
 #include <ImageIO/ImageIO.h>
 
@@ -77,14 +78,12 @@ namespace gfx {
     Blob *Image::makeRepresentation(RepresentationType type) const
     {
         cf::AutoRef<CFMutableDataRef> data = CFDataCreateMutable(kCFAllocatorDefault, 0);
-        CGImageDestinationRef destination = CGImageDestinationCreateWithData(data, RepresentationTypeToUTType(type), 1, NULL);
+        cf::AutoRef<CGImageDestinationRef> destination = CGImageDestinationCreateWithData(data, RepresentationTypeToUTType(type), 1, NULL);
         CGImageDestinationAddImage(destination, get(), NULL);
         
         if(!CGImageDestinationFinalize(destination)) {
-            
+            throw Exception("Could not create image blob representation"_gfx, nullptr);
         }
-        
-        CFRelease(destination);
         
         return make<Blob>(data);
     }
