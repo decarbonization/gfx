@@ -168,6 +168,8 @@ namespace T11 {
         double runningTime = time_code([this]() {
             try {
                 mSetup();
+            } catch (std::bad_function_call) {
+                //Ignore
             } catch (...) {
                 if(!gOutputOptions.ignoreExceptions)
                     std::cerr << "Unexpected exception swallowed from suite's (" << mName << ") setup function." << std::endl;
@@ -182,6 +184,8 @@ namespace T11 {
             
             try {
                 mTeardown();
+            } catch (std::bad_function_call) {
+                //Ignore
             } catch (...) {
                 if(!gOutputOptions.ignoreExceptions)
                     std::cerr << "Unexpected exception swallowed from suite's (" << mName << ") teardown function." << std::endl;

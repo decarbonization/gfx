@@ -40,21 +40,78 @@ namespace gfx {
     /// \field  x   The x offset.
     /// \field  y   The y offset.
     ///
-    typedef CGPoint     Point;
+    typedef CGPoint             Point;
     
     ///A structure that contains width and height values.
     ///
     /// \field  width   The width of the size.
     /// \field  height  The height of the size.
     ///
-    typedef CGSize      Size;
+    typedef CGSize              Size;
     
     ///A structure that contains the location and dimensions of a shape.
     ///
     /// \field  origin  The coordinates of the shape.
     /// \field  size    The size of the shape.
     ///
-    typedef CGRect      Rect;
+    typedef CGRect              Rect;
+    
+    ///An opaque structure for holding an affine transformation matrix.
+    class Transform2D : protected CGAffineTransform
+    {
+        ///Returns a new 2D transform matrix constructed from a provided rotation value.
+        static Transform2D makeRotation(Float angleInRadians)
+        {
+            return Transform2D::Identity.rotate(angleInRadians);
+        }
+        
+        ///Returns a new 2D transform matrix constructed from provided scaling values.
+        static Transform2D makeScale(Float scaleX, Float scaleY)
+        {
+            return Transform2D::Identity.scale(scaleX, scaleY);
+        }
+        
+        ///Returns a new 2D transform matrix constructed from provided translation values.
+        static Transform2D makeTranslation(Float translateX, Float translateY)
+        {
+            return Transform2D::Identity.translate(translateX, translateY);
+        }
+        
+        ///The identity transform.
+        static Transform2D const Identity = CGAffineTransformIdentity;
+        
+#pragma mark -
+        
+        ///Returns a new 2D transform constructed by rotating the receiver.
+        Transform2D rotate(Float angleInRadians) const
+        {
+            return CGAffineTransformRotate(*this, angleInRadians);
+        }
+        
+        ///Returns a new 2D transform constructed by scaling the receiver.
+        Transform2D scale(Float scaleX, Float scaleY) const
+        {
+            return CGAffineTransformScale(*this, scaleX, scaleY);
+        }
+        
+        ///Returns a new 2D transform constructed by translating the receiver.
+        Transform2D translate(Float translateX, Float translateY) const
+        {
+            return CGAffineTransformTranslate(*this, translateX, translateY);
+        }
+        
+        ///Returns a new 2D transform constructed by inverting the receiver.
+        Transform2D invert() const
+        {
+            return CGAffineTransformInvert(*this);
+        }
+        
+        ///Returns a new 2D transform constructed by concating the receiver with another given 2D transform.
+        Transform2D concat(const Transform2D &other) const
+        {
+            return CGAffineTransformConcat(*this, other);
+        }
+    };
     
 #endif /* GFX_Include_GraphicsStack */
 }

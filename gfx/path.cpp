@@ -42,7 +42,10 @@ namespace gfx {
     Path::Path() :
         Base(),
         mPath(CGPathCreateMutable()),
-        mTransform(CGAffineTransformIdentity)
+        mTransform(Transform2D::Identity),
+        mLineCapStyle(LineCap::Butt),
+        mLineJoinStyle(LineJoin::Miter),
+        mLineWidth(1.0)
     {
         
     }
@@ -50,7 +53,10 @@ namespace gfx {
     Path::Path(CGPathRef path) :
         Base(),
         mPath(CGPathCreateMutableCopy(path)),
-        mTransform(CGAffineTransformIdentity)
+        mTransform(CGAffineTransformIdentity),
+        mLineCapStyle(LineCap::Butt),
+        mLineJoinStyle(LineJoin::Miter),
+        mLineWidth(1.0)
     {
     }
     
@@ -125,6 +131,7 @@ namespace gfx {
     
     void Path::addPath(const Path *otherPath)
     {
+        gfx_assert_param(otherPath);
         CGPathAddPath(this->get(), &otherPath->mTransform, otherPath->get());
     }
     
@@ -133,7 +140,7 @@ namespace gfx {
         CGPathAddArcToPoint(get(), &mTransform, point1.x, point1.y, point2.x, point2.y, radius);
     }
     
-    void Path::curveToPoint(Point point, Point controlPoint1, Point controlPoint2, Float radius)
+    void Path::curveToPoint(Point point, Point controlPoint1, Point controlPoint2)
     {
         CGPathAddCurveToPoint(get(), &mTransform, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, point.x, point.y);
     }
@@ -176,7 +183,11 @@ namespace gfx {
     
     void Path::set() const
     {
-        CGContextAddPath(Context::currentContext()->get(), get());
+        Context *context = Context::currentContext();
+        CGContextAddPath(context->get(), this->get());
+        CGContextSetLineCap(context->get(), lineCapStyle());
+        CGContextSetLineJoin(context->get(), lineJoinStyle());
+        CGContextSetLineWidth(context->get(), lineWidth());
     }
     
     void Path::fill() const
@@ -195,6 +206,75 @@ namespace gfx {
             set();
             CGContextStrokePath(context->get());
         });
+    }
+    
+#pragma mark -
+    
+    void Path::fillRect(Rect rect)
+    {
+        Context *context = Context::currentContext();
+        CGContextFillRect(context->get(), rect);
+    }
+    
+    void Path::strokeRect(Rect rect)
+    {
+        Context *context = Context::currentContext();
+        CGContextStrokeRect(context->get(), rect);
+    }
+    
+    void Path::strokeLine(Point point1, Point point2)
+    {
+        Context *context = Context::currentContext();
+        Point points[] = { point1, point2 };
+        CGContextStrokeLineSegments(context->get(), points, 2);
+    }
+    
+#pragma mark - Path Attributes
+    
+    Path::LineCap Path::lineCapStyle() const
+    {
+        return mLineCapStyle;
+    }
+    
+    void Path::setLineCapStyle(LineCap capStyle)
+    {
+        mLineCapStyle = capStyle;
+    }
+    
+#pragma mark -
+    
+    Path::LineJoin Path::lineJoinStyle() const
+    {
+        return mLineJoinStyle;
+    }
+    
+    void Path::setLineJoinStyle(LineJoin joinStyle)
+    {
+        mLineJoinStyle = joinStyle;
+    }
+    
+#pragma mark -
+    
+    Float Path::lineWidth() const
+    {
+        return mLineWidth;
+    }
+    
+    void Path::setLineWidth(Float width)
+    {
+        mLineWidth = width;
+    }
+    
+#pragma mark -
+    
+    void Path::setTransform(const Transform2D &transform)
+    {
+        mTransform = transform;
+    }
+    
+    Transform2D Path::transform() const
+    {
+        return mTransform;
     }
 }
 

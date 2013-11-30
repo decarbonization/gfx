@@ -43,16 +43,16 @@
 ///of the `T11_Active` macro to modify scope of class members. In order
 ///for this macro to operate as intended, T11 should be included before
 ///any other files, preferably in a prefix header (`pch`) file.
-#define T11_MakeIsPublic    1
+#define T11_MakeAllPublic   1
 
-#if T11_MakeIsPublic
+#if T11_MakeAllPublic
 #   if private
 #       undef private
 #   endif /* private */
 #   if protected
 #       undef protected
 #   endif /* protected */
-#endif /* T11_MakeIsPublic */
+#endif /* T11_MakeAllPublic */
 
 #pragma mark -
 
@@ -391,10 +391,10 @@ namespace T11 {
     
 #pragma mark -
     
-#if T11_MakeIsPublic
+#if T11_MakeAllPublic
 #   define protected    public
 #   define private      public
-#endif /* T11_MakeIsPublic */
+#endif /* T11_MakeAllPublic */
 }
 
 #endif /* defined(__t11_h__) */
