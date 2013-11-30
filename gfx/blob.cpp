@@ -14,9 +14,15 @@ namespace gfx {
 #pragma mark - Lifecycle
     
     Blob::Blob() :
-        Base(),
-        mData(CFDataCreate(kCFAllocatorDefault, nullptr, 0))
+        Blob(nullptr, 0)
     {
+    }
+    
+    Blob::Blob(const UInt8 *buffer, Index size) :
+        Base(),
+        mData(CFDataCreate(kCFAllocatorDefault, buffer, size))
+    {
+        
     }
     
     Blob::Blob(CFDataRef data) :
