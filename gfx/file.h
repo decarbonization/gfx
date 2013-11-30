@@ -90,7 +90,7 @@ namespace gfx {
         
 #pragma mark - Identity
         
-        virtual CFHashCode hash() const override;
+        virtual HashCode hash() const override;
         virtual bool isEqual(const File *otherFile) const;
         virtual bool isEqual(const Base *other) const override;
         virtual const String *description() const override;

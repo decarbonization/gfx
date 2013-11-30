@@ -21,7 +21,7 @@ namespace gfx {
         CFStringAppendCString(mStorage, string, encoding);
     }
     
-    String::String(const UniChar *buffer, CFIndex length, CFStringEncoding encoding) :
+    String::String(const UniChar *buffer, Index length, CFStringEncoding encoding) :
         mStorage(CFStringCreateMutable(kCFAllocatorDefault, length))
     {
         CFStringAppendCharacters(mStorage, buffer, length);
@@ -44,7 +44,7 @@ namespace gfx {
     
 #pragma mark - Identity
     
-    CFHashCode String::hash() const
+    HashCode String::hash() const
     {
         return CFHash(mStorage);
     }
@@ -109,7 +109,7 @@ namespace gfx {
     
 #pragma mark -
     
-    CFIndex String::length() const
+    Index String::length() const
     {
         return CFStringGetLength(mStorage);
     }
@@ -119,7 +119,7 @@ namespace gfx {
         return CFStringGetFastestEncoding(mStorage);
     }
     
-    UniChar String::at(CFIndex offset) const
+    UniChar String::at(Index offset) const
     {
         gfx_assert((offset < this->length()), "out of bounds"_gfx);
         
@@ -192,7 +192,7 @@ namespace gfx {
         }
     }
     
-    CFIndex String::findAndReplace(const String *stringToFind, const String *stringToReplace, CFRange searchRange, CFStringCompareFlags options)
+    Index String::findAndReplace(const String *stringToFind, const String *stringToReplace, CFRange searchRange, CFStringCompareFlags options)
     {
         gfx_assert_param(stringToFind);
         gfx_assert_param(stringToReplace);
@@ -218,7 +218,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void String::insert(const String *stringToInsert, CFIndex insertionPoint)
+    void String::insert(const String *stringToInsert, Index insertionPoint)
     {
         gfx_assert_param(stringToInsert);
         

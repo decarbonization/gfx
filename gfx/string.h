@@ -31,7 +31,7 @@ namespace gfx {
         String(const char *string, CFStringEncoding encoding = kCFStringEncodingUTF8);
         
         ///Constructs a string from a given buffer of utf16 data, length, and encoding.
-        String(const UniChar *buffer, CFIndex length, CFStringEncoding encoding);
+        String(const UniChar *buffer, Index length, CFStringEncoding encoding);
         
         ///Constructs a string by copying another string.
         String(const String *string);
@@ -44,7 +44,7 @@ namespace gfx {
         
 #pragma mark - Identity
         
-        CFHashCode hash() const;
+        HashCode hash() const;
         
         ///Returns a bool indicating whether or not the string matches a given string.
         bool isEqual(const String *other) const;
@@ -85,7 +85,7 @@ namespace gfx {
 #pragma mark -
         
         ///Returns the length of the string.
-        CFIndex length() const;
+        Index length() const;
         
         ///Returns the encoding of the string.
         CFStringEncoding encoding() const;
@@ -94,7 +94,7 @@ namespace gfx {
         ///
         /// \throws Exception when offset is out of bounds.
         ///
-        UniChar at(CFIndex offset) const;
+        UniChar at(Index offset) const;
         
         ///Returns a new String created from a given range of the receiver's data.
         String *substring(CFRange range) const;
@@ -146,7 +146,7 @@ namespace gfx {
         ///
         /// \result The number of occurances replaced.
         ///
-        CFIndex findAndReplace(const String *stringToFind, const String *stringToReplace, CFRange searchRange, CFStringCompareFlags options = 0);
+        Index findAndReplace(const String *stringToFind, const String *stringToReplace, CFRange searchRange, CFStringCompareFlags options = 0);
         
 #pragma mark - Mutation
         
@@ -171,7 +171,7 @@ namespace gfx {
         /// \param  insertionPoint  Where to insert the string. Must be within {0, String::length()}
         ///
         /// \throws Exception on out of bounds errors.
-        void insert(const String *stringToInsert, CFIndex insertionPoint);
+        void insert(const String *stringToInsert, Index insertionPoint);
         
         ///Appends a given string to the receiver.
         ///
@@ -205,7 +205,7 @@ namespace gfx {
             }
             
             ///Returns the length of the builder's string.
-            CFIndex length() const
+            Index length() const
             {
                 return mString->length();
             }

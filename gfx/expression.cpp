@@ -48,7 +48,7 @@ namespace gfx {
         else if(mType == Type::Function)
             description << "{";
         
-        mSubexpressions->iterate([&description](Base *value, CFIndex index, bool *stop) {
+        mSubexpressions->iterate([&description](Base *value, Index index, bool *stop) {
             AutoreleasePool pool;
             
             description << value << " ";

@@ -84,9 +84,9 @@ namespace gfx {
     
 #pragma mark - Identity
     
-    CFHashCode File::hash() const
+    HashCode File::hash() const
     {
-        return (CFHashCode)mFile;
+        return (HashCode)mFile;
     }
     
     bool File::isEqual(const File *otherFile) const

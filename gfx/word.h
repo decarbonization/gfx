@@ -52,7 +52,7 @@ namespace gfx {
         
 #pragma mark - Identity
         
-        virtual CFHashCode hash() const override
+        virtual HashCode hash() const override
         {
             return mString->hash() + 'word';
         }

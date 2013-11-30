@@ -211,7 +211,7 @@ frame->push(result); \
         String::Builder stackDescription;
         stackDescription << "-- stack has " << frame->depth() << " items --\n";
         
-        frame->iterate([&stackDescription](Base *value, CFIndex index, bool *stop) {
+        frame->iterate([&stackDescription](Base *value, Index index, bool *stop) {
             stackDescription << value;
             stackDescription << "\n";
         });
@@ -336,7 +336,7 @@ frame->push(result); \
         Base *wordOrWords = frame->pop();
         if(wordOrWords && wordOrWords->isKindOfClass<Array<Base>>()) {
             auto words = static_cast<Array<Base> *>(wordOrWords);
-            for (CFIndex index = words->count() - 1; index >= 0; index--) {
+            for (Index index = words->count() - 1; index >= 0; index--) {
                 Word *word = static_cast<Word *>(words->at(index));
                 frame->createBindingWithValue(word->string(), frame->pop());
             }
@@ -576,7 +576,7 @@ frame->push(result); \
         /* vec func -- */
         Function *function = frame->popFunction();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        vector->iterate([frame, function](Base *value, CFIndex index, bool *stop) {
+        vector->iterate([frame, function](Base *value, Index index, bool *stop) {
             frame->push(value);
             function->apply(frame);
             frame->safeDrop();
@@ -588,7 +588,7 @@ frame->push(result); \
         /* vec func -- vec */
         Function *function = frame->popFunction();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        const Array<Base> *result = vector->filter([frame, function](Base *value, CFIndex index, bool *stop) {
+        const Array<Base> *result = vector->filter([frame, function](Base *value, Index index, bool *stop) {
             frame->push(value);
             function->apply(frame);
             return (bool)frame->popNumber()->value();
@@ -601,7 +601,7 @@ frame->push(result); \
         /* vec func -- vec */
         Function *function = frame->popFunction();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        const Array<Base> *result = vector->map([frame, function](Base *value, CFIndex index, bool *stop) -> Base * {
+        const Array<Base> *result = vector->map([frame, function](Base *value, Index index, bool *stop) -> Base * {
             frame->push(value);
             function->apply(frame);
             return frame->pop();

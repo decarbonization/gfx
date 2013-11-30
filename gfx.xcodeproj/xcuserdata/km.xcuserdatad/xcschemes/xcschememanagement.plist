@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>gfx-tests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>gfx.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>8B10B91A1842E92300DEB62F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8B420020183488540020D1D1</key>
 		<dict>
 			<key>primary</key>

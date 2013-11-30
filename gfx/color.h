@@ -12,7 +12,6 @@
 #if GFX_Include_GraphicsStack
 
 #include "base.h"
-#include "cf.h"
 #include <CoreGraphics/CoreGraphics.h>
 
 namespace gfx {
@@ -20,18 +19,24 @@ namespace gfx {
     
     class Color : public Base
     {
+    public:
+        
+        typedef CGColorRef NativeType;
+        
+    protected:
+        
         CGColorRef mColor;
         
     public:
         
         Color(CGColorRef color);
-        Color(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha);
+        Color(Float red, Float green, Float blue, Float alpha);
         Color(const Word *word);
         ~Color();
         
 #pragma mark - Identity
         
-        CFHashCode hash() const override;
+        HashCode hash() const override;
         bool isEqual(const Base *other) const override;
         const String *description() const override;
         
@@ -43,11 +48,11 @@ namespace gfx {
         
 #pragma mark - Introspection
         
-        CFIndex numberOfComponents() const;
-        const CGFloat *getComponents() const;
-        CGColorRef getColor() const;
+        Index numberOfComponents() const;
+        const Float *getComponents() const;
+        NativeType get() const;
         CGColorSpaceRef getColorSpace() const;
-        CGFloat getAlpha() const;
+        Float getAlpha() const;
     };
 }
 

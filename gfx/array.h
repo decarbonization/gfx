@@ -70,7 +70,7 @@ namespace gfx {
         
 #pragma mark - Identity
         
-        CFHashCode hash() const override
+        HashCode hash() const override
         {
             return CFHash(mStorage);
         }
@@ -80,7 +80,7 @@ namespace gfx {
             String::Builder description;
             description << "{\n";
             
-            iterate([&description](T *value, CFIndex index, bool *stop) {
+            iterate([&description](T *value, Index index, bool *stop) {
                 AutoreleasePool pool;
                 
                 description << "\t";
@@ -132,7 +132,7 @@ namespace gfx {
 #pragma mark - Reading
         
         ///Returns the number of values contained within the receiver.
-        CFIndex count() const
+        Index count() const
         {
             return CFArrayGetCount(mStorage);
         }
@@ -140,7 +140,7 @@ namespace gfx {
         ///Returns the value stored at a given index.
         ///
         /// \throws Exception for out of bounds errors.
-        T *at(CFIndex index) const
+        T *at(Index index) const
         {
             gfx_assert((index < this->count()), "out of range access"_gfx);
             
@@ -162,7 +162,7 @@ namespace gfx {
         ///Returns the first value contained in the receiver, or null if the array is empty.
         T *first() const
         {
-            CFIndex count = this->count();
+            Index count = this->count();
             if(count == 0)
                 return nullptr;
             else
@@ -172,7 +172,7 @@ namespace gfx {
         ///Returns the last value contained in the receiver, or null if the array is empty.
         T *last() const
         {
-            CFIndex count = this->count();
+            Index count = this->count();
             if(count == 0)
                 return nullptr;
             else
@@ -181,14 +181,14 @@ namespace gfx {
         
         ///Returns the first index of a given value within the receiver,
         ///or kCFNotFound if the value is not contained within the array.
-        CFIndex firstIndexOf(CFRange range, T *value) const
+        Index firstIndexOf(CFRange range, T *value) const
         {
             return CFArrayGetFirstIndexOfValue(mStorage, range, value);
         }
         
         ///Returns the last index of a given value within the receiver,
         ///or kCFNotFound if the value is not contained within the array.
-        CFIndex lastIndexOf(CFRange range, T *value) const
+        Index lastIndexOf(CFRange range, T *value) const
         {
             return CFArrayGetLastIndexOfValue(mStorage, range, value);
         }
@@ -202,7 +202,7 @@ namespace gfx {
 #pragma mark - Mutation
         
         ///Inserts a given value at a given index within the receiver.
-        void insertAt(T *value, CFIndex index)
+        void insertAt(T *value, Index index)
         {
             gfx_assert((index < this->count()), "out of range"_gfx);
             gfx_assert_param(value);
@@ -229,7 +229,7 @@ namespace gfx {
         ///Removes the value at a given index.
         ///
         /// \throws Exception for out of bounds errors.
-        void removeAt(CFIndex index)
+        void removeAt(Index index)
         {
             gfx_assert((index < this->count()), "out of range"_gfx);
             
@@ -240,7 +240,7 @@ namespace gfx {
         ///Does nothing if the array is empty.
         void removeFirst()
         {
-            CFIndex count = this->count();
+            Index count = this->count();
             if(count > 0)
                 this->removeAt(0);
         }
@@ -249,7 +249,7 @@ namespace gfx {
         ///Does nothing if the array is empty.
         void removeLast()
         {
-            CFIndex count = this->count();
+            Index count = this->count();
             if(count > 0)
                 this->removeAt(count - 1);
         }
@@ -263,7 +263,7 @@ namespace gfx {
         ///Exchanges the values at the two given indexes within the receiver.
         ///
         /// \throws Exception for out of bounds errors.
-        void exchange(CFIndex index1, CFIndex index2)
+        void exchange(Index index1, Index index2)
         {
             gfx_assert((index1 < this->count()), "out of range"_gfx);
             gfx_assert((index2 < this->count()), "out of range"_gfx);
@@ -291,10 +291,10 @@ namespace gfx {
     public:
         
         ///Enumerates the contents of the receiver, applying a given function with each value.
-        void iterate(std::function<void(T *value, CFIndex index, bool *stop)> function) const
+        void iterate(std::function<void(T *value, Index index, bool *stop)> function) const
         {
             bool stop = false;
-            for (CFIndex index = 0, count = this->count(); index < count; index++) {
+            for (Index index = 0, count = this->count(); index < count; index++) {
                 function(this->at(index), index, &stop);
                 
                 if(stop)
@@ -304,12 +304,12 @@ namespace gfx {
         
         ///Maps the contents of the receiver, applying a given function with each value,
         ///and placing the returned value of the function into a new array.
-        const Array *map(std::function<T *(T *value, CFIndex index, bool *stop)> function) const
+        const Array *map(std::function<T *(T *value, Index index, bool *stop)> function) const
         {
             Array<T> *newArray = make<Array<T>>();
             
             bool stop = false;
-            for (CFIndex index = 0, count = this->count(); index < count; index++) {
+            for (Index index = 0, count = this->count(); index < count; index++) {
                 T *newValue = function(this->at(index), index, &stop);
                 newArray->append(newValue);
                 if(stop)
@@ -321,12 +321,12 @@ namespace gfx {
         
         ///Filters the contents of the receiver, applying a given function with each value,
         ///and placing the values for which the function returns true in a new array.
-        const Array *filter(std::function<bool(T *value, CFIndex index, bool *stop)> function) const
+        const Array *filter(std::function<bool(T *value, Index index, bool *stop)> function) const
         {
             Array<T> *newArray = make<Array<T>>();
             
             bool stop = false;
-            for (CFIndex index = 0, count = this->count(); index < count; index++) {
+            for (Index index = 0, count = this->count(); index < count; index++) {
                 T *value =this->at(index);
                 if(function(value, index, &stop))
                    newArray->append(value);
@@ -344,7 +344,7 @@ namespace gfx {
         class Iterator
         {
             const Array *mArray;
-            CFIndex mOffset;
+            Index mOffset;
             
         public:
             
@@ -422,7 +422,7 @@ namespace gfx {
         
         auto results = make<Array<String>>();
         cf::ArrayAutoRef cfStrings = CFStringCreateArrayBySeparatingStrings(kCFAllocatorDefault, string->getStorage(), separatorString->getStorage());
-        for (CFIndex index = 0, count = CFArrayGetCount(cfStrings); index < count; index++) {
+        for (Index index = 0, count = CFArrayGetCount(cfStrings); index < count; index++) {
             results->append(make<String>((CFStringRef)CFArrayGetValueAtIndex(cfStrings, index)));
         }
         
@@ -444,7 +444,7 @@ namespace gfx {
         gfx_assert_param(separatorString);
         
         cf::MutableArrayAutoRef cfStrings = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-        values->iterate([cfStrings](Base *value, CFIndex index, bool *stop) {
+        values->iterate([cfStrings](Base *value, Index index, bool *stop) {
             CFArrayAppendValue(cfStrings, value->description()->getStorage());
         });
         

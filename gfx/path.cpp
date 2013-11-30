@@ -13,7 +13,7 @@
 
 namespace gfx {
     
-    Path *Path::withRect(CGRect rect)
+    Path *Path::withRect(Rect rect)
     {
         CGPathRef ovalPath = CGPathCreateWithRect(rect, NULL);
         Path *path = make<Path>(ovalPath);
@@ -21,7 +21,7 @@ namespace gfx {
         return path;
     }
     
-    Path *Path::withRoundedRect(CGRect rect, CGFloat cornerWidth, CGFloat cornerHeight)
+    Path *Path::withRoundedRect(Rect rect, Float cornerWidth, Float cornerHeight)
     {
         CGPathRef ovalPath = CGPathCreateWithRoundedRect(rect, cornerWidth, cornerHeight, NULL);
         Path *path = make<Path>(ovalPath);
@@ -29,7 +29,7 @@ namespace gfx {
         return path;
     }
     
-    Path *Path::withOval(CGRect rect)
+    Path *Path::withOval(Rect rect)
     {
         CGPathRef ovalPath = CGPathCreateWithEllipseInRect(rect, NULL);
         Path *path = make<Path>(ovalPath);
@@ -55,7 +55,7 @@ namespace gfx {
     }
     
     Path::Path(const Path *path) :
-        Path(path->getPath())
+        Path(path->get())
     {
         
     }
@@ -75,7 +75,7 @@ namespace gfx {
         if(!other)
             return false;
         
-        return CFEqual(getPath(), other->getPath());
+        return CFEqual(get(), other->get());
     }
     
     bool Path::isEqual(const Base *other) const
@@ -89,94 +89,94 @@ namespace gfx {
         return false;
     }
     
-    CFHashCode Path::hash() const
+    HashCode Path::hash() const
     {
-        return CFHash(getPath());
+        return CFHash(get());
     }
     
 #pragma mark -
     
-    CGMutablePathRef Path::getPath()
+    Path::NativeType Path::get()
     {
         return mPath;
     }
     
-    CGPathRef Path::getPath() const
+    Path::ConstNativeType Path::get() const
     {
         return mPath;
     }
     
 #pragma mark - Constructing Paths
     
-    void Path::moveToPoint(CGPoint point)
+    void Path::moveToPoint(Point point)
     {
-        CGPathMoveToPoint(getPath(), &mTransform, point.x, point.y);
+        CGPathMoveToPoint(get(), &mTransform, point.x, point.y);
     }
     
-    void Path::lineToPoint(CGPoint point)
+    void Path::lineToPoint(Point point)
     {
-        CGPathAddLineToPoint(getPath(), &mTransform, point.x, point.y);
+        CGPathAddLineToPoint(get(), &mTransform, point.x, point.y);
     }
     
     void Path::closePath()
     {
-        CGPathCloseSubpath(getPath());
+        CGPathCloseSubpath(get());
     }
     
     void Path::addPath(const Path *otherPath)
     {
-        CGPathAddPath(this->getPath(), &otherPath->mTransform, otherPath->getPath());
+        CGPathAddPath(this->get(), &otherPath->mTransform, otherPath->get());
     }
     
-    void Path::arcToPoint(CGPoint point1, CGPoint point2, CGFloat radius)
+    void Path::arcToPoint(Point point1, Point point2, Float radius)
     {
-        CGPathAddArcToPoint(getPath(), &mTransform, point1.x, point1.y, point2.x, point2.y, radius);
+        CGPathAddArcToPoint(get(), &mTransform, point1.x, point1.y, point2.x, point2.y, radius);
     }
     
-    void Path::curveToPoint(CGPoint point, CGPoint controlPoint1, CGPoint controlPoint2, CGFloat radius)
+    void Path::curveToPoint(Point point, Point controlPoint1, Point controlPoint2, Float radius)
     {
-        CGPathAddCurveToPoint(getPath(), &mTransform, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, point.x, point.y);
+        CGPathAddCurveToPoint(get(), &mTransform, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, point.x, point.y);
     }
     
 #pragma mark - Getting Information about Paths
     
-    CGRect Path::boundingBox() const
+    Rect Path::boundingBox() const
     {
-        return CGPathGetBoundingBox(getPath());
+        return CGPathGetBoundingBox(get());
     }
     
-    CGRect Path::pathBoundingBox() const
+    Rect Path::pathBoundingBox() const
     {
-        return CGPathGetBoundingBox(getPath());
+        return CGPathGetBoundingBox(get());
     }
     
-    CGPoint Path::currentPoint() const
+    Point Path::currentPoint() const
     {
-        return CGPathGetCurrentPoint(getPath());
+        return CGPathGetCurrentPoint(get());
     }
     
 #pragma mark -
     
     bool Path::isEmpty() const
     {
-        return CGPathIsEmpty(getPath());
+        return CGPathIsEmpty(get());
     }
     
-    bool Path::isRectangle(CGRect *outRect) const
+    bool Path::isRectangle(Rect *outRect) const
     {
-        return CGPathIsRect(getPath(), outRect);
+        return CGPathIsRect(get(), outRect);
     }
     
-    bool Path::containsPoint(CGPoint point) const
+    bool Path::containsPoint(Point point) const
     {
-        return CGPathContainsPoint(getPath(), &mTransform, point, false);
+        return CGPathContainsPoint(get(), &mTransform, point, false);
     }
     
 #pragma mark - Drawing
     
     void Path::set() const
     {
-        CGContextAddPath(Context::currentContext()->getContext(), getPath());
+        CGContextAddPath(Context::currentContext()->get(), get());
     }
     
     void Path::fill() const
@@ -184,7 +184,7 @@ namespace gfx {
         Context *context = Context::currentContext();
         context->transaction([this](Context *context) {
             set();
-            CGContextFillPath(context->getContext());
+            CGContextFillPath(context->get());
         });
     }
     
@@ -193,7 +193,7 @@ namespace gfx {
         Context *context = Context::currentContext();
         context->transaction([this](Context *context) {
             set();
-            CGContextStrokePath(context->getContext());
+            CGContextStrokePath(context->get());
         });
     }
 }

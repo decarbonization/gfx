@@ -62,7 +62,7 @@ namespace gfx {
         
 #pragma mark - Identity
         
-        CFHashCode hash() const override
+        HashCode hash() const override
         {
             return CFHash(mStorage);
         }
@@ -124,13 +124,13 @@ namespace gfx {
 #pragma mark - Accessing Values
         
         ///Returns the number of key-value associations stored in the dictionary.
-        CFIndex count() const
+        Index count() const
         {
             return CFDictionaryGetCount(mStorage);
         }
         
         ///Returns the number of instances of a given key are stored in the receiver.
-        CFIndex countOfKey(Key *key) const
+        Index countOfKey(Key *key) const
         {
             gfx_assert_param(key);
             
@@ -138,7 +138,7 @@ namespace gfx {
         }
         
         ///Returns the number of instances of a given value are stored in the receiver.
-        CFIndex countOfValue(Value *value) const
+        Index countOfValue(Value *value) const
         {
             gfx_assert_param(value);
             

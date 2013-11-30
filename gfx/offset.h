@@ -19,10 +19,10 @@ namespace gfx {
     //of Expressions and Words from the `gfx::Parser` class.
     struct Offset {
         ///The line of origination.
-        CFIndex line;
+        Index line;
         
         ///The line-offset of origination.
-        CFIndex offset;
+        Index offset;
         
         
         ///The Invalid offset. Used as a default placeholder, like null.

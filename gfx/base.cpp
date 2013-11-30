@@ -36,7 +36,7 @@ namespace gfx {
         return static_cast<const Base *>(value1)->isEqual(static_cast<const Base *>(value2));
     }
     
-    CFHashCode HashCallBack(const void *value)
+    HashCode HashCallBack(const void *value)
     {
         return static_cast<const Base *>(value)->hash();
     }
@@ -78,9 +78,9 @@ namespace gfx {
     
 #pragma mark - Identity
     
-    CFHashCode Base::hash() const
+    HashCode Base::hash() const
     {
-        return (CFHashCode)this;
+        return (HashCode)this;
     }
     
     const String *Base::className() const
@@ -142,7 +142,7 @@ namespace gfx {
     
     AutoreleasePool::~AutoreleasePool()
     {
-        for (CFIndex index = 0, count = CFArrayGetCount(mStorage); index < count; index++) {
+        for (Index index = 0, count = CFArrayGetCount(mStorage); index < count; index++) {
             const Base *object = (const Base *)CFArrayGetValueAtIndex(mStorage, index);
             object->release();
         }

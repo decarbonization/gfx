@@ -61,9 +61,9 @@ namespace gfx {
 #pragma mark - Identity
         
         ///Uses the number's double value as a hash code.
-        CFHashCode hash() const override
+        HashCode hash() const override
         {
-            return (CFHashCode)mValue;
+            return (HashCode)mValue;
         }
         
         bool isEqual(const Number *other) const

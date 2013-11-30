@@ -19,6 +19,7 @@
 		8B10B90E183DC95600DEB62F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B90D183DC90600DEB62F /* ImageIO.framework */; };
 		8B10B91118413EFA00DEB62F /* path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B90F18413EFA00DEB62F /* path.cpp */; };
 		8B10B9141841C09900DEB62F /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B9121841C09900DEB62F /* context.cpp */; };
+		8B10B9271842E94700DEB62F /* t11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B9251842E94700DEB62F /* t11.cpp */; };
 		8B124F04183715D600F255EF /* string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F02183715D600F255EF /* string.cpp */; };
 		8B124F08183741F200F255EF /* interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F06183741F200F255EF /* interpreter.cpp */; };
 		8B124F0B1837434E00F255EF /* stackframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F091837434E00F255EF /* stackframe.cpp */; };
@@ -32,6 +33,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		8B10B9191842E92300DEB62F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		8B42001F183488540020D1D1 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -68,6 +78,9 @@
 		8B10B9121841C09900DEB62F /* context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = context.cpp; sourceTree = "<group>"; };
 		8B10B9131841C09900DEB62F /* context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = context.h; sourceTree = "<group>"; };
 		8B10B91518429C0000DEB62F /* gfx_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gfx_prefix.pch; sourceTree = "<group>"; };
+		8B10B91B1842E92300DEB62F /* gfx-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "gfx-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B10B9251842E94700DEB62F /* t11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = t11.cpp; sourceTree = "<group>"; };
+		8B10B9261842E94700DEB62F /* t11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t11.h; sourceTree = "<group>"; };
 		8B124F02183715D600F255EF /* string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string.cpp; sourceTree = "<group>"; };
 		8B124F03183715D600F255EF /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
 		8B124F0518373F7F00F255EF /* word.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = word.h; sourceTree = "<group>"; };
@@ -82,6 +95,7 @@
 		8B124F1018374BA500F255EF /* corefunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = corefunctions.h; sourceTree = "<group>"; };
 		8B124F181837516A00F255EF /* papertape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = papertape.cpp; sourceTree = "<group>"; };
 		8B124F191837516A00F255EF /* papertape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = papertape.h; sourceTree = "<group>"; };
+		8B12C64618496DAB00DBD77C /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		8B420021183488540020D1D1 /* gfx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfx; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B420024183488540020D1D1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8B420027183488540020D1D1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -96,6 +110,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8B10B9181842E92300DEB62F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B42001E183488540020D1D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -151,8 +172,18 @@
 				8B10B91018413EFA00DEB62F /* path.h */,
 				8B10B9121841C09900DEB62F /* context.cpp */,
 				8B10B9131841C09900DEB62F /* context.h */,
+				8B12C64618496DAB00DBD77C /* types.h */,
 			);
 			name = "Graphics Stack";
+			sourceTree = "<group>";
+		};
+		8B10B91C1842E92300DEB62F /* gfx-tests */ = {
+			isa = PBXGroup;
+			children = (
+				8B10B9251842E94700DEB62F /* t11.cpp */,
+				8B10B9261842E94700DEB62F /* t11.h */,
+			);
+			path = "gfx-tests";
 			sourceTree = "<group>";
 		};
 		8B124F01183715C900F255EF /* Core Types */ = {
@@ -180,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				8B420026183488540020D1D1 /* gfx */,
+				8B10B91C1842E92300DEB62F /* gfx-tests */,
 				8B420023183488540020D1D1 /* Frameworks */,
 				8B420022183488540020D1D1 /* Products */,
 			);
@@ -189,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				8B420021183488540020D1D1 /* gfx */,
+				8B10B91B1842E92300DEB62F /* gfx-tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,6 +255,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8B10B91A1842E92300DEB62F /* gfx-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B10B9231842E92300DEB62F /* Build configuration list for PBXNativeTarget "gfx-tests" */;
+			buildPhases = (
+				8B10B9171842E92300DEB62F /* Sources */,
+				8B10B9181842E92300DEB62F /* Frameworks */,
+				8B10B9191842E92300DEB62F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "gfx-tests";
+			productName = "gfx-tests";
+			productReference = 8B10B91B1842E92300DEB62F /* gfx-tests */;
+			productType = "com.apple.product-type.tool";
+		};
 		8B420020183488540020D1D1 /* gfx */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B42002D183488540020D1D1 /* Build configuration list for PBXNativeTarget "gfx" */;
@@ -261,11 +311,20 @@
 			projectRoot = "";
 			targets = (
 				8B420020183488540020D1D1 /* gfx */,
+				8B10B91A1842E92300DEB62F /* gfx-tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8B10B9171842E92300DEB62F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B10B9271842E94700DEB62F /* t11.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8B42001D183488540020D1D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -294,6 +353,24 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		8B10B9211842E92300DEB62F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		8B10B9221842E92300DEB62F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		8B42002B183488540020D1D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -383,6 +460,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8B10B9231842E92300DEB62F /* Build configuration list for PBXNativeTarget "gfx-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B10B9211842E92300DEB62F /* Debug */,
+				8B10B9221842E92300DEB62F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8B42001C183488540020D1D1 /* Build configuration list for PBXProject "gfx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -125,9 +125,9 @@ namespace gfx {
         return this->peek(0);
     }
     
-    UniChar Parser::peek(CFIndex delta)
+    UniChar Parser::peek(Index delta)
     {
-        CFIndex offset = mCurrentIndex + delta;
+        Index offset = mCurrentIndex + delta;
         if(offset < mString->length())
             return mString->at(offset);
         else

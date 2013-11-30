@@ -22,7 +22,7 @@ namespace gfx {
         CFRetain(color);
     }
     
-    Color::Color(CGFloat red, CGFloat green, CGFloat blue, CGFloat alpha) :
+    Color::Color(Float red, Float green, Float blue, Float alpha) :
         Base(),
         mColor(NULL)
     {
@@ -60,7 +60,7 @@ namespace gfx {
     
 #pragma mark - Identity
     
-    CFHashCode Color::hash() const
+    HashCode Color::hash() const
     {
         return CFHash(mColor);
     }
@@ -81,8 +81,8 @@ namespace gfx {
         
         description << "<" << this->className() << ":" << (void *)this << " {";
         
-        const CGFloat *components = getComponents();
-        for (CFIndex i = 0, count = numberOfComponents(); i < count; i++) {
+        const Float *components = getComponents();
+        for (Index i = 0, count = numberOfComponents(); i < count; i++) {
             description << components[i] << ", ";
         }
         
@@ -101,27 +101,27 @@ namespace gfx {
     
     void Color::setFill()
     {
-        CGContextSetFillColorWithColor(Context::currentContext()->getContext(), mColor);
+        CGContextSetFillColorWithColor(Context::currentContext()->get(), mColor);
     }
     
     void Color::setStroke()
     {
-        CGContextSetStrokeColorWithColor(Context::currentContext()->getContext(), mColor);
+        CGContextSetStrokeColorWithColor(Context::currentContext()->get(), mColor);
     }
     
 #pragma mark - Introspection
     
-    CFIndex Color::numberOfComponents() const
+    Index Color::numberOfComponents() const
     {
         return CGColorGetNumberOfComponents(mColor);
     }
     
-    const CGFloat *Color::getComponents() const
+    const Float *Color::getComponents() const
     {
         return CGColorGetComponents(mColor);
     }
     
-    CGColorRef Color::getColor() const
+    Color::NativeType Color::get() const
     {
         return mColor;
     }
@@ -131,7 +131,7 @@ namespace gfx {
         return CGColorGetColorSpace(mColor);
     }
     
-    CGFloat Color::getAlpha() const
+    Float Color::getAlpha() const
     {
         return CGColorGetAlpha(mColor);
     }

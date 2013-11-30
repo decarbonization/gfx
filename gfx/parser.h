@@ -23,7 +23,7 @@ namespace gfx {
     class Parser : public Base
     {
         const String *mString;
-        CFIndex mCurrentIndex;
+        Index mCurrentIndex;
         Offset mOffset;
         
 #pragma mark - Movement
@@ -31,7 +31,7 @@ namespace gfx {
         UniChar previous();
         UniChar next();
         UniChar current();
-        UniChar peek(CFIndex delta);
+        UniChar peek(Index delta);
         bool more();
         
         void moveToNext(UniChar c);

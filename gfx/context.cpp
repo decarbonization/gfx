@@ -38,7 +38,7 @@ namespace gfx {
     
 #pragma mark - Lifecycle
     
-    Context *Context::bitmapContextWith(CGSize size, CGFloat scale)
+    Context *Context::bitmapContextWith(Size size, Float scale)
     {
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef imageContext = CGBitmapContextCreate(/* in data */ NULL,
@@ -58,15 +58,16 @@ namespace gfx {
     
 #pragma mark -
     
-    Context::Context(CGContextRef context) :
+    Context::Context(Context::NativeType context, bool ownsContext) :
         Base(),
-        mContext(context)
+        mContext(context),
+        mOwnsContext(ownsContext)
     {
     }
     
     Context::~Context()
     {
-        if(mContext) {
+        if(mContext && mOwnsContext) {
             CFRelease(mContext);
             mContext = NULL;
         }
@@ -74,7 +75,7 @@ namespace gfx {
     
 #pragma mark - Identity
     
-    CFHashCode Context::hash() const
+    HashCode Context::hash() const
     {
         return CFHash(mContext);
     }
@@ -84,7 +85,7 @@ namespace gfx {
         if(!other)
             return NULL;
         
-        return CFEqual(getContext(), other->getContext());
+        return CFEqual(get(), other->get());
     }
     
     bool Context::isEqual(const Base *other) const
@@ -100,31 +101,36 @@ namespace gfx {
     
 #pragma mark - Introspection
     
-    CGContextRef Context::getContext() const
+    bool Context::ownsContext() const
+    {
+        return mOwnsContext;
+    }
+    
+    Context::NativeType Context::get() const
     {
         return mContext;
     }
     
     CGImageRef Context::createImage() const
     {
-        return CGBitmapContextCreateImage(getContext());
+        return CGBitmapContextCreateImage(get());
     }
     
-    CGRect Context::boundingRect() const
+    Rect Context::boundingRect() const
     {
-        return CGContextGetClipBoundingBox(getContext());
+        return CGContextGetClipBoundingBox(get());
     }
     
 #pragma mark - Saving/Restoring State
     
     void Context::save()
     {
-        CGContextSaveGState(getContext());
+        CGContextSaveGState(get());
     }
     
     void Context::restore()
     {
-        CGContextRestoreGState(getContext());
+        CGContextRestoreGState(get());
     }
     
     void Context::transaction(std::function<void(Context *context)> transactionFunctor)

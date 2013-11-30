@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>FDF4ED1D-1D5A-47E1-8558-1137F225226D</string>
+	<string>051F7FC3-1370-4C4E-83EE-F11BDE32514D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>gfx</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>5BC65ED2-875C-43D1-A976-7927DBD995C3</key>
-		<string>https://pinna.git.beanstalkapp.com/uikit.git</string>
+		<key>448C072E-944A-4986-878E-72CA4B9EF60B</key>
+		<string>ssh://github.com/decarbonization/gfx.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>gfx/gfx.xcodeproj/project.xcworkspace</string>
+	<string>gfx.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>5BC65ED2-875C-43D1-A976-7927DBD995C3</key>
-		<string>../../..</string>
+		<key>448C072E-944A-4986-878E-72CA4B9EF60B</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://pinna.git.beanstalkapp.com/uikit.git</string>
+	<string>ssh://github.com/decarbonization/gfx.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>5BC65ED2-875C-43D1-A976-7927DBD995C3</string>
+	<string>448C072E-944A-4986-878E-72CA4B9EF60B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5BC65ED2-875C-43D1-A976-7927DBD995C3</string>
+			<string>448C072E-944A-4986-878E-72CA4B9EF60B</string>
 			<key>IDESourceControlWCCName</key>
-			<string>UIKit</string>
+			<string>gfx</string>
 		</dict>
 	</array>
 </dict>

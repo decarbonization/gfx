@@ -14,6 +14,7 @@
 #include <atomic>
 #include "cf.h"
 #include "assertions.h"
+#include "types.h"
 
 namespace gfx {
     class String;
@@ -79,7 +80,7 @@ namespace gfx {
         ///Returns a code that can be used to identify the object in a hashing structure.
         ///
         ///The default implementation uses the pointer value of `this`.
-        virtual CFHashCode hash() const;
+        virtual HashCode hash() const;
         
         ///Returns the class name of the object.
         ///

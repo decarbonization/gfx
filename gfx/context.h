@@ -17,7 +17,14 @@
 namespace gfx {
     class Context : public Base
     {
-        CGContextRef mContext;
+    public:
+        
+        typedef CGContextRef NativeType;
+        
+    protected:
+        
+        NativeType mContext;
+        bool mOwnsContext;
         
     public:
         
@@ -29,24 +36,25 @@ namespace gfx {
         
 #pragma mark - Lifecycle
         
-        static Context *bitmapContextWith(CGSize size, CGFloat scale = 1.0);
+        static Context *bitmapContextWith(Size size, Float scale = 1.0);
         
 #pragma mark -
         
-        Context(CGContextRef context);
+        Context(NativeType context, bool ownsContext = true);
         virtual ~Context();
         
 #pragma mark - Identity
         
-        virtual CFHashCode hash() const override;
+        virtual HashCode hash() const override;
         virtual bool isEqual(const Context *other) const;
         virtual bool isEqual(const Base *other) const override;
         
 #pragma mark - Introspection
         
-        CGContextRef getContext() const;
+        bool ownsContext() const;
+        NativeType get() const;
         CGImageRef createImage() const;
-        CGRect boundingRect() const;
+        Rect boundingRect() const;
         
 #pragma mark - Saving/Restoring State
         

@@ -108,7 +108,7 @@ namespace gfx {
         return (mStorage->count() == 0);
     }
     
-    void StackFrame::iterate(std::function<void(Base *value, CFIndex index, bool *stop)> function) const
+    void StackFrame::iterate(std::function<void(Base *value, Index index, bool *stop)> function) const
     {
         mStorage->iterate(function);
     }

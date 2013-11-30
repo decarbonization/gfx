@@ -47,6 +47,10 @@ namespace gfx {
         mImportAllowed(true),
         mUnboundWordHandler()
     {
+        mRootFrame = make<StackFrame>(nullptr, this);
+        CoreFunctions::addTo(mRootFrame);
+        this->pushFrame(mRootFrame);
+        
 #if GFX_Include_GraphicsStack
         Graphics::attachTo(this);
 #else
@@ -55,10 +59,6 @@ namespace gfx {
             return nullptr;
         };
 #endif /* GFX_Include_GraphicsStack */
-        
-        mRootFrame = make<StackFrame>(nullptr, this);
-        CoreFunctions::addTo(mRootFrame);
-        this->pushFrame(mRootFrame);
         
         this->setFileName("(none)"_gfx);
         this->addSearchPath(""_gfx);
@@ -191,7 +191,7 @@ namespace gfx {
         String::Builder backtrace;
         
         backtrace << "-- backtrace for " << this << " --\n";
-        for (CFIndex index = mRunningFunctions->count() - 1; index >= 0; index--) {
+        for (Index index = mRunningFunctions->count() - 1; index >= 0; index--) {
             backtrace << mRunningFunctions->at(index) << "\n";
         }
         backtrace << "-- end backtrace --";

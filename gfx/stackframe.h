@@ -58,7 +58,7 @@ namespace gfx {
         Base *peak() const;
         size_t depth() const;
         bool empty() const;
-        void iterate(std::function<void(Base *value, CFIndex index, bool *stop)> function) const;
+        void iterate(std::function<void(Base *value, Index index, bool *stop)> function) const;
         
 #pragma mark - Parent
         
