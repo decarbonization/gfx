@@ -33,7 +33,9 @@ namespace gfx {
     
     Context *Context::currentContext()
     {
-        return gContextStack->last();
+        Context *context = gContextStack->last();
+        gfx_assert(context != nullptr, "There are no context on the context stack."_gfx);
+        return context;
     }
     
 #pragma mark - Lifecycle

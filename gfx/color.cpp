@@ -12,10 +12,9 @@
 #include "context.h"
 #include "string.h"
 #include "exception.h"
-#include "word.h"
 
 namespace gfx {
-    Color::Color(CGColorRef color) :
+    Color::Color(NativeType color) :
         Base(),
         mColor(color)
     {
@@ -30,11 +29,11 @@ namespace gfx {
         mColor = color;
     }
     
-    Color::Color(const Word *word) :
+    Color::Color(const String *inColorString) :
         Base(),
         mColor(NULL)
     {
-        auto colorString = autoreleased(const_cast<String *>(copy(word->string())));
+        auto colorString = autoreleased(copy(inColorString));
         
         if(colorString->hasPrefix("#"_gfx))
             colorString->deleteRange(CFRangeMake(0, 1));
@@ -86,7 +85,7 @@ namespace gfx {
             description << components[i] << ", ";
         }
         
-        description << getAlpha() << "}>";
+        description << alpha() << "}>";
         
         return description;
     }
@@ -121,19 +120,14 @@ namespace gfx {
         return CGColorGetComponents(mColor);
     }
     
+    Float Color::alpha() const
+    {
+        return CGColorGetAlpha(mColor);
+    }
+    
     Color::NativeType Color::get() const
     {
         return mColor;
-    }
-    
-    CGColorSpaceRef Color::getColorSpace() const
-    {
-        return CGColorGetColorSpace(mColor);
-    }
-    
-    Float Color::getAlpha() const
-    {
-        return CGColorGetAlpha(mColor);
     }
 }
 

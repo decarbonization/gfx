@@ -225,14 +225,15 @@ namespace gfx {
     ///Copies an instance of Base-derived type T that has
     ///a constructor that accepts an instance of type T.
     ///
-    /// \tparam  T   A subclass of Base that has a constructor of type `(const T *)`.
+    /// \tparam  T      A subclass of Base that has a constructor of type `(const T *)`.
+    ///                 The constness of `T` will be removed for the return value.
     ///
     /// \param  object  The object to copy.
     ///
-    /// \result A copy of `object`.
+    /// \result A non-const copy of `object`.
     ///
     template<typename T>
-    T *copy(T *object)
+    typename std::remove_const<T>::type *copy(T *object)
     {
         static_assert(std::is_base_of<Base, T>::value, "copy requires Base-derived types");
         static_assert(!std::is_pointer<T>::value, "T must be a bare type");
@@ -240,7 +241,7 @@ namespace gfx {
         if(!object)
             return nullptr;
         
-        return new T(object);
+        return new typename std::remove_const<T>::type(object);
     }
     
     ///Constructs a new instan ce of a given Base-derived type T, subsequently autoreleasing it.

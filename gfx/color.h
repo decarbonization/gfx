@@ -12,26 +12,52 @@
 #if GFX_Include_GraphicsStack
 
 #include "base.h"
+#include "types.h"
 #include <CoreGraphics/CoreGraphics.h>
 
 namespace gfx {
-    class Word;
     
+    ///The Color class encapsulates color and alpha information.
+    ///
+    ///The underlying type of Color is platform dependent. On OS X and iOS, it is CGColor.
     class Color : public Base
     {
     public:
         
+        ///The native type of the Color class.
         typedef CGColorRef NativeType;
         
     protected:
         
+        ///The native object backing the instance.
         CGColorRef mColor;
         
     public:
         
-        Color(CGColorRef color);
+        ///Constructs the Color using a native object.
+        ///
+        /// \param  color   The native color object. Should not be null.
+        ///
+        Color(NativeType color);
+        
+        ///Constructs the Color using given red, green, blue, and alpha values.
+        ///
+        /// \param  red     The red value of the color. Range is {0.0, 1.0}.
+        /// \param  green   The green value of the color. Range is {0.0, 1.0}.
+        /// \param  blue    The blue value of the color. Range is {0.0, 1.0}.
+        /// \param  alpha   The alpha value of the color. Range is {0.0, 1.0}.
+        ///
         Color(Float red, Float green, Float blue, Float alpha);
-        Color(const Word *word);
+        
+        ///Constructs the Color from a String instance containing an HTML style color.
+        ///
+        /// \param  inColorString   The color string. Should not be null.
+        ///
+        ///The color string should be of the form `#ffffff`. Currently only six character
+        ///HTML color strings are supported. Any other value will raise an exception.
+        Color(const String *inColorString);
+        
+        ///The destructor.
         ~Color();
         
 #pragma mark - Identity
@@ -42,17 +68,33 @@ namespace gfx {
         
 #pragma mark - Setting
         
+        ///Sets the receiver as the current stroke and
+        ///fill color in the current `gfx::Context`.
         void set();
+        
+        ///Sets the receiver as the current fill color.
         void setFill();
+        
+        ///Sets the receiver as the current stroke color.
         void setStroke();
         
 #pragma mark - Introspection
         
+        ///Returns the number of components that make up the Color instance.
+        ///
+        ///The number does not include the alpha value of the color.
         Index numberOfComponents() const;
+        
+        ///Returns the components that make up the Color instance.
+        ///
+        ///Does not include the alpha value of the color.
         const Float *getComponents() const;
+        
+        ///Returns the alpha value of the color.
+        Float alpha() const;
+        
+        ///Returns the native object backing the Color.
         NativeType get() const;
-        CGColorSpaceRef getColorSpace() const;
-        Float getAlpha() const;
     };
 }
 

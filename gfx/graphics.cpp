@@ -369,7 +369,7 @@ namespace gfx {
         Graphics::addTo(interpreter->currentFrame());
         interpreter->setUnboundWordHandler([interpreter](Word *word) -> Color * {
             if(word->string()->hasPrefix("#"_gfx)) {
-                return make<Color>(word);
+                return make<Color>(word->string());
             } else {
                 interpreter->failForUnboundWord(word);
                 return nullptr;
