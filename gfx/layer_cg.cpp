@@ -8,6 +8,8 @@
 
 #include "layer.h"
 #include "context.h"
+#include "color.h"
+#include "path.h"
 
 namespace gfx {
     
@@ -35,7 +37,8 @@ namespace gfx {
         mDrawFunctor(drawFunctor),
         mSuperlayer(nullptr),
         mSublayers(make<Array<Layer>>()),
-        mStorage(new LayerImplementation(frame))
+        mStorage(new LayerImplementation(frame)),
+        DidDisplaySignal("DidDisplaySignal"_gfx)
     {
         setNeedsDisplay();
     }
@@ -139,7 +142,7 @@ namespace gfx {
     {
         AutoreleasePool pool;
         
-        Context *layerContext = make<Context>(CGLayerGetContext(mStorage->mLayer));
+        Context *layerContext = make<Context>(CGLayerGetContext(mStorage->mLayer), false);
         Rect boundingRect = { {}, size() };
         layerContext->clear(boundingRect);
         
@@ -148,6 +151,8 @@ namespace gfx {
             mDrawFunctor(this, boundingRect);
         });
         Context::popContext();
+        
+        DidDisplaySignal(this);
     }
     
     void Layer::setNeedsDisplay()
@@ -157,13 +162,22 @@ namespace gfx {
     
 #pragma mark -
     
-    void Layer::render(Context *context)
+    void Layer::render(Context *context, RenderOptions renderOptions)
     {
         gfx_assert_param(context);
         
-        CGContextDrawLayerAtPoint(context->get(), {0.0, 0.0}, mStorage->mLayer);
-        mSublayers->iterate([context](Layer *sublayer, Index index, bool *stop) {
-            sublayer->render(context);
+        CGContextDrawLayerAtPoint(context->get(), origin(), mStorage->mLayer);
+        
+        if((renderOptions & RenderOptions::RenderBorder) == RenderOptions::RenderBorder) {
+            context->transaction([this](Context *context) {
+                make<Color>(1.0, 1.0, 0.0, 1.0)->set();
+                Path::setDefaultLineWidth(3.0);
+                Path::strokeRect(this->frame());
+            });
+        }
+        
+        mSublayers->iterate([context, renderOptions](Layer *sublayer, Index index, bool *stop) {
+            sublayer->render(context, renderOptions);
         });
     }
 }

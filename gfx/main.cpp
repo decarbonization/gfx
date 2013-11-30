@@ -16,7 +16,7 @@ int main(int argc, const char * argv[])
     AutoreleasePool pool;
     
     auto interpreter = make<Interpreter>();
-    auto result = make<Parser>("[100 100] canvas/begin #54558f set-fill [0 0 100 100] path/oval path/fill \"/Users/km/Desktop/test.png\" canvas/save"_gfx)->parse();
+    auto result = make<Parser>("[100 100] { #54558f set-fill [0 0 100 100] fill } layer 'square let [100 100] canvas/begin square layer/render \"/Users/km/Desktop/test.png\" canvas/save"_gfx)->parse();
     interpreter->eval(result);
     
     Base *lastValue = interpreter->lastValue();

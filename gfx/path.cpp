@@ -243,6 +243,11 @@ namespace gfx {
         mLineCapStyle = capStyle;
     }
     
+    void Path::setDefaultLineCapStyle(LineCap capStyle)
+    {
+        CGContextSetLineCap(Context::currentContext()->get(), (CGLineCap)capStyle);
+    }
+    
 #pragma mark -
     
     Path::LineJoin Path::lineJoinStyle() const
@@ -255,6 +260,11 @@ namespace gfx {
         mLineJoinStyle = joinStyle;
     }
     
+    void Path::setDefaultLineJoinStyle(LineJoin joinStyle)
+    {
+        CGContextSetLineJoin(Context::currentContext()->get(), (CGLineJoin)joinStyle);
+    }
+    
 #pragma mark -
     
     Float Path::lineWidth() const
@@ -265,6 +275,11 @@ namespace gfx {
     void Path::setLineWidth(Float width)
     {
         mLineWidth = width;
+    }
+    
+    void Path::setDefaultLineWidth(Float width)
+    {
+        CGContextSetLineWidth(Context::currentContext()->get(), width);
     }
     
 #pragma mark -

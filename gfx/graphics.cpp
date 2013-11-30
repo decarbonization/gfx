@@ -22,8 +22,7 @@
 #include "path.h"
 #include "context.h"
 #include "image.h"
-
-#include <ImageIO/ImageIO.h>
+#include "layer.h"
 
 namespace gfx {
 #pragma mark - Utility Functions
@@ -126,6 +125,70 @@ namespace gfx {
         file->write(data);
     }
     
+#pragma mark - Layer Functions
+    
+    static void layer_make(StackFrame *stack)
+    {
+        /* vec func -- Layer */
+        auto drawFunction = stack->popFunction();
+        auto sizeOrRect = stack->popType<Array<Base>>();
+        
+        Rect frame = {};
+        if(sizeOrRect->count() == 4) {
+            frame = vectorToRect(sizeOrRect);
+        } else if(sizeOrRect->count() == 2) {
+            frame.size = vectorToSize(sizeOrRect);
+        } else {
+            throw Exception("Invalid vector given to `layer`. Must contain either 2 numbers for a size, or 4 numbers for a rect."_gfx, nullptr);
+        }
+        
+        //TODO: This will crash.
+        Interpreter *interpreter = stack->interpreter();
+        auto drawBridge = [drawFunction, interpreter](Layer *layer, Rect rect) {
+            StackFrame *frame = interpreter->currentFrame();
+            frame->push(vectorFromRect(rect));
+            drawFunction->apply(frame);
+            frame->safeDrop();
+        };
+        stack->push(make<Layer>(frame, drawBridge));
+    }
+    
+    static void layer_frame(StackFrame *stack)
+    {
+        /* Layer -- vec */
+        auto layer = stack->popType<Layer>();
+        stack->push(vectorFromRect(layer->frame()));
+    }
+    
+    static void layer_setFrame(StackFrame *stack)
+    {
+        /* layer vec -- */
+        auto frameVector = stack->popType<Array<Base>>();
+        auto layer = stack->popType<Layer>();
+        layer->setFrame(vectorToRect(frameVector));
+    }
+    
+    static void layer_display(StackFrame *stack)
+    {
+        /* layer -- */
+        auto layer = stack->popType<Layer>();
+        layer->setNeedsDisplay();
+    }
+    
+    static void layer_displayNow(StackFrame *stack)
+    {
+        /* layer -- */
+        auto layer = stack->popType<Layer>();
+        layer->display();
+    }
+    
+    static void layer_render(StackFrame *stack)
+    {
+        /* layer -- */
+        auto layer = stack->popType<Layer>();
+        layer->render(Context::currentContext(), Layer::RenderOptions::RenderBorder);
+    }
+    
 #pragma mark - Color Functions
     
     static void rgb(StackFrame *stack)
@@ -165,14 +228,14 @@ namespace gfx {
     {
         auto rectVector = stack->popType<Array<Base>>();
         Rect rect = vectorToRect(rectVector);
-        CGContextFillRect(Context::currentContext()->get(), rect);
+        Path::fillRect(rect);
     }
     
     static void stroke(StackFrame *stack)
     {
         auto rectVector = stack->popType<Array<Base>>();
         Rect rect = vectorToRect(rectVector);
-        CGContextStrokeRect(Context::currentContext()->get(), rect);
+        Path::strokeRect(rect);
     }
     
 #pragma mark - Paths
@@ -328,6 +391,14 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "canvas/end"_gfx, &canvas_end);
         Graphics::createFunctionBinding(frame, "canvas/size"_gfx, &canvas_size);
         Graphics::createFunctionBinding(frame, "canvas/save"_gfx, &canvas_save);
+        
+        //Layer Functions
+        Graphics::createFunctionBinding(frame, "layer"_gfx, &layer_make);
+        Graphics::createFunctionBinding(frame, "layer/frame"_gfx, &layer_frame);
+        Graphics::createFunctionBinding(frame, "layer/set-frame"_gfx, &layer_setFrame);
+        Graphics::createFunctionBinding(frame, "layer/display"_gfx, &layer_display);
+        Graphics::createFunctionBinding(frame, "layer/display-now"_gfx, &layer_displayNow);
+        Graphics::createFunctionBinding(frame, "layer/render"_gfx, &layer_render);
         
         //Colors
         Graphics::createFunctionBinding(frame, "rgb"_gfx, &rgb);

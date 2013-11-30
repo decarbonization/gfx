@@ -33,7 +33,10 @@ namespace gfx {
     Context *Context::currentContext()
     {
         Context *context = gContextStack->last();
-        gfx_assert(context != nullptr, "There are no context on the context stack."_gfx);
+        if(!context) {
+            context = Context::bitmapContextWith({1.0, 1.0});
+            Context::pushContext(context);
+        }
         return context;
     }
     
@@ -64,6 +67,7 @@ namespace gfx {
         mContext(context),
         mOwnsContext(ownsContext)
     {
+        gfx_assert_param(context);
     }
     
     Context::~Context()

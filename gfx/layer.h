@@ -12,6 +12,7 @@
 #include "base.h"
 #include "types.h"
 #include "array.h"
+#include "signal.h"
 
 namespace gfx {
     struct LayerImplementation;
@@ -37,6 +38,12 @@ namespace gfx {
         ///The result of the function is cached, however, the function
         ///should still attempt to complete its work as quickly as possible.
         typedef std::function<void(Layer *layer, Rect rect)> DrawFunctor;
+        
+        enum RenderOptions : int
+        {
+            None = 0,
+            RenderBorder = (1 << 1),
+        };
         
     protected:
         
@@ -169,7 +176,15 @@ namespace gfx {
         ///
         /// \param  context The context to render the contents into. Required.
         ///
-        virtual void render(Context *context);
+        virtual void render(Context *context, RenderOptions renderOptions = RenderOptions::None);
+        
+#pragma mark - Signals
+        
+        ///A signal that broadcasts whenever the Layer's contents are redrawn
+        ///as a side effect of the `gfx::Layer::display` method being invoked.
+        ///
+        ///The signal parameter is the Layer that sent the signal.
+        Signal<Layer *> DidDisplaySignal;
     };
 }
 

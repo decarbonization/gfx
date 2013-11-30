@@ -239,6 +239,9 @@ namespace gfx {
         ///Sets the line cap style of the path.
         void setLineCapStyle(LineCap capStyle);
         
+        ///Sets the default line cap style for all paths.
+        static void setDefaultLineCapStyle(LineCap capStyle);
+        
 #pragma mark -
         
         ///Returns the line join style of the path.
@@ -247,6 +250,9 @@ namespace gfx {
         ///Sets the line join style of the path.
         void setLineJoinStyle(LineJoin joinStyle);
         
+        ///Sets the line join style for all paths.
+        static void setDefaultLineJoinStyle(LineJoin joinStyle);
+        
 #pragma mark -
         
         ///Returns the line width of the path.
@@ -254,6 +260,9 @@ namespace gfx {
         
         ///Sets the line width of the path.
         void setLineWidth(Float width);
+        
+        ///Sets the line width for all paths.
+        static void setDefaultLineWidth(Float width);
         
 #pragma mark -
         
