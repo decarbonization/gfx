@@ -44,11 +44,11 @@ namespace gfx {
         
 #pragma mark - Identity
         
-        HashCode hash() const;
+        HashCode hash() const override;
         
         ///Returns a bool indicating whether or not the string matches a given string.
         bool isEqual(const String *other) const;
-        bool isEqual(const Base *other) const;
+        bool isEqual(const Base *other) const override;
         const String *description() const override;
         
         ///Compares the string to another string, returning its sorting order.

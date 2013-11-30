@@ -10,8 +10,7 @@
 
 #include "context.h"
 #include "array.h"
-
-#include <ImageIO/ImageIO.h>
+#include "image.h"
 
 namespace gfx {
     
@@ -113,9 +112,9 @@ namespace gfx {
         return mContext;
     }
     
-    CGImageRef Context::createImage() const
+    Image *Context::createImage() const
     {
-        return CGBitmapContextCreateImage(get());
+        return make<Image>(CGBitmapContextCreateImage(get()), true);
     }
     
     Rect Context::boundingRect() const

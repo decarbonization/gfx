@@ -15,6 +15,7 @@
 #include "base.h"
 
 namespace gfx {
+    class Image;
     
     ///The Context class encapsulates the core 2D drawing destination used by
     ///the gfx language and drawing stack.
@@ -107,7 +108,9 @@ namespace gfx {
         NativeType get() const;
         
         ///Creates a new image from the contents of the context.
-        CGImageRef createImage() const;
+        ///
+        /// \result A new autoreleased Image object encapsulating the context's contents.
+        Image *createImage() const;
         
         ///Returns the bounding rectangle of the context.
         Rect boundingRect() const;

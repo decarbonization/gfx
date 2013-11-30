@@ -28,6 +28,7 @@
 		8B12C64B184A6C0600DBD77C /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64A184A6C0600DBD77C /* types.cpp */; };
 		8B12C64E184A761100DBD77C /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64C184A761100DBD77C /* image.cpp */; };
 		8B12C651184A761600DBD77C /* layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64F184A761600DBD77C /* layer.cpp */; };
+		8B12C654184A79C500DBD77C /* blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C652184A79C500DBD77C /* blob.cpp */; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 		8B420028183488540020D1D1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B420027183488540020D1D1 /* main.cpp */; };
 		8B42002A183488540020D1D1 /* gfx.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B420029183488540020D1D1 /* gfx.1 */; };
@@ -104,6 +105,8 @@
 		8B12C64D184A761100DBD77C /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
 		8B12C64F184A761600DBD77C /* layer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layer.cpp; sourceTree = "<group>"; };
 		8B12C650184A761600DBD77C /* layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layer.h; sourceTree = "<group>"; };
+		8B12C652184A79C500DBD77C /* blob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blob.cpp; sourceTree = "<group>"; };
+		8B12C653184A79C500DBD77C /* blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blob.h; sourceTree = "<group>"; };
 		8B420021183488540020D1D1 /* gfx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfx; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B420024183488540020D1D1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8B420027183488540020D1D1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				8B10B8FA183B251000DEB62F /* file.h */,
 				8B10B904183DC01500DEB62F /* assertions.cpp */,
 				8B10B905183DC01500DEB62F /* assertions.h */,
+				8B12C652184A79C500DBD77C /* blob.cpp */,
+				8B12C653184A79C500DBD77C /* blob.h */,
 			);
 			name = "Core Types";
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				8B124F0B1837434E00F255EF /* stackframe.cpp in Sources */,
 				8B124F08183741F200F255EF /* interpreter.cpp in Sources */,
 				8B10B8F218383F2F00DEB62F /* expression.cpp in Sources */,
+				8B12C654184A79C500DBD77C /* blob.cpp in Sources */,
 				8B10B8F51838420000DEB62F /* offset.cpp in Sources */,
 				8B12C64E184A761100DBD77C /* image.cpp in Sources */,
 				8B10B91118413EFA00DEB62F /* path.cpp in Sources */,

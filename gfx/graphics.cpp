@@ -16,10 +16,12 @@
 #include "number.h"
 #include "file.h"
 #include "word.h"
+#include "blob.h"
 
 #include "color.h"
 #include "path.h"
 #include "context.h"
+#include "image.h"
 
 #include <ImageIO/ImageIO.h>
 
@@ -117,16 +119,11 @@ namespace gfx {
     {
         String *path = stack->popString();
         
-        cf::AutoRef<CGImageRef> image = Context::currentContext()->createImage();
-        
-        cf::AutoRef<CFMutableDataRef> data = CFDataCreateMutable(kCFAllocatorDefault, 0);
-        cf::AutoRef<CGImageDestinationRef> destination = CGImageDestinationCreateWithData(data, CFSTR("public.png"), 1, NULL);
-        CGImageDestinationAddImage(destination, image, NULL);
-        
-        gfx_assert(CGImageDestinationFinalize(destination), "could not rasterize canvas to save it"_gfx);
+        Image *image = Context::currentContext()->createImage();
+        Blob *data = image->makeRepresentation(Image::RepresentationType::PNG);
         
         auto file = make<File>(path, "w");
-        file->write(CFDataGetBytePtr(data), CFDataGetLength(data));
+        file->write(data->bytes(), data->length());
     }
     
 #pragma mark - Color Functions
