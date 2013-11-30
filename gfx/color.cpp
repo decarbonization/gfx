@@ -14,6 +14,9 @@
 #include "exception.h"
 
 namespace gfx {
+    
+#pragma mark - Lifecycle
+    
     Color::Color(NativeType color) :
         Base(),
         mColor(color)
