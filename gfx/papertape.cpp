@@ -7,7 +7,7 @@
 //
 
 #include "papertape.h"
-#include "string.h"
+#include "str.h"
 #include "file.h"
 
 namespace gfx {

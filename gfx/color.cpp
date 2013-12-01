@@ -10,7 +10,7 @@
 
 #include "color.h"
 #include "context.h"
-#include "string.h"
+#include "str.h"
 #include "exception.h"
 
 namespace gfx {

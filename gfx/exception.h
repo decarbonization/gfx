@@ -11,7 +11,7 @@
 
 #include <exception>
 #include "dictionary.h"
-#include "string.h"
+#include "str.h"
 
 namespace gfx {
     class String;

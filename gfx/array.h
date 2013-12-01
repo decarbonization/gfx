@@ -10,7 +10,7 @@
 #define gfx_array_h
 
 #include "base.h"
-#include "string.h"
+#include "str.h"
 #include "exception.h"
 #include <initializer_list>
 

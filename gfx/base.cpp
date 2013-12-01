@@ -11,7 +11,7 @@
 #include <cxxabi.h>
 #include <stack>
 
-#include "string.h"
+#include "str.h"
 
 namespace gfx {
     const void *RetainCallBack(CFAllocatorRef allocator, const void *value)

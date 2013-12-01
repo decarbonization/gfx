@@ -8,7 +8,7 @@
 
 #include "interpreter.h"
 #include "word.h"
-#include "string.h"
+#include "str.h"
 #include "number.h"
 #include "expression.h"
 

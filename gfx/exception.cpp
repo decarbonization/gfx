@@ -7,7 +7,7 @@
 //
 
 #include "exception.h"
-#include "string.h"
+#include "str.h"
 #include "dictionary.h"
 
 namespace gfx {

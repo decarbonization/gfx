@@ -1,5 +1,5 @@
 //
-//  string.h
+//  str.h
 //  gfx
 //
 //  Created by Kevin MacWhinnie on 11/15/13.

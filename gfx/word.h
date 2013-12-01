@@ -10,7 +10,7 @@
 #define gfx_word_h
 
 #include "base.h"
-#include "string.h"
+#include "str.h"
 #include "offset.h"
 
 namespace gfx {

@@ -10,7 +10,7 @@
 #define gfx_number_h
 
 #include "base.h"
-#include "string.h"
+#include "str.h"
 
 namespace gfx {
     ///The Number class encapsulates a simple `double` in an

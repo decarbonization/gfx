@@ -12,7 +12,7 @@
 #include "gfx_defines.h"
 
 #include "base.h"
-#include "string.h"
+#include "str.h"
 #include "exception.h"
 #include "array.h"
 #include "dictionary.h"

@@ -10,7 +10,7 @@
 
 #include "path.h"
 #include "context.h"
-#include "string.h"
+#include "str.h"
 
 namespace gfx {
     

@@ -7,7 +7,7 @@
 //
 
 #include "assertions.h"
-#include "string.h"
+#include "str.h"
 #include "exception.h"
 #include "file.h"
 

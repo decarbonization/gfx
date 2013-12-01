@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
-#include "string.h"
+#include "str.h"
 #include "exception.h"
 
 namespace gfx {

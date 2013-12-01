@@ -10,7 +10,7 @@
 #define gfx_offset_h
 
 #include <CoreFoundation/CoreFoundation.h>
-#include "string.h"
+#include "str.h"
 
 namespace gfx {
     class String;

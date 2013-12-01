@@ -12,7 +12,7 @@
 #include "stackframe.h"
 #include "function.h"
 #include "word.h"
-#include "string.h"
+#include "str.h"
 #include "number.h"
 #include "papertape.h"
 #include "file.h"

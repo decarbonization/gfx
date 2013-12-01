@@ -7,7 +7,7 @@
 //
 
 #include "offset.h"
-#include "string.h"
+#include "str.h"
 
 namespace gfx {
     const Offset Offset::Invalid = { -1, 0 };

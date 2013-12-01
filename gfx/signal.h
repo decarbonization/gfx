@@ -9,7 +9,7 @@
 #ifndef gfx_signal_h
 #define gfx_signal_h
 
-#include "string.h"
+#include "str.h"
 #include <vector>
 #include <unordered_map>
 

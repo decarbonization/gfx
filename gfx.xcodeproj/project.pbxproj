@@ -20,7 +20,7 @@
 		8B10B91118413EFA00DEB62F /* path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B90F18413EFA00DEB62F /* path.cpp */; };
 		8B10B9141841C09900DEB62F /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B9121841C09900DEB62F /* context.cpp */; };
 		8B10B9271842E94700DEB62F /* t11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B9251842E94700DEB62F /* t11.cpp */; };
-		8B124F04183715D600F255EF /* string.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F02183715D600F255EF /* string.cpp */; };
+		8B124F04183715D600F255EF /* str.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F02183715D600F255EF /* str.cpp */; };
 		8B124F08183741F200F255EF /* interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F06183741F200F255EF /* interpreter.cpp */; };
 		8B124F0B1837434E00F255EF /* stackframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F091837434E00F255EF /* stackframe.cpp */; };
 		8B124F1118374BA500F255EF /* corefunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B124F0F18374BA500F255EF /* corefunctions.cpp */; };
@@ -88,8 +88,8 @@
 		8B10B91B1842E92300DEB62F /* gfx-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "gfx-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B10B9251842E94700DEB62F /* t11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = t11.cpp; sourceTree = "<group>"; };
 		8B10B9261842E94700DEB62F /* t11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t11.h; sourceTree = "<group>"; };
-		8B124F02183715D600F255EF /* string.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string.cpp; sourceTree = "<group>"; };
-		8B124F03183715D600F255EF /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
+		8B124F02183715D600F255EF /* str.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = str.cpp; sourceTree = "<group>"; };
+		8B124F03183715D600F255EF /* str.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = str.h; sourceTree = "<group>"; };
 		8B124F0518373F7F00F255EF /* word.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = word.h; sourceTree = "<group>"; };
 		8B124F06183741F200F255EF /* interpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interpreter.cpp; sourceTree = "<group>"; };
 		8B124F07183741F200F255EF /* interpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpreter.h; sourceTree = "<group>"; };
@@ -220,8 +220,8 @@
 				8B42003C1835CF810020D1D1 /* cf.h */,
 				8B42003618348D460020D1D1 /* base.cpp */,
 				8B42003718348D460020D1D1 /* base.h */,
-				8B124F02183715D600F255EF /* string.cpp */,
-				8B124F03183715D600F255EF /* string.h */,
+				8B124F02183715D600F255EF /* str.cpp */,
+				8B124F03183715D600F255EF /* str.h */,
 				8B42003D1835E0870020D1D1 /* array.h */,
 				8B124F0C1837451D00F255EF /* dictionary.h */,
 				8B10B8EC1838314E00DEB62F /* exception.cpp */,
@@ -378,7 +378,7 @@
 				8B10B906183DC01500DEB62F /* assertions.cpp in Sources */,
 				8B42003818348D460020D1D1 /* base.cpp in Sources */,
 				8B10B90C183DC50100DEB62F /* color.cpp in Sources */,
-				8B124F04183715D600F255EF /* string.cpp in Sources */,
+				8B124F04183715D600F255EF /* str.cpp in Sources */,
 				8B124F0B1837434E00F255EF /* stackframe.cpp in Sources */,
 				8B124F08183741F200F255EF /* interpreter.cpp in Sources */,
 				8B10B8F218383F2F00DEB62F /* expression.cpp in Sources */,

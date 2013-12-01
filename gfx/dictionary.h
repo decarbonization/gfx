@@ -11,7 +11,7 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 #include "base.h"
-#include "string.h"
+#include "str.h"
 #include "dictionary.h"
 
 namespace gfx {

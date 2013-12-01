@@ -7,7 +7,7 @@
 //
 
 #include "session.h"
-#include "string.h"
+#include "str.h"
 
 namespace gfx {
     
