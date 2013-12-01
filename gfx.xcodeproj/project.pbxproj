@@ -30,6 +30,8 @@
 		8B12C651184A761600DBD77C /* layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C64F184A761600DBD77C /* layer.cpp */; };
 		8B12C654184A79C500DBD77C /* blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C652184A79C500DBD77C /* blob.cpp */; };
 		8B12C799184AD2B100DBD77C /* layerbacking_cg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C797184AD2B100DBD77C /* layerbacking_cg.cpp */; };
+		8B12C79C184AE48700DBD77C /* session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C79A184AE48700DBD77C /* session.cpp */; };
+		8B12C79E184AEB2300DBD77C /* libreadline.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C79D184AEB2300DBD77C /* libreadline.dylib */; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 		8B420028183488540020D1D1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B420027183488540020D1D1 /* main.cpp */; };
 		8B42002A183488540020D1D1 /* gfx.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B420029183488540020D1D1 /* gfx.1 */; };
@@ -111,6 +113,9 @@
 		8B12C655184AA24300DBD77C /* signal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = signal.h; sourceTree = "<group>"; };
 		8B12C797184AD2B100DBD77C /* layerbacking_cg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = layerbacking_cg.cpp; sourceTree = "<group>"; };
 		8B12C798184AD2B100DBD77C /* layerbacking_cg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layerbacking_cg.h; sourceTree = "<group>"; };
+		8B12C79A184AE48700DBD77C /* session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session.cpp; sourceTree = "<group>"; };
+		8B12C79B184AE48700DBD77C /* session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = session.h; sourceTree = "<group>"; };
+		8B12C79D184AEB2300DBD77C /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
 		8B420021183488540020D1D1 /* gfx */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfx; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B420024183488540020D1D1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		8B420027183488540020D1D1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -136,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B12C79E184AEB2300DBD77C /* libreadline.dylib in Frameworks */,
 				8B10B90E183DC95600DEB62F /* ImageIO.framework in Frameworks */,
 				8B10B909183DC22E00DEB62F /* CoreGraphics.framework in Frameworks */,
 				8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */,
@@ -254,6 +260,7 @@
 		8B420023183488540020D1D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B12C79D184AEB2300DBD77C /* libreadline.dylib */,
 				8B10B90D183DC90600DEB62F /* ImageIO.framework */,
 				8B10B908183DC22E00DEB62F /* CoreGraphics.framework */,
 				8B420024183488540020D1D1 /* CoreFoundation.framework */,
@@ -268,6 +275,8 @@
 				8B420029183488540020D1D1 /* gfx.1 */,
 				8B10B8FC183C85CD00DEB62F /* gfx.h */,
 				8B10B8FD183C860000DEB62F /* gfx_defines.h */,
+				8B12C79A184AE48700DBD77C /* session.cpp */,
+				8B12C79B184AE48700DBD77C /* session.h */,
 				8B10B900183DBE2300DEB62F /* Graphics Stack */,
 				8B10B8FE183C953000DEB62F /* Parser */,
 				8B10B8FF183C953C00DEB62F /* Interpreter */,
@@ -362,6 +371,7 @@
 				8B10B9141841C09900DEB62F /* context.cpp in Sources */,
 				8B10B8FB183B251000DEB62F /* file.cpp in Sources */,
 				8B10B8F01838389600DEB62F /* function.cpp in Sources */,
+				8B12C79C184AE48700DBD77C /* session.cpp in Sources */,
 				8B124F1118374BA500F255EF /* corefunctions.cpp in Sources */,
 				8B10B903183DBE2E00DEB62F /* graphics.cpp in Sources */,
 				8B12C799184AD2B100DBD77C /* layerbacking_cg.cpp in Sources */,

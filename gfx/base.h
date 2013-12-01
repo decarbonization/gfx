@@ -259,6 +259,72 @@ namespace gfx {
         
         return autoreleased(new T(std::forward<Args>(args)...));
     }
+    
+#pragma mark - Scope Adaptor
+    
+    ///The Scoped class is an adaptor that implements scope-local automatic
+    ///retain and release semantics for Base-derived objects. It is provided
+    ///so that lambda expressions can be used with long living objects without
+    ///causing memory leaks.
+    ///
+    /// \tparam T   A Base-derived class name. Must not be a pointer.
+    ///
+    ///The Scoped class immediately retains whatever value is assigned to it.
+    ///
+    ///Instances of scoped should be treated exactly as values of `T *`.
+    template<typename T>
+    class Scoped
+    {
+        static_assert(std::is_base_of<Base, T>::value, "Scoped requires Base-derived types");
+        static_assert(!std::is_pointer<T>::value, "T must be a bare type");
+        
+        T *mValue;
+        
+    public:
+        
+        Scoped(T *value) :
+            mValue(retained(value))
+        {
+        }
+        
+        Scoped(const Scoped<T> &other) :
+            Scoped(other.mValue)
+        {
+        }
+        
+        ~Scoped()
+        {
+            released(mValue);
+        }
+        
+        Scoped &operator=(T *value)
+        {
+            autoreleased(mValue);
+            mValue = retained(value);
+            
+            return *this;
+        }
+        
+        Scoped &operator=(const Scoped<T> &value)
+        {
+            return operator=(value.mValue);
+        }
+        
+        operator T *() const
+        {
+            return mValue;
+        }
+        
+        T *operator->() const
+        {
+            return mValue;
+        }
+        
+        T *operator *() const
+        {
+            return mValue;
+        }
+    };
 }
 
 #endif /* defined(__gfx__base__) */

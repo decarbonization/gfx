@@ -9,6 +9,22 @@
 #ifndef gfx_gfx_defines_h
 #define gfx_gfx_defines_h
 
+#pragma mark - Information
+
+///A C-string literal containing the current version of Gfx.
+#define GFX_Version                 "0.0.1"
+
+///The major component of the current version of Gfx.
+#define GFX_Version_Major           0
+
+///The minor component of the current version of Gfx.
+#define GFX_Version_Minor           0
+
+///The bug fix component of the current version of Gfx.
+#define GFX_Version_BugFix          1
+
+#pragma mark - Feature Toggles
+
 ///Whether or not support for basic file operations
 ///should be exposed to the Gfx language.
 #define GFX_Language_SupportsFiles  1
@@ -20,6 +36,8 @@
 ///Whether or not the graphics stack should be
 ///compiled and included with the language.
 #define GFX_Include_GraphicsStack   1
+
+#pragma mark - Mac Config Options
 
 #if TARGET_OS_MAC
 ///Whether or not to use the implementation of `gfx::Layer`

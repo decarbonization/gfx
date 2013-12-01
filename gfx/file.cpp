@@ -76,8 +76,8 @@ namespace gfx {
         mFile(std::fopen(path->getCString(), ModeToString(mode))),
         mHasOwnership(true)
     {
-        if(long errorCode = std::ferror(mFile)) {
-            throw Exception((String::Builder() << "opening file failed with error " << errorCode), nullptr);
+        if(!mFile) {
+            throw Exception((String::Builder() << "opening file failed with error " << stderr), nullptr);
         }
     }
     
