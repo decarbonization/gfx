@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B420020183488540020D1D1"
-               BuildableName = "gfx"
-               BlueprintName = "gfx"
+               BuildableName = "gsh"
+               BlueprintName = "gsh"
                ReferencedContainer = "container:gfx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B420020183488540020D1D1"
-            BuildableName = "gfx"
-            BlueprintName = "gfx"
+            BuildableName = "gsh"
+            BlueprintName = "gsh"
             ReferencedContainer = "container:gfx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -52,8 +52,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B420020183488540020D1D1"
-            BuildableName = "gfx"
-            BlueprintName = "gfx"
+            BuildableName = "gsh"
+            BlueprintName = "gsh"
             ReferencedContainer = "container:gfx.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -93,8 +93,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8B420020183488540020D1D1"
-            BuildableName = "gfx"
-            BlueprintName = "gfx"
+            BuildableName = "gsh"
+            BlueprintName = "gsh"
             ReferencedContainer = "container:gfx.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

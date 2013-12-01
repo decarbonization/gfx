@@ -7,13 +7,7 @@
 //
 
 #include <readline/readline.h>
-#include "gfx.h"
-#include "stackframe.h"
-#include "session.h"
-
-#include "types.h"
-#include "context.h"
-#include "image.h"
+#include <gfx/gfx.h>
 
 using namespace gfx;
 

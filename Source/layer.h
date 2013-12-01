@@ -12,7 +12,7 @@
 #include "base.h"
 #include "types.h"
 #include "array.h"
-#include "signal.h"
+#include "broadcastsignal.h"
 
 namespace gfx {
     class LayerBacking;

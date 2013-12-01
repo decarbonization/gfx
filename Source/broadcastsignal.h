@@ -1,13 +1,13 @@
 //
-//  signal.h
+//  broadcastsignal.h
 //  gfx
 //
 //  Created by Kevin MacWhinnie on 11/30/13.
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
-#ifndef gfx_signal_h
-#define gfx_signal_h
+#ifndef gfx_broadcastsignal_h
+#define gfx_broadcastsignal_h
 
 #include "str.h"
 #include <vector>
