@@ -118,7 +118,7 @@ namespace gfx {
     {
         String *path = stack->popString();
         
-        Image *image = Context::currentContext()->createImage();
+        Image *image = Context::currentContext()->makeImage();
         Blob *data = image->makeRepresentation(Image::RepresentationType::PNG);
         
         auto file = make<File>(path, File::Mode::Write);

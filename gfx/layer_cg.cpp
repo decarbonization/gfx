@@ -17,11 +17,17 @@ namespace gfx {
     {
         CGLayerRef mLayer;
         Point mOrigin;
+        Float mScale;
         
-        explicit LayerImplementation(Rect frame) :
-            mLayer(CGLayerCreateWithContext(Context::currentContext()->get(), frame.size, NULL)),
-            mOrigin(frame.origin)
+        explicit LayerImplementation(Rect frame, Float scale) :
+            mLayer(NULL),
+            mOrigin(frame.origin),
+            mScale(scale)
         {
+            AutoreleasePool pool;
+            
+            Context *referenceContext = Context::bitmapContextWith(frame.size, scale);
+            mLayer = CGLayerCreateWithContext(referenceContext->get(), referenceContext->boundingRect().size, NULL);
         }
         
         ~LayerImplementation()
@@ -32,12 +38,12 @@ namespace gfx {
     
 #pragma mark - Lifecycle
     
-    Layer::Layer(Rect frame, DrawFunctor drawFunctor) :
+    Layer::Layer(Rect frame, DrawFunctor drawFunctor, Float scale) :
         Base(),
         mDrawFunctor(drawFunctor),
         mSuperlayer(nullptr),
         mSublayers(make<Array<Layer>>()),
-        mStorage(new LayerImplementation(frame)),
+        mStorage(new LayerImplementation(frame, scale)),
         DidDisplaySignal("DidDisplaySignal"_gfx)
     {
         setNeedsDisplay();
@@ -55,13 +61,19 @@ namespace gfx {
         return mDrawFunctor;
     }
     
+    Float Layer::scale() const
+    {
+        return mStorage->mScale;
+    }
+    
 #pragma mark - Metrics
     
     void Layer::setSize(Size size)
     {
         Size currentSize = this->size();
         if(currentSize.width != size.width || currentSize.height != size.height) {
-            CGLayerRef newLayer = CGLayerCreateWithContext(CGLayerGetContext(mStorage->mLayer), size, NULL);
+            CGContextRef referenceContext = CGLayerGetContext(mStorage->mLayer);
+            CGLayerRef newLayer = CGLayerCreateWithContext(referenceContext, CGContextGetClipBoundingBox(referenceContext).size, NULL);
             
             CGLayerRelease(mStorage->mLayer);
             mStorage->mLayer = newLayer;
@@ -142,7 +154,7 @@ namespace gfx {
     {
         AutoreleasePool pool;
         
-        Context *layerContext = make<Context>(CGLayerGetContext(mStorage->mLayer), false);
+        Context *layerContext = make<Context>(CGLayerGetContext(mStorage->mLayer), scale(), false);
         Rect boundingRect = { {}, size() };
         layerContext->clear(boundingRect);
         

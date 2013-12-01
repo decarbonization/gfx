@@ -50,15 +50,25 @@ namespace gfx {
     
     void Image::drawInRect(Rect rect)
     {
-        Context::currentContext()->transaction([this, rect](Context *context){
-            CGContextDrawImage(context->get(), rect, this->get());
+        Context::currentContext()->transaction([this, rect](Context *context) {
+            Rect scaledRect = rect;
+            scaledRect.origin.x *= context->scale();
+            scaledRect.origin.y *= context->scale();
+            scaledRect.size.width *= context->scale();
+            scaledRect.size.height *= context->scale();
+            CGContextDrawImage(context->get(), scaledRect, this->get());
         });
     }
     
     void Image::tileInRect(Rect rect)
     {
-        Context::currentContext()->transaction([this, rect](Context *context){
-            CGContextDrawTiledImage(context->get(), rect, this->get());
+        Context::currentContext()->transaction([this, rect](Context *context) {
+            Rect scaledRect = rect;
+            scaledRect.origin.x *= context->scale();
+            scaledRect.origin.y *= context->scale();
+            scaledRect.size.width *= context->scale();
+            scaledRect.size.height *= context->scale();
+            CGContextDrawTiledImage(context->get(), scaledRect, this->get());
         });
     }
     

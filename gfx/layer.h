@@ -70,10 +70,11 @@ namespace gfx {
         ///
         /// \param  frame       The frame of the layer.
         /// \param  drawFunctor The function that will render the contents of the layer.
+        /// \param  scale       The scale of the layer. Pass 0.0 to use the default scale.
         ///
         ///This constructor requires that there be an active context on the stack
         ///at the time of creation, otherwise an exception will be raised.
-        Layer(Rect frame, DrawFunctor drawFunctor);
+        Layer(Rect frame, DrawFunctor drawFunctor, Float scale = 0.0);
         
         ///The destructor.
         ~Layer();
@@ -82,6 +83,9 @@ namespace gfx {
         
         ///Returns the draw functor of the layer.
         virtual const DrawFunctor &drawFunctor() const;
+        
+        ///Returns the scale factor of the layer.
+        virtual Float scale() const;
         
 #pragma mark - Metrics
         

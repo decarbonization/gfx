@@ -42,8 +42,28 @@ namespace gfx {
     
 #pragma mark - Lifecycle
     
+    Float Context::defaultScale()
+    {
+#if TARGET_OS_MAC
+        CGDirectDisplayID mainDisplay = CGMainDisplayID();
+        CGDisplayModeRef displayMode = CGDisplayCopyDisplayMode(mainDisplay);
+        
+        size_t scale = CGDisplayModeGetPixelHeight(displayMode) / CGDisplayModeGetHeight(displayMode);
+        
+        CGDisplayModeRelease(displayMode);
+        
+        return scale;
+#else
+#warning Current platform does not have a functional implementation for `Context::defaultScale`.
+        return 1.0
+#endif /* TARGET_OS_MAC */
+    }
+    
     Context *Context::bitmapContextWith(Size size, Float scale)
     {
+        if(!scale)
+            scale = Context::defaultScale();
+        
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef imageContext = CGBitmapContextCreate(/* in data */ NULL,
                                                           /* in width */ size.width * scale,
@@ -57,14 +77,15 @@ namespace gfx {
         CGContextTranslateCTM(imageContext, 0.0, size.height * scale);
         CGContextScaleCTM(imageContext, scale, -scale);
         
-        return make<Context>(imageContext);
+        return make<Context>(imageContext, scale);
     }
     
 #pragma mark -
     
-    Context::Context(Context::NativeType context, bool ownsContext) :
+    Context::Context(NativeType context, Float scale, bool ownsContext) :
         Base(),
         mContext(context),
+        mScale(scale),
         mOwnsContext(ownsContext)
     {
         gfx_assert_param(context);
@@ -111,12 +132,17 @@ namespace gfx {
         return mOwnsContext;
     }
     
+    Float Context::scale() const
+    {
+        return mScale;
+    }
+    
     Context::NativeType Context::get() const
     {
         return mContext;
     }
     
-    Image *Context::createImage() const
+    Image *Context::makeImage() const
     {
         return make<Image>(CGBitmapContextCreateImage(get()), true);
     }

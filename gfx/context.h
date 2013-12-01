@@ -42,6 +42,9 @@ namespace gfx {
         ///The underlying context object.
         NativeType mContext;
         
+        ///The scale factor of the context.
+        Float mScale;
+        
         ///Whether or not the context should destroy the context when it is destructed.
         bool mOwnsContext;
         
@@ -61,34 +64,41 @@ namespace gfx {
         
         ///Returns top most context on the stack.
         ///
-        ///This method raises an exception if the context stack is empty.
-        ///
         ///The current context is the target of all state-machine
         ///style operations defined on `gfx::Path`.
         static Context *currentContext();
         
 #pragma mark - Lifecycle
         
+        ///Returns the default scale to use for contexts. This corresponds
+        ///to whatever the scale of the host's main screen is. If the main
+        ///screen's scale cannot be determined, this method returns `1.0`.
+        static Float defaultScale();
+        
         ///Creates a new bitmap context with a given size and scale.
         ///
         /// \param  size    The size of the context to create.
         /// \param  scale   The number of hardware pixels per point in the returned context.
+        ///                 Pass in 0.0 to use the `gfx::Context::defaultScale`.
         ///
         /// \result A new autoreleased Context object ready for use.
         ///
-        static Context *bitmapContextWith(Size size, Float scale = 1.0);
+        static Context *bitmapContextWith(Size size, Float scale = 0.0);
         
 #pragma mark -
         
         ///Constructs a context with a given native object.
         ///
         /// \param  context     The native object to construct the context with. Should not be null.
+        /// \param  scale       The number of hardware pixels per point in the context. This value is
+        ///                     used in drawing calculations in various parts of the drawing stack, if
+        ///                     the scale is unknown, pass `1.0`.
         /// \param  ownsContext Whether or not the native object should be destroyed
         ///                     when the Context object is destructed. Default is true.
         ///
         ///Context objects are typically created through `gfx::Layer`
         ///instances, or through `gfx::Context::bitmapContextWith`.
-        Context(NativeType context, bool ownsContext = true);
+        Context(NativeType context, Float scale, bool ownsContext = true);
         
         ///The destructor.
         virtual ~Context();
@@ -107,10 +117,13 @@ namespace gfx {
         ///Returns the underlying native object of the context.
         NativeType get() const;
         
+        ///Returns the scale of the context.
+        Float scale() const;
+        
         ///Creates a new image from the contents of the context.
         ///
         /// \result A new autoreleased Image object encapsulating the context's contents.
-        Image *createImage() const;
+        Image *makeImage() const;
         
         ///Returns the bounding rectangle of the context.
         Rect boundingRect() const;
