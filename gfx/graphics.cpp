@@ -215,13 +215,6 @@ namespace gfx {
         layer->setNeedsDisplay();
     }
     
-    static void layer_displayNow(StackFrame *stack)
-    {
-        /* layer -- */
-        auto layer = stack->popType<Layer>();
-        layer->display();
-    }
-    
     static void layer_render(StackFrame *stack)
     {
         /* layer -- */
@@ -437,7 +430,6 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "layer/frame"_gfx, &layer_frame);
         Graphics::createFunctionBinding(frame, "layer/set-frame"_gfx, &layer_setFrame);
         Graphics::createFunctionBinding(frame, "layer/display"_gfx, &layer_display);
-        Graphics::createFunctionBinding(frame, "layer/display-now"_gfx, &layer_displayNow);
         Graphics::createFunctionBinding(frame, "layer/render"_gfx, &layer_render);
         
         //Colors

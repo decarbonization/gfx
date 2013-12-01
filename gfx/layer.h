@@ -15,7 +15,7 @@
 #include "signal.h"
 
 namespace gfx {
-    struct LayerImplementation;
+    class LayerBacking;
     class Context;
     
     ///The Layer class manages rasterized contents, and encapsulates rendering
@@ -56,11 +56,12 @@ namespace gfx {
         ///The sublayers of the layer.
         Array<Layer> *mSublayers;
         
-        ///The storage of the Layer.
+        ///The backing of the Layer.
         ///
-        ///This is an opaque type due to Layer potentially being
-        ///backed by multiple different types on a single platform.
-        LayerImplementation *mStorage;
+        ///A layer's backing will vary depending on target platform,
+        ///and sometimes on the same platform bsaed on compile-time
+        ///options set in the `gfx_defines` header.
+        LayerBacking *mBacking;
         
     public:
         
@@ -81,6 +82,13 @@ namespace gfx {
         
 #pragma mark - Introspection
         
+        ///Sets the draw functor to use for the layer.
+        ///
+        /// \param  functor The new functor to use to populate the layer's contents.
+        ///
+        ///This method marks the layer as needing display.
+        virtual void setDrawFunctor(const DrawFunctor &functor);
+        
         ///Returns the draw functor of the layer.
         virtual const DrawFunctor &drawFunctor() const;
         
@@ -88,30 +96,6 @@ namespace gfx {
         virtual Float scale() const;
         
 #pragma mark - Metrics
-        
-        ///Sets the size of the layer.
-        ///
-        /// \param  size    The new size for the layer.
-        ///
-        ///Calling this method results in the receiver
-        ///being marked as needing display. Depending on
-        ///the implementation of the layer, this method
-        ///can be very expensive to invoke.
-        virtual void setSize(Size size);
-        
-        ///Returns the size of the layer.
-        virtual Size size() const;
-        
-        ///Sets the origin of the layer within its superlayer's coordinate system.
-        ///
-        /// \param  origin  The origin of the layer within the receiver's superlayer's coordinate system.
-        ///
-        virtual void setOrigin(Point origin);
-        
-        ///Returns the origin of the layer within its superlayer's coordinate system.
-        ///
-        ///Defaults to {0, 0}.
-        virtual Point origin() const;
         
         ///Sets the frame of the layer.
         ///
@@ -155,23 +139,26 @@ namespace gfx {
         
 #pragma mark - Rendering
         
-        ///Immediately draws the contents of the layer into its backing context.
-        ///
-        ///This method is generally not invoked directly, but rather is
-        ///called as a consequence of calling `gfx::Layer::setNeedsDisplay`.
-        ///
-        ///This method clears the layer's context before pushing it
-        ///onto the context stack and invoking the layer's render
-        ///function.
-        virtual void display();
+        ///Informs the layer that its draw functor will soon be invoked.
+        virtual void willDisplay();
         
-        ///Marks the layer's contents as invalid, invoking the receiver's
-        ///draw functor.
+        ///Draws the contents of the receiver into the current context.
         ///
-        ///Depending on the implementation of `gfx::Layer` in use, this
-        ///method will either synchronously invoke the `gfx::Layer::display`
-        ///function, or `gfx::Layer::display` will be called on the next
-        ///run loop cycle. Call sites should take this into account as needed.
+        ///The default implementation of this method invokes the layer's.
+        virtual void draw(Rect rect);
+        
+        ///Informs the layer that its draw functor was invoked.
+        ///
+        ///This method broadcasts the `gfx::Layer::DidDisplaySignal`.
+        virtual void didDisplay();
+        
+        ///Marks the layer's contents as invalid, eventually invoking
+        ///the receiver's draw functor.
+        ///
+        ///Depending on the implementation of `gfx::Layer` in use, this method
+        ///will either synchronously invoke the draw functor function,
+        ///or the draw functor will be called on the next run loop cycle.
+        ///Call sites should take this into account as needed.
         virtual void setNeedsDisplay();
         
 #pragma mark -
@@ -184,8 +171,12 @@ namespace gfx {
         
 #pragma mark - Signals
         
-        ///A signal that broadcasts whenever the Layer's contents are redrawn
-        ///as a side effect of the `gfx::Layer::display` method being invoked.
+        ///A signal that broadcasts whenever the Layer's contents will be redrawn.
+        ///
+        ///The signal parameter is the Layer that sent the signal.
+        Signal<Layer *> WillDisplaySignal;
+        
+        ///A signal that broadcasts whenever the Layer's contents are redrawn.
         ///
         ///The signal parameter is the Layer that sent the signal.
         Signal<Layer *> DidDisplaySignal;
