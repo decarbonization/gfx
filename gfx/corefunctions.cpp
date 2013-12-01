@@ -673,6 +673,26 @@ frame->push(result); \
 #if GFX_Language_SupportsFiles
 #pragma mark - File Operations
     
+    static void file_exists(StackFrame *frame)
+    {
+        /* str -- bool */
+        String *path = frame->popString();
+        if(File::exists(path))
+            frame->push(Number::True());
+        else
+            frame->push(Number::False());
+    }
+    
+    static void file_isDirectory(StackFrame *frame)
+    {
+        /* str -- bool */
+        String *path = frame->popString();
+        if(File::isDirectory(path))
+            frame->push(Number::True());
+        else
+            frame->push(Number::False());
+    }
+    
     static void file_open(StackFrame *frame)
     {
         /* str -- file */
@@ -911,6 +931,8 @@ frame->push(result); \
         
 #if GFX_Language_SupportsFiles
         //File Functions
+        CoreFunctions::createFunctionBinding(frame, "file/exists?"_gfx, &file_exists);
+        CoreFunctions::createFunctionBinding(frame, "file/dir?"_gfx, &file_isDirectory);
         CoreFunctions::createFunctionBinding(frame, "file/open"_gfx, &file_open);
         CoreFunctions::createFunctionBinding(frame, "file/close"_gfx, &file_close);
         CoreFunctions::createFunctionBinding(frame, "file/size"_gfx, &file_size);
