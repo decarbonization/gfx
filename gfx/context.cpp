@@ -44,7 +44,7 @@ namespace gfx {
     
     Float Context::defaultScale()
     {
-#if TARGET_OS_MAC
+#if TARGET_OS_MAC && !TARGET_OS_IPHONE
         CGDirectDisplayID mainDisplay = CGMainDisplayID();
         CGDisplayModeRef displayMode = CGDisplayCopyDisplayMode(mainDisplay);
         
@@ -56,7 +56,7 @@ namespace gfx {
 #else
 #warning Current platform does not have a functional implementation for `Context::defaultScale`.
         return 1.0
-#endif /* TARGET_OS_MAC */
+#endif
     }
     
     Context *Context::bitmapContextWith(Size size, Float scale)

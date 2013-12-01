@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
+#if GFX_Layer_Use_CG
+
 #include "layer.h"
 #include "context.h"
 #include "color.h"
@@ -193,3 +195,5 @@ namespace gfx {
         });
     }
 }
+
+#endif /* GFX_Layer_Use_CG */
