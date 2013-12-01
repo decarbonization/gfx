@@ -69,6 +69,12 @@
 		8B12C8FA184BE15600DBD77C /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8C3184BE15600DBD77C /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C8FB184BE15600DBD77C /* word.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8C4184BE15600DBD77C /* word.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C903184BE26400DBD77C /* gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C826184BDF7800DBD77C /* gfx.framework */; };
+		8B12C905184BE64900DBD77C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
+		8B12C906184BE64C00DBD77C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B908183DC22E00DEB62F /* CoreGraphics.framework */; };
+		8B12C907184BE65000DBD77C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B90D183DC90600DEB62F /* ImageIO.framework */; };
+		8B12C90B184BE69900DBD77C /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C90A184BE69900DBD77C /* libSystem.dylib */; };
+		8B12C90D184BE75300DBD77C /* filepaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C90C184BE75300DBD77C /* filepaths.h */; };
+		8B12C90F184BECF200DBD77C /* filepaths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C90E184BECF200DBD77C /* filepaths.cpp */; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +181,10 @@
 		8B12C8C3184BE15600DBD77C /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		8B12C8C4184BE15600DBD77C /* word.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = word.h; sourceTree = "<group>"; };
 		8B12C8FC184BE19400DBD77C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
+		8B12C908184BE65300DBD77C /* libdispatch.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libdispatch.dylib; path = usr/lib/system/introspection/libdispatch.dylib; sourceTree = SDKROOT; };
+		8B12C90A184BE69900DBD77C /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = usr/lib/libSystem.dylib; sourceTree = SDKROOT; };
+		8B12C90C184BE75300DBD77C /* filepaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filepaths.h; sourceTree = "<group>"; };
+		8B12C90E184BECF200DBD77C /* filepaths.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filepaths.cpp; sourceTree = "<group>"; };
 		8B420021183488540020D1D1 /* gsh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gsh; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B420024183488540020D1D1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -191,6 +201,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B12C90B184BE69900DBD77C /* libSystem.dylib in Frameworks */,
+				8B12C907184BE65000DBD77C /* ImageIO.framework in Frameworks */,
+				8B12C906184BE64C00DBD77C /* CoreGraphics.framework in Frameworks */,
+				8B12C905184BE64900DBD77C /* CoreFoundation.framework in Frameworks */,
 				8B12C828184BDF7800DBD77C /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +301,8 @@
 				8B12C8C1184BE15600DBD77C /* str.h */,
 				8B12C8C2184BE15600DBD77C /* types.cpp */,
 				8B12C8C3184BE15600DBD77C /* types.h */,
+				8B12C90E184BECF200DBD77C /* filepaths.cpp */,
+				8B12C90C184BE75300DBD77C /* filepaths.h */,
 			);
 			name = "Core Types";
 			sourceTree = "<group>";
@@ -361,6 +377,8 @@
 		8B420023183488540020D1D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B12C90A184BE69900DBD77C /* libSystem.dylib */,
+				8B12C908184BE65300DBD77C /* libdispatch.dylib */,
 				8B12C79D184AEB2300DBD77C /* libreadline.dylib */,
 				8B10B90D183DC90600DEB62F /* ImageIO.framework */,
 				8B10B908183DC22E00DEB62F /* CoreGraphics.framework */,
@@ -380,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B12C8F8184BE15600DBD77C /* str.h in Headers */,
+				8B12C90D184BE75300DBD77C /* filepaths.h in Headers */,
 				8B12C8E7184BE15600DBD77C /* layer.h in Headers */,
 				8B12C8DD184BE15600DBD77C /* gfx.h in Headers */,
 				8B12C8F2184BE15600DBD77C /* path.h in Headers */,
@@ -543,6 +562,7 @@
 				8B12C8F3184BE15600DBD77C /* session.cpp in Sources */,
 				8B12C8D2184BE15600DBD77C /* corefunctions.cpp in Sources */,
 				8B12C8CA184BE15600DBD77C /* blob.cpp in Sources */,
+				8B12C90F184BECF200DBD77C /* filepaths.cpp in Sources */,
 				8B12C8D7184BE15600DBD77C /* expression.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,11 +625,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GFX_TARGET_OSX_FRAMEWORK=1",
 					"DEBUG=1",
-					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Framework/Framework-Info.plist";
 				INSTALL_PATH = "@rpath";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system/introspection",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -624,8 +648,13 @@
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "GFX_TARGET_OSX_FRAMEWORK=1";
 				INFOPLIST_FILE = "Framework/Framework-Info.plist";
 				INSTALL_PATH = "@rpath";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system/introspection",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};

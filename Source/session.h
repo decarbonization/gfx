@@ -90,22 +90,36 @@ namespace gfx {
         ///Returns the shared Session object, raising if it has not been created yet.
         static Session *shared();
         
-#pragma mark - Accessing Data
+#pragma mark - Command Line Argumnets
         
         ///Returns the name of the current program.
-        const String *name() const;
+        const String *name() const { return retained_autoreleased(mName); }
         
         ///Returns the command line arguments.
-        const Array<String> *arguments() const;
+        const Array<String> *arguments() const { return retained_autoreleased(mArguments); }
         
         ///Parses the arguments array of the session, returning
         ///an array of `gfx::Argument` objects describing the
         ///information passed into the program.
-        const Array<Argument> *parsedArguments() const;
+        const Array<Argument> *parsedArguments() const { return retained_autoreleased(mParsedArguments); }
         
         ///Returns whether or not there are text arguments
         ///presence in the parsed arguments of the receiver.
         bool hasTextArguments() const { return mHasTextArguments; }
+        
+#pragma mark - Resources
+        
+        ///Returns the path of the runtime resources for the Gfx runtime.
+        const String *resourcesPath() const;
+        
+        ///Returns the path of a given resource.
+        ///
+        /// \param  resourceName    The name of the resource, including path extension, to return the path for. Required.
+        ///
+        /// \result The path for the given resource name.
+        ///
+        ///This method does not verify the existence of the resource file.
+        const String *pathForResource(const String *resourceName) const;
         
     private:
         

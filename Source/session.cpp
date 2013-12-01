@@ -8,6 +8,11 @@
 
 #include "session.h"
 #include "str.h"
+#include "file.h"
+
+#if TARGET_OS_MAC
+#   include <dispatch/dispatch.h>
+#endif /* TARGET_OS_MAC */
 
 namespace gfx {
     
@@ -31,21 +36,56 @@ namespace gfx {
         return gSharedSession;
     }
     
-#pragma mark - Accessing Data
+#pragma mark - Resources
     
-    const String *Session::name() const
+    const String *Session::resourcesPath() const
     {
-        return retained_autoreleased(mName);
+        static const String *sharedResourcesPath = nullptr;
+        
+#if GFX_TARGET_OSX_FRAMEWORK
+        
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            AutoreleasePool pool;
+            
+            CFBundleRef frameworkBundle = CFBundleGetBundleWithIdentifier(CFSTR("com.roundabout.gfx"));
+            gfx_assert(frameworkBundle != NULL, "Could not find framework bundle."_gfx);
+            cf::AutoRef<CFURLRef> resourcesURL = CFBundleCopyResourcesDirectoryURL(frameworkBundle);
+            
+            UInt8 pathBuffer[PATH_MAX];
+            CFURLGetFileSystemRepresentation(resourcesURL, true, pathBuffer, sizeof(pathBuffer));
+            sharedResourcesPath = new String((const char *)pathBuffer);
+        });
+        
+#elif GFX_TARGET_IOS_LIBRARY
+        
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            AutoreleasePool pool;
+            
+            CFBundleRef mainBundle = CFBundleGetMainBundle();
+            gfx_assert(mainBundle != NULL, "Could not find main bundle."_gfx);
+            cf::AutoRef<CFURLRef> resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+            
+            UInt8 pathBuffer[PATH_MAX];
+            CFURLGetFileSystemRepresentation(resourcesURL, true, pathBuffer, sizeof(pathBuffer));
+            sharedResourcesPath = new String((const char *)pathBuffer);
+        });
+        
+#elif GFX_TARGET_SYS_LIBRARY
+        
+        if(!sharedResourcesPath) {
+            sharedResourcesPath = (GFX_TARGET_INSTALLATION_DIR "/share/gfx"_gfx);
+        }
+        
+#endif /* GFX_TARGET */
+        
+        return sharedResourcesPath;
     }
     
-    const Array<String> *Session::arguments() const
+    const String *Session::pathForResource(const String *resourceName) const
     {
-        return retained_autoreleased(mArguments);
-    }
-    
-    const Array<Argument> *Session::parsedArguments() const
-    {
-        return retained_autoreleased(mParsedArguments);
+        return FilePaths::combinePaths(this->resourcesPath(), resourceName);
     }
     
 #pragma mark - Parsing Arguments

@@ -9,6 +9,21 @@
 #ifndef gfx_gfx_defines_h
 #define gfx_gfx_defines_h
 
+/*
+ The following defines should be conditionally introduced by
+ the environment compiling the Gfx langauge and graphics stack:
+ 
+ GFX_TARGET_OSX_FRAMEWORK: Indicates that GFX is being compiled into a framework targeting OS X.
+ - Gfx will look for its runtime resources within the bundle of the framework.
+ 
+ GFX_TARGET_IOS_LIBRARY: Indicates that GFX is being compiled into an iOS static library.
+ - Gfx will look for its runtime resources within the main bundle of the host.
+ 
+ GFX_TARGET_SYS_LIBRARY: Indicates that GFX is being compiled into a system library.
+ - GFX_TARGET_INSTALLATION_DIR should also be defined to indicate where the library will be installed.
+ - Gfx will look for its runtime resources in GFX_TARGET_INSTALLATION_DIR/share/gfx
+ */
+
 #pragma mark - Information
 
 ///A C-string literal containing the current version of Gfx.

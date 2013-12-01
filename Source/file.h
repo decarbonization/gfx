@@ -11,6 +11,7 @@
 
 #include <cstdio>
 #include "base.h"
+#include "filepaths.h"
 
 namespace gfx {
     class Blob;
