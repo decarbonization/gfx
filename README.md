@@ -15,6 +15,68 @@ Being a forth-style language, the stack is a central component to programming wi
 
 Gfx expands on the simple stack in a couple of ways. Gfx stacks are hierarchical. A stack may have a parent stack, which may have a parent stack, which... This allows Gfx functions to have their on stack, and still pull values off of the stack that was used to call the function. Gfx stacks also have a concept of variable bindings. Each stack has its own lookup hash that is used to store said bindings.
 
+Literals
+========
+
+Gfx has a bare-minimum set of literals. The available literals are as follows:
+
+##Numbers
+
+Numbers may be of the format `12`, or `3.50`. Internally, they are always represented as double precision floating point numbers. Underscores may be introduced to improve readability, e.g. `10_000`. Numbers may not begin with underscores, but otherwise there are no positional restrictions on where they may be placed.
+
+##Strings
+
+String literals are enclosed in double quotes, like `"hello world"`. The following escape sequences are available:
+
+* `\a`
+* `\b`
+* `\f`
+* `\n`
+* `\r`
+* `\t`
+* `\v`
+* `\'`
+* `\"`
+* `\\`
+* `\?`
+* `\%`
+
+String literals currently do not implement interpolation. In the future, interpolation will be implemented using the form "hello %(greeting)". As such, the % as a literal within a string is reserved, and should be prefixed with a backslash.
+
+##Vectors
+
+Vector literals are enclosed within square brackets, like `[12 15 18]`. Unlike in bare code, literals within a literal are placed within the vector, and are not pushed to the stack. This means that code such as `[12 12 +]` will not yield `[24]`, but will likely crash due to a stack underflow caused by the `+` function.
+
+##Functions
+
+Function literals are enclosed in curly braces, like `{"hello world" print}`. Function literals are given their own stack frame when evaluated, and honor a simple form of lexical scoping for variables. To evaluate a function literal immediately after you have created it, use the `apply` word.
+
+##Comments
+
+Comment literals are enclosed in parentheses, like `(this is ignored)`, and are otherwise ignored by the language under normal circumstances. It is customary to describe how a function will manipulate the stack using comments of the form `(before -- after)`. E.g. `(num num -- num)` could describe all of the basic math operations. Comments of the form `(%  %)` are reserved for machine readable information. These comments may be used to add metadata to files, such as documentation, or structural information for an editor. E.g.
+
+	(%
+		\function	add-three (num num num -- num)
+		
+		\param		num	The first number.
+		\param		num	The second number.
+		\param		num	The third num.
+		
+		\result		The sum of all three numbers given.
+	 %)
+
+##Booleans
+
+Boolean literals come in the form of two reserved words, `true` and `false`. They always evaluate to themselves.
+
+##Words
+
+Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `rt/showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a tick, like `'hello`. Words beginning with `#` and `&` are currently reserved for the Gfx language for future usage.
+
+##Other Types
+
+All other types besides the ones described above are provided through functions, and live outside of the Gfx parser.
+
 Types and Functions
 ===================
 
@@ -202,6 +264,19 @@ Gfx exposes a small set of functions to convert between function types. These fu
 
 * `->str ( val -- str )` – converts the top most value on the stack to a str, yielding it.
 * `->void ( val -- )` – converts the top most value on the stack to nothing. Synonym for `rt/drop`
+
+Command Line Tool
+=================
+
+Gfx is currently distributed as a tiny command line tool for OS X. The tool contains a rudimentary REPL, and is able to run files.
+
+	Usage: gfx [--to-file /path/to/output.png] [--of-size 100x100] [<path...>]
+	
+##Parameters
+
+* `--to-file <path>`: Specifies an output location for any graphics described while the command line tool was running. This parameter is available both for files and the REPL.
+* `--of-size <size>`: A string of the format N**x**N specifying the size of the canvas that will be created before any code is run. The default value is 500x500. This parameter is available both for files and the REPL.
+* `<path...>`: Any number of paths may be specified. They are run in the order that they are specified in the tool's arguments. If no files are specified, the REPL is started.
 
 Graphics
 ========
