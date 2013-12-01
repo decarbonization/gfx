@@ -90,7 +90,7 @@ namespace gfx {
         /// \param  range       The range of bytes to copy. Throws if not within range.
         /// \param  outBuffer   The buffer to copy the bytes to. Must be large enough to hold `range`.
         ///
-        void getBytes(CFRange range, UInt8 *outBuffer);
+        void getBytes(Range range, UInt8 *outBuffer);
         
 #pragma mark - Modifying The Blob
         
@@ -111,7 +111,7 @@ namespace gfx {
         ///
         /// \param  range   The range of bytes to delete. Must be within {0, length()}.
         ///
-        void deleteRange(CFRange range);
+        void deleteRange(Range range);
         
         ///Replace the bytes within a given range with a given buffer.
         ///
@@ -119,14 +119,14 @@ namespace gfx {
         /// \param  buffer  The buffer to replace the bytes with.
         /// \param  length  The length of the buffer.
         ///
-        void replaceRange(CFRange range, const UInt8 *buffer, Index length);
+        void replaceRange(Range range, const UInt8 *buffer, Index length);
         
         ///Replace the bytes within a given range with the data contained in given blob.
         ///
         /// \param  range   The range of bytes to delete. Must be within {0, length()}.
         /// \param  other   The blob to replace the range with.
         ///
-        void replaceRange(CFRange range, const Blob *other);
+        void replaceRange(Range range, const Blob *other);
         
         ///Increase the length of the blob by n bytes, writing zeros into the new portion of the buffer.
         ///

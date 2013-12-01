@@ -82,7 +82,7 @@ namespace gfx {
                 description << ",\n";
             });
             
-            description.string()->deleteRange(CFRangeMake(description.length() - 1, 1));
+            description.string()->deleteRange(Range(description.length() - 1, 1));
             description << "\n}";
             
             return description.string();

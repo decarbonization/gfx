@@ -74,7 +74,7 @@ namespace gfx {
         return retained_autoreleased(this);
     }
     
-    CFComparisonResult String::compare(const String *other, CFRange range, CFStringCompareFlags options) const
+    CFComparisonResult String::compare(const String *other, Range range, CFStringCompareFlags options) const
     {
         gfx_assert_param(other);
         
@@ -126,7 +126,7 @@ namespace gfx {
         return CFStringGetCharacterAtIndex(mStorage, offset);
     }
     
-    String *String::substring(CFRange range) const
+    String *String::substring(Range range) const
     {
         return make<String>(CFStringCreateWithSubstring(kCFAllocatorDefault, mStorage, range));
     }
@@ -136,7 +136,7 @@ namespace gfx {
         return CFStringGetCStringPtr(mStorage, encoding);
     }
     
-    void String::getCharacters(CFRange range, UniChar *ioBuffer) const
+    void String::getCharacters(Range range, UniChar *ioBuffer) const
     {
         gfx_assert_param(ioBuffer);
         
@@ -180,19 +180,19 @@ namespace gfx {
     
 #pragma mark - Searching
     
-    CFRange String::find(const String *stringToFind, CFRange range, CFStringCompareFlags options) const
+    Range String::find(const String *stringToFind, Range range, CFStringCompareFlags options) const
     {
         gfx_assert_param(stringToFind);
         
-        CFRange result;
+        Range result;
         if(CFStringFindWithOptions(mStorage, stringToFind->getStorage(), range, options, &result)) {
             return result;
         } else {
-            return CFRangeMake(kCFNotFound, 0);
+            return Range(kCFNotFound, 0);
         }
     }
     
-    Index String::findAndReplace(const String *stringToFind, const String *stringToReplace, CFRange searchRange, CFStringCompareFlags options)
+    Index String::findAndReplace(const String *stringToFind, const String *stringToReplace, Range searchRange, CFStringCompareFlags options)
     {
         gfx_assert_param(stringToFind);
         gfx_assert_param(stringToReplace);
@@ -202,7 +202,7 @@ namespace gfx {
     
 #pragma mark - Mutation
     
-    void String::replace(CFRange rangeToReplace, const String *replacementString)
+    void String::replace(Range rangeToReplace, const String *replacementString)
     {
         gfx_assert_param(replacementString);
         
@@ -232,7 +232,7 @@ namespace gfx {
         CFStringAppend(mStorage, stringToAppend->getStorage());
     }
     
-    void String::deleteRange(CFRange rangeToDelete)
+    void String::deleteRange(Range rangeToDelete)
     {
         CFStringDelete(mStorage, rangeToDelete);
     }

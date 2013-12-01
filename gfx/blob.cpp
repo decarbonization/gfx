@@ -93,7 +93,7 @@ namespace gfx {
         }
         
         if(inspectString.length() > 0)
-            inspectString.string()->deleteRange(CFRangeMake(inspectString.length() - 1, 1));
+            inspectString.string()->deleteRange(Range(inspectString.length() - 1, 1));
         
         return inspectString;
     }
@@ -125,10 +125,10 @@ namespace gfx {
         return CFDataGetMutableBytePtr(getStorage());
     }
     
-    void Blob::getBytes(CFRange range, UInt8 *outBuffer)
+    void Blob::getBytes(Range range, UInt8 *outBuffer)
     {
         gfx_assert_param(outBuffer);
-        gfx_assert(range.location < length() && range.location + range.length < length(), "out of bounds range"_gfx);
+        gfx_assert(range.location < length() && range.max() < length(), "out of bounds range"_gfx);
         
         CFDataGetBytes(getStorage(), range, outBuffer);
     }
@@ -145,21 +145,21 @@ namespace gfx {
         append(other->bytes(), other->length());
     }
     
-    void Blob::deleteRange(CFRange range)
+    void Blob::deleteRange(Range range)
     {
-        gfx_assert(range.location < length() && range.location + range.length < length(), "out of bounds range"_gfx);
+        gfx_assert(range.location < length() && range.max() < length(), "out of bounds range"_gfx);
         
         CFDataDeleteBytes(getStorage(), range);
     }
     
-    void Blob::replaceRange(CFRange range, const UInt8 *buffer, Index length)
+    void Blob::replaceRange(Range range, const UInt8 *buffer, Index length)
     {
-        gfx_assert(range.location < this->length() && range.location + range.length < this->length(), "out of bounds range"_gfx);
+        gfx_assert(range.location < this->length() && range.max() < this->length(), "out of bounds range"_gfx);
         
         CFDataReplaceBytes(getStorage(), range, buffer, length);
     }
     
-    void Blob::replaceRange(CFRange range, const Blob *other)
+    void Blob::replaceRange(Range range, const Blob *other)
     {
         replaceRange(range, other->bytes(), other->length());
     }

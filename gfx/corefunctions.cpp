@@ -380,7 +380,7 @@ frame->push(result); \
         /* str str -- num */
         String *right = frame->popString();
         String *left = frame->popString();
-        CFComparisonResult result = left->compare(right, CFRangeMake(0, left->length()));
+        CFComparisonResult result = left->compare(right, Range(0, left->length()));
         frame->push(make<Number>(result));
     }
     
@@ -389,7 +389,7 @@ frame->push(result); \
         /* str haystack str needle -- bool */
         String *needle = frame->popString();
         String *haystack = frame->popString();
-        CFRange rangeOfString = haystack->find(needle, CFRangeMake(0, haystack->length()));
+        Range rangeOfString = haystack->find(needle, Range(0, haystack->length()));
         if(rangeOfString.location != kCFNotFound)
             frame->push(Number::True());
         else
@@ -434,7 +434,7 @@ frame->push(result); \
         /* str haystack str needle -- int */
         String *needle = frame->popString();
         String *haystack = frame->popString();
-        CFRange rangeOfString = haystack->find(needle, CFRangeMake(0, haystack->length()));
+        Range rangeOfString = haystack->find(needle, Range(0, haystack->length()));
         frame->push(make<Number>(rangeOfString.location));
     }
     
@@ -455,7 +455,7 @@ frame->push(result); \
         String *toFind = frame->popString();
         String *target = frame->popString();
         String *targetCopy = make<String>(target);
-        targetCopy->findAndReplace(toFind, toReplace, CFRangeMake(0, targetCopy->length()));
+        targetCopy->findAndReplace(toFind, toReplace, Range(0, targetCopy->length()));
         frame->push(targetCopy);
     }
     
@@ -465,7 +465,7 @@ frame->push(result); \
         Number *length = frame->popNumber();
         Number *location = frame->popNumber();
         String *haystack = frame->popString();
-        String *substring = haystack->substring(CFRangeMake(location->value(), length->value()));
+        String *substring = haystack->substring(Range(location->value(), length->value()));
         frame->push(substring);
     }
     
@@ -525,7 +525,7 @@ frame->push(result); \
         /* vec val -- num */
         Base *value = frame->pop();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        frame->push(make<Number>(vector->firstIndexOf(CFRangeMake(0, vector->count()), value)));
+        frame->push(make<Number>(vector->firstIndexOf(Range(0, vector->count()), value)));
     }
     
     static void vec_lastIndexOf(StackFrame *frame)
@@ -533,7 +533,7 @@ frame->push(result); \
         /* vec val -- num */
         Base *value = frame->pop();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        frame->push(make<Number>(vector->lastIndexOf(CFRangeMake(0, vector->count()), value)));
+        frame->push(make<Number>(vector->lastIndexOf(Range(0, vector->count()), value)));
     }
     
     static void vec_join(StackFrame *frame)
@@ -550,7 +550,7 @@ frame->push(result); \
         Number *length = frame->popNumber();
         Number *location = frame->popNumber();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        Array<Base> *subvector = vector->subarray(CFRangeMake(location->value(), length->value()));
+        Array<Base> *subvector = vector->subarray(Range(location->value(), length->value()));
         frame->push(subvector);
     }
     
@@ -560,7 +560,7 @@ frame->push(result); \
         Function *function = frame->popFunction();
         Array<Base> *vector = frame->popType<Array<Base>>();
         Array<Base> *newVector = copy(vector);
-        newVector->sort(CFRangeMake(0, vector->count()), [frame, function](Base *left, Base *right) -> CFComparisonResult {
+        newVector->sort(Range(0, vector->count()), [frame, function](Base *left, Base *right) -> CFComparisonResult {
             frame->push(left);
             frame->push(right);
             

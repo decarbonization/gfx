@@ -39,7 +39,7 @@ namespace gfx {
         auto colorString = autoreleased(copy(inColorString));
         
         if(colorString->hasPrefix("#"_gfx))
-            colorString->deleteRange(CFRangeMake(0, 1));
+            colorString->deleteRange(Range(0, 1));
         
         if(colorString->length() == 6) {
             unsigned long colorCode = strtoul(colorString->getCString(), NULL, 16);

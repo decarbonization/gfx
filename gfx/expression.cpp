@@ -54,7 +54,7 @@ namespace gfx {
             description << value << " ";
         });
         
-        description.string()->deleteRange(CFRangeMake(description.length() - 1, 1));
+        description.string()->deleteRange(Range(description.length() - 1, 1));
         
         if(mType == Type::Vector)
             description << "]";

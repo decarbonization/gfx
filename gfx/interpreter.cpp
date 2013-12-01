@@ -91,7 +91,7 @@ namespace gfx {
         if(part->isKindOfClass<Word>()) {
             auto word = static_cast<Word *>(part);
             if(word->string()->hasPrefix("'"_gfx)) {
-                auto rawWord = word->string()->substring(CFRangeMake(1, word->string()->length() - 1));
+                auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
                 currentFrame->push(make<Word>(rawWord, word->offset()));
             } else {
                 auto value = currentFrame->bindingValue(word->string());
@@ -240,10 +240,10 @@ namespace gfx {
     void Interpreter::removeSearchPath(const String *searchPath)
     {
         gfx_assert_param(searchPath);
-        gfx_assert(mSearchPaths->contains(CFRangeMake(0, mSearchPaths->count()), searchPath),
+        gfx_assert(mSearchPaths->contains(Range(0, mSearchPaths->count()), searchPath),
                 "cannot remove search path that was never in search paths array"_gfx);
         
-        mSearchPaths->removeAt(mSearchPaths->firstIndexOf(CFRangeMake(0, mSearchPaths->count()), searchPath));
+        mSearchPaths->removeAt(mSearchPaths->firstIndexOf(Range(0, mSearchPaths->count()), searchPath));
     }
     
 #pragma mark -

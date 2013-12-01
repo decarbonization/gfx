@@ -88,7 +88,7 @@ namespace gfx {
                 description << ",\n";
             });
             
-            description.string()->deleteRange(CFRangeMake(description.length() - 1, 1));
+            description.string()->deleteRange(Range(description.length() - 1, 1));
             description << "\n}";
             
             return description.string();
@@ -150,7 +150,7 @@ namespace gfx {
         
         ///Returns a new subarray with the values
         ///contained within a given range of the receiver.
-        Array<T> *subarray(CFRange range) const
+        Array<T> *subarray(Range range) const
         {
             const void *rawObjects[range.length];
             CFArrayGetValues(mStorage, range, rawObjects);
@@ -181,20 +181,20 @@ namespace gfx {
         
         ///Returns the first index of a given value within the receiver,
         ///or kCFNotFound if the value is not contained within the array.
-        Index firstIndexOf(CFRange range, T *value) const
+        Index firstIndexOf(Range range, T *value) const
         {
             return CFArrayGetFirstIndexOfValue(mStorage, range, value);
         }
         
         ///Returns the last index of a given value within the receiver,
         ///or kCFNotFound if the value is not contained within the array.
-        Index lastIndexOf(CFRange range, T *value) const
+        Index lastIndexOf(Range range, T *value) const
         {
             return CFArrayGetLastIndexOfValue(mStorage, range, value);
         }
         
         ///Returns a bool indicating whether or not the array contains a given value.
-        bool contains(CFRange range, T *value) const
+        bool contains(Range range, T *value) const
         {
             return CFArrayContainsValue(mStorage, range, value);
         }
@@ -223,7 +223,7 @@ namespace gfx {
         {
             gfx_assert_param(array);
             
-            CFArrayAppendArray(mStorage, array->getStorage(), CFRangeMake(0, array->count()));
+            CFArrayAppendArray(mStorage, array->getStorage(), Range(0, array->count()));
         }
         
         ///Removes the value at a given index.
@@ -240,7 +240,7 @@ namespace gfx {
         {
             gfx_assert_param(value);
             
-            Index indexOfValue = this->firstIndexOf(CFRangeMake(0, count()), value);
+            Index indexOfValue = this->firstIndexOf(Range(0, count()), value);
             if(indexOfValue != kCFNotFound)
                 this->removeAt(indexOfValue);
         }
@@ -290,7 +290,7 @@ namespace gfx {
     public:
         
         ///Sorts the contents of the array using a given comparator function.
-        void sort(CFRange range, std::function<CFComparisonResult(T *left, T *right)> comparator)
+        void sort(Range range, std::function<CFComparisonResult(T *left, T *right)> comparator)
         {
             CFArraySortValues(mStorage, range, (CFComparatorFunction)&comparer, &comparator);
         }

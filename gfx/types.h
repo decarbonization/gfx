@@ -31,6 +31,40 @@ namespace gfx {
     ///A type used for indexes, counts, etc.
     typedef CFIndex     Index;
     
+    ///A type for ranges of bytes, characters, etc.
+    struct Range : CFRange
+    {
+        ///Empty constructor.
+        Range() :
+            CFRange{}
+        {
+        }
+        
+        ///Construct a range from a location and length.
+        Range(Index inLocation, Index inLength) :
+            CFRange{inLocation, inLength}
+        {
+        }
+        
+        ///Construct a range from a CFRange.
+        Range(CFRange range) :
+            CFRange(range)
+        {
+        }
+        
+        ///Returns the maximum index referred to by this range.
+        Index max() const
+        {
+            return this->location + this->length;
+        }
+        
+        ///Returns a bool indicating whether or not an index is contained within the range.
+        bool contains(Index index) const
+        {
+            return (index >= this->location && index <= this->max());
+        }
+    };
+    
 #if GFX_Include_GraphicsStack
     
     /*! \section    Graphics Types */

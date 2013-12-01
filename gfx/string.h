@@ -59,7 +59,7 @@ namespace gfx {
         ///
         /// \result The result of the comparison.
         ///
-        CFComparisonResult compare(const String *other, CFRange range, CFStringCompareFlags options = 0) const;
+        CFComparisonResult compare(const String *other, Range range, CFStringCompareFlags options = 0) const;
         
         ///Returns a bool indicating whether or not the receiver starts with a given string.
         ///
@@ -97,14 +97,14 @@ namespace gfx {
         UniChar at(Index offset) const;
         
         ///Returns a new String created from a given range of the receiver's data.
-        String *substring(CFRange range) const;
+        String *substring(Range range) const;
         
         ///Returns a C string representation of the receiver with
         ///a given encoding, defaulting to the kCFStringEncodingUTF8.
         const char *getCString(CFStringEncoding encoding = kCFStringEncodingUTF8) const;
         
         ///Places the characters in a given range into a given utf16 data buffer.
-        void getCharacters(CFRange range, UniChar *ioBuffer) const;
+        void getCharacters(Range range, UniChar *ioBuffer) const;
         
 #pragma mark - Conversions
         
@@ -135,7 +135,7 @@ namespace gfx {
         ///
         /// \result A range consisting of {kCFNotFound, 0} if nothing could be found; a valid range otherwise.
         ///
-        CFRange find(const String *stringToFind, CFRange range, CFStringCompareFlags options = 0) const;
+        Range find(const String *stringToFind, Range range, CFStringCompareFlags options = 0) const;
         
         ///Finds all instances of a given string, and replaces them with a given substitution.
         ///
@@ -146,7 +146,7 @@ namespace gfx {
         ///
         /// \result The number of occurances replaced.
         ///
-        Index findAndReplace(const String *stringToFind, const String *stringToReplace, CFRange searchRange, CFStringCompareFlags options = 0);
+        Index findAndReplace(const String *stringToFind, const String *stringToReplace, Range searchRange, CFStringCompareFlags options = 0);
         
 #pragma mark - Mutation
         
@@ -155,7 +155,7 @@ namespace gfx {
         /// \param  rangeToReplace      The range to replace.
         /// \param  replacementString   The string to replace the range's data with. Required.
         ///
-        void replace(CFRange rangeToReplace, const String *replacementString);
+        void replace(Range rangeToReplace, const String *replacementString);
         
         ///Replaces the contents of the receiver with a given string.
         ///
@@ -179,7 +179,7 @@ namespace gfx {
         void append(const String *stringToAppend);
         
         ///Deletes a range of data from the receiver.
-        void deleteRange(CFRange rangeToDelete);
+        void deleteRange(Range rangeToDelete);
         
 #pragma mark - Builder
         
