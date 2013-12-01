@@ -127,6 +127,51 @@ namespace gfx {
     
 #pragma mark - Layer Functions
     
+    namespace {
+        ///The FunctionDrawAdaptor class is a wrapper around a Function and Interpreter
+        ///object that takes ownership of its parameters so that it can be safely used
+        ///with an `std::function` adaptor.
+        class DrawFunctionAdaptor
+        {
+            ///The interpreter that `mFunction` is to be evaluated with. Unsafe weak reference.
+            Interpreter *mInterpreter;
+            
+            ///The implementation of the DrawFunction.
+            Function *mFunction;
+            
+        public:
+            
+            ///Constructs an adaptor from a given interpreter and function,
+            ///taking ownership of their lifecycle.
+            DrawFunctionAdaptor(Interpreter *interpreter, Function *function) :
+                mInterpreter(interpreter),
+                mFunction(retained(function))
+            {
+            }
+            
+            ///Copies the contents of one adaptor into another.
+            DrawFunctionAdaptor(const DrawFunctionAdaptor &other) :
+                DrawFunctionAdaptor(other.mInterpreter, other.mFunction)
+            {
+            }
+            
+            ///The destructor.
+            ~DrawFunctionAdaptor()
+            {
+                released(mFunction);
+            }
+            
+            ///Performs the necessary glue to forward drawing responsibility into `mFunction`.
+            void operator() (Layer *layer, Rect rect)
+            {
+                StackFrame *frame = mInterpreter->currentFrame();
+                frame->push(vectorFromRect(rect));
+                mFunction->apply(frame);
+                frame->safeDrop();
+            }
+        };
+    };
+    
     static void layer_make(StackFrame *stack)
     {
         /* vec func -- Layer */
@@ -142,15 +187,10 @@ namespace gfx {
             throw Exception("Invalid vector given to `layer`. Must contain either 2 numbers for a size, or 4 numbers for a rect."_gfx, nullptr);
         }
         
-        //TODO: This will crash.
-        Interpreter *interpreter = stack->interpreter();
-        auto drawBridge = [drawFunction, interpreter](Layer *layer, Rect rect) {
-            StackFrame *frame = interpreter->currentFrame();
-            frame->push(vectorFromRect(rect));
-            drawFunction->apply(frame);
-            frame->safeDrop();
-        };
-        stack->push(make<Layer>(frame, drawBridge));
+        //We would use a lambda here, except that the adaptor can outlive
+        //the containing autorelease pool that `drawFunction`'s lifecycle
+        //currently belongs to.
+        stack->push(make<Layer>(frame, DrawFunctionAdaptor(stack->interpreter(), drawFunction)));
     }
     
     static void layer_frame(StackFrame *stack)
@@ -186,7 +226,7 @@ namespace gfx {
     {
         /* layer -- */
         auto layer = stack->popType<Layer>();
-        layer->render(Context::currentContext(), Layer::RenderOptions::RenderBorder);
+        layer->render(Context::currentContext());
     }
     
 #pragma mark - Color Functions
