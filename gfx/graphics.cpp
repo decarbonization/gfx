@@ -94,27 +94,27 @@ namespace gfx {
         }
     }
     
-#pragma mark - Canvas Functions
+#pragma mark - Context Functions
     
-    static void canvas_begin(StackFrame *stack)
+    static void ctx_begin(StackFrame *stack)
     {
         auto sizeVector = stack->popType<Array<Base>>();
         Size size = vectorToSize(sizeVector);
         Context::pushContext(Context::bitmapContextWith(size));
     }
     
-    static void canvas_end(StackFrame *stack)
+    static void ctx_end(StackFrame *stack)
     {
         Context::popContext();
     }
     
-    static void canvas_size(StackFrame *stack)
+    static void ctx_size(StackFrame *stack)
     {
-        auto canvasSize = Context::currentContext()->boundingRect().size;
-        stack->push(vectorFromSize(canvasSize));
+        auto ctxSize = Context::currentContext()->boundingRect().size;
+        stack->push(vectorFromSize(ctxSize));
     }
     
-    static void canvas_save(StackFrame *stack)
+    static void ctx_save(StackFrame *stack)
     {
         String *path = stack->popString();
         
@@ -377,11 +377,11 @@ namespace gfx {
     
     void Graphics::addTo(StackFrame *frame)
     {
-        //Canvas Functions
-        Graphics::createFunctionBinding(frame, "canvas/begin"_gfx, &canvas_begin);
-        Graphics::createFunctionBinding(frame, "canvas/end"_gfx, &canvas_end);
-        Graphics::createFunctionBinding(frame, "canvas/size"_gfx, &canvas_size);
-        Graphics::createFunctionBinding(frame, "canvas/save"_gfx, &canvas_save);
+        //Context Functions
+        Graphics::createFunctionBinding(frame, "ctx/begin"_gfx, &ctx_begin);
+        Graphics::createFunctionBinding(frame, "ctx/end"_gfx, &ctx_end);
+        Graphics::createFunctionBinding(frame, "ctx/size"_gfx, &ctx_size);
+        Graphics::createFunctionBinding(frame, "ctx/save"_gfx, &ctx_save);
         
         //Layer Functions
         Graphics::createFunctionBinding(frame, "layer"_gfx, &layer_make);
