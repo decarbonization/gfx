@@ -75,6 +75,11 @@
 		8B12C90B184BE69900DBD77C /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C90A184BE69900DBD77C /* libSystem.dylib */; };
 		8B12C90D184BE75300DBD77C /* filepaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C90C184BE75300DBD77C /* filepaths.h */; };
 		8B12C90F184BECF200DBD77C /* filepaths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C90E184BECF200DBD77C /* filepaths.cpp */; };
+		8B12C911184C148E00DBD77C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C910184C148E00DBD77C /* CoreText.framework */; };
+		8B12C916184C14B000DBD77C /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C914184C14B000DBD77C /* font.cpp */; };
+		8B12C917184C14B000DBD77C /* font.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C915184C14B000DBD77C /* font.h */; };
+		8B12C91E184C18F000DBD77C /* textline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C91C184C18EF00DBD77C /* textline.cpp */; };
+		8B12C91F184C18F000DBD77C /* textline.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C91D184C18EF00DBD77C /* textline.h */; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -185,6 +190,11 @@
 		8B12C90A184BE69900DBD77C /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = usr/lib/libSystem.dylib; sourceTree = SDKROOT; };
 		8B12C90C184BE75300DBD77C /* filepaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filepaths.h; sourceTree = "<group>"; };
 		8B12C90E184BECF200DBD77C /* filepaths.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filepaths.cpp; sourceTree = "<group>"; };
+		8B12C910184C148E00DBD77C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		8B12C914184C14B000DBD77C /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = font.cpp; sourceTree = "<group>"; };
+		8B12C915184C14B000DBD77C /* font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = font.h; sourceTree = "<group>"; };
+		8B12C91C184C18EF00DBD77C /* textline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textline.cpp; sourceTree = "<group>"; };
+		8B12C91D184C18EF00DBD77C /* textline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textline.h; sourceTree = "<group>"; };
 		8B420021183488540020D1D1 /* gsh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gsh; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B420024183488540020D1D1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -201,6 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B12C911184C148E00DBD77C /* CoreText.framework in Frameworks */,
 				8B12C90B184BE69900DBD77C /* libSystem.dylib in Frameworks */,
 				8B12C907184BE65000DBD77C /* ImageIO.framework in Frameworks */,
 				8B12C906184BE64C00DBD77C /* CoreGraphics.framework in Frameworks */,
@@ -334,12 +345,21 @@
 		8B12C900184BE1FB00DBD77C /* Graphics Stack */ = {
 			isa = PBXGroup;
 			children = (
+				8B12C8A9184BE15600DBD77C /* graphics.cpp */,
+				8B12C8AA184BE15600DBD77C /* graphics.h */,
+				8B12C912184C149C00DBD77C /* Core */,
+				8B12C913184C14A200DBD77C /* Text */,
+			);
+			name = "Graphics Stack";
+			sourceTree = "<group>";
+		};
+		8B12C912184C149C00DBD77C /* Core */ = {
+			isa = PBXGroup;
+			children = (
 				8B12C897184BE15600DBD77C /* color.cpp */,
 				8B12C898184BE15600DBD77C /* color.h */,
 				8B12C899184BE15600DBD77C /* context.cpp */,
 				8B12C89A184BE15600DBD77C /* context.h */,
-				8B12C8A9184BE15600DBD77C /* graphics.cpp */,
-				8B12C8AA184BE15600DBD77C /* graphics.h */,
 				8B12C8AB184BE15600DBD77C /* image.cpp */,
 				8B12C8AC184BE15600DBD77C /* image.h */,
 				8B12C8AF184BE15600DBD77C /* layer.cpp */,
@@ -349,7 +369,18 @@
 				8B12C8BA184BE15600DBD77C /* path.cpp */,
 				8B12C8BB184BE15600DBD77C /* path.h */,
 			);
-			name = "Graphics Stack";
+			name = Core;
+			sourceTree = "<group>";
+		};
+		8B12C913184C14A200DBD77C /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				8B12C914184C14B000DBD77C /* font.cpp */,
+				8B12C915184C14B000DBD77C /* font.h */,
+				8B12C91C184C18EF00DBD77C /* textline.cpp */,
+				8B12C91D184C18EF00DBD77C /* textline.h */,
+			);
+			name = Text;
 			sourceTree = "<group>";
 		};
 		8B420018183488540020D1D1 = {
@@ -377,6 +408,7 @@
 		8B420023183488540020D1D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B12C910184C148E00DBD77C /* CoreText.framework */,
 				8B12C90A184BE69900DBD77C /* libSystem.dylib */,
 				8B12C908184BE65300DBD77C /* libdispatch.dylib */,
 				8B12C79D184AEB2300DBD77C /* libreadline.dylib */,
@@ -408,9 +440,11 @@
 				8B12C8D4184BE15600DBD77C /* dictionary.h in Headers */,
 				8B12C8E3184BE15600DBD77C /* image.h in Headers */,
 				8B12C8F4184BE15600DBD77C /* session.h in Headers */,
+				8B12C91F184C18F000DBD77C /* textline.h in Headers */,
 				8B12C8C5184BE15600DBD77C /* array.h in Headers */,
 				8B12C8DE184BE15600DBD77C /* gfx_defines.h in Headers */,
 				8B12C8CC184BE15600DBD77C /* broadcastsignal.h in Headers */,
+				8B12C917184C14B000DBD77C /* font.h in Headers */,
 				8B12C8D6184BE15600DBD77C /* exception.h in Headers */,
 				8B12C8EE184BE15600DBD77C /* papertape.h in Headers */,
 				8B12C8F0184BE15600DBD77C /* parser.h in Headers */,
@@ -543,10 +577,12 @@
 				8B12C8E4184BE15600DBD77C /* interpreter.cpp in Sources */,
 				8B12C8C8184BE15600DBD77C /* base.cpp in Sources */,
 				8B12C8ED184BE15600DBD77C /* papertape.cpp in Sources */,
+				8B12C916184C14B000DBD77C /* font.cpp in Sources */,
 				8B12C8EB184BE15600DBD77C /* offset.cpp in Sources */,
 				8B12C8EF184BE15600DBD77C /* parser.cpp in Sources */,
 				8B12C8CE184BE15600DBD77C /* color.cpp in Sources */,
 				8B12C8E0184BE15600DBD77C /* graphics.cpp in Sources */,
+				8B12C91E184C18F000DBD77C /* textline.cpp in Sources */,
 				8B12C8F5184BE15600DBD77C /* stackframe.cpp in Sources */,
 				8B12C8D9184BE15600DBD77C /* file.cpp in Sources */,
 				8B12C8DB184BE15600DBD77C /* function.cpp in Sources */,

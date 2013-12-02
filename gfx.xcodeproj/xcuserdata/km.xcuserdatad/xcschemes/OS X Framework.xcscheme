@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8B12C825184BDF7800DBD77C"
-               BuildableName = "Gfx.framework"
+               BuildableName = "gfx.framework"
                BlueprintName = "gfx"
                ReferencedContainer = "container:gfx.xcodeproj">
             </BuildableReference>
