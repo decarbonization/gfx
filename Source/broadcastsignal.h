@@ -16,6 +16,8 @@
 namespace gfx {
     class String;
     
+    struct Nothing {};
+    
     ///The Signal class encapsulates a simple one-to-many notification system.
     ///
     /// \tparam Param   The type of the parameter passed onto observer functors.
@@ -26,7 +28,7 @@ namespace gfx {
     ///observers add new functors through the `gfx::Signal::add` method like
     ///`mSignal.add([](int value) { ... })`. Broadcasters transmit through the
     ///signal through a simple application like `mSignal(12)`.
-    template<typename Param = Base *>
+    template<typename Param = Nothing>
     class Signal
     {
     public:
@@ -124,7 +126,7 @@ namespace gfx {
         }
         
         ///Synonym for `gfx::Signal::broadcast`.
-        void operator() (Param param) const
+        void operator() (Param param = Param()) const
         {
             broadcast(param);
         }

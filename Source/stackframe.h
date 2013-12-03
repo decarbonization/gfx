@@ -12,6 +12,7 @@
 #include "base.h"
 #include "array.h"
 #include "dictionary.h"
+#include "broadcastsignal.h"
 #include <tuple>
 
 namespace gfx {
@@ -28,8 +29,12 @@ namespace gfx {
         
     public:
         
+#pragma mark - Lifecycle
+        
         explicit StackFrame(StackFrame *parent, Interpreter *interpreter);
         virtual ~StackFrame();
+        
+        Signal<Nothing> DestroySignal;
         
 #pragma mark - Stack Methods
         

@@ -16,19 +16,21 @@ namespace gfx {
     
     StackFrame::StackFrame(StackFrame *parent, Interpreter *interpreter) :
         mStorage(new Array<Base>),
-        mParent(retained(parent)),
+        mParent(parent),
         mBindings(new Dictionary<const String, Base>),
-        mInterpreter(interpreter)
+        mInterpreter(interpreter),
+        DestroySignal("gfx::StackFrame::DestroySignal"_gfx)
     {
+        if(mParent)
+            mParent->DestroySignal += [this](Nothing) { autoreleased(this); };
     }
     
     StackFrame::~StackFrame()
     {
-        if(mParent)
-            mParent->release();
+        DestroySignal();
         
-        mStorage->release();
-        mBindings->release();
+        released(mStorage);
+        released(mBindings);
     }
     
 #pragma mark - Stack Methods
