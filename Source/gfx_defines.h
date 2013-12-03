@@ -24,6 +24,18 @@
  - Gfx will look for its runtime resources in GFX_TARGET_INSTALLATION_DIR/share/gfx
  */
 
+#pragma mark - Glue
+
+///Language safe glue that allows the same extern statement
+///to be used without preprocessor ugliness.
+///
+///__Important:__ OBJC_EXTERN_CLASS must always be used outside of namespaces.
+#if __OBJC__
+#   define OBJC_EXTERN_CLASS    @class
+#else
+#   define OBJC_EXTERN_CLASS    class
+#endif /* __OBJC__ */
+
 #pragma mark - Information
 
 ///A C-string literal containing the current version of Gfx.

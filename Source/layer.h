@@ -14,6 +14,8 @@
 #include "array.h"
 #include "broadcastsignal.h"
 
+OBJC_EXTERN_CLASS CALayer;
+
 namespace gfx {
     class LayerBacking;
     class Context;
@@ -88,6 +90,14 @@ namespace gfx {
         
         ///Returns the scale factor of the layer.
         virtual Float scale() const;
+        
+#if GFX_Layer_Use_CA
+        
+        ///Returns the CALayer backing the receiver. Only available
+        ///if Gfx is compiled with GFX_Layer_Use_CA=1.
+        CALayer *CALayer() const;
+        
+#endif /* GFX_Layer_Use_CA */
         
 #pragma mark - Metrics
         
@@ -176,6 +186,7 @@ namespace gfx {
         Signal<Layer *> DidDisplaySignal;
         
         
+        ///Some LayerBacking implementations need access to our members.
         friend class LayerBacking;
     };
 }

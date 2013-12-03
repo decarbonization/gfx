@@ -65,6 +65,11 @@ namespace gfx {
         return mLayer;
     }
     
+    CALayer *LayerBacking::texture() const
+    {
+        return [[mTexture retain] autorelease];
+    }
+    
 #pragma mark -
     
     void LayerBacking::setScale(Float scale)

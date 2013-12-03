@@ -13,9 +13,7 @@
 #   import <Foundation/Foundation.h>
 #endif
 
-#if !__OBJC__
-class NSAutoreleasePool;
-#endif /* !__OBJC__ */
+OBJC_EXTERN_CLASS NSAutoreleasePool;
 
 namespace gfx {
     class Base;

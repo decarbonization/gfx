@@ -59,6 +59,15 @@ namespace gfx {
         return mBacking->scale();
     }
     
+#if GFX_Layer_Use_CA
+    
+    CALayer *Layer::CALayer() const
+    {
+        return mBacking->texture();
+    }
+    
+#endif /* GFX_Layer_Use_CA */
+    
 #pragma mark - Metrics
     
     void Layer::setFrame(Rect frame)

@@ -14,13 +14,8 @@
 #include "base.h"
 #include "types.h"
 
-#if __OBJC__
-@class CALayer;
-@class GFXLayerBackingDelegateAdaptor;
-#else
-class CALayer;
-class GFXLayerBackingDelegateAdaptor;
-#endif /* __OBJC__ */
+OBJC_EXTERN_CLASS CALayer;
+OBJC_EXTERN_CLASS GFXLayerBackingDelegateAdaptor;
 
 namespace gfx {
     class Layer;
@@ -65,6 +60,9 @@ namespace gfx {
         
         ///Returns the layer associated with the backing.
         Layer *layer() const;
+        
+        ///Returns the texture layer of the backing.
+        CALayer *texture() const;
         
 #pragma mark -
         
