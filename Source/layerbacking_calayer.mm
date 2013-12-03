@@ -47,6 +47,7 @@ namespace gfx {
         mDelegateAdaptor([GFXLayerBackingDelegateAdaptor new]),
         mLayer(layer)
     {
+        mTexture.needsDisplayOnBoundsChange = YES;
     }
     
     LayerBacking::~LayerBacking()
