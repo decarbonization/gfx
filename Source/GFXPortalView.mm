@@ -103,11 +103,6 @@
 
 #pragma mark - Drawing
 
-- (BOOL)isFlipped
-{
-    return YES;
-}
-
 - (void)drawGraphicsLayer:(gfx::Layer *)layer inRect:(gfx::Rect)rect
 {
     if(_function) {

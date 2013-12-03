@@ -560,6 +560,7 @@
 				8B89D9DE184DAB550062EFB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8B89D9DF184DAB550062EFB4 /* Build configuration list for PBXNativeTarget "SimpleHostTests" */ = {
 			isa = XCConfigurationList;
@@ -568,6 +569,7 @@
 				8B89D9E1184DAB550062EFB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
