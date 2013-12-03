@@ -12,6 +12,7 @@
 #include "base.h"
 #include "array.h"
 #include "offset.h"
+#include "broadcastsignal.h"
 #include <stack>
 
 namespace gfx {
@@ -54,6 +55,11 @@ namespace gfx {
         
         void evalExpression(Base *expression, EvalContext context);
         void eval(const Array<Base> *expressions, EvalContext context = EvalContext::Normal);
+        
+#pragma mark - Resetting
+        
+        void reset();
+        Signal<Interpreter *> ResetSignal;
         
 #pragma mark - Unbound Word Handling
         

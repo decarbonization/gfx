@@ -30,6 +30,11 @@ namespace gfx {
         gContextStack->removeLast();
     }
     
+    void Context::emptyContextStack()
+    {
+        gContextStack->removeAll();
+    }
+    
     Context *Context::currentContext()
     {
         Context *context = gContextStack->last();

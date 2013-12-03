@@ -226,6 +226,12 @@ frame->push(result); \
         PaperTape::WriteLine(frame->interpreter()->backtrace());
     }
     
+    static void reset(StackFrame *frame)
+    {
+        PaperTape::WriteLine("Resetting..."_gfx);
+        frame->interpreter()->reset();
+    }
+    
 #pragma mark - Core Functions
     
 #if GFX_Language_SupportsImport
@@ -863,6 +869,7 @@ frame->push(result); \
         CoreFunctions::createFunctionBinding(frame, "rt/clear"_gfx, &clear);
         CoreFunctions::createFunctionBinding(frame, "rt/showstack"_gfx, &showstack);
         CoreFunctions::createFunctionBinding(frame, "rt/backtrace"_gfx, &backtrace);
+        CoreFunctions::createFunctionBinding(frame, "rt/reset"_gfx, &reset);
         
         
         //Core Functions

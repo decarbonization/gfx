@@ -21,6 +21,7 @@
 
 #if GFX_Include_GraphicsStack
 #   include "graphics.h"
+#   include "context.h"
 #endif /* GFX_Include_GraphicsStack */
 
 namespace gfx {
@@ -45,7 +46,8 @@ namespace gfx {
         mRunningFunctions(new Array<const Function>),
         mSearchPaths(make<Array<const String>>()),
         mImportAllowed(true),
-        mUnboundWordHandler()
+        mUnboundWordHandler(),
+        ResetSignal("gfx::Interpreter::ResetSignal"_gfx)
     {
         mRootFrame = make<StackFrame>(nullptr, this);
         CoreFunctions::addTo(mRootFrame);
@@ -130,6 +132,22 @@ namespace gfx {
         for (Base *expression : expressions) {
             this->evalExpression(expression, context);
         }
+    }
+    
+#pragma mark - Resetting
+    
+    void Interpreter::reset()
+    {
+#if GFX_Include_GraphicsStack
+        Context::emptyContextStack();
+#endif /* GFX_Include_GraphicsStack */
+        
+        released(mRootFrame);
+        mRootFrame = make<StackFrame>(nullptr, this);
+        CoreFunctions::addTo(mRootFrame);
+        this->pushFrame(mRootFrame);
+        
+        ResetSignal(this);
     }
     
 #pragma mark - Unbound Word Handling

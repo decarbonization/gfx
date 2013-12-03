@@ -26,7 +26,7 @@ namespace gfx {
     ///observers add new functors through the `gfx::Signal::add` method like
     ///`mSignal.add([](int value) { ... })`. Broadcasters transmit through the
     ///signal through a simple application like `mSignal(12)`.
-    template<typename Param>
+    template<typename Param = Base *>
     class Signal
     {
     public:
@@ -87,7 +87,13 @@ namespace gfx {
             mReferenceCounter++;
             mObservers[mReferenceCounter] = observer;
             
-            return mObservers.size();
+            return mReferenceCounter;
+        }
+        
+        ///Synonym for `gfx::Signal<>::add`.
+        ObserverReference operator+=(const ObserverFunctor &observer)
+        {
+            return add(observer);
         }
         
         ///Remove an observer using the refernece returned by `gfx::Signal::add`.

@@ -62,6 +62,9 @@ namespace gfx {
         ///making the previous context the current one.
         static void popContext();
         
+        ///Removes all contexts from the stack, releasing them.
+        static void emptyContextStack();
+        
         ///Returns top most context on the stack.
         ///
         ///The current context is the target of all state-machine

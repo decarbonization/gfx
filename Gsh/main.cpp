@@ -153,6 +153,9 @@ int main(int argc, const char * argv[])
     }
     
     Context::pushContext(Context::bitmapContextWith(canvasSize));
+    interpreter->ResetSignal += [canvasSize](Interpreter *unused) {
+        Context::pushContext(Context::bitmapContextWith(canvasSize));
+    };
     
     for (const String *filePath : files) {
         File *file = nullptr;
