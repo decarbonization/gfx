@@ -19,13 +19,14 @@
 #import "graphics.h"
 #import "context.h"
 #import "layer.h"
+#import "color.h"
+#import "path.h"
 
 @interface GFXPortalView ()
 
-@property (nonatomic, assign) CALayer *contentLayer;
-
 #pragma mark - readwrite
 
+@property (nonatomic, readwrite, assign) CALayer *contentLayer;
 @property (nonatomic, readwrite) gfx::Interpreter *interpreter;
 @property (nonatomic, readwrite) gfx::Layer *gfxLayer;
 
@@ -63,11 +64,20 @@
         auto drawFunctor = [self](gfx::Layer *layer, gfx::Rect rect) {
             [self drawGraphicsLayer:layer inRect:rect];
         };
+        auto exceptionHandler = [self](const gfx::Exception &e) {
+            NSError *error = [NSError errorWithDomain:@"GFXPortalViewRenderErrorDomain"
+                                                 code:'!ren'
+                                             userInfo:@{NSLocalizedDescriptionKey: (NSString *)e.reason()->getStorage()}];
+            [self handleRenderTimeError:error];
+            return true;
+        };
         self.gfxLayer = new gfx::Layer(self.frame, drawFunctor, [self layer].contentsScale);
+        self.gfxLayer->setDrawExceptionHandler(exceptionHandler);
         
         self.contentLayer = self.gfxLayer->CALayer();
-        self.contentLayer.borderColor = [NSColor darkGrayColor].CGColor;
-        self.contentLayer.borderWidth = 1.0;
+        self.contentLayer.shadowColor = [NSColor blackColor].CGColor;
+        self.contentLayer.shadowOpacity = 0.3;
+        self.contentLayer.shadowRadius = 10.0;
         [self.layer addSublayer:self.contentLayer];
     }
     
@@ -101,7 +111,7 @@
     [CATransaction commit];
 }
 
-#pragma mark - Drawing
+#pragma mark - Callbacks
 
 - (void)drawGraphicsLayer:(gfx::Layer *)layer inRect:(gfx::Rect)rect
 {
@@ -110,7 +120,18 @@
         frame->push(gfx::VectorFromRect(rect));
         _function->apply(frame);
         frame->safeDrop();
+    } else {
+        gfx::Color::white()->set();
+        gfx::Path::fillRect(rect);
     }
+    
+    [_delegate portalViewDidDraw:self];
+}
+
+- (void)handleRenderTimeError:(NSError *)error
+{
+    self.function = nil;
+    [self.delegate portalView:self didEncounterError:error];
 }
 
 #pragma mark - Properties

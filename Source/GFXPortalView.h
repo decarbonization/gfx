@@ -16,11 +16,15 @@ namespace gfx {
 }
 #endif /* __cplusplus */
 
+@protocol GFXPortalViewDelegate;
+
 @interface GFXPortalView : NSView
 
 #if __cplusplus
 
 - (instancetype)initWithSize:(CGSize)size interpreter:(gfx::Interpreter *)interpreter;
+
+#pragma mark - Properties
 
 @property (nonatomic, readonly) gfx::Interpreter *interpreter;
 @property (nonatomic, readonly) gfx::Layer *gfxLayer;
@@ -28,8 +32,20 @@ namespace gfx {
 
 #endif /* __cplusplus */
 
+@property (nonatomic, readonly, assign) CALayer *contentLayer;
+@property (nonatomic, assign) IBOutlet id <GFXPortalViewDelegate> delegate;
+
 #pragma mark - Evaluation
 
 - (BOOL)runString:(NSString *)string error:(NSError **)error;
+
+@end
+
+#pragma mark -
+
+@protocol GFXPortalViewDelegate <NSObject>
+
+- (void)portalViewDidDraw:(GFXPortalView *)sender;
+- (void)portalView:(GFXPortalView *)sender didEncounterError:(NSError *)error;
 
 @end

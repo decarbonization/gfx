@@ -20,6 +20,8 @@
 		8B89D9D9184DAB550062EFB4 /* SimpleHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D9D8184DAB550062EFB4 /* SimpleHostTests.m */; };
 		8B89D9F0184DAB6B0062EFB4 /* gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9ED184DAB5F0062EFB4 /* gfx.framework */; };
 		8B89D9F2184DAB7F0062EFB4 /* gfx.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9ED184DAB5F0062EFB4 /* gfx.framework */; };
+		8B89D9FA184DB28F0062EFB4 /* CheckerBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B89D9F8184DB28F0062EFB4 /* CheckerBackground.png */; };
+		8B89D9FB184DB28F0062EFB4 /* CheckerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B89D9F9184DB28F0062EFB4 /* CheckerBackground@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		8B89D9D6184DAB550062EFB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8B89D9D8184DAB550062EFB4 /* SimpleHostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleHostTests.m; sourceTree = "<group>"; };
 		8B89D9E2184DAB5F0062EFB4 /* gfx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gfx.xcodeproj; path = ../../gfx.xcodeproj; sourceTree = "<group>"; };
+		8B89D9F8184DB28F0062EFB4 /* CheckerBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CheckerBackground.png; sourceTree = "<group>"; };
+		8B89D9F9184DB28F0062EFB4 /* CheckerBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CheckerBackground@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,8 @@
 		8B89D9B5184DAB550062EFB4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8B89D9F8184DB28F0062EFB4 /* CheckerBackground.png */,
+				8B89D9F9184DB28F0062EFB4 /* CheckerBackground@2x.png */,
 				8B89D9B6184DAB550062EFB4 /* SimpleHost-Info.plist */,
 				8B89D9B7184DAB550062EFB4 /* InfoPlist.strings */,
 				8B89D9BA184DAB550062EFB4 /* main.m */,
@@ -320,8 +326,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B89D9B9184DAB550062EFB4 /* InfoPlist.strings in Resources */,
+				8B89D9FA184DB28F0062EFB4 /* CheckerBackground.png in Resources */,
 				8B89D9C7184DAB550062EFB4 /* Images.xcassets in Resources */,
 				8B89D9BF184DAB550062EFB4 /* Credits.rtf in Resources */,
+				8B89D9FB184DB28F0062EFB4 /* CheckerBackground@2x.png in Resources */,
 				8B89D9C5184DAB550062EFB4 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

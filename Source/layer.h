@@ -41,10 +41,24 @@ namespace gfx {
         ///should still attempt to complete its work as quickly as possible.
         typedef std::function<void(Layer *layer, Rect rect)> DrawFunctor;
         
+        ///A function used to capture exceptions that are raised during the rendering of a layer.
+        ///
+        /// \param  e   The `gfx::Exception` raised and caught.
+        ///
+        /// \result true if the exception was handled by the functor;
+        ///         false if it wasn't. Unhandled exceptions are rethrown.
+        ///
+        ///Certain backing implementations of `gfx::Layer` may not be exception safe. This
+        ///functor is used as a hook to prevent issues, and ease in host error handling.
+        typedef std::function<bool(const Exception &e)> DrawExceptionHandlerFunctor;
+        
     protected:
         
         ///The function that will be used to render the contents of the layer.
         DrawFunctor mDrawFunctor;
+        
+        ///The function that will potentially handle exceptions caught during drawing.
+        DrawExceptionHandlerFunctor mDrawExceptionHandler;
         
         ///The superlayer of the layer.
         Layer *mSuperlayer;
@@ -142,6 +156,14 @@ namespace gfx {
         virtual const Array<Layer> *sublayers() const;
         
 #pragma mark - Rendering
+        
+        ///Sets the exception handler function used during draw operations.
+        virtual void setDrawExceptionHandler(const DrawExceptionHandlerFunctor &handler);
+        
+        ///Returns the exception handler function used during draw operations.
+        virtual const DrawExceptionHandlerFunctor &drawExceptionHandler() const;
+        
+#pragma mark -
         
         ///Informs the layer that its draw functor will soon be invoked.
         virtual void willDisplay();

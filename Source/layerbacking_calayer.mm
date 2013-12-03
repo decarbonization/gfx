@@ -25,14 +25,20 @@
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx
 {
-    gfx::AutoreleasePool pool;
-    
-    gfx::Context *context = gfx::make<gfx::Context>(ctx, layer.contentsScale, false);
-    gfx::Context::pushContext(context);
-    
-    self.layerBacking->display();
-    
-    gfx::Context::popContext();
+    try {
+        gfx::AutoreleasePool pool;
+        
+        gfx::Context *context = gfx::make<gfx::Context>(ctx, layer.contentsScale, false);
+        gfx::Context::pushContext(context);
+        
+        self.layerBacking->display();
+        
+        gfx::Context::popContext();
+    } catch (gfx::Exception e) {
+        @throw [NSException exceptionWithName:@"gfx::Exception"
+                                       reason:(NSString *)e.reason()->getStorage()
+                                     userInfo:nil];
+    }
 }
 
 @end

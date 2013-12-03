@@ -84,7 +84,7 @@ namespace gfx {
         Base(),
         mString(retained(string)),
         mCurrentIndex(0),
-        mOffset{1, 0}
+        mOffset{0, 0}
     {
         
     }

@@ -21,9 +21,11 @@
 
 @property (assign) IBOutlet NSWindow *inputWindow;
 @property (assign) IBOutlet NSTextView *inputTextView;
+@property (assign) IBOutlet NSTextView *consoleTextView;
 
 #pragma mark - Actions
 
+- (IBAction)clear:(id)sender;
 - (IBAction)run:(id)sender;
 
 @end

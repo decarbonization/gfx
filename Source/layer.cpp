@@ -126,6 +126,18 @@ namespace gfx {
     
 #pragma mark - Rendering
     
+    void Layer::setDrawExceptionHandler(const DrawExceptionHandlerFunctor &handler)
+    {
+        mDrawExceptionHandler = handler;
+    }
+    
+    const Layer::DrawExceptionHandlerFunctor &Layer::drawExceptionHandler() const
+    {
+        return mDrawExceptionHandler;
+    }
+    
+#pragma mark -
+    
     void Layer::willDisplay()
     {
         WillDisplaySignal(this);
@@ -133,7 +145,12 @@ namespace gfx {
     
     void Layer::draw(Rect rect)
     {
-        mDrawFunctor(this, rect);
+        try {
+            mDrawFunctor(this, rect);
+        } catch (Exception e) {
+            if(!mDrawExceptionHandler || !mDrawExceptionHandler(e))
+                throw;
+        }
     }
     
     void Layer::didDisplay()
