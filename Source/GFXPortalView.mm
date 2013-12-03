@@ -60,9 +60,8 @@
         
         self.interpreter = interpreter;
         
-        __unsafe_unretained __typeof(self) weakSelf = self;
-        auto drawFunctor = ^(gfx::Layer *layer, gfx::Rect rect) {
-            [weakSelf drawGraphicsLayer:layer inRect:rect];
+        auto drawFunctor = [self](gfx::Layer *layer, gfx::Rect rect) {
+            [self drawGraphicsLayer:layer inRect:rect];
         };
         self.gfxLayer = new gfx::Layer(self.frame, drawFunctor, [self layer].contentsScale);
         
@@ -89,15 +88,25 @@
 
 - (void)layoutSubviews
 {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0.0];
+    
     CGRect bounds = self.bounds;
     
     CGRect contentLayerFrame = _contentLayer.bounds;
-    contentLayerFrame.origin.x = round(CGRectGetMidX(contentLayerFrame) - CGRectGetMidX(bounds));
-    contentLayerFrame.origin.y = round(CGRectGetMidY(contentLayerFrame) - CGRectGetMidY(bounds));
+    contentLayerFrame.origin.x = round(CGRectGetMidX(bounds) - CGRectGetWidth(contentLayerFrame) / 2.0);
+    contentLayerFrame.origin.y = round(CGRectGetMidY(bounds) - CGRectGetHeight(contentLayerFrame) / 2.0);
     _contentLayer.frame = contentLayerFrame;
+    
+    [CATransaction commit];
 }
 
 #pragma mark - Drawing
+
+- (BOOL)isFlipped
+{
+    return YES;
+}
 
 - (void)drawGraphicsLayer:(gfx::Layer *)layer inRect:(gfx::Rect)rect
 {
@@ -120,7 +129,7 @@
 - (void)setFunction:(gfx::Function *)function
 {
     gfx::autoreleased(_function);
-    _function = retained(_function);
+    _function = retained(function);
     
     self.gfxLayer->setNeedsDisplay();
 }
@@ -129,7 +138,7 @@
 
 - (BOOL)runString:(NSString *)string error:(NSError **)error
 {
-    if(string) {
+    if(string.length > 0) {
         NSString *enclosedString = [NSString stringWithFormat:@"{ %@ }", string];
         try {
             auto expressions = gfx::Parser(gfx::make<gfx::String>((CFStringRef)enclosedString)).parse();

@@ -116,6 +116,7 @@ namespace gfx {
     
 #pragma mark - Auto Lifecycle
     
+#if !TARGET_OS_MAC
     static std::stack<AutoreleasePool *> pools;
     
     static void pushPool(AutoreleasePool *pool)
@@ -137,6 +138,28 @@ namespace gfx {
             return nullptr;
         }
     }
+#endif /* !TARGET_OS_MAC */
+    
+#pragma mark - • AutoreleasePool
+    
+    void AutoreleasePool::Autorelease(const Base *object)
+    {
+        if(!object)
+            return;
+        
+#if TARGET_OS_MAC
+        //There can exist NSAutoreleasePools long before the gfx stack
+        //is fully up and running, so on OS X we bypass our autorelease
+        //pool stack completely.
+        platform::autorelease_pool_current_add(object);
+#else
+        AutoreleasePool *currentPool = getCurrentPool();
+        if(currentPool)
+            currentPool->add(object);
+#endif /* TARGET_OS_MAC */
+    }
+    
+#pragma mark - Lifecycle
     
     AutoreleasePool::AutoreleasePool() :
 #if TARGET_OS_MAC
@@ -145,7 +168,9 @@ namespace gfx {
         mStorage()
 #endif /* TARGET_OS_MAC */
     {
+#if !TARGET_OS_MAC
         pushPool(this);
+#endif /* !TARGET_OS_MAC */
     }
     
     AutoreleasePool::~AutoreleasePool()
@@ -156,9 +181,9 @@ namespace gfx {
         for (const Base *object : mStorage) {
             object->release();
         }
-#endif /* TARGET_OS_MAC */
         
         popPool();
+#endif /* TARGET_OS_MAC */
     }
     
     void AutoreleasePool::add(const Base *object)
@@ -172,9 +197,6 @@ namespace gfx {
     
     void Base::autorelease() const
     {
-        AutoreleasePool *currentPool = getCurrentPool();
-        
-        if(currentPool)
-            currentPool->add(this);
+        AutoreleasePool::Autorelease(this);
     }
 }

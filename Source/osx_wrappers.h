@@ -22,6 +22,7 @@ namespace gfx {
         NSAutoreleasePool *autorelease_pool_make();
         void autorelease_pool_drain(NSAutoreleasePool **ioPool);
         void autorelease_pool_add(NSAutoreleasePool *pool, const Base *object);
+        void autorelease_pool_current_add(const Base *object);
     }
 }
 

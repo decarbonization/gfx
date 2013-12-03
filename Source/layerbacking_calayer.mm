@@ -47,14 +47,22 @@ namespace gfx {
         mDelegateAdaptor([GFXLayerBackingDelegateAdaptor new]),
         mLayer(layer)
     {
+        mTexture.geometryFlipped = YES;
+        mTexture.frame = frame;
         mTexture.needsDisplayOnBoundsChange = YES;
+        
+        mDelegateAdaptor.layerBacking = this;
+        mTexture.delegate = mDelegateAdaptor;
     }
     
     LayerBacking::~LayerBacking()
     {
+        mDelegateAdaptor.layerBacking = nullptr;
+        
         [mDelegateAdaptor release];
         mDelegateAdaptor = nil;
         
+        mTexture.delegate = nil;
         [mTexture release];
         mTexture = nil;
     }
@@ -112,7 +120,7 @@ namespace gfx {
     
     void LayerBacking::setNeedsDisplay()
     {
-        display();
+        [mTexture setNeedsDisplay];
     }
     
     void LayerBacking::render(Context *context)

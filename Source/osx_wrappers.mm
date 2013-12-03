@@ -65,5 +65,10 @@ namespace gfx {
             if(object)
                 [[[GFXBaseWrapper alloc] initWithBaseObject:object] autorelease];
         }
+        
+        void autorelease_pool_current_add(const Base *object)
+        {
+            if(object) [[[GFXBaseWrapper alloc] initWithBaseObject:object] autorelease];
+        }
     }
 }

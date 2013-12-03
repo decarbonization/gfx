@@ -73,20 +73,20 @@
 		8B12C906184BE64C00DBD77C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B908183DC22E00DEB62F /* CoreGraphics.framework */; };
 		8B12C907184BE65000DBD77C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B90D183DC90600DEB62F /* ImageIO.framework */; };
 		8B12C90B184BE69900DBD77C /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C90A184BE69900DBD77C /* libSystem.dylib */; };
-		8B12C90D184BE75300DBD77C /* filepaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C90C184BE75300DBD77C /* filepaths.h */; };
+		8B12C90D184BE75300DBD77C /* filepaths.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C90C184BE75300DBD77C /* filepaths.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C90F184BECF200DBD77C /* filepaths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C90E184BECF200DBD77C /* filepaths.cpp */; };
 		8B12C911184C148E00DBD77C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C910184C148E00DBD77C /* CoreText.framework */; };
 		8B12C916184C14B000DBD77C /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C914184C14B000DBD77C /* font.cpp */; };
-		8B12C917184C14B000DBD77C /* font.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C915184C14B000DBD77C /* font.h */; };
+		8B12C917184C14B000DBD77C /* font.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C915184C14B000DBD77C /* font.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C91E184C18F000DBD77C /* textline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C91C184C18EF00DBD77C /* textline.cpp */; };
-		8B12C91F184C18F000DBD77C /* textline.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C91D184C18EF00DBD77C /* textline.h */; };
+		8B12C91F184C18F000DBD77C /* textline.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C91D184C18EF00DBD77C /* textline.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C924184D896800DBD77C /* layerbacking_calayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C922184D896800DBD77C /* layerbacking_calayer.mm */; };
-		8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C923184D896800DBD77C /* layerbacking_calayer.h */; };
+		8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C923184D896800DBD77C /* layerbacking_calayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 		8B89D998184D8AEF0062EFB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */; };
 		8B89D99B184D8EEA0062EFB4 /* osx_wrappers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D999184D8EEA0062EFB4 /* osx_wrappers.mm */; };
-		8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */; };
-		8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */; };
+		8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B89D9A1184DA2DC0062EFB4 /* GFXPortalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */; };
 /* End PBXBuildFile section */
 
@@ -460,8 +460,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B12C8F8184BE15600DBD77C /* str.h in Headers */,
-				8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */,
-				8B12C90D184BE75300DBD77C /* filepaths.h in Headers */,
 				8B12C8E7184BE15600DBD77C /* layer.h in Headers */,
 				8B12C8DD184BE15600DBD77C /* gfx.h in Headers */,
 				8B12C8F2184BE15600DBD77C /* path.h in Headers */,
@@ -471,20 +469,22 @@
 				8B12C8D4184BE15600DBD77C /* dictionary.h in Headers */,
 				8B12C8E3184BE15600DBD77C /* image.h in Headers */,
 				8B12C8F4184BE15600DBD77C /* session.h in Headers */,
-				8B12C91F184C18F000DBD77C /* textline.h in Headers */,
 				8B12C8C5184BE15600DBD77C /* array.h in Headers */,
-				8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */,
 				8B12C8DE184BE15600DBD77C /* gfx_defines.h in Headers */,
 				8B12C8CC184BE15600DBD77C /* broadcastsignal.h in Headers */,
-				8B12C917184C14B000DBD77C /* font.h in Headers */,
 				8B12C8D6184BE15600DBD77C /* exception.h in Headers */,
 				8B12C8EE184BE15600DBD77C /* papertape.h in Headers */,
 				8B12C8F0184BE15600DBD77C /* parser.h in Headers */,
 				8B12C8FA184BE15600DBD77C /* types.h in Headers */,
 				8B12C8C7184BE15600DBD77C /* assertions.h in Headers */,
+				8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */,
+				8B12C90D184BE75300DBD77C /* filepaths.h in Headers */,
+				8B12C91F184C18F000DBD77C /* textline.h in Headers */,
+				8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */,
+				8B12C917184C14B000DBD77C /* font.h in Headers */,
+				8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */,
 				8B12C8C9184BE15600DBD77C /* base.h in Headers */,
 				8B12C8D8184BE15600DBD77C /* expression.h in Headers */,
-				8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */,
 				8B12C8D1184BE15600DBD77C /* context.h in Headers */,
 				8B12C8EA184BE15600DBD77C /* number.h in Headers */,
 				8B12C8E9184BE15600DBD77C /* layerbacking_cg.h in Headers */,

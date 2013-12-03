@@ -138,19 +138,24 @@ namespace gfx {
         
     public:
         
+        ///Autoreleases a given object in the top most autorelease pool.
+        static void Autorelease(const Base *object);
+        
+#pragma mark - Lifecycle
+        
         ///The constructor.
         AutoreleasePool();
         
         ///The destructor.
         ~AutoreleasePool();
         
+    private:
+        
         ///Add an object to the receiver to be
         ///released when the pool goes out of scope.
         ///
         ///This method is currently *not* thread safe.
         void add(const Base *object);
-        
-    private:
         
         AutoreleasePool(const AutoreleasePool &);
         AutoreleasePool &operator=(AutoreleasePool &);
