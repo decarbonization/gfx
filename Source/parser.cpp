@@ -145,7 +145,7 @@ namespace gfx {
             this->next();
         }
         
-        require(this->current() == c, (String::Builder() << "expected '" << c << "', found end of file."));
+        requireCondition(this->current() == c, (String::Builder() << "expected '" << c << "', found end of file."));
     }
     
     const String *Parser::accumulateWhile(std::function<bool(UniChar c, bool isFirstCharacter)> predicate)
@@ -165,7 +165,7 @@ namespace gfx {
     
 #pragma mark - Parsers
     
-    void Parser::require(bool condition, const String *reason)
+    void Parser::requireCondition(bool condition, const String *reason)
     {
         if(!condition) fail(reason);
     }
@@ -271,7 +271,7 @@ namespace gfx {
             }
         }
         
-        require(this->current() == end, (String::Builder() << "expected '" << end << "', found end of file."));
+        requireCondition(this->current() == end, (String::Builder() << "expected '" << end << "', found end of file."));
         
         this->next();
         

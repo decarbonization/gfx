@@ -86,6 +86,8 @@
 		8B89D998184D8AEF0062EFB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */; };
 		8B89D99B184D8EEA0062EFB4 /* osx_wrappers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D999184D8EEA0062EFB4 /* osx_wrappers.mm */; };
 		8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */; };
+		8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */; };
+		8B89D9A1184DA2DC0062EFB4 /* GFXPortalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +209,8 @@
 		8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8B89D999184D8EEA0062EFB4 /* osx_wrappers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = osx_wrappers.mm; sourceTree = "<group>"; };
 		8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osx_wrappers.h; sourceTree = "<group>"; };
+		8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXPortalView.h; sourceTree = "<group>"; };
+		8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXPortalView.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +299,7 @@
 				8B12C8FE184BE1C900DBD77C /* Core Types */,
 				8B12C8FF184BE1F000DBD77C /* Core Interpreter */,
 				8B12C900184BE1FB00DBD77C /* Graphics Stack */,
+				8B89D99D184DA2AD0062EFB4 /* hosting */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -438,6 +443,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8B89D99D184DA2AD0062EFB4 /* hosting */ = {
+			isa = PBXGroup;
+			children = (
+				8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */,
+				8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */,
+			);
+			name = hosting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -459,6 +473,7 @@
 				8B12C8F4184BE15600DBD77C /* session.h in Headers */,
 				8B12C91F184C18F000DBD77C /* textline.h in Headers */,
 				8B12C8C5184BE15600DBD77C /* array.h in Headers */,
+				8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */,
 				8B12C8DE184BE15600DBD77C /* gfx_defines.h in Headers */,
 				8B12C8CC184BE15600DBD77C /* broadcastsignal.h in Headers */,
 				8B12C917184C14B000DBD77C /* font.h in Headers */,
@@ -614,6 +629,7 @@
 				8B12C8E6184BE15600DBD77C /* layer.cpp in Sources */,
 				8B89D99B184D8EEA0062EFB4 /* osx_wrappers.mm in Sources */,
 				8B12C8C6184BE15600DBD77C /* assertions.cpp in Sources */,
+				8B89D9A1184DA2DC0062EFB4 /* GFXPortalView.mm in Sources */,
 				8B12C8F9184BE15600DBD77C /* types.cpp in Sources */,
 				8B12C8F3184BE15600DBD77C /* session.cpp in Sources */,
 				8B12C8D2184BE15600DBD77C /* corefunctions.cpp in Sources */,

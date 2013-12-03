@@ -45,7 +45,7 @@ namespace gfx {
             Function,
         };
         
-        static void require(bool condition, const String *reason);
+        static void requireCondition(bool condition, const String *reason);
         static void fail(const String *reason);
         
         Word *parseWord();

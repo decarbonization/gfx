@@ -63,7 +63,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "100x100"
+            argument = "150x150"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

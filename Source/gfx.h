@@ -36,4 +36,8 @@
 #   include <gfx/color.h>
 #endif /* __cplusplus */
 
+#if __OBJC__
+#   import "GFXPortalView.h"
+#endif /* __OBJC__ */
+
 #endif

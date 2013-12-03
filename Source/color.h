@@ -34,6 +34,41 @@ namespace gfx {
         
     public:
         
+        ///Returns a new autoreleased white Color object.
+        static Color *white()   { return make<Color>(1.0, 1.0, 1.0, 1.0); }
+        
+        ///Returns a new autoreleased black Color object.
+        static Color *black()   { return make<Color>(0.0, 0.0, 0.0, 1.0); }
+        
+        ///Returns a new autoreleased translucent Color object.
+        static Color *clear()   { return make<Color>(0.0, 0.0, 0.0, 0.0); }
+        
+        ///Returns a new autoreleased red Color object.
+        static Color *red()     { return make<Color>(1.0, 0.0, 0.0, 1.0); }
+        
+        ///Returns a new autoreleased green Color object.
+        static Color *green()   { return make<Color>(0.0, 1.0, 0.0, 1.0); }
+        
+        ///Returns a new autoreleased blue Color object.
+        static Color *blue()    { return make<Color>(0.0, 0.0, 1.0, 1.0); }
+        
+        ///Returns a new autoreleased orange Color object.
+        static Color *orange()  { return make<Color>(1.0, 0.5, 0.0, 1.0); }
+        
+        ///Returns a new autoreleased purple Color object.
+        static Color *purple()  { return make<Color>(0.5, 0.0, 0.5, 1.0); }
+        
+        ///Returns a new autoreleased pink Color object.
+        static Color *pink()    { return make<Color>(1.0, 0.0, 1.0, 1.0); }
+        
+        ///Returns a new autoreleased brown Color object.
+        static Color *brown()   { return make<Color>(0.6, 0.4, 0.2, 1.0); }
+        
+        ///Returns a new autoreleased yellow Color object.
+        static Color *yellow()  { return make<Color>(1.0, 1.0, 0.0, 1.0); }
+        
+#pragma mark - Lifecycle
+        
         ///Constructs the Color using a native object.
         ///
         /// \param  color   The native color object. Should not be null.

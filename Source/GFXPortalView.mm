@@ -1,0 +1,162 @@
+//
+//  GFXPortalView.m
+//  gfx
+//
+//  Created by Kevin MacWhinnie on 12/2/13.
+//  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
+//
+
+#if GFX_Layer_Use_CA
+
+#import "GFXPortalView.h"
+#import <QuartzCore/QuartzCore.h>
+
+#import "interpreter.h"
+#import "parser.h"
+#import "function.h"
+#import "stackframe.h"
+
+#import "graphics.h"
+#import "context.h"
+#import "layer.h"
+
+@interface GFXPortalView ()
+
+@property (nonatomic, assign) CALayer *contentLayer;
+
+#pragma mark - readwrite
+
+@property (nonatomic, readwrite) gfx::Interpreter *interpreter;
+@property (nonatomic, readwrite) gfx::Layer *gfxLayer;
+
+@end
+
+#pragma mark -
+
+@implementation GFXPortalView
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    _gfxLayer->setDrawFunctor(nullptr);
+    released(_gfxLayer);
+    
+    [super dealloc];
+}
+
+- (instancetype)initWithSize:(CGSize)size interpreter:(gfx::Interpreter *)interpreter
+{
+    if((self = [super initWithFrame:CGRectMake(0.0, 0.0, size.width, size.height)])) {
+        [self setWantsLayer:YES];
+        self.layer.backgroundColor = [NSColor whiteColor].CGColor;
+        
+        [self setPostsFrameChangedNotifications:YES];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(layoutSubviews)
+                                                     name:NSViewFrameDidChangeNotification
+                                                   object:self];
+        
+        
+        self.interpreter = interpreter;
+        
+        __unsafe_unretained __typeof(self) weakSelf = self;
+        auto drawFunctor = ^(gfx::Layer *layer, gfx::Rect rect) {
+            [weakSelf drawGraphicsLayer:layer inRect:rect];
+        };
+        self.gfxLayer = new gfx::Layer(self.frame, drawFunctor, [self layer].contentsScale);
+        
+        self.contentLayer = self.gfxLayer->CALayer();
+        self.contentLayer.borderColor = [NSColor darkGrayColor].CGColor;
+        self.contentLayer.borderWidth = 1.0;
+        [self.layer addSublayer:self.contentLayer];
+    }
+    
+    return self;
+}
+
+- (id)initWithFrame:(NSRect)frameRect
+{
+    gfx::Interpreter *newInterpreter = gfx::make<gfx::Interpreter>();
+    if((self = [self initWithSize:frameRect.size interpreter:newInterpreter])) {
+        self.frameOrigin = frameRect.origin;
+    }
+    
+    return self;
+}
+
+#pragma mark - Layout
+
+- (void)layoutSubviews
+{
+    CGRect bounds = self.bounds;
+    
+    CGRect contentLayerFrame = _contentLayer.bounds;
+    contentLayerFrame.origin.x = round(CGRectGetMidX(contentLayerFrame) - CGRectGetMidX(bounds));
+    contentLayerFrame.origin.y = round(CGRectGetMidY(contentLayerFrame) - CGRectGetMidY(bounds));
+    _contentLayer.frame = contentLayerFrame;
+}
+
+#pragma mark - Drawing
+
+- (void)drawGraphicsLayer:(gfx::Layer *)layer inRect:(gfx::Rect)rect
+{
+    if(_function) {
+        gfx::StackFrame *frame = self.interpreter->currentFrame();
+        frame->push(gfx::VectorFromRect(rect));
+        _function->apply(frame);
+        frame->safeDrop();
+    }
+}
+
+#pragma mark - Properties
+
+- (void)setInterpreter:(gfx::Interpreter *)interpreter
+{
+    autoreleased(_interpreter);
+    _interpreter = retained(interpreter);
+}
+
+- (void)setFunction:(gfx::Function *)function
+{
+    gfx::autoreleased(_function);
+    _function = retained(_function);
+    
+    self.gfxLayer->setNeedsDisplay();
+}
+
+#pragma mark - Evaluation
+
+- (BOOL)runString:(NSString *)string error:(NSError **)error
+{
+    if(string) {
+        NSString *enclosedString = [NSString stringWithFormat:@"{ %@ }", string];
+        try {
+            auto expressions = gfx::Parser(gfx::make<gfx::String>((CFStringRef)enclosedString)).parse();
+            _interpreter->eval(expressions);
+            
+            self.function = _interpreter->currentFrame()->popFunction();
+        } catch (gfx::Parser::ParsingException e) {
+            if(error) *error = [NSError errorWithDomain:@"gfx::Parser::ErrorDomain"
+                                                   code:'pars'
+                                               userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Parsing error. %@", e.reason()->getStorage()]}];
+            
+            return NO;
+        } catch (gfx::Exception e) {
+            if(error) *error = [NSError errorWithDomain:@"gfx::Interpreter::ErrorDomain"
+                                                   code:'pars'
+                                               userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Error running code. %@", e.reason()->getStorage()]}];
+            
+            return NO;
+        }
+        
+        return YES;
+    } else {
+        self.function = nullptr;
+        return YES;
+    }
+}
+
+@end
+
+#endif /* GFX_Layer_Use_CA */

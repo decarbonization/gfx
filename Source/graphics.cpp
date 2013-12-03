@@ -12,7 +12,6 @@
 #include "interpreter.h"
 #include "stackframe.h"
 #include "function.h"
-#include "array.h"
 #include "number.h"
 #include "file.h"
 #include "word.h"
@@ -28,87 +27,86 @@
 #include "font.h"
 
 namespace gfx {
+    
 #pragma mark - Utility Functions
     
-    namespace {
-        Array<Base> *vectorFromSize(Size size)
-        {
-            return autoreleased(new Array<Base>{
-                make<Number>(size.width),
-                make<Number>(size.height)
-            });
-        }
+    Array<Base> *VectorFromSize(Size size)
+    {
+        return autoreleased(new Array<Base>{
+            make<Number>(size.width),
+            make<Number>(size.height)
+        });
+    }
+    
+    Size VectorToSize(const Array<Base> *sizeVector)
+    {
+        gfx_assert_param(sizeVector);
+        gfx_assert(sizeVector->count() == 2, "wrong number of numbers in vector"_gfx);
         
-        Size vectorToSize(const Array<Base> *sizeVector)
-        {
-            gfx_assert_param(sizeVector);
-            gfx_assert(sizeVector->count() == 2, "wrong number of numbers in vector"_gfx);
-            
-            return Size{
-                dynamic_cast_or_throw<Number *>(sizeVector->at(0))->value(),
-                dynamic_cast_or_throw<Number *>(sizeVector->at(1))->value(),
+        return Size{
+            dynamic_cast_or_throw<Number *>(sizeVector->at(0))->value(),
+            dynamic_cast_or_throw<Number *>(sizeVector->at(1))->value(),
+        };
+    }
+    
+    Array<Base> *VectorFromPoint(Point point)
+    {
+        return autoreleased(new Array<Base>{
+            make<Number>(point.x),
+            make<Number>(point.y)
+        });
+    }
+    
+    Point VectorToPoint(const Array<Base> *pointVector)
+    {
+        gfx_assert_param(pointVector);
+        gfx_assert(pointVector->count() == 2, "wrong number of numbers in vector"_gfx);
+        
+        return Point{
+            dynamic_cast_or_throw<Number *>(pointVector->at(0))->value(),
+            dynamic_cast_or_throw<Number *>(pointVector->at(1))->value(),
+        };
+    }
+    
+    Array<Base> *VectorFromRect(Rect rect)
+    {
+        return autoreleased(new Array<Base>{
+            make<Number>(rect.origin.x),
+            make<Number>(rect.origin.y),
+            make<Number>(rect.size.width),
+            make<Number>(rect.size.height),
+        });
+    }
+    
+    Rect VectorToRect(const Array<Base> *rectVector)
+    {
+        gfx_assert_param(rectVector);
+        
+        if(rectVector->count() == 4) {
+            return Rect{
+                Point{
+                    dynamic_cast_or_throw<Number *>(rectVector->at(0))->value(),
+                    dynamic_cast_or_throw<Number *>(rectVector->at(1))->value(),
+                },
+                Size{
+                    dynamic_cast_or_throw<Number *>(rectVector->at(2))->value(),
+                    dynamic_cast_or_throw<Number *>(rectVector->at(3))->value(),
+                }
             };
-        }
-        
-        Array<Base> *vectorFromPoint(Point point)
-        {
-            return autoreleased(new Array<Base>{
-                make<Number>(point.x),
-                make<Number>(point.y)
-            });
-        }
-        
-        Point vectorToPoint(const Array<Base> *pointVector)
-        {
-            gfx_assert_param(pointVector);
-            gfx_assert(pointVector->count() == 2, "wrong number of numbers in vector"_gfx);
-            
-            return Point{
-                dynamic_cast_or_throw<Number *>(pointVector->at(0))->value(),
-                dynamic_cast_or_throw<Number *>(pointVector->at(1))->value(),
+        } else if(rectVector->count() == 2) {
+            return Rect{
+                Point{
+                    0.0,
+                    0.0,
+                },
+                Size{
+                    dynamic_cast_or_throw<Number *>(rectVector->at(0))->value(),
+                    dynamic_cast_or_throw<Number *>(rectVector->at(1))->value(),
+                }
             };
-        }
-        
-        Array<Base> *vectorFromRect(Rect rect)
-        {
-            return autoreleased(new Array<Base>{
-                make<Number>(rect.origin.x),
-                make<Number>(rect.origin.y),
-                make<Number>(rect.size.width),
-                make<Number>(rect.size.height),
-            });
-        }
-        
-        Rect vectorToRect(const Array<Base> *rectVector)
-        {
-            gfx_assert_param(rectVector);
-            
-            if(rectVector->count() == 4) {
-                return Rect{
-                    Point{
-                        dynamic_cast_or_throw<Number *>(rectVector->at(0))->value(),
-                        dynamic_cast_or_throw<Number *>(rectVector->at(1))->value(),
-                    },
-                    Size{
-                        dynamic_cast_or_throw<Number *>(rectVector->at(2))->value(),
-                        dynamic_cast_or_throw<Number *>(rectVector->at(3))->value(),
-                    }
-                };
-            } else if(rectVector->count() == 2) {
-                return Rect{
-                    Point{
-                        0.0,
-                        0.0,
-                    },
-                    Size{
-                        dynamic_cast_or_throw<Number *>(rectVector->at(0))->value(),
-                        dynamic_cast_or_throw<Number *>(rectVector->at(1))->value(),
-                    }
-                };
-            } else {
-                throw Exception("wrong number of numbers in vector for rect"_gfx, nullptr);
-                return Rect{};
-            }
+        } else {
+            throw Exception("wrong number of numbers in vector for rect"_gfx, nullptr);
+            return Rect{};
         }
     }
     
@@ -117,7 +115,7 @@ namespace gfx {
     static void ctx_begin(StackFrame *stack)
     {
         auto sizeVector = stack->popType<Array<Base>>();
-        auto size = vectorToSize(sizeVector);
+        auto size = VectorToSize(sizeVector);
         Context::pushContext(Context::bitmapContextWith(size));
     }
     
@@ -129,7 +127,7 @@ namespace gfx {
     static void ctx_size(StackFrame *stack)
     {
         auto ctxSize = Context::currentContext()->boundingRect().size;
-        stack->push(vectorFromSize(ctxSize));
+        stack->push(VectorFromSize(ctxSize));
     }
     
     static void ctx_save(StackFrame *stack)
@@ -148,7 +146,7 @@ namespace gfx {
         /* -- vec */
         
         auto context = Context::currentContext();
-        auto vector = vectorFromSize(context->boundingRect().size);
+        auto vector = VectorFromSize(context->boundingRect().size);
         stack->push(vector);
     }
     
@@ -162,9 +160,9 @@ namespace gfx {
         
         Rect frame = {};
         if(sizeOrRect->count() == 4) {
-            frame = vectorToRect(sizeOrRect);
+            frame = VectorToRect(sizeOrRect);
         } else if(sizeOrRect->count() == 2) {
-            frame.size = vectorToSize(sizeOrRect);
+            frame.size = VectorToSize(sizeOrRect);
         } else {
             throw Exception("Invalid vector given to `layer`. Must contain either 2 numbers for a size, or 4 numbers for a rect."_gfx, nullptr);
         }
@@ -172,7 +170,7 @@ namespace gfx {
         Interpreter *interpreter = stack->interpreter();
         stack->push(make<Layer>(frame, [interpreter, drawFunction](Layer *layer, Rect rect) {
             StackFrame *frame = interpreter->currentFrame();
-            frame->push(vectorFromRect(rect));
+            frame->push(VectorFromRect(rect));
             drawFunction->apply(frame);
             frame->safeDrop();
         }));
@@ -182,7 +180,7 @@ namespace gfx {
     {
         /* Layer -- vec */
         auto layer = stack->popType<Layer>();
-        stack->push(vectorFromRect(layer->frame()));
+        stack->push(VectorFromRect(layer->frame()));
     }
     
     static void layer_setFrame(StackFrame *stack)
@@ -190,7 +188,7 @@ namespace gfx {
         /* layer vec -- */
         auto frameVector = stack->popType<Array<Base>>();
         auto layer = stack->popType<Layer>();
-        layer->setFrame(vectorToRect(frameVector));
+        layer->setFrame(VectorToRect(frameVector));
     }
     
     static void layer_display(StackFrame *stack)
@@ -245,14 +243,14 @@ namespace gfx {
     static void fill(StackFrame *stack)
     {
         auto rectVector = stack->popType<Array<Base>>();
-        Rect rect = vectorToRect(rectVector);
+        Rect rect = VectorToRect(rectVector);
         Path::fillRect(rect);
     }
     
     static void stroke(StackFrame *stack)
     {
         auto rectVector = stack->popType<Array<Base>>();
-        Rect rect = vectorToRect(rectVector);
+        Rect rect = VectorToRect(rectVector);
         Path::strokeRect(rect);
     }
     
@@ -268,7 +266,7 @@ namespace gfx {
     {
         /* vec -- path */
         auto rectVector = stack->popType<Array<Base>>();
-        Rect rect = vectorToRect(rectVector);
+        Rect rect = VectorToRect(rectVector);
         stack->push(Path::withRect(rect));
     }
     
@@ -277,7 +275,7 @@ namespace gfx {
         /* vec num -- path */
         auto radius = stack->popNumber();
         auto rectVector = stack->popType<Array<Base>>();
-        Rect rect = vectorToRect(rectVector);
+        Rect rect = VectorToRect(rectVector);
         stack->push(Path::withRoundedRect(rect, radius->value(), radius->value()));
     }
     
@@ -285,7 +283,7 @@ namespace gfx {
     {
         /* vec -- path */
         auto rectVector = stack->popType<Array<Base>>();
-        Rect rect = vectorToRect(rectVector);
+        Rect rect = VectorToRect(rectVector);
         stack->push(Path::withOval(rect));
     }
     
@@ -294,7 +292,7 @@ namespace gfx {
     static void path_move(StackFrame *stack)
     {
         /* path vec -- path */
-        auto point = vectorToPoint(stack->popType<Array<Base>>());
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
         auto path = stack->popType<Path>();
         path->moveToPoint(point);
         stack->push(path);
@@ -303,7 +301,7 @@ namespace gfx {
     static void path_line(StackFrame *stack)
     {
         /* path vec -- path */
-        auto point = vectorToPoint(stack->popType<Array<Base>>());
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
         auto path = stack->popType<Path>();
         path->lineToPoint(point);
         stack->push(path);
@@ -313,8 +311,8 @@ namespace gfx {
     {
         /* path vec1 vec2 num -- path */
         auto radius = stack->popNumber();
-        auto point2 = vectorToPoint(stack->popType<Array<Base>>());
-        auto point1 = vectorToPoint(stack->popType<Array<Base>>());
+        auto point2 = VectorToPoint(stack->popType<Array<Base>>());
+        auto point1 = VectorToPoint(stack->popType<Array<Base>>());
         auto path = stack->popType<Path>();
         path->arcToPoint(point1, point2, radius->value());
         stack->push(path);
@@ -322,9 +320,9 @@ namespace gfx {
     
     static void path_curve(StackFrame *stack)
     {
-        auto controlPoint2 = vectorToPoint(stack->popType<Array<Base>>());
-        auto controlPoint1 = vectorToPoint(stack->popType<Array<Base>>());
-        auto point = vectorToPoint(stack->popType<Array<Base>>());
+        auto controlPoint2 = VectorToPoint(stack->popType<Array<Base>>());
+        auto controlPoint1 = VectorToPoint(stack->popType<Array<Base>>());
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
         auto path = stack->popType<Path>();
         path->curveToPoint(point, controlPoint1, controlPoint2);
         stack->push(path);
@@ -337,7 +335,7 @@ namespace gfx {
         /* path -- vec */
         auto path = stack->popType<Path>();
         auto boundingBox = path->boundingBox();
-        auto array = vectorFromRect(boundingBox);
+        auto array = VectorFromRect(boundingBox);
         stack->push(array);
     }
     
@@ -366,7 +364,7 @@ namespace gfx {
     static void path_containsPoint(StackFrame *stack)
     {
         /* path vec -- bool */
-        auto point = vectorToPoint(stack->popType<Array<Base>>());
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
         auto path = stack->popType<Path>();
         if(path->containsPoint(point))
             stack->push(Number::True());
@@ -419,14 +417,14 @@ namespace gfx {
     {
         /* text -- vec */
         auto text = stack->popType<TextLine>();
-        auto vector = vectorFromSize(text->bounds().size);
+        auto vector = VectorFromSize(text->bounds().size);
         stack->push(vector);
     }
     
     static void text_draw(StackFrame *stack)
     {
         /* text vec -- */
-        auto point = vectorToPoint(stack->popType<Array<Base>>());
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
         auto text = stack->popType<TextLine>();
         
         text->drawAtPoint(point);
@@ -461,6 +459,18 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "layer/render"_gfx, &layer_render);
         
         //Colors
+        Graphics::createVariableBinding(frame, "white"_gfx, Color::white());
+        Graphics::createVariableBinding(frame, "black"_gfx, Color::black());
+        Graphics::createVariableBinding(frame, "translucent"_gfx, Color::clear());
+        Graphics::createVariableBinding(frame, "red"_gfx, Color::red());
+        Graphics::createVariableBinding(frame, "green"_gfx, Color::green());
+        Graphics::createVariableBinding(frame, "blue"_gfx, Color::blue());
+        Graphics::createVariableBinding(frame, "orange"_gfx, Color::orange());
+        Graphics::createVariableBinding(frame, "purple"_gfx, Color::purple());
+        Graphics::createVariableBinding(frame, "pink"_gfx, Color::pink());
+        Graphics::createVariableBinding(frame, "brown"_gfx, Color::brown());
+        Graphics::createVariableBinding(frame, "yellow"_gfx, Color::yellow());
+        
         Graphics::createFunctionBinding(frame, "rgb"_gfx, &rgb);
         Graphics::createFunctionBinding(frame, "rgba"_gfx, &rgba);
         Graphics::createFunctionBinding(frame, "set-fill"_gfx, &set_fill);
