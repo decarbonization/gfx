@@ -13,6 +13,10 @@
 
 #include "str.h"
 
+#if TARGET_OS_MAC
+#   import "osx_wrappers.h"
+#endif /* TARGET_OS_MAC */
+
 namespace gfx {
     const void *RetainCallBack(CFAllocatorRef allocator, const void *value)
     {
@@ -135,24 +139,36 @@ namespace gfx {
     }
     
     AutoreleasePool::AutoreleasePool() :
+#if TARGET_OS_MAC
+        mPool(platform::autorelease_pool_make())
+#else
         mStorage(CFArrayCreateMutable(kCFAllocatorDefault, 0, NULL))
+#endif /* TARGET_OS_MAC */
     {
         pushPool(this);
     }
     
     AutoreleasePool::~AutoreleasePool()
     {
+#if TARGET_OS_MAC
+        platform::autorelease_pool_drain(&mPool);
+#else
         for (Index index = 0, count = CFArrayGetCount(mStorage); index < count; index++) {
             const Base *object = (const Base *)CFArrayGetValueAtIndex(mStorage, index);
             object->release();
         }
+#endif /* TARGET_OS_MAC */
         
         popPool();
     }
     
     void AutoreleasePool::add(const Base *object)
     {
+#if TARGET_OS_MAC
+        platform::autorelease_pool_add(mPool, object);
+#else
         CFArrayAppendValue(mStorage, object);
+#endif /* TARGET_OS_MAC */
     }
     
     void Base::autorelease() const

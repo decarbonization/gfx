@@ -8,12 +8,12 @@
 
 #if GFX_Layer_Use_CA
 
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+
 #include "layerbacking_calayer.h"
 #include "layer.h"
 #include "context.h"
-
-#import <Foundation/Foundation.h>
-#import <QuartzCore/QuartzCore.h>
 
 @interface GFXLayerBackingDelegateAdaptor : NSObject
 
@@ -47,9 +47,6 @@ namespace gfx {
         mDelegateAdaptor([GFXLayerBackingDelegateAdaptor new]),
         mLayer(layer)
     {
-        AutoreleasePool pool;
-        
-        
     }
     
     LayerBacking::~LayerBacking()

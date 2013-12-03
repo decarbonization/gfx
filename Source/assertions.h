@@ -33,7 +33,7 @@ namespace gfx {
 ///
 ///Do not place side effects in param, as they will
 ///not be evaluated if assertions are disabled.
-#   define gfx_assert_param(param) gfx_assert(param != nullptr, #param ""_gfx)
+#   define gfx_assert_param(param) gfx_assert(param != nullptr, make<gfx::String>(#param))
 
 #endif /* gfx_assertions_enabled */
 

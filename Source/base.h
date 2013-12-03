@@ -16,6 +16,10 @@
 #include "assertions.h"
 #include "types.h"
 
+#if !__OBJC__ && TARGET_OS_MAC
+class NSAutoreleasePool;
+#endif /* TARGET_OS_MAC */
+
 namespace gfx {
     class String;
     
@@ -125,7 +129,11 @@ namespace gfx {
     ///destroyed without receiving parties having to manage all lifecycles.
     class AutoreleasePool final
     {
+#if TARGET_OS_MAC
+        NSAutoreleasePool *mPool;
+#else
         CFMutableArrayRef mStorage;
+#endif /* TARGET_OS_MAC */
         
     public:
         
