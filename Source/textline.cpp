@@ -85,14 +85,25 @@ namespace gfx {
     void TextLine::drawAtPoint(Point point)
     {
         Context::currentContext()->transaction([this, point](Context *context) {
-            CGContextSetTextPosition(context->get(), point.x, point.y);
-            CTLineDraw(get(), context->get());
+            CGContextRef ctx = context->get();
+            CGContextSetShouldSmoothFonts(ctx, false);
+            CGContextSetShouldSubpixelPositionFonts(ctx, true);
+            CGContextSetShouldSubpixelQuantizeFonts(ctx, true);
+            
+            CGFloat ascent = 0.0;
+            CTLineGetTypographicBounds(get(), &ascent, NULL, NULL);
+            CGContextTranslateCTM(ctx, point.x, point.y + ascent);
+            
+            CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0));
+            CGContextSetTextPosition(ctx, point.x, point.y);
+            CTLineDraw(get(), ctx);
         });
     }
     
     void TextLine::drawInRect(Rect rect)
     {
         Context::currentContext()->transaction([this, rect](Context *context) {
+            CGContextSetTextMatrix(context->get(), CGAffineTransformMakeScale(1.0, -1.0));
             CGContextSetTextPosition(context->get(), rect.origin.x, rect.origin.y);
             CGContextClipToRect(context->get(), rect);
             CTLineDraw(get(), context->get());

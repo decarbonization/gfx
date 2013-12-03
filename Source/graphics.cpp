@@ -24,6 +24,9 @@
 #include "image.h"
 #include "layer.h"
 
+#include "textline.h"
+#include "font.h"
+
 namespace gfx {
 #pragma mark - Utility Functions
     
@@ -79,18 +82,33 @@ namespace gfx {
         Rect vectorToRect(const Array<Base> *rectVector)
         {
             gfx_assert_param(rectVector);
-            gfx_assert(rectVector->count() == 4, "wrong number of numbers in vector"_gfx);
             
-            return Rect{
-                Point{
-                    dynamic_cast_or_throw<Number *>(rectVector->at(0))->value(),
-                    dynamic_cast_or_throw<Number *>(rectVector->at(1))->value(),
-                },
-                Size{
-                    dynamic_cast_or_throw<Number *>(rectVector->at(2))->value(),
-                    dynamic_cast_or_throw<Number *>(rectVector->at(3))->value(),
-                }
-            };
+            if(rectVector->count() == 4) {
+                return Rect{
+                    Point{
+                        dynamic_cast_or_throw<Number *>(rectVector->at(0))->value(),
+                        dynamic_cast_or_throw<Number *>(rectVector->at(1))->value(),
+                    },
+                    Size{
+                        dynamic_cast_or_throw<Number *>(rectVector->at(2))->value(),
+                        dynamic_cast_or_throw<Number *>(rectVector->at(3))->value(),
+                    }
+                };
+            } else if(rectVector->count() == 2) {
+                return Rect{
+                    Point{
+                        0.0,
+                        0.0,
+                    },
+                    Size{
+                        dynamic_cast_or_throw<Number *>(rectVector->at(0))->value(),
+                        dynamic_cast_or_throw<Number *>(rectVector->at(1))->value(),
+                    }
+                };
+            } else {
+                throw Exception("wrong number of numbers in vector for rect"_gfx, nullptr);
+                return Rect{};
+            }
         }
     }
     
@@ -99,7 +117,7 @@ namespace gfx {
     static void ctx_begin(StackFrame *stack)
     {
         auto sizeVector = stack->popType<Array<Base>>();
-        Size size = vectorToSize(sizeVector);
+        auto size = vectorToSize(sizeVector);
         Context::pushContext(Context::bitmapContextWith(size));
     }
     
@@ -116,13 +134,22 @@ namespace gfx {
     
     static void ctx_save(StackFrame *stack)
     {
-        String *path = stack->popString();
+        auto path = stack->popString();
         
-        Image *image = Context::currentContext()->makeImage();
-        Blob *data = image->makeRepresentation(Image::RepresentationType::PNG);
+        auto image = Context::currentContext()->makeImage();
+        auto data = image->makeRepresentation(Image::RepresentationType::PNG);
         
         auto file = make<File>(path, File::Mode::Write);
         file->write(data);
+    }
+    
+    static void ctx_getSize(StackFrame *stack)
+    {
+        /* -- vec */
+        
+        auto context = Context::currentContext();
+        auto vector = vectorFromSize(context->boundingRect().size);
+        stack->push(vector);
     }
     
 #pragma mark - Layer Functions
@@ -184,19 +211,19 @@ namespace gfx {
     
     static void rgb(StackFrame *stack)
     {
-        Number *blue = stack->popNumber();
-        Number *green = stack->popNumber();
-        Number *red = stack->popNumber();
+        auto blue = stack->popNumber();
+        auto green = stack->popNumber();
+        auto red = stack->popNumber();
         
         stack->push(make<Color>(red->value(), green->value(), blue->value(), 1.0));
     }
     
     static void rgba(StackFrame *stack)
     {
-        Number *alpha = stack->popNumber();
-        Number *blue = stack->popNumber();
-        Number *green = stack->popNumber();
-        Number *red = stack->popNumber();
+        auto alpha = stack->popNumber();
+        auto blue = stack->popNumber();
+        auto green = stack->popNumber();
+        auto red = stack->popNumber();
         
         stack->push(make<Color>(red->value(), green->value(), blue->value(), alpha->value()));
     }
@@ -363,6 +390,48 @@ namespace gfx {
         path->stroke();
     }
     
+#pragma mark - Core Text Operations
+    
+    static void font_make(StackFrame *stack)
+    {
+        /* str num -- font */
+        auto size = stack->popNumber();
+        auto name = stack->popString();
+        stack->push(Font::withName(name, size->value()));
+    }
+    
+#pragma mark -
+    
+    static void text_make(StackFrame *stack)
+    {
+        /* font color str -- text */
+        auto string = stack->popString();
+        auto color = stack->popType<Color>();
+        auto font = stack->popType<Font>();
+        
+        auto attributes = make<Dictionary<const String, Base>>();
+        attributes->set(kFontAttributeName, font);
+        attributes->set(kForegroundColorAttributeName, color);
+        stack->push(TextLine::withString(string, attributes));
+    }
+    
+    static void text_size(StackFrame *stack)
+    {
+        /* text -- vec */
+        auto text = stack->popType<TextLine>();
+        auto vector = vectorFromSize(text->bounds().size);
+        stack->push(vector);
+    }
+    
+    static void text_draw(StackFrame *stack)
+    {
+        /* text vec -- */
+        auto point = vectorToPoint(stack->popType<Array<Base>>());
+        auto text = stack->popType<TextLine>();
+        
+        text->drawAtPoint(point);
+    }
+    
 #pragma mark - Public Interface
     
     void Graphics::createVariableBinding(StackFrame *frame, const String *name, Base *value)
@@ -382,6 +451,7 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "ctx/end"_gfx, &ctx_end);
         Graphics::createFunctionBinding(frame, "ctx/size"_gfx, &ctx_size);
         Graphics::createFunctionBinding(frame, "ctx/save"_gfx, &ctx_save);
+        Graphics::createFunctionBinding(frame, "everything"_gfx, &ctx_getSize);
         
         //Layer Functions
         Graphics::createFunctionBinding(frame, "layer"_gfx, &layer_make);
@@ -418,6 +488,13 @@ namespace gfx {
         
         Graphics::createFunctionBinding(frame, "path/fill"_gfx, &path_fill);
         Graphics::createFunctionBinding(frame, "path/stroke"_gfx, &path_stroke);
+        
+        //Core Text Operations
+        Graphics::createFunctionBinding(frame, "font"_gfx, &font_make);
+        
+        Graphics::createFunctionBinding(frame, "text"_gfx, &text_make);
+        Graphics::createFunctionBinding(frame, "text/size"_gfx, &text_size);
+        Graphics::createFunctionBinding(frame, "text/draw"_gfx, &text_draw);
     }
     
 #pragma mark -
