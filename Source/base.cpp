@@ -142,7 +142,7 @@ namespace gfx {
 #if TARGET_OS_MAC
         mPool(platform::autorelease_pool_make())
 #else
-        mStorage(CFArrayCreateMutable(kCFAllocatorDefault, 0, NULL))
+        mStorage()
 #endif /* TARGET_OS_MAC */
     {
         pushPool(this);
@@ -153,8 +153,7 @@ namespace gfx {
 #if TARGET_OS_MAC
         platform::autorelease_pool_drain(&mPool);
 #else
-        for (Index index = 0, count = CFArrayGetCount(mStorage); index < count; index++) {
-            const Base *object = (const Base *)CFArrayGetValueAtIndex(mStorage, index);
+        for (const Base *object : mStorage) {
             object->release();
         }
 #endif /* TARGET_OS_MAC */
@@ -167,7 +166,7 @@ namespace gfx {
 #if TARGET_OS_MAC
         platform::autorelease_pool_add(mPool, object);
 #else
-        CFArrayAppendValue(mStorage, object);
+        mStorage.push_back(object);
 #endif /* TARGET_OS_MAC */
     }
     

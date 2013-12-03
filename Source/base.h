@@ -12,6 +12,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <iostream>
 #include <atomic>
+#include <list>
 #include "cf.h"
 #include "assertions.h"
 #include "types.h"
@@ -132,7 +133,7 @@ namespace gfx {
 #if TARGET_OS_MAC
         NSAutoreleasePool *mPool;
 #else
-        CFMutableArrayRef mStorage;
+        std::list<const Base *> mStorage;
 #endif /* TARGET_OS_MAC */
         
     public:
