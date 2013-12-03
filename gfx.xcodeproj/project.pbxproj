@@ -80,7 +80,10 @@
 		8B12C917184C14B000DBD77C /* font.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C915184C14B000DBD77C /* font.h */; };
 		8B12C91E184C18F000DBD77C /* textline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C91C184C18EF00DBD77C /* textline.cpp */; };
 		8B12C91F184C18F000DBD77C /* textline.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C91D184C18EF00DBD77C /* textline.h */; };
+		8B12C924184D896800DBD77C /* layerbacking_calayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C922184D896800DBD77C /* layerbacking_calayer.mm */; };
+		8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C923184D896800DBD77C /* layerbacking_calayer.h */; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
+		8B89D998184D8AEF0062EFB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,8 +198,11 @@
 		8B12C915184C14B000DBD77C /* font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = font.h; sourceTree = "<group>"; };
 		8B12C91C184C18EF00DBD77C /* textline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textline.cpp; sourceTree = "<group>"; };
 		8B12C91D184C18EF00DBD77C /* textline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textline.h; sourceTree = "<group>"; };
+		8B12C922184D896800DBD77C /* layerbacking_calayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = layerbacking_calayer.mm; sourceTree = "<group>"; };
+		8B12C923184D896800DBD77C /* layerbacking_calayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layerbacking_calayer.h; sourceTree = "<group>"; };
 		8B420021183488540020D1D1 /* gsh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gsh; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B420024183488540020D1D1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B89D998184D8AEF0062EFB4 /* QuartzCore.framework in Frameworks */,
 				8B12C911184C148E00DBD77C /* CoreText.framework in Frameworks */,
 				8B12C90B184BE69900DBD77C /* libSystem.dylib in Frameworks */,
 				8B12C907184BE65000DBD77C /* ImageIO.framework in Frameworks */,
@@ -364,6 +371,8 @@
 				8B12C8AC184BE15600DBD77C /* image.h */,
 				8B12C8AF184BE15600DBD77C /* layer.cpp */,
 				8B12C8B0184BE15600DBD77C /* layer.h */,
+				8B12C922184D896800DBD77C /* layerbacking_calayer.mm */,
+				8B12C923184D896800DBD77C /* layerbacking_calayer.h */,
 				8B12C8B1184BE15600DBD77C /* layerbacking_cg.cpp */,
 				8B12C8B2184BE15600DBD77C /* layerbacking_cg.h */,
 				8B12C8BA184BE15600DBD77C /* path.cpp */,
@@ -408,6 +417,7 @@
 		8B420023183488540020D1D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */,
 				8B12C910184C148E00DBD77C /* CoreText.framework */,
 				8B12C90A184BE69900DBD77C /* libSystem.dylib */,
 				8B12C908184BE65300DBD77C /* libdispatch.dylib */,
@@ -452,6 +462,7 @@
 				8B12C8C7184BE15600DBD77C /* assertions.h in Headers */,
 				8B12C8C9184BE15600DBD77C /* base.h in Headers */,
 				8B12C8D8184BE15600DBD77C /* expression.h in Headers */,
+				8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */,
 				8B12C8D1184BE15600DBD77C /* context.h in Headers */,
 				8B12C8EA184BE15600DBD77C /* number.h in Headers */,
 				8B12C8E9184BE15600DBD77C /* layerbacking_cg.h in Headers */,
@@ -580,6 +591,7 @@
 				8B12C916184C14B000DBD77C /* font.cpp in Sources */,
 				8B12C8EB184BE15600DBD77C /* offset.cpp in Sources */,
 				8B12C8EF184BE15600DBD77C /* parser.cpp in Sources */,
+				8B12C924184D896800DBD77C /* layerbacking_calayer.mm in Sources */,
 				8B12C8CE184BE15600DBD77C /* color.cpp in Sources */,
 				8B12C8E0184BE15600DBD77C /* graphics.cpp in Sources */,
 				8B12C91E184C18F000DBD77C /* textline.cpp in Sources */,
@@ -654,6 +666,8 @@
 		8B12C84B184BDF7800DBD77C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -678,6 +692,8 @@
 		8B12C84C184BDF7800DBD77C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

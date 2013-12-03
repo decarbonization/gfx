@@ -1,35 +1,64 @@
 //
-//  LayerBacking_cg.cpp
+//  layerbacking_calayer.mm
 //  gfx
 //
-//  Created by Kevin MacWhinnie on 11/30/13.
+//  Created by Kevin MacWhinnie on 12/2/13.
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
-#if GFX_Layer_Use_CG
+#if GFX_Layer_Use_CA
 
-#include "layerbacking_cg.h"
+#include "layerbacking_calayer.h"
 #include "layer.h"
 #include "context.h"
 
+#import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
+
+@interface GFXLayerBackingDelegateAdaptor : NSObject
+
+@property (nonatomic) gfx::LayerBacking *layerBacking;
+
+@end
+
+@implementation GFXLayerBackingDelegateAdaptor
+
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx
+{
+    gfx::AutoreleasePool pool;
+    
+    gfx::Context *context = gfx::make<gfx::Context>(ctx, layer.contentsScale, false);
+    gfx::Context::pushContext(context);
+    
+    self.layerBacking->display();
+    
+    gfx::Context::popContext();
+}
+
+@end
+
+#pragma mark -
+
 namespace gfx {
-    bool const LayerBacking::RendersOwnSublayers = false;
+    bool const LayerBacking::RendersOwnSublayers = true;
     
     LayerBacking::LayerBacking(Layer *layer, Rect frame, Float scale) :
-        mTexture(),
-        mLayer(layer),
-        mFrame(frame),
-        mScale(scale)
+        mTexture([CALayer new]),
+        mDelegateAdaptor([GFXLayerBackingDelegateAdaptor new]),
+        mLayer(layer)
     {
         AutoreleasePool pool;
         
-        Context *referenceContext = Context::bitmapContextWith(frame.size, scale);
-        mTexture = CGLayerCreateWithContext(referenceContext->get(), referenceContext->boundingRect().size, NULL);
+        
     }
     
     LayerBacking::~LayerBacking()
     {
-        CGLayerRelease(mTexture);
+        [mDelegateAdaptor release];
+        mDelegateAdaptor = nil;
+        
+        [mTexture release];
+        mTexture = nil;
     }
     
 #pragma mark - Properties
@@ -43,51 +72,37 @@ namespace gfx {
     
     void LayerBacking::setScale(Float scale)
     {
-        mScale = scale;
+        mTexture.contentsScale = scale;
     }
     
     Float LayerBacking::scale() const
     {
-        return mScale;
+        return mTexture.contentsScale;
     }
     
     void LayerBacking::setFrame(Rect frame)
     {
-        if(frame.size.width != mFrame.size.width || frame.size.height != mFrame.size.height) {
-            CGContextRef referenceContext = CGLayerGetContext(mTexture);
-            CGLayerRef newBacking = CGLayerCreateWithContext(referenceContext, CGContextGetClipBoundingBox(referenceContext).size, NULL);
-            
-            CGLayerRelease(mTexture);
-            mTexture = newBacking;
-            
-            setNeedsDisplay();
-        }
-        
-        mFrame = frame;
+        mTexture.frame = frame;
     }
     
     Rect LayerBacking::frame() const
     {
-        return mFrame;
+        return mTexture.frame;
     }
     
 #pragma mark - Drawing
     
     void LayerBacking::display()
     {
-        AutoreleasePool pool;
-        
         mLayer->willDisplay();
         
-        Context *layerContext = make<Context>(CGLayerGetContext(mTexture), scale(), false);
+        Context *layerContext = Context::currentContext();
         Rect boundingRect = { {}, frame().size };
         layerContext->clear(boundingRect);
         
-        Context::pushContext(layerContext);
         layerContext->transaction([this, boundingRect](Context *context) {
             mLayer->draw(boundingRect);
         });
-        Context::popContext();
         
         mLayer->didDisplay();
     }
@@ -101,20 +116,21 @@ namespace gfx {
     {
         gfx_assert_param(context);
         
-        CGContextDrawLayerAtPoint(context->get(), frame().origin, mTexture);
+        [mTexture renderInContext:context->get()];
     }
     
 #pragma mark - Hooks
     
     void LayerBacking::layerDidInsertSublayer(Index offset, Layer *newSublayer)
     {
-        //Do nothing.
+        [mTexture insertSublayer:newSublayer->mBacking->mTexture atIndex:(unsigned int)offset];
     }
     
     void LayerBacking::layerDidRemoveFromSuperlayer()
     {
-        //Do nothing.
+        [mTexture removeFromSuperlayer];
     }
 }
 
-#endif /* GFX_Layer_Use_CG */
+
+#endif /* GFX_Layer_Use_CA */

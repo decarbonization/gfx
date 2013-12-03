@@ -39,12 +39,6 @@ namespace gfx {
         ///should still attempt to complete its work as quickly as possible.
         typedef std::function<void(Layer *layer, Rect rect)> DrawFunctor;
         
-        enum RenderOptions : int
-        {
-            None = 0,
-            RenderBorder = (1 << 1),
-        };
-        
     protected:
         
         ///The function that will be used to render the contents of the layer.
@@ -167,7 +161,7 @@ namespace gfx {
         ///
         /// \param  context The context to render the contents into. Required.
         ///
-        virtual void render(Context *context, RenderOptions renderOptions = RenderOptions::None);
+        virtual void render(Context *context);
         
 #pragma mark - Signals
         
@@ -180,6 +174,9 @@ namespace gfx {
         ///
         ///The signal parameter is the Layer that sent the signal.
         Signal<Layer *> DidDisplaySignal;
+        
+        
+        friend class LayerBacking;
     };
 }
 

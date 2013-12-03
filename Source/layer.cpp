@@ -13,6 +13,8 @@
 
 #if GFX_Layer_Use_CG
 #   include "layerbacking_cg.h"
+#elif GFX_Layer_Use_CA
+#   include "layerbacking_calayer.h"
 #endif /* GFX_Layer_Use_CG */
 
 namespace gfx {
@@ -137,23 +139,15 @@ namespace gfx {
     
 #pragma mark -
     
-    void Layer::render(Context *context, RenderOptions renderOptions)
+    void Layer::render(Context *context)
     {
         gfx_assert_param(context);
         
         mBacking->render(context);
         
-        if((renderOptions & RenderOptions::RenderBorder) == RenderOptions::RenderBorder) {
-            context->transaction([this](Context *context) {
-                make<Color>(1.0, 1.0, 0.0, 1.0)->set();
-                Path::setDefaultLineWidth(3.0);
-                Path::strokeRect(this->frame());
-            });
-        }
-        
         if(!LayerBacking::RendersOwnSublayers) {
-            mSublayers->iterate([context, renderOptions](Layer *sublayer, Index index, bool *stop) {
-                sublayer->render(context, renderOptions);
+            mSublayers->iterate([context](Layer *sublayer, Index index, bool *stop) {
+                sublayer->render(context);
             });
         }
     }

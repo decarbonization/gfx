@@ -1,18 +1,26 @@
 //
-//  LayerBacking_cg.h
+//  layerbacking_calayer.h
 //  gfx
 //
-//  Created by Kevin MacWhinnie on 11/30/13.
+//  Created by Kevin MacWhinnie on 12/2/13.
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
-#ifndef __gfx__LayerBacking_cg__
-#define __gfx__LayerBacking_cg__
+#ifndef __gfx__layerbacking_calayer__
+#define __gfx__layerbacking_calayer__
 
-#if GFX_Layer_Use_CG
+#if GFX_Layer_Use_CA
 
 #include "base.h"
 #include "types.h"
+
+#if __OBJC__
+@class CALayer;
+@class GFXLayerBackingDelegateAdaptor;
+#else
+class CALayer;
+class GFXLayerBackingDelegateAdaptor;
+#endif /* __OBJC__ */
 
 namespace gfx {
     class Layer;
@@ -29,7 +37,10 @@ namespace gfx {
     class LayerBacking
     {
         ///The backing's backing.
-        CGLayerRef mTexture;
+        CALayer *mTexture;
+        
+        ///The delegate adaptor of the CALayer.
+        GFXLayerBackingDelegateAdaptor *mDelegateAdaptor;
         
         ///The layer the backing is associated with.
         ///
@@ -37,12 +48,6 @@ namespace gfx {
         ///to the layer's draw functor, it simply manages setting
         ///up the context stack as appropriate.
         Layer *mLayer;
-        
-        ///The scale of the layer backing.
-        Float mScale;
-        
-        ///The frame of the layer backing.
-        Rect mFrame;
         
     public:
         
@@ -120,6 +125,6 @@ namespace gfx {
     };
 }
 
-#endif /* GFX_Layer_Use_CG */
+#endif /* GFX_Layer_Use_CA */
 
-#endif /* defined(__gfx__LayerBacking_cg__) */
+#endif /* defined(__gfx__layerbacking_calayer__) */
