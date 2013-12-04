@@ -449,7 +449,7 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "ctx/end"_gfx, &ctx_end);
         Graphics::createFunctionBinding(frame, "ctx/size"_gfx, &ctx_size);
         Graphics::createFunctionBinding(frame, "ctx/save"_gfx, &ctx_save);
-        Graphics::createFunctionBinding(frame, "everything"_gfx, &ctx_getSize);
+        Graphics::createFunctionBinding(frame, "ctx/all"_gfx, &ctx_getSize);
         
         //Layer Functions
         Graphics::createFunctionBinding(frame, "layer"_gfx, &layer_make);
@@ -477,8 +477,8 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "set-stroke"_gfx, &set_stroke);
         
         //Core Operations
-        Graphics::createFunctionBinding(frame, "fill"_gfx, &fill);
-        Graphics::createFunctionBinding(frame, "stroke"_gfx, &stroke);
+        Graphics::createFunctionBinding(frame, "fill-rect"_gfx, &fill);
+        Graphics::createFunctionBinding(frame, "stroke-rect"_gfx, &stroke);
         
         //Path Operations
         Graphics::createFunctionBinding(frame, "path/make"_gfx, &path_make);

@@ -1,2 +1,2 @@
-#54558f set-fill everything fill
+#54558f set-fill ctx/all fill-rect
 "HelveticaNeue" 13 font white "hello, world" text [100 100] text/draw
