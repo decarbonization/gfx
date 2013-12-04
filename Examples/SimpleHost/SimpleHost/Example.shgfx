@@ -1,2 +1,4 @@
+(canvas size is 300 x 300)
+
 #54558f set-fill ctx/all fill-rect
-"HelveticaNeue" 13 font white "hello, world" text [100 100] text/draw
+"Lucida Grande" 30 font white "hello, world" text [30 65] text/draw
