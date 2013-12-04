@@ -4,12 +4,6 @@
 <array>
 	<dict>
 		<key>SHDefinitionName</key>
-		<string>SHDefinitionNameStrings</string>
-		<key>SHDefinitionRegex</key>
-		<string>\&quot;(\\.|[^\&quot;])*\&quot;</string>
-	</dict>
-	<dict>
-		<key>SHDefinitionName</key>
 		<string>SHDefinitionNameNumbers</string>
 		<key>SHDefinitionRegex</key>
 		<string>[\d|.|_]+</string>
@@ -31,6 +25,18 @@
 		<string>SHDefinitionNameCoreFunctions</string>
 		<key>SHDefinitionRegex</key>
 		<string>(ctx/begin|ctx/end|ctx/size|ctx/save|everything|layer/frame|layer/set\-frame|layer/display|layer/render|layer|set\-fill|set\-stroke|fill|stroke|path/make|path/rect|path/round\-rect|path/oval|path/move|path/line|path/arc|path/curve|path/bounding\-box|path/current\-point|path/empty?|path/contains\-point|path/fill|path/stroke|font|text/size|text/draw|text)</string>
+	</dict>
+	<dict>
+		<key>SHDefinitionName</key>
+		<string>SHDefinitionNameComments</string>
+		<key>SHDefinitionRegex</key>
+		<string>(\([^)]+\))</string>
+	</dict>
+	<dict>
+		<key>SHDefinitionName</key>
+		<string>SHDefinitionNameStrings</string>
+		<key>SHDefinitionRegex</key>
+		<string>\&quot;(\\.|[^\&quot;])*\&quot;</string>
 	</dict>
 </array>
 </plist>

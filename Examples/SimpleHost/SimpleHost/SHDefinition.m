@@ -16,6 +16,7 @@ NSString *const SHDefinitionNameNumbers = @"SHDefinitionNameNumbers";
 NSString *const SHDefinitionNameColors = @"SHDefinitionNameColors";
 NSString *const SHDefinitionNameKeywords = @"SHDefinitionNameKeywords";
 NSString *const SHDefinitionNameCoreFunctions = @"SHDefinitionNameCoreFunctions";
+NSString *const SHDefinitionNameComments = @"SHDefinitionNameComments";
 
 @implementation SHDefinition
 

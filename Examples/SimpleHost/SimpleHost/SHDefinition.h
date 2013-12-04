@@ -16,6 +16,7 @@ FOUNDATION_EXPORT NSString *const SHDefinitionNameNumbers;
 FOUNDATION_EXPORT NSString *const SHDefinitionNameColors;
 FOUNDATION_EXPORT NSString *const SHDefinitionNameKeywords;
 FOUNDATION_EXPORT NSString *const SHDefinitionNameCoreFunctions;
+FOUNDATION_EXPORT NSString *const SHDefinitionNameComments;
 
 @interface SHDefinition : NSObject
 

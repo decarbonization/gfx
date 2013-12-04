@@ -1,10 +1,13 @@
+//From <http://www.bergdesign.com/developer/index_files/88a764e343ce7190c4372d1425b3b6a3-0.html>
+
 #import "SBCenteringClipView.h"
 
-@implementation SBCenteringClipView
+@implementation SBCenteringClipView {
+    ///The proportion up and across the view (not coordinates.)
+	NSPoint _lookingAt;
+}
 
-// ----------------------------------------
-
--(void)centerDocument
+- (void)centerDocument
 {
 	NSRect docRect = [[self documentView] frame];
 	NSRect clipRect = [self bounds];
@@ -33,10 +36,7 @@
 	// [[self superview] scrollClipView:self toPoint:[self constrainScrollPoint:clipRect.origin]];
 }
 
-// ----------------------------------------
-// We need to override this so that the superclass doesn't override our new origin point.
-
--(NSPoint)constrainScrollPoint:(NSPoint)proposedNewOrigin
+- (NSPoint)constrainScrollPoint:(NSPoint)proposedNewOrigin
 {
 	NSRect docRect = [[self documentView] frame];
 	NSRect clipRect = [self bounds];
@@ -64,13 +64,7 @@
 	return clipRect.origin;
 }
 
-// ----------------------------------------
-// These two methods get called whenever the NSClipView's subview changes.
-// We save the old center of interest, call the superclass to let it do its work,
-// then move the scroll point to try and put the old center of interest
-// back in the center of the view if possible.
-
--(void)viewBoundsChanged:(NSNotification *)notification
+- (void)viewBoundsChanged:(NSNotification *)notification
 {
 	NSPoint savedPoint = _lookingAt;
 	[super viewBoundsChanged:notification];
@@ -78,57 +72,59 @@
 	[self centerDocument];
 }
 
--(void)viewFrameChanged:(NSNotification *)notification
+- (void)viewFrameChanged:(NSNotification *)notification
 {
 	NSPoint savedPoint = _lookingAt;
 	[super viewFrameChanged:notification];
 	_lookingAt = savedPoint;
 	[self centerDocument];
+    
+    [self setNeedsDisplay:YES];
 }
 
-// ----------------------------------------
-// These NSClipView superclass methods change the bounds rect
-// directly without sending any notifications,
-// so we're not sure what other work they silently do for us.
-// As a result, we let them do their
-// work and then swoop in behind to change the bounds origin ourselves.
-// This appears to work just fine without us having to
-// reinvent the methods from scratch.
-// ---
-// Even though an NSView posts an NSViewFrameDidChangeNotification to the default notification center
-// if it's configured to do so, NSClipViews appear to be configured not to. The methods
-// setPostsFrameChangedNotifications: and setPostsBoundsChangedNotifications: appear
-// to be configured not to send notifications.
-// ---
-// We have some redundancy in the fact that setFrame: appears to call/send setFrameOrigin:
-// and setFrameSize: to do its work, but we need to override these individual methods in case
-// either one gets called independently. Because none of them explicitly cause a screen update,
-// it's ok to do a little extra work behind the scenes because it wastes very little time.
-// It's probably the result of a single UI action anyway so it's not like it's slowing
-// down a huge iteration by being called thousands of times.
-
--(void)setFrame:(NSRect)frameRect
+- (void)setFrame:(NSRect)frameRect
 {
 	[super setFrame:frameRect];
 	[self centerDocument];
 }
 
--(void)setFrameOrigin:(NSPoint)newOrigin
+- (void)setFrameOrigin:(NSPoint)newOrigin
 {
 	[super setFrameOrigin:newOrigin];
 	[self centerDocument];
 }
 
--(void)setFrameSize:(NSSize)newSize
+- (void)setFrameSize:(NSSize)newSize
 {
 	[super setFrameSize:newSize];
 	[self centerDocument];
 }
 
--(void)setFrameRotation:(CGFloat)angle
+- (void)setFrameRotation:(CGFloat)angle
 {
 	[super setFrameRotation:angle];
 	[self centerDocument];
+}
+
+#pragma mark - Drawing Shadows
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+    
+    [NSGraphicsContext saveGraphicsState];
+    {
+        NSRect documentViewFrame = [[self documentView] frame];
+        
+        NSShadow *shadow = [NSShadow new];
+        [shadow setShadowColor:[NSColor colorWithDeviceWhite:0.0 alpha:0.5]];
+        [shadow setShadowBlurRadius:10.0];
+        [shadow set];
+        
+        [[NSColor whiteColor] set];
+        [NSBezierPath fillRect:documentViewFrame];
+    }
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 @end

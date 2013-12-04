@@ -76,9 +76,7 @@
         };
         self.gfxLayer = new gfx::Layer(self.frame, drawFunctor, [self layer].contentsScale);
         self.gfxLayer->setDrawExceptionHandler(exceptionHandler);
-        
-        self.contentLayer = self.gfxLayer->CALayer();
-        [self.layer addSublayer:self.contentLayer];
+        self.layer = self.gfxLayer->CALayer();
     }
     
     return self;
@@ -95,6 +93,11 @@
 }
 
 #pragma mark - Layout
+
+- (BOOL)isFlipped
+{
+    return YES;
+}
 
 - (void)layoutSubviews
 {

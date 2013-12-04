@@ -183,21 +183,14 @@
 			children = (
 				8B89D9C0184DAB550062EFB4 /* AppDelegate.h */,
 				8B89D9C1184DAB550062EFB4 /* AppDelegate.m */,
-				8B89DA01184EDFD60062EFB4 /* SHTextView.h */,
-				8B89DA02184EDFD60062EFB4 /* SHTextView.m */,
-				8B89DA04184EE0490062EFB4 /* SyntaxHighligher.h */,
-				8B89DA05184EE0490062EFB4 /* SyntaxHighligher.m */,
-				8B89DA07184EE0540062EFB4 /* SHDefinition.h */,
-				8B89DA08184EE0540062EFB4 /* SHDefinition.m */,
+				8B89DA14184EF8D20062EFB4 /* Syntax Highlighting */,
 				8B89DA0C184EE9950062EFB4 /* SBCenteringClipView.h */,
 				8B89DA0D184EE9950062EFB4 /* SBCenteringClipView.m */,
-				8B89DA0A184EE23C0062EFB4 /* GFX.shd */,
-				8B89D9C3184DAB550062EFB4 /* MainMenu.xib */,
-				8B89D9C6184DAB550062EFB4 /* Images.xcassets */,
-				8B89D9B5184DAB550062EFB4 /* Supporting Files */,
 				8B89DA0F184EF09E0062EFB4 /* GraphicsDocument.h */,
 				8B89DA10184EF09E0062EFB4 /* GraphicsDocument.m */,
 				8B89DA11184EF09E0062EFB4 /* GraphicsDocument.xib */,
+				8B89D9C6184DAB550062EFB4 /* Images.xcassets */,
+				8B89D9B5184DAB550062EFB4 /* Supporting Files */,
 			);
 			path = SimpleHost;
 			sourceTree = "<group>";
@@ -205,6 +198,7 @@
 		8B89D9B5184DAB550062EFB4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8B89D9C3184DAB550062EFB4 /* MainMenu.xib */,
 				8B89D9B6184DAB550062EFB4 /* SimpleHost-Info.plist */,
 				8B89D9B7184DAB550062EFB4 /* InfoPlist.strings */,
 				8B89D9BA184DAB550062EFB4 /* main.m */,
@@ -240,6 +234,20 @@
 				8B89D9ED184DAB5F0062EFB4 /* gfx.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8B89DA14184EF8D20062EFB4 /* Syntax Highlighting */ = {
+			isa = PBXGroup;
+			children = (
+				8B89DA0A184EE23C0062EFB4 /* GFX.shd */,
+				8B89DA01184EDFD60062EFB4 /* SHTextView.h */,
+				8B89DA02184EDFD60062EFB4 /* SHTextView.m */,
+				8B89DA04184EE0490062EFB4 /* SyntaxHighligher.h */,
+				8B89DA05184EE0490062EFB4 /* SyntaxHighligher.m */,
+				8B89DA07184EE0540062EFB4 /* SHDefinition.h */,
+				8B89DA08184EE0540062EFB4 /* SHDefinition.m */,
+			);
+			name = "Syntax Highlighting";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

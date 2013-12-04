@@ -32,7 +32,6 @@ namespace gfx {
 
 #endif /* __cplusplus */
 
-@property (nonatomic, readonly, assign) CALayer *contentLayer;
 @property (nonatomic, assign) IBOutlet id <GFXPortalViewDelegate> delegate;
 
 #pragma mark - Evaluation

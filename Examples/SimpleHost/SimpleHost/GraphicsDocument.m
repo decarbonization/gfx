@@ -59,13 +59,12 @@
                                SHDefinitionNameNumbers: @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.93 green:0.54 blue:0.28 alpha:1.00]},
                                SHDefinitionNameColors: @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.55 green:0.69 blue:0.79 alpha:1.00]},
                                SHDefinitionNameKeywords: @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.78 green:0.63 blue:0.78 alpha:1.00]},
-                               SHDefinitionNameCoreFunctions: @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.98 green:0.80 blue:0.40 alpha:1.00]}};
+                               SHDefinitionNameCoreFunctions: @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.98 green:0.80 blue:0.40 alpha:1.00]},
+                               SHDefinitionNameComments: @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.65 green:0.66 blue:0.65 alpha:1.00]}};
     self.inputTextView.syntaxHighlighter = highlighter;
     
     self.graphicsView = [[GFXPortalView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 300.0, 300.0)];
     self.graphicsView.delegate = self;
-    self.graphicsView.layer.borderColor = [NSColor headerColor].CGColor;
-    self.graphicsView.layer.borderWidth = 1.0;
     
     [self.canvasScrollView setDocumentView:self.graphicsView];
     NSColor *backgroundColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"CheckerBackground"]];
@@ -161,6 +160,7 @@
 
 - (void)writeErrorMessageToConsole:(NSString *)errorMessage
 {
+    [self clearConsole];
     NSDictionary *attributes = @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.93 green:0.54 blue:0.28 alpha:1.00],
                                  NSFontAttributeName: [NSFont userFixedPitchFontOfSize:11.0]};
     NSAttributedString *errorString = [[NSAttributedString alloc] initWithString:errorMessage
