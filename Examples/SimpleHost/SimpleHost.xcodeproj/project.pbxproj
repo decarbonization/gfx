@@ -27,6 +27,7 @@
 		8B89DA0E184EE9950062EFB4 /* SBCenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA0D184EE9950062EFB4 /* SBCenteringClipView.m */; };
 		8B89DA12184EF09E0062EFB4 /* GraphicsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA10184EF09E0062EFB4 /* GraphicsDocument.m */; };
 		8B89DA13184EF09E0062EFB4 /* GraphicsDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B89DA11184EF09E0062EFB4 /* GraphicsDocument.xib */; };
+		8B89DA17184EFBAF0062EFB4 /* Example.shgfx in Resources */ = {isa = PBXBuildFile; fileRef = 8B89DA16184EFBAF0062EFB4 /* Example.shgfx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		8B89DA0F184EF09E0062EFB4 /* GraphicsDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicsDocument.h; sourceTree = "<group>"; };
 		8B89DA10184EF09E0062EFB4 /* GraphicsDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphicsDocument.m; sourceTree = "<group>"; };
 		8B89DA11184EF09E0062EFB4 /* GraphicsDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GraphicsDocument.xib; sourceTree = "<group>"; };
+		8B89DA16184EFBAF0062EFB4 /* Example.shgfx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Example.shgfx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 				8B89DA0F184EF09E0062EFB4 /* GraphicsDocument.h */,
 				8B89DA10184EF09E0062EFB4 /* GraphicsDocument.m */,
 				8B89DA11184EF09E0062EFB4 /* GraphicsDocument.xib */,
+				8B89DA16184EFBAF0062EFB4 /* Example.shgfx */,
 				8B89D9C6184DAB550062EFB4 /* Images.xcassets */,
 				8B89D9B5184DAB550062EFB4 /* Supporting Files */,
 			);
@@ -364,6 +367,7 @@
 				8B89DA13184EF09E0062EFB4 /* GraphicsDocument.xib in Resources */,
 				8B89D9BF184DAB550062EFB4 /* Credits.rtf in Resources */,
 				8B89D9C5184DAB550062EFB4 /* MainMenu.xib in Resources */,
+				8B89DA17184EFBAF0062EFB4 /* Example.shgfx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,7 +56,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="gQ6-KV-33p">
-                                                    <rect key="frame" x="387" y="0.0" width="15" height="386"/>
+                                                    <rect key="frame" x="386" y="0.0" width="16" height="386"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -79,16 +79,6 @@
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <size key="minSize" width="397" height="386"/>
                                                             <size key="maxSize" width="463" height="10000000"/>
-                                                            <attributedString key="textStorage">
-                                                                <fragment>
-                                                                    <string key="content">#54558f set-fill everything fill
-"HelveticaNeue" 13 font white "hello, world" text [100 100] text/draw</string>
-                                                                    <attributes>
-                                                                        <font key="NSFont" size="10" name="Monaco"/>
-                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                                    </attributes>
-                                                                </fragment>
-                                                            </attributedString>
                                                             <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                             <size key="minSize" width="397" height="386"/>
                                                             <size key="maxSize" width="463" height="10000000"/>

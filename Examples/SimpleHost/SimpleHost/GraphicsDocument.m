@@ -70,6 +70,8 @@
     NSColor *backgroundColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"CheckerBackground"]];
     [self.canvasScrollView setBackgroundColor:backgroundColor];
     
+    NSURL *exampleLocation = [[NSBundle mainBundle] URLForResource:@"Example" withExtension:@"shgfx"];
+    self.inputTextView.string = [NSString stringWithContentsOfURL:exampleLocation encoding:NSUTF8StringEncoding error:NULL];
     [self run:nil];
 }
 
