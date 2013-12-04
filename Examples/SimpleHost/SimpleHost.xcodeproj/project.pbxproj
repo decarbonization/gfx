@@ -20,8 +20,13 @@
 		8B89D9D9184DAB550062EFB4 /* SimpleHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D9D8184DAB550062EFB4 /* SimpleHostTests.m */; };
 		8B89D9F0184DAB6B0062EFB4 /* gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9ED184DAB5F0062EFB4 /* gfx.framework */; };
 		8B89D9F2184DAB7F0062EFB4 /* gfx.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9ED184DAB5F0062EFB4 /* gfx.framework */; };
-		8B89D9FA184DB28F0062EFB4 /* CheckerBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B89D9F8184DB28F0062EFB4 /* CheckerBackground.png */; };
-		8B89D9FB184DB28F0062EFB4 /* CheckerBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B89D9F9184DB28F0062EFB4 /* CheckerBackground@2x.png */; };
+		8B89DA03184EDFD60062EFB4 /* SHTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA02184EDFD60062EFB4 /* SHTextView.m */; };
+		8B89DA06184EE0490062EFB4 /* SyntaxHighligher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA05184EE0490062EFB4 /* SyntaxHighligher.m */; };
+		8B89DA09184EE0540062EFB4 /* SHDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA08184EE0540062EFB4 /* SHDefinition.m */; };
+		8B89DA0B184EE23C0062EFB4 /* GFX.shd in Resources */ = {isa = PBXBuildFile; fileRef = 8B89DA0A184EE23C0062EFB4 /* GFX.shd */; };
+		8B89DA0E184EE9950062EFB4 /* SBCenteringClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA0D184EE9950062EFB4 /* SBCenteringClipView.m */; };
+		8B89DA12184EF09E0062EFB4 /* GraphicsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA10184EF09E0062EFB4 /* GraphicsDocument.m */; };
+		8B89DA13184EF09E0062EFB4 /* GraphicsDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B89DA11184EF09E0062EFB4 /* GraphicsDocument.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,8 +102,18 @@
 		8B89D9D6184DAB550062EFB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8B89D9D8184DAB550062EFB4 /* SimpleHostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleHostTests.m; sourceTree = "<group>"; };
 		8B89D9E2184DAB5F0062EFB4 /* gfx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gfx.xcodeproj; path = ../../gfx.xcodeproj; sourceTree = "<group>"; };
-		8B89D9F8184DB28F0062EFB4 /* CheckerBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CheckerBackground.png; sourceTree = "<group>"; };
-		8B89D9F9184DB28F0062EFB4 /* CheckerBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CheckerBackground@2x.png"; sourceTree = "<group>"; };
+		8B89DA01184EDFD60062EFB4 /* SHTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHTextView.h; sourceTree = "<group>"; };
+		8B89DA02184EDFD60062EFB4 /* SHTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHTextView.m; sourceTree = "<group>"; };
+		8B89DA04184EE0490062EFB4 /* SyntaxHighligher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxHighligher.h; sourceTree = "<group>"; };
+		8B89DA05184EE0490062EFB4 /* SyntaxHighligher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyntaxHighligher.m; sourceTree = "<group>"; };
+		8B89DA07184EE0540062EFB4 /* SHDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHDefinition.h; sourceTree = "<group>"; };
+		8B89DA08184EE0540062EFB4 /* SHDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHDefinition.m; sourceTree = "<group>"; };
+		8B89DA0A184EE23C0062EFB4 /* GFX.shd */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = GFX.shd; sourceTree = "<group>"; };
+		8B89DA0C184EE9950062EFB4 /* SBCenteringClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBCenteringClipView.h; sourceTree = "<group>"; };
+		8B89DA0D184EE9950062EFB4 /* SBCenteringClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBCenteringClipView.m; sourceTree = "<group>"; };
+		8B89DA0F184EF09E0062EFB4 /* GraphicsDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicsDocument.h; sourceTree = "<group>"; };
+		8B89DA10184EF09E0062EFB4 /* GraphicsDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphicsDocument.m; sourceTree = "<group>"; };
+		8B89DA11184EF09E0062EFB4 /* GraphicsDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GraphicsDocument.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,9 +183,21 @@
 			children = (
 				8B89D9C0184DAB550062EFB4 /* AppDelegate.h */,
 				8B89D9C1184DAB550062EFB4 /* AppDelegate.m */,
+				8B89DA01184EDFD60062EFB4 /* SHTextView.h */,
+				8B89DA02184EDFD60062EFB4 /* SHTextView.m */,
+				8B89DA04184EE0490062EFB4 /* SyntaxHighligher.h */,
+				8B89DA05184EE0490062EFB4 /* SyntaxHighligher.m */,
+				8B89DA07184EE0540062EFB4 /* SHDefinition.h */,
+				8B89DA08184EE0540062EFB4 /* SHDefinition.m */,
+				8B89DA0C184EE9950062EFB4 /* SBCenteringClipView.h */,
+				8B89DA0D184EE9950062EFB4 /* SBCenteringClipView.m */,
+				8B89DA0A184EE23C0062EFB4 /* GFX.shd */,
 				8B89D9C3184DAB550062EFB4 /* MainMenu.xib */,
 				8B89D9C6184DAB550062EFB4 /* Images.xcassets */,
 				8B89D9B5184DAB550062EFB4 /* Supporting Files */,
+				8B89DA0F184EF09E0062EFB4 /* GraphicsDocument.h */,
+				8B89DA10184EF09E0062EFB4 /* GraphicsDocument.m */,
+				8B89DA11184EF09E0062EFB4 /* GraphicsDocument.xib */,
 			);
 			path = SimpleHost;
 			sourceTree = "<group>";
@@ -178,8 +205,6 @@
 		8B89D9B5184DAB550062EFB4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8B89D9F8184DB28F0062EFB4 /* CheckerBackground.png */,
-				8B89D9F9184DB28F0062EFB4 /* CheckerBackground@2x.png */,
 				8B89D9B6184DAB550062EFB4 /* SimpleHost-Info.plist */,
 				8B89D9B7184DAB550062EFB4 /* InfoPlist.strings */,
 				8B89D9BA184DAB550062EFB4 /* main.m */,
@@ -325,11 +350,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B89DA0B184EE23C0062EFB4 /* GFX.shd in Resources */,
 				8B89D9B9184DAB550062EFB4 /* InfoPlist.strings in Resources */,
-				8B89D9FA184DB28F0062EFB4 /* CheckerBackground.png in Resources */,
 				8B89D9C7184DAB550062EFB4 /* Images.xcassets in Resources */,
+				8B89DA13184EF09E0062EFB4 /* GraphicsDocument.xib in Resources */,
 				8B89D9BF184DAB550062EFB4 /* Credits.rtf in Resources */,
-				8B89D9FB184DB28F0062EFB4 /* CheckerBackground@2x.png in Resources */,
 				8B89D9C5184DAB550062EFB4 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,7 +375,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B89D9C2184DAB550062EFB4 /* AppDelegate.m in Sources */,
+				8B89DA12184EF09E0062EFB4 /* GraphicsDocument.m in Sources */,
 				8B89D9BB184DAB550062EFB4 /* main.m in Sources */,
+				8B89DA03184EDFD60062EFB4 /* SHTextView.m in Sources */,
+				8B89DA0E184EE9950062EFB4 /* SBCenteringClipView.m in Sources */,
+				8B89DA09184EE0540062EFB4 /* SHDefinition.m in Sources */,
+				8B89DA06184EE0490062EFB4 /* SyntaxHighligher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

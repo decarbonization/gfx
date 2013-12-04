@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment version="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="GraphicsDocument">
+            <connections>
+                <outlet property="canvasScrollView" destination="zpj-cO-nlr" id="ou7-TE-xnd"/>
+                <outlet property="consoleTextView" destination="09m-uH-gBF" id="VnW-gC-7mz"/>
+                <outlet property="inputTextView" destination="WVW-Fi-j1t" id="4YT-nh-e3t"/>
+                <outlet property="window" destination="lQe-f4-elr" id="vgw-JN-1Cj"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <window title="SimpleHost" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="lQe-f4-elr" userLabel="Canvas">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
+            <rect key="contentRect" x="91" y="282" width="800" height="500"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="746"/>
+            <value key="minSize" type="size" width="770" height="504"/>
+            <view key="contentView" id="v7c-Eo-Wgb">
+                <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <splitView dividerStyle="thin" id="oWX-jX-3ev">
+                        <rect key="frame" x="0.0" y="-2" width="800" height="502"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <splitView dividerStyle="thin" vertical="YES" id="rzQ-N7-K0q">
+                                <rect key="frame" x="0.0" y="0.0" width="800" height="386"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <customView id="cyi-sX-YCZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="402" height="386"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="zpj-cO-nlr">
+                                                <rect key="frame" x="0.0" y="0.0" width="402" height="386"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <clipView key="contentView" id="Rsn-M7-mT6" customClass="SBCenteringClipView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="402" height="386"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <view id="9rt-NW-WL9">
+                                                            <rect key="frame" x="0.0" y="0.0" width="402" height="386"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </clipView>
+                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="p2e-fH-o6r">
+                                                    <rect key="frame" x="0.0" y="370" width="402" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="gQ6-KV-33p">
+                                                    <rect key="frame" x="386" y="0.0" width="16" height="386"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                            </scrollView>
+                                        </subviews>
+                                    </customView>
+                                    <customView id="Y0E-g7-Hp4">
+                                        <rect key="frame" x="403" y="0.0" width="397" height="386"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="xUg-Wp-Rfx">
+                                                <rect key="frame" x="0.0" y="0.0" width="397" height="386"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <clipView key="contentView" id="OK6-Xo-XoA">
+                                                    <rect key="frame" x="0.0" y="0.0" width="397" height="386"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textView importsGraphics="NO" richText="NO" findStyle="panel" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="WVW-Fi-j1t" customClass="SHTextView">
+                                                            <rect key="frame" x="0.0" y="0.0" width="397" height="386"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <size key="minSize" width="397" height="386"/>
+                                                            <size key="maxSize" width="463" height="10000000"/>
+                                                            <attributedString key="textStorage">
+                                                                <fragment>
+                                                                    <string key="content">#54558f set-fill everything fill
+"HelveticaNeue" 13 font white "hello, world" text [100 100] text/draw</string>
+                                                                    <attributes>
+                                                                        <font key="NSFont" size="10" name="Monaco"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <size key="minSize" width="397" height="386"/>
+                                                            <size key="maxSize" width="463" height="10000000"/>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="-2" id="QR6-1f-dVD"/>
+                                                            </connections>
+                                                        </textView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </clipView>
+                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="TlG-ts-7IP">
+                                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="6TD-xt-T67">
+                                                    <rect key="frame" x="381" y="0.0" width="16" height="386"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                            </scrollView>
+                                        </subviews>
+                                    </customView>
+                                </subviews>
+                                <holdingPriorities>
+                                    <real value="250"/>
+                                    <real value="250"/>
+                                </holdingPriorities>
+                            </splitView>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="oSo-jZ-YG9">
+                                <rect key="frame" x="0.0" y="387" width="800" height="115"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <clipView key="contentView" id="Oea-JF-2VX">
+                                    <rect key="frame" x="0.0" y="0.0" width="800" height="115"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="09m-uH-gBF" userLabel="Console Text View">
+                                            <rect key="frame" x="0.0" y="0.0" width="800" height="115"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="800" height="115"/>
+                                            <size key="maxSize" width="800" height="10000000"/>
+                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="800" height="115"/>
+                                            <size key="maxSize" width="800" height="10000000"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="CBV-Re-uZJ">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="nnA-k5-ItD">
+                                    <rect key="frame" x="784" y="0.0" width="16" height="115"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="250"/>
+                            <real value="250"/>
+                        </holdingPriorities>
+                    </splitView>
+                </subviews>
+            </view>
+        </window>
+    </objects>
+</document>

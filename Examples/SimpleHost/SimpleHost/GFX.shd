@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>SHDefinitionName</key>
+		<string>SHDefinitionNameStrings</string>
+		<key>SHDefinitionRegex</key>
+		<string>\&quot;(\\.|[^\&quot;])*\&quot;</string>
+	</dict>
+	<dict>
+		<key>SHDefinitionName</key>
+		<string>SHDefinitionNameNumbers</string>
+		<key>SHDefinitionRegex</key>
+		<string>[\d|.|_]+</string>
+	</dict>
+	<dict>
+		<key>SHDefinitionName</key>
+		<string>SHDefinitionNameColors</string>
+		<key>SHDefinitionRegex</key>
+		<string>(#[0-9a-f]{3,6}|white|black|translucent|red|green|blue|orange|purple|pink|brown|yellow|rgb|rgba)</string>
+	</dict>
+	<dict>
+		<key>SHDefinitionName</key>
+		<string>SHDefinitionNameKeywords</string>
+		<key>SHDefinitionRegex</key>
+		<string>(true|false|null|num/min|num/max|math/E|math/LOG2E|math/LOG10E|math/LN2|math/LN10|math/PI|math/PI2|math/1PI|math/2PI|math/2SQRTPI|math/SQRT2|math/SQRT1_2|file/out|file/in|file/err|math/cos|math/sin|math/tan|math/acos|math/asin|math/atan|math/atan2|math/cosh|math/sinh|math/tanh|math/acosh|math/asinh|math/atanh|math/exp|math/log|math/log10|math/sqrt|math/cbrt|math/hypot|math/abs|math/ceil|math/floor|math/round|rt/dup|rt/swap|rt/drop|rt/clear|rt/showstack|rt/backtrace|rt/reset|import|print|read|\-&gt;str|if|ifelse|while|times|fn/apply|throw|rescue|\-&gt;void|let|set\!|destruct\!|str/eq|str/compare|str/contains|str/starts\-with|str/ends\-with|str/char\-at|str/index\-of|str/concat|str/replace|str/substr|str/split|str/lower\-case|str/upper\-case|str/capital\-case|vec/at|vec/concat|vec/index\-of|vec/last\-index\-of|vec/join|vec/subset|vec/sort|vec/for\-each|vec/filter|vec/map|hash/begin|hash/end|hash/get|hash/concat|hash/each\-pair|file/exists?|file/dir?|file/open|file/close|file/size|file/seek|file/tell|file/read|file/read\-line|file/write|file/write\-line)</string>
+	</dict>
+	<dict>
+		<key>SHDefinitionName</key>
+		<string>SHDefinitionNameCoreFunctions</string>
+		<key>SHDefinitionRegex</key>
+		<string>(ctx/begin|ctx/end|ctx/size|ctx/save|everything|layer/frame|layer/set\-frame|layer/display|layer/render|layer|set\-fill|set\-stroke|fill|stroke|path/make|path/rect|path/round\-rect|path/oval|path/move|path/line|path/arc|path/curve|path/bounding\-box|path/current\-point|path/empty?|path/contains\-point|path/fill|path/stroke|font|text/size|text/draw|text)</string>
+	</dict>
+</array>
+</plist>

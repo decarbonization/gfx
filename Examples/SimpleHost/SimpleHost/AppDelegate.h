@@ -8,24 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class GFXPortalView;
-
 @interface AppDelegate : NSObject <NSApplicationDelegate>
-
-#pragma mark - Outlets
-
-@property (assign) IBOutlet NSWindow *canvasWindow;
-@property (assign) IBOutlet GFXPortalView *graphicsView;
-
-#pragma mark -
-
-@property (assign) IBOutlet NSWindow *inputWindow;
-@property (assign) IBOutlet NSTextView *inputTextView;
-@property (assign) IBOutlet NSTextView *consoleTextView;
-
-#pragma mark - Actions
-
-- (IBAction)clear:(id)sender;
-- (IBAction)run:(id)sender;
 
 @end

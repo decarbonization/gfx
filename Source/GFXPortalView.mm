@@ -40,8 +40,11 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    _gfxLayer->setDrawFunctor(nullptr);
-    released(_gfxLayer);
+    if(_gfxLayer) {
+        _gfxLayer->setDrawFunctor(nullptr);
+        released(_gfxLayer);
+        _gfxLayer = nullptr;
+    }
     
     [super dealloc];
 }
@@ -75,9 +78,6 @@
         self.gfxLayer->setDrawExceptionHandler(exceptionHandler);
         
         self.contentLayer = self.gfxLayer->CALayer();
-        self.contentLayer.shadowColor = [NSColor blackColor].CGColor;
-        self.contentLayer.shadowOpacity = 0.3;
-        self.contentLayer.shadowRadius = 10.0;
         [self.layer addSublayer:self.contentLayer];
     }
     

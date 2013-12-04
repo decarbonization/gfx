@@ -25,7 +25,7 @@ namespace gfx {
         Base(),
         mDrawFunctor(drawFunctor),
         mSuperlayer(nullptr),
-        mSublayers(make<Array<Layer>>()),
+        mSublayers(new Array<Layer>()),
         mBacking(new LayerBacking(this, frame, scale)),
         WillDisplaySignal("WillDisplaySignal"_gfx),
         DidDisplaySignal("DidDisplaySignal"_gfx)
@@ -35,8 +35,11 @@ namespace gfx {
     
     Layer::~Layer()
     {
-        for (Layer *sublayer : mSublayers)
-            sublayer->removeFromSuperlayer();
+        while (mSublayers->count() > 0)
+            mSublayers->last()->removeFromSuperlayer();
+        
+        released(mSublayers);
+        mSublayers = nullptr;
         
         delete mBacking;
     }
