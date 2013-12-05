@@ -76,6 +76,9 @@ namespace gfx {
         ///Whether or not the frame's contents are frozen.
         bool mIsFrozen;
         
+        ///The current destroy signal reference, if any.
+        Signal<Nothing>::ObserverReference mDestroySignalReference;
+        
     public:
         
 #pragma mark - Lifecycle

@@ -256,7 +256,7 @@ namespace gfx {
         return make<Number>(numberString->doubleValue());
     }
     
-    Expression *Parser::parseSubexpression(Expression::Type type, ParserMode parserMode, UniChar start, UniChar end)
+    Expression *Parser::parseSubexpression(Expression::Type type, UniChar start, UniChar end)
     {
         Offset offset = mOffset;
         auto accumulator = make<Array<Base>>();
@@ -264,7 +264,7 @@ namespace gfx {
             if(is_whitespace(current()))
                 continue;
             
-            auto expression = this->parseExpression(parserMode);
+            auto expression = this->parseExpression();
             if(expression) {
                 accumulator->append(expression);
                 this->previous();
@@ -280,7 +280,7 @@ namespace gfx {
     
 #pragma mark - Parsing
     
-    Base *Parser::parseExpression(Parser::ParserMode mode)
+    Base *Parser::parseExpression()
     {
         while (this->more()) {
             UniChar c = this->current();
@@ -291,9 +291,9 @@ namespace gfx {
                 this->moveToNext(kCommentEnd);
                 this->next();
             } else if(is_vector(c)) {
-                return this->parseSubexpression(Expression::Type::Vector, ParserMode::Vector, kVectorBegin, kVectorEnd);
+                return this->parseSubexpression(Expression::Type::Vector, kVectorBegin, kVectorEnd);
             } else if(is_function(c)) {
-                return this->parseSubexpression(Expression::Type::Function, ParserMode::Function, kFunctionBegin, kFunctionEnd);
+                return this->parseSubexpression(Expression::Type::Function, kFunctionBegin, kFunctionEnd);
             } else if(is_string(c, true)) {
                 return this->parseString();
             } else if(is_word(c, true)) {
@@ -313,7 +313,7 @@ namespace gfx {
         auto expressionStack = make<Array<Base>>();
         
         while (this->more()) {
-            auto expression = this->parseExpression(ParserMode::Normal);
+            auto expression = this->parseExpression();
             expressionStack->append(expression);
         }
         

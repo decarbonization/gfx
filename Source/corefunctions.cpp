@@ -785,6 +785,10 @@ frame->push(result); \
     
     void CoreFunctions::addTo(StackFrame *frame)
     {
+        gfx_assert_param(frame);
+        
+        AutoreleasePool pool;
+        
         //Core Constants
         CoreFunctions::createVariableBinding(frame, "true"_gfx, make<Number>(1));
         CoreFunctions::createVariableBinding(frame, "false"_gfx, make<Number>(0));

@@ -20,18 +20,23 @@ namespace gfx {
         mBindings(new Dictionary<const String, Base>),
         mInterpreter(interpreter),
         mIsFrozen(false),
+        mDestroySignalReference(),
         DestroySignal("gfx::StackFrame::DestroySignal"_gfx)
     {
         if(mParent)
-            mParent->DestroySignal += [this](Nothing) {
+            mDestroySignalReference = mParent->DestroySignal.add([this](Nothing) {
                 mParent = nullptr;
                 autoreleased(this);
-            };
+            });
     }
     
     StackFrame::~StackFrame()
     {
         DestroySignal();
+        
+        if(mParent) {
+            mParent->DestroySignal.remove(mDestroySignalReference);
+        }
         
         released(mStorage);
         released(mBindings);
