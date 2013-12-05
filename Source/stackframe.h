@@ -68,7 +68,7 @@ namespace gfx {
         ///Child frames observe their parent's `DestroySignal`
         ///and autorelease themselves. This prevents dangling
         ///pointers and allows frames to be implicitly destroyed.
-        GFX_weak StackFrame *mParent;
+        GFX_safe_weak StackFrame *mParent;
         
         ///The interpreter that the stack frame is attached to.
         GFX_weak Interpreter *mInterpreter;
