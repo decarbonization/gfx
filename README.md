@@ -71,7 +71,7 @@ Boolean literals come in the form of two reserved words, `true` and `false`. The
 
 ##Words
 
-Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `rt/showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a tick, like `'hello`. Words beginning with `#` and `&` are currently reserved for the Gfx language for future usage.
+Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `rt/showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a tick, like `'hello`. Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3. Words beginning with `#` are currently reserved for the Gfx language for future usage.
 
 ##Other Types
 

@@ -94,6 +94,9 @@ namespace gfx {
             if(word->string()->hasPrefix("'"_gfx)) {
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
                 currentFrame->push(make<Word>(rawWord, word->offset()));
+            } else if(word->string()->hasPrefix("&"_gfx)) {
+                auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
+                this->evalExpression(make<Word>(rawWord, word->offset()), EvalContext::Vector);
             } else {
                 auto value = currentFrame->bindingValue(word->string());
                 if(!value) value = mUnboundWordHandler(word);

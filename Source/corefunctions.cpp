@@ -311,7 +311,7 @@ frame->push(result); \
     
     static void apply(StackFrame *frame)
     {
-        static_cast<Function *>(frame->pop())->apply(frame);
+        frame->popFunction()->apply(frame);
     }
     
 #pragma mark -
