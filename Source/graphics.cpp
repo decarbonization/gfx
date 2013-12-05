@@ -205,6 +205,28 @@ namespace gfx {
         layer->render(Context::currentContext());
     }
     
+    static void layer_addChild(StackFrame *stack)
+    {
+        /* layer(parent) layer(child) -- */
+        auto child = stack->popType<Layer>();
+        auto parent = stack->popType<Layer>();
+        parent->addSublayer(child);
+    }
+    
+    static void layer_removeAsChild(StackFrame *stack)
+    {
+        /* layer -- */
+        auto layer = stack->popType<Layer>();
+        layer->removeFromSuperlayer();
+    }
+    
+    static void layer_children(StackFrame *stack)
+    {
+        /* layer -- vec */
+        auto layer = stack->popType<Layer>();
+        stack->push(copy(layer->sublayers()));
+    }
+    
 #pragma mark - Color Functions
     
     static void rgb(StackFrame *stack)
@@ -457,6 +479,9 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "layer/set-frame"_gfx, &layer_setFrame);
         Graphics::createFunctionBinding(frame, "layer/display"_gfx, &layer_display);
         Graphics::createFunctionBinding(frame, "layer/render"_gfx, &layer_render);
+        Graphics::createFunctionBinding(frame, "layer/add-child"_gfx, &layer_addChild);
+        Graphics::createFunctionBinding(frame, "layer/remove-as-child"_gfx, &layer_removeAsChild);
+        Graphics::createFunctionBinding(frame, "layer/children"_gfx, &layer_children);
         
         //Colors
         Graphics::createVariableBinding(frame, "white"_gfx, Color::white());
