@@ -854,9 +854,9 @@ frame->push(result); \
         
         
         //Boolean Operations
-        CoreFunctions::createFunctionBinding(frame, "&"_gfx, &opAnd);
-        CoreFunctions::createFunctionBinding(frame, "|"_gfx, &opOr);
-        CoreFunctions::createFunctionBinding(frame, "!"_gfx, &opNot);
+        CoreFunctions::createFunctionBinding(frame, "and"_gfx, &opAnd);
+        CoreFunctions::createFunctionBinding(frame, "or"_gfx, &opOr);
+        CoreFunctions::createFunctionBinding(frame, "not"_gfx, &opNot);
         
         CoreFunctions::createFunctionBinding(frame, "="_gfx, &opEqual);
         CoreFunctions::createFunctionBinding(frame, "!="_gfx, &opNotEqual);

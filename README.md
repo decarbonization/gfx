@@ -137,9 +137,9 @@ Numbers are currently represented as double precision floating point numbers. Th
 
 Gfx does not have a separate type for bools, but represents them as `1` for `true`, and `0` for `false`. Only the number `0` is considered falsey. The following functions are exposed to operate on boolean values.
 
-* `& ( bool bool -- bool )`: yields true if two bools are true; false otherwise.
-* `| ( bool bool -- bool )`: yields true if one of two bools are true; false otherwise.
-* `! ( bool -- bool )`: negates a boolean value.
+* `and ( bool bool -- bool )`: yields true if two bools are true; false otherwise.
+* `or ( bool bool -- bool )`: yields true if one of two bools are true; false otherwise.
+* `not ( bool -- bool )`: negates a boolean value.
 
 ##null
 
