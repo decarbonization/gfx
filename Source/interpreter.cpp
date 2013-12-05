@@ -221,7 +221,7 @@ namespace gfx {
     
     void Interpreter::setFileName(const String *filename)
     {
-        mRootFrame->createBindingWithValue("__FILE__"_gfx, const_cast<String *>(filename));
+        mRootFrame->setBindingToValue("__FILE__"_gfx, const_cast<String *>(filename), false);
     }
     
     const String *Interpreter::fileName() const

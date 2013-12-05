@@ -344,11 +344,11 @@ frame->push(result); \
             auto words = static_cast<Array<Base> *>(wordOrWords);
             for (Index index = words->count() - 1; index >= 0; index--) {
                 Word *word = static_cast<Word *>(words->at(index));
-                frame->createBindingWithValue(word->string(), frame->pop());
+                frame->setBindingToValue(word->string(), frame->pop(), false);
             }
         } else if(wordOrWords && wordOrWords->isKindOfClass<Word>()) {
             Base *value = frame->pop();
-            frame->createBindingWithValue(static_cast<Word *>(wordOrWords)->string(), value);
+            frame->setBindingToValue(static_cast<Word *>(wordOrWords)->string(), value, false);
         } else {
             gfx_assert(false, "bind is being used incorrectly"_gfx);
         }
@@ -775,12 +775,12 @@ frame->push(result); \
     
     void CoreFunctions::createVariableBinding(StackFrame *frame, const String *name, Base *value)
     {
-        frame->createBindingWithValue(name, value);
+        frame->setBindingToValue(name, value, false);
     }
     
     void CoreFunctions::createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation)
     {
-        frame->createBindingWithValue(name, make<NativeFunction>(name, implementation));
+        frame->setBindingToValue(name, make<NativeFunction>(name, implementation), false);
     }
     
     void CoreFunctions::addTo(StackFrame *frame)

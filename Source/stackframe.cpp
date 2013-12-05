@@ -19,10 +19,14 @@ namespace gfx {
         mParent(parent),
         mBindings(new Dictionary<const String, Base>),
         mInterpreter(interpreter),
+        mIsFrozen(false),
         DestroySignal("gfx::StackFrame::DestroySignal"_gfx)
     {
         if(mParent)
-            mParent->DestroySignal += [this](Nothing) { autoreleased(this); };
+            mParent->DestroySignal += [this](Nothing) {
+                mParent = nullptr;
+                autoreleased(this);
+            };
     }
     
     StackFrame::~StackFrame()
@@ -37,6 +41,8 @@ namespace gfx {
     
     void StackFrame::push(Base *value)
     {
+        assertMutationPossible();
+        
         if(!value)
             mStorage->append(make<Number>(0));
         else
@@ -45,6 +51,8 @@ namespace gfx {
     
     Base *StackFrame::pop()
     {
+        assertMutationPossible();
+        
         if(empty()) {
             if(!mParent)
                 gfx_assert(false, "stack underflow"_gfx);
@@ -77,12 +85,16 @@ namespace gfx {
     
     void StackFrame::safeDrop()
     {
+        assertMutationPossible();
+        
         if(!empty())
             pop();
     }
     
-    void StackFrame::reset()
+    void StackFrame::dropAll()
     {
+        assertMutationPossible();
+        
         mStorage->removeAll();
     }
     
@@ -129,16 +141,11 @@ namespace gfx {
     
 #pragma mark - Bindings
     
-    void StackFrame::createBindingWithValue(const String *key, Base *value)
-    {
-        gfx_assert_param(key);
-        
-        mBindings->set(key, value);
-    }
-    
     void StackFrame::setBindingToValue(const String *key, Base *value, bool searchParentScopes)
     {
         gfx_assert_param(key);
+        
+        assertMutationPossible(String::Builder() << "Cannot change value of binding '" << key << "'.");
         
         auto bindings = mBindings;
         if(searchParentScopes) {
@@ -152,6 +159,9 @@ namespace gfx {
                 
                 parentScope = parentScope->parent();
             } while (parentScope != nullptr);
+            
+            if(!bindings)
+                bindings = mBindings;
         }
         
         bindings->set(key, value);
@@ -168,5 +178,35 @@ namespace gfx {
             return mParent->bindingValue(key);
         else
             return nullptr;
+    }
+    
+#pragma mark - Freezing
+    
+    void StackFrame::assertMutationPossible(const String *message, const String *affectedBindingKey) const
+    {
+        if(mIsFrozen) {
+            Dictionary<const String, Base> *userInfo = nullptr;
+            if(affectedBindingKey) {
+                userInfo = autoreleased(new Dictionary<const String, Base>{
+                    {"AffectedBindingKey"_gfx, (Base *)affectedBindingKey},
+                });
+            }
+            throw StackFrame::AccessViolationException(message, userInfo);
+        }
+    }
+    
+    void StackFrame::freeze()
+    {
+        mIsFrozen = true;
+    }
+    
+    void StackFrame::unfreeze()
+    {
+        mIsFrozen = false;
+    }
+    
+    bool StackFrame::isFrozen() const
+    {
+        return mIsFrozen;
     }
 }

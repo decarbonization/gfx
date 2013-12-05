@@ -10,6 +10,7 @@
 #define gfx_dictionary_h
 
 #include <CoreFoundation/CoreFoundation.h>
+#include <initializer_list>
 #include "base.h"
 #include "str.h"
 #include "dictionary.h"
@@ -30,6 +31,21 @@ namespace gfx {
         static_assert(std::is_base_of<Base, Value>::value, "Dictionary requires Base-derived value types");
         static_assert(!std::is_pointer<Key>::value, "Key must be a bare type");
         static_assert(!std::is_pointer<Value>::value, "Value must be a bare type");
+        
+    public:
+        
+        ///A structure that contains a weak reference to a key object,
+        ///and value object. Used for simple inline construction.
+        struct Pair
+        {
+            ///The key of the pair.
+            Key *key;
+            
+            ///The value of the pair.
+            Value *value;
+        };
+        
+    protected:
         
         ///The storage of the Dictionary.
         CFMutableDictionaryRef mStorage;
@@ -52,6 +68,14 @@ namespace gfx {
         Dictionary(const Dictionary<Key, Value> *dictionary) :
             Dictionary(dictionary->getStorage())
         {
+        }
+        
+        ///Constructs a dictionary with an initializer list of pairs.
+        Dictionary(const std::initializer_list<Pair> &list) :
+            Dictionary()
+        {
+            for (const Pair &pair : list)
+                this->set(pair.key, pair.value);
         }
         
         ///The destructor of the dictionary.

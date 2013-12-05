@@ -434,12 +434,12 @@ namespace gfx {
     
     void Graphics::createVariableBinding(StackFrame *frame, const String *name, Base *value)
     {
-        frame->createBindingWithValue(name, value);
+        frame->setBindingToValue(name, value, false);
     }
     
     void Graphics::createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation)
     {
-        frame->createBindingWithValue(name, make<NativeFunction>(name, implementation));
+        frame->setBindingToValue(name, make<NativeFunction>(name, implementation), false);
     }
     
     void Graphics::addTo(StackFrame *frame)
