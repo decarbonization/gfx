@@ -15,52 +15,103 @@ namespace gfx {
     class StackFrame;
     class Expression;
     
-    class Function : public Base {
+    ///The Function abstract class describes the methods necessary
+    ///to implement a functor value in the gfx language.
+    ///
+    ///Concrete subclasses of `gfx::Function` should wrap the contents
+    ///of their `apply` method with the following method calls so that
+    ///stack traces function correctly:
+    ///
+    /// stack->interpreter()->enteredFunction(this);
+    /// ...
+    /// stack->interpreter()->exitedFunction(this);
+    ///
+    class Function : public Base
+    {
     public:
+        
+        ///Invokes the logic contained within the function, providing
+        ///a stack frame to read and write shared state from.
+        ///
+        /// \param  stack   The frame to read and write shared state from. Will never be null.
+        ///
+        ///The function should push its return value, if any, onto the passed in frame.
         virtual void apply(StackFrame *stack) const = 0;
     };
     
-    class NativeFunction : public Function {
+#pragma mark -
+    
+    ///The NativeFunction concrete class wraps a native (as in C++) function
+    ///so that it can be used as a functor value in the gfx language.
+    class NativeFunction : public Function
+    {
     public:
+        
+        ///The type that represents native (C++) functions.
+        ///
+        /// \param  stack   The frame to read and write shared state from. Will never be null.
+        ///
+        ///The function should push its return value, if any, onto the passed in frame.
         typedef std::function<void(StackFrame *stack)> Type;
         
     protected:
         
+        ///The implementation of the native function.
         NativeFunction::Type mImplementation;
+        
+        ///The name of the native function.
         const String *mName;
         
     public:
         
+        ///Constructs the native function with a name and implementation
+        ///
+        /// \param  name            The name of the native function. Provided to aid in debugging. Should not be null.
+        /// \param  implementation  The logic of the native function.
+        ///
         NativeFunction(const String *name, NativeFunction::Type implementation) :
             mName(retained(name)),
             mImplementation(implementation)
         {
         }
         
+        ///The destructor.
         ~NativeFunction()
         {
             released(mName);
         }
         
-        const String *name() const
-        {
-            return mName;
-        }
+        ///Returns the name of the native function.
+        const String *name() const { return retained_autoreleased(mName); }
         
         virtual const String *description() const override;
-        
-        virtual void apply(StackFrame *stack) const;
+        virtual void apply(StackFrame *stack) const override;
     };
     
-    class InterpretedFunction : public Function {
+#pragma mark -
+    
+    ///The InterpretedFunction concrete class wraps an instance of `gfx::Expression`
+    ///to allow interpreted logic to be used as a functor value in Gfx.
+    ///
+    ///The expression associated with the interpreted function is evaluated with its
+    ///own stack frame wrapping the frame passed into `apply`. It is also applied
+    ///with an autorelease pool so that all temporary objects created are scope bound.
+    class InterpretedFunction : public Function
+    {
+        ///The source Expression object.
         Expression *mSource;
         
     public:
+        ///Constructs an interpreted function with a given source expression.
+        ///
+        /// \param  source   The expression to evaluate when applied. Should not be null.
+        ///
         explicit InterpretedFunction(Expression *source);
+        
+        ///The destructor.
         virtual ~InterpretedFunction();
         
         virtual void apply(StackFrame *stack) const override;
-        
         virtual const String *description() const override;
     };
 }

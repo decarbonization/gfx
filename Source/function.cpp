@@ -12,6 +12,8 @@
 #include "stackframe.h"
 
 namespace gfx {
+    ///A simple type that evaluates a specified function upon destruction
+    ///to guarantee certain logic always runs, regardless of exceptions.
     class at_end
     {
         std::function<void()> mAction;
@@ -32,10 +34,11 @@ namespace gfx {
     void NativeFunction::apply(StackFrame *stack) const
     {
         stack->interpreter()->enteredFunction(this);
+        at_end finally([stack, this] {
+            stack->interpreter()->exitedFunction(this);
+        });
         
         mImplementation(stack);
-        
-        stack->interpreter()->exitedFunction(this);
     }
     
     const String *NativeFunction::description() const
@@ -64,7 +67,7 @@ namespace gfx {
         
         StackFrame *functionFrame = make<StackFrame>(stack, interpreter);
         interpreter->pushFrame(functionFrame);
-        at_end finally([stack, this, interpreter, functionFrame]() {
+        at_end finally([stack, this, interpreter, functionFrame] {
             interpreter->popFrame();
             interpreter->exitedFunction(this);
             
