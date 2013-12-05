@@ -24,15 +24,15 @@ namespace gfx {
 #pragma mark - Math Operations
     
 #   define SYNTHESIZE_MATH_WRAPPER_1_PARAM(FunctionName) static void FunctionName##Wrapper(StackFrame *frame) { \
-Number *input = frame->popNumber(); \
-Number *result = make<Number>(FunctionName(input->value())); \
-frame->push(result); \
+    Number *input = frame->popNumber(); \
+    Number *result = make<Number>(FunctionName(input->value())); \
+    frame->push(result); \
 }
 #   define SYNTHESIZE_MATH_WRAPPER_2_PARAM(FunctionName) static void FunctionName##Wrapper(StackFrame *frame) { \
-Number *input1 = frame->popNumber(); \
-Number *input2 = frame->popNumber(); \
-Number *result = make<Number>(FunctionName(input1->value(), input2->value())); \
-frame->push(result); \
+    Number *input1 = frame->popNumber(); \
+    Number *input2 = frame->popNumber(); \
+    Number *result = make<Number>(FunctionName(input1->value(), input2->value())); \
+    frame->push(result); \
 }
     
     static void opPlus(StackFrame *frame)
@@ -956,4 +956,20 @@ frame->push(result); \
 #endif /* GFX_Language_SupportsFiles */
     }
     
+    StackFrame *CoreFunctions::sharedCoreFunctionFrame()
+    {
+        static StackFrame *sharedCoreFunctionFrame = nullptr;
+        if(!sharedCoreFunctionFrame) {
+            sharedCoreFunctionFrame = new StackFrame(nullptr, nullptr);
+            CoreFunctions::addTo(sharedCoreFunctionFrame);
+            sharedCoreFunctionFrame->freeze();
+        }
+        
+        return sharedCoreFunctionFrame;
+    }
+    
+    StackFrame *CoreFunctions::createCoreFunctionFrame(Interpreter *interpreter)
+    {
+        return make<StackFrame>(CoreFunctions::sharedCoreFunctionFrame(), interpreter);
+    }
 }

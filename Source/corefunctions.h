@@ -13,6 +13,7 @@
 
 namespace gfx {
     class StackFrame;
+    class Interpreter;
     
     ///The CoreFunctions class encapsulates all of the
     ///core language functions of the Gfx language.
@@ -25,12 +26,23 @@ namespace gfx {
         ///and adds it to a given frame with a given name.
         static void createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation);
         
+        ///Returns the shared core function frame, creating it if it does not already exist.
+        ///
+        ///__Important:__ The frame returned by this method __is not__ usable directly. It
+        ///__must__ be used as the parent of a child stack frame. The returned frame is
+        ///frozen, and won't take new stack or binding values. Additionally, it has no
+        ///interpreter associated with it, and as such will cause crashes if used.
+        static StackFrame *sharedCoreFunctionFrame();
+        
     public:
         
         ///Adds all of the core language functions to a given frame.
         ///
         /// \param  frame   The frame to add the functions to. Required.
         static void addTo(StackFrame *frame);
+        
+        ///Creates a new core function frame for use with a new instance of `gfx::Interpreter`.
+        static StackFrame *createCoreFunctionFrame(Interpreter *interpreter);
     };
 }
 

@@ -49,8 +49,7 @@ namespace gfx {
         mUnboundWordHandler(),
         ResetSignal("gfx::Interpreter::ResetSignal"_gfx)
     {
-        mRootFrame = make<StackFrame>(nullptr, this);
-        CoreFunctions::addTo(mRootFrame);
+        mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
         this->pushFrame(mRootFrame);
         
 #if GFX_Include_GraphicsStack
@@ -145,8 +144,7 @@ namespace gfx {
 #endif /* GFX_Include_GraphicsStack */
         
         released(mRootFrame);
-        mRootFrame = make<StackFrame>(nullptr, this);
-        CoreFunctions::addTo(mRootFrame);
+        mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
         this->pushFrame(mRootFrame);
         
         mRunningFunctions->removeAll();

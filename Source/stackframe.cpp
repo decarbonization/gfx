@@ -153,11 +153,13 @@ namespace gfx {
         assertMutationPossible(String::Builder() << "Cannot change value of binding '" << key << "'.");
         
         auto bindings = mBindings;
-        if(searchParentScopes) {
-            auto parentScope = this;
+        if(searchParentScopes && parent()) {
+            auto parentScope = parent();
             
             do {
                 if(parentScope->bindingValue(key, false)) {
+                    parentScope->assertMutationPossible(String::Builder() << "Cannot change value of binding '" << key << "'.");
+                    
                     bindings = parentScope->mBindings;
                     break;
                 }
@@ -179,8 +181,8 @@ namespace gfx {
         Base *value = mBindings->get(key);
         if(value)
             return value;
-        else if(searchParentScopes && mParent)
-            return mParent->bindingValue(key);
+        else if(searchParentScopes && parent())
+            return parent()->bindingValue(key);
         else
             return nullptr;
     }
