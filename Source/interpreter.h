@@ -20,84 +20,202 @@ namespace gfx {
     class Function;
     class Word;
     
+    ///The Interpreter class encapsulates evaluation of already-parsed GFX code
+    ///from the `gfx::Parser` class, as well as management of shared global state.
     class Interpreter : public Base
     {
     public:
         
+        ///A function to invoke when an unbound word is
+        ///referenced within an expression tree.
+        ///
+        /// \param  word    The word that has no known value. Will not be null.
+        ///
+        /// \result A value to use as the meaning of `word`.
+        ///
+        ///If no value is available, an exception should be raised.
         typedef std::function<Base *(Word *word)> UnboundWordHandler;
         
     protected:
         
-        /*weak*/ StackFrame *mRootFrame;
+        ///The root frame of the interpreter. This contains the core and graphics stack functions.
+        GFX_weak StackFrame *mRootFrame;
+        
+        ///The stack frames currently in use.
         std::stack<StackFrame *> mFrames;
-        Array<const Function> *mRunningFunctions;
-        Array<const String> *mSearchPaths;
+        
+        ///The currently executing function stack trace.
+        GFX_strong Array<const Function> *mRunningFunctions;
+        
+        ///The search paths used by the import method.
+        GFX_strong Array<const String> *mSearchPaths;
+        
+        ///Whether or not import is disabled.
         bool mImportAllowed;
+        
+        ///The functor to invoke when an unbound word is referenced in an expression tree.
         UnboundWordHandler mUnboundWordHandler;
         
         
+        ///Raises an exception with a given reason, originating from a specified source offset.
+        ///
+        /// \param  reason  The reason for the failure. Should not be null.
+        /// \param  source  The source code offset of the failure.
+        ///
         void fail(const String *reason, Offset source);
         
     public:
+        ///Returns a bool indicating whether or not a given value is truthy.
+        ///
+        /// \param  value   The value to check for truthiness.
+        ///
+        /// \result true if the value has truthiness; false otherwise.
+        ///
         static bool IsTrue(Base *value);
         
+        
+        ///Constructs an interpreter.
         explicit Interpreter();
+        
+        ///The destructor.
         virtual ~Interpreter();
         
 #pragma mark - Interpretation
         
-        enum class EvalContext
-        {
+        ///The context from which an expression is being evaluated.
+        enum class EvalContext {
+            ///The expression is being evaluated from the root of a document.
             Normal,
+            
+            ///The expression is being evaluated within a vector expression.
             Vector,
+            
+            ///The expression is being evaluated within a function expression.
             Function,
         };
         
+    protected:
+        
+        ///Evaluates the a given expression object in a given context.
+        ///
+        /// \param  expression  The expression to evaluate. May not be null.
+        /// \param  context     The context the expression is to be evaluated in.
+        ///
+        ///The result of evaluating the expression may be retrieved through
+        ///the interpreter's current stack frame's top most value.
+        ///
+        /// \seealso(gfx::Interpreter::lastValue)
         void evalExpression(Base *expression, EvalContext context);
+        
+    public:
+        
+        ///Evaluates a given array of expressions in a given context.
+        ///
+        /// \param  expressions The expressions to evaluate. May not be null.
+        /// \param  context     The context to evaluate the expressions in. Default
+        ///                     value is `gfx::Interpreter::EvalContext::Normal`.
+        ///
+        ///The result of evaluating the expressions may be retrieved through
+        ///the interpreter's current stack frame's top most value.
+        ///
+        /// \seealso(gfx::Interpreter::lastValue)
         void eval(const Array<Base> *expressions, EvalContext context = EvalContext::Normal);
         
 #pragma mark - Resetting
         
+        ///Destroys all state associated with the interpreter,
+        ///effectively rendering it as though it were just
+        ///constructed. This method does not destroy any non-
+        ///code related state. E.g. import allowed status,
+        ///search paths will remain.
+        ///
+        /// \seealso(gfx::Interpreter::ResetSignal)
         void reset();
+        
+        ///A signal sent whenever an interpreter is told to reset.
         Signal<Interpreter *> ResetSignal;
         
 #pragma mark - Unbound Word Handling
         
+        ///Sets the unbound word handler.
         void setUnboundWordHandler(UnboundWordHandler handler);
+        
+        ///Returns the unbound word handler.
         UnboundWordHandler unboundWordHandler() const;
+        
+        ///Raises an exception to indicate that a given word has
+        ///no known word available for it. The default unbound
+        ///word handler simply invokes this method.
+        ///
+        /// \param  word    The word with no known value. Should not be null.
+        ///
+        /// \throws `gfx::Exception`
+        ///
         void failForUnboundWord(const Word *word);
         
 #pragma mark - Stack Frames
         
+        ///Pushes a frame onto the interpreter's frame stack. This
+        ///frame will be the target for all in-place stack operations.
         void pushFrame(StackFrame *frame);
+        
+        ///Pops the top most frame from the interpreter's frame stack.
+        ///
+        /// \throws `gfx::Exception` if there are no frames on the stack.
         void popFrame();
+        
+        ///Returns the top most frame on the interpreter's frame stack, if any.
         StackFrame *currentFrame() const;
+        
+        ///Returns the top most value of the interpreter's current frame, if any.
         Base *lastValue() const;
         
 #pragma mark - Backtrace Tracking
         
+        ///Informs the interpreter that a given function has been entered.
+        ///
+        ///The interpreter updates its backtrace information as a
+        ///side-effect of this method being invoked.
         void enteredFunction(const Function *function);
+        
+        ///Informs the interpreter that a given function has returned.
+        ///
+        ///The interpreter updates its backtrace information as a
+        ///side-effect of this method being invoked.
         void exitedFunction(const Function *function);
+        
+        ///Returns the current function backtrace.
         const String *backtrace() const;
         
 #pragma mark - Files & Import Support
         
-        void setFileName(const String *filename);
-        const String *fileName() const;
-        
-#pragma mark -
-        
+        ///Sets whether or not imports are allowed.
         void setImportAllowed(bool importAllowed);
+        
+        ///Returns whether or not imports are allowed.
         bool isImportAllowed() const;
         
 #pragma mark -
         
+        ///Returns the known search paths of the interpreter.
+        ///
+        ///Search paths are generally stored as least to most specific.
         const Array<const String> *searchPaths() const;
+        
+        ///Adds a given search path to the interpreter.
         void addSearchPath(const String *searchPath);
+        
+        ///Removes a givne search path from the interpreter.
         void removeSearchPath(const String *searchPath);
         
 #pragma mark -
         
+        ///Attempts to import the contents of a gfx file
+        ///known by a given name into the interpreter.
+        ///
+        /// \param  filename    The name of the gfx file. Required.
+        ///
+        /// \result true if the file could be found and imported; false otherwise.
         bool import(const String *filename);
     };
     

@@ -18,7 +18,7 @@ namespace gfx {
     class Word : public Base
     {
         ///The underlying string of the word.
-        const String *mString;
+        GFX_strong const String *mString;
         
         ///Where the word originated.
         Offset mOffset;

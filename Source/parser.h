@@ -23,6 +23,8 @@ namespace gfx {
     ///The Parser class encapsulates a recursive descent parser that converts a string
     ///into instances of `gfx::Expression`, `gfx::Word`, `gfx::Number`, and `gfx::String`.
     ///The resulting objects are then executed by the `gfx::Interpreter` class.
+    ///
+    ///Parsers are one use, and should be stack allocated.
     class Parser : public Base
     {
         ///The string being parsed.

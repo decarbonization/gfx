@@ -57,10 +57,10 @@ namespace gfx {
     protected:
         
         ///The storage for the LiFO stack of the frame.
-        Array<Base> *mStorage;
+        GFX_strong Array<Base> *mStorage;
         
         ///The variable bindings of the frame.
-        Dictionary<const String, Base> *mBindings;
+        GFX_strong Dictionary<const String, Base> *mBindings;
         
         ///The parent frame of this frame. Used for pop/
         ///peak operations, and binding lookups/assignments.
@@ -68,10 +68,10 @@ namespace gfx {
         ///Child frames observe their parent's `DestroySignal`
         ///and autorelease themselves. This prevents dangling
         ///pointers and allows frames to be implicitly destroyed.
-        /* weak */ StackFrame *mParent;
+        GFX_weak StackFrame *mParent;
         
         ///The interpreter that the stack frame is attached to.
-        /* weak */ Interpreter *mInterpreter;
+        GFX_weak Interpreter *mInterpreter;
         
         ///Whether or not the frame's contents are frozen.
         bool mIsFrozen;

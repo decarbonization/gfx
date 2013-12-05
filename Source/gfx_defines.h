@@ -78,4 +78,15 @@
 #   define GFX_Layer_Use_CA         1
 #endif /* TARGET_OS_MAC && !TARGET_OS_IPHONE */
 
+#pragma mark - Lifecycle Markers
+
+///Marks a variable as being a strong reference.
+#define GFX_strong          /* strong */
+
+///Marks a variable as being a weak reference.
+#define GFX_weak            /* weak */
+
+///Marks a variable as being a zeroing weak reference.
+#define GFX_safe_weak       /* safe_weak */
+
 #endif

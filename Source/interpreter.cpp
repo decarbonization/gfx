@@ -62,7 +62,6 @@ namespace gfx {
         };
 #endif /* GFX_Include_GraphicsStack */
         
-        this->setFileName("(none)"_gfx);
         this->addSearchPath(""_gfx);
         this->addSearchPath("./"_gfx);
     }
@@ -147,6 +146,8 @@ namespace gfx {
         CoreFunctions::addTo(mRootFrame);
         this->pushFrame(mRootFrame);
         
+        mRunningFunctions->removeAll();
+        
         ResetSignal(this);
     }
     
@@ -176,6 +177,9 @@ namespace gfx {
     
     void Interpreter::popFrame()
     {
+        if(mFrames.empty())
+            throw Exception("Frame stack underflow."_gfx, nullptr);
+        
         mFrames.top()->autorelease();
         mFrames.pop();
     }
@@ -219,18 +223,6 @@ namespace gfx {
     
 #pragma mark - Import Support
     
-    void Interpreter::setFileName(const String *filename)
-    {
-        mRootFrame->setBindingToValue("__FILE__"_gfx, const_cast<String *>(filename), false);
-    }
-    
-    const String *Interpreter::fileName() const
-    {
-        return (const String *)mRootFrame->bindingValue("__FILE__"_gfx, false);
-    }
-    
-#pragma mark -
-    
     void Interpreter::setImportAllowed(bool importAllowed)
     {
         mImportAllowed = importAllowed;
@@ -273,23 +265,19 @@ namespace gfx {
         if(!this->isImportAllowed())
             throw Exception("illegal import"_gfx, nullptr);
         
-        if(!filename->hasSuffix(".gfx"_gfx))
+        if(FilePaths::pathExtension(filename)->length() == 0)
             filename = String::Builder() << filename << ".gfx";
         
         AutoreleasePool pool;
         for (const String *searchPath : this->searchPaths()) {
-            String::Builder path;
-            path << searchPath;
-            
-            if(!searchPath->hasSuffix("/"_gfx)) {
-                path << "/"_gfx;
-            }
-            
-            path << filename;
-            
+            const String *path = FilePaths::combinePaths(searchPath, filename);
             if(File::exists(path)) {
-                const String *source = File::readFileAtPath(filename);
-                this->eval(Parser(source).parse());
+                try {
+                    const String *source = File::readFileAtPath(filename);
+                    this->eval(Parser(source).parse());
+                } catch (Exception e) {
+                    return false;
+                }
                 
                 return true;
             }
