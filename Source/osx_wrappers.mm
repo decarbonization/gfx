@@ -10,9 +10,14 @@
 #include "str.h"
 #include "assertions.h"
 
+///Set to 1 to include the class name in the `GFXBaseWrapper`. Useful for debugging crashes.
+#define Debug_IncludeClassName  0
+
 @interface GFXBaseWrapper : NSObject {
     const gfx::Base *_object;
+#if Debug_IncludeClassName
     NSString *_className;
+#endif /* Debug_IncludeClassName */
 }
 
 - (instancetype)initWithBaseObject:(const gfx::Base *)object;
@@ -28,8 +33,10 @@
         _object = nil;
     }
     
+#if Debug_IncludeClassName
     [_className release];
     _className = nil;
+#endif /* Debug_IncludeClassName */
     
     [super dealloc];
 }
@@ -39,8 +46,12 @@
     if((self = [super init])) {
         _object = object;
         
-        if(!object->isKindOfClass<gfx::String>())
+#if Debug_IncludeClassName
+        if(object->isKindOfClass<gfx::String>())
+            _className = @"gfx::String";
+        else
             _className = [(NSString *)_object->className()->getStorage() copy];
+#endif /* Debug_IncludeClassName */
     }
     
     return self;
