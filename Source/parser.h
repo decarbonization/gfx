@@ -19,6 +19,7 @@ namespace gfx {
     class String;
     class Number;
     class Word;
+    class Annotation;
     
     ///The Parser class encapsulates a recursive descent parser that converts a string
     ///into instances of `gfx::Expression`, `gfx::Word`, `gfx::Number`, and `gfx::String`.
@@ -99,6 +100,8 @@ namespace gfx {
         
         ///Parses a number at the current parser position, returning it.
         Number *parseNumber();
+        
+        Annotation *parseAnnotation();
         
         ///Parses a subexpression at the current position.
         ///

@@ -10,6 +10,7 @@
 #include "expression.h"
 #include "word.h"
 #include "number.h"
+#include "annotation.h"
 
 namespace gfx {
     
@@ -18,6 +19,7 @@ namespace gfx {
     enum Tokens : UniChar {
         kCommentBegin = '(',
         kCommentEnd = ')',
+        kAnnotationMarker = '%',
         
         kVectorBegin = '[',
         kVectorEnd = ']',
@@ -256,6 +258,22 @@ namespace gfx {
         return make<Number>(numberString->doubleValue());
     }
     
+    Annotation *Parser::parseAnnotation()
+    {
+        // (% this is an annotation %)
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // ^ <- Parsing starts here.
+        
+        next(); //%
+        
+        const String *contents = accumulateWhile([](UniChar c, bool isFirst) { return (c != kAnnotationMarker); });
+        
+        next(); //%
+        next(); //)
+        
+        return make<Annotation>(mOffset, contents);
+    }
+    
     Expression *Parser::parseSubexpression(Expression::Type type, UniChar start, UniChar end)
     {
         Offset offset = mOffset;
@@ -288,8 +306,12 @@ namespace gfx {
             if(is_whitespace(c)) {
                 this->next();
             } else if(is_comment(c)) {
-                this->moveToNext(kCommentEnd);
-                this->next();
+                if(next() == kAnnotationMarker) {
+                    return this->parseAnnotation();
+                } else {
+                    this->moveToNext(kCommentEnd);
+                    this->next();
+                }
             } else if(is_vector(c)) {
                 return this->parseSubexpression(Expression::Type::Vector, kVectorBegin, kVectorEnd);
             } else if(is_function(c)) {

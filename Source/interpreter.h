@@ -19,6 +19,7 @@ namespace gfx {
     class StackFrame;
     class Function;
     class Word;
+    class Annotation;
     
     ///The Interpreter class encapsulates evaluation of already-parsed GFX code
     ///from the `gfx::Parser` class, as well as management of shared global state.
@@ -108,6 +109,11 @@ namespace gfx {
         void evalExpression(Base *expression, EvalContext context);
         
     public:
+        
+        ///Signals that an annotation was encountered when evaluating an expression tree.
+        ///
+        ///Note that annotations found outside of `EvalContext::Normal` will be ignored.
+        Signal<const Annotation *> AnnotationFoundSignal;
         
         ///Evaluates a given array of expressions in a given context.
         ///

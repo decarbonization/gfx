@@ -11,6 +11,7 @@
 #include "str.h"
 #include "number.h"
 #include "expression.h"
+#include "annotation.h"
 
 #include "stackframe.h"
 #include "function.h"
@@ -47,6 +48,7 @@ namespace gfx {
         mSearchPaths(make<Array<const String>>()),
         mImportAllowed(true),
         mUnboundWordHandler(),
+        AnnotationFoundSignal("gfx::Interpreter::AnnotationFoundSignal"_gfx),
         ResetSignal("gfx::Interpreter::ResetSignal"_gfx)
     {
         mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
@@ -122,6 +124,8 @@ namespace gfx {
             } else if(expression->type() == Expression::Type::Function) {
                 currentFrame->push(make<InterpretedFunction>(expression));
             }
+        } else if(part->isKindOfClass<Annotation>() && context == EvalContext::Normal) {
+            AnnotationFoundSignal(static_cast<Annotation *>(part));
         }
     }
     
@@ -139,11 +143,14 @@ namespace gfx {
     
     void Interpreter::reset()
     {
+        AutoreleasePool pool;
 #if GFX_Include_GraphicsStack
         Context::emptyContextStack();
 #endif /* GFX_Include_GraphicsStack */
         
-        released(mRootFrame);
+        while (!mFrames.empty())
+            this->popFrame();
+        
         mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
         this->pushFrame(mRootFrame);
         

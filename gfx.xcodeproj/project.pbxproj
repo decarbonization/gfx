@@ -88,6 +88,7 @@
 		8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B89D9A1184DA2DC0062EFB4 /* GFXPortalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */; };
+		8B89DA1F1852D8B20062EFB4 /* annotation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA1E1852D8B20062EFB4 /* annotation.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +212,7 @@
 		8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osx_wrappers.h; sourceTree = "<group>"; };
 		8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXPortalView.h; sourceTree = "<group>"; };
 		8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXPortalView.mm; sourceTree = "<group>"; };
+		8B89DA1E1852D8B20062EFB4 /* annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = annotation.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +358,7 @@
 				8B12C8BE184BE15600DBD77C /* stackframe.cpp */,
 				8B12C8BF184BE15600DBD77C /* stackframe.h */,
 				8B12C8C4184BE15600DBD77C /* word.h */,
+				8B89DA1E1852D8B20062EFB4 /* annotation.h */,
 			);
 			name = "Core Interpreter";
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				8B12C8DD184BE15600DBD77C /* gfx.h in Headers */,
 				8B12C8F2184BE15600DBD77C /* path.h in Headers */,
 				8B12C8DC184BE15600DBD77C /* function.h in Headers */,
+				8B89DA1F1852D8B20062EFB4 /* annotation.h in Headers */,
 				8B12C8F6184BE15600DBD77C /* stackframe.h in Headers */,
 				8B12C8DA184BE15600DBD77C /* file.h in Headers */,
 				8B12C8D4184BE15600DBD77C /* dictionary.h in Headers */,

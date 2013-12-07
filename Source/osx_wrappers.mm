@@ -12,6 +12,7 @@
 
 @interface GFXBaseWrapper : NSObject {
     const gfx::Base *_object;
+    NSString *_className;
 }
 
 - (instancetype)initWithBaseObject:(const gfx::Base *)object;
@@ -27,6 +28,9 @@
         _object = nil;
     }
     
+    [_className release];
+    _className = nil;
+    
     [super dealloc];
 }
 
@@ -34,6 +38,9 @@
 {
     if((self = [super init])) {
         _object = object;
+        
+        if(!object->isKindOfClass<gfx::String>())
+            _className = [(NSString *)_object->className()->getStorage() copy];
     }
     
     return self;
