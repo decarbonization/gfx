@@ -21,8 +21,8 @@ namespace gfx {
         ///The line of origination.
         Index line;
         
-        ///The line-offset of origination.
-        Index offset;
+        ///The column of origination.
+        Index column;
         
         
         ///The Invalid offset. Used as a default placeholder, like null.

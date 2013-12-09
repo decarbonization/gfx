@@ -37,7 +37,10 @@
 #endif /* __cplusplus */
 
 #if __OBJC__
-#   import "GFXPortalView.h"
+#   import "GFXValue.h"
+#   import "GFXInterpreter.h"
+#   import "GFXLayer.h"
+#   import "GFXView.h"
 #endif /* __OBJC__ */
 
 #endif

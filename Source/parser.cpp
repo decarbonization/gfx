@@ -111,12 +111,12 @@ namespace gfx {
     UniChar Parser::next()
     {
         mCurrentIndex++;
-        mOffset.offset++;
+        mOffset.column++;
         
         UniChar current = this->current();
         if(is_newline(current)) {
             mOffset.line++;
-            mOffset.offset = 0;
+            mOffset.column = 0;
         }
         
         return current;
@@ -174,7 +174,11 @@ namespace gfx {
     
     void Parser::fail(const String *reason)
     {
-        throw ParsingException(reason, nullptr);
+        auto userInfo = autoreleased(new Dictionary<const String, Base>{
+            { kUserInfoKeyOffsetLine, make<Number>(mOffset.line) },
+            { kUserInfoKeyOffsetLine, make<Number>(mOffset.column) },
+        });
+        throw ParsingException(reason, userInfo);
     }
     
     Word *Parser::parseWord()
@@ -336,7 +340,8 @@ namespace gfx {
         
         while (this->more()) {
             auto expression = this->parseExpression();
-            expressionStack->append(expression);
+            if(expression)
+                expressionStack->append(expression);
         }
         
         return expressionStack;

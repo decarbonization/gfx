@@ -77,10 +77,11 @@ namespace gfx {
     
     void Interpreter::fail(const String *reason, Offset source)
     {
-        const String *extendedReason = String::Builder() << "From " << source.line << ":" << source.offset << ": " << reason;
-        Dictionary<const String, Base> *userInfo = make<Dictionary<const String, Base>>();
-        userInfo->set("line"_gfx, make<Number>(source.line));
-        userInfo->set("offset"_gfx, make<Number>(source.offset));
+        const String *extendedReason = String::Builder() << "From " << source.line << ":" << source.column << ": " << reason;
+        auto userInfo = autoreleased(new Dictionary<const String, Base>{
+            { kUserInfoKeyOffsetLine, make<Number>(source.line) },
+            { kUserInfoKeyOffsetLine, make<Number>(source.column) },
+        });
         
         throw Exception(extendedReason, userInfo);
     }

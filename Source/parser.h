@@ -85,10 +85,10 @@ namespace gfx {
         /// \param  condition   The condition that must be true.
         /// \param  reason      The reason the condition being false is a failure.
         ///
-        static void requireCondition(bool condition, const String *reason);
+        void requireCondition(bool condition, const String *reason);
         
         ///Raises a `gfx::Parser::ParsingException` with a given reason.
-        static void fail(const String *reason);
+        void fail(const String *reason);
         
 #pragma mark -
         

@@ -54,6 +54,9 @@ namespace gfx {
         ///Returns the user info of the exception.
         virtual const Dictionary<const String, Base> *userInfo() const;
     };
+    
+    extern const String *const kUserInfoKeyOffsetLine;
+    extern const String *const kUserInfoKeyOffsetColumn;
 }
 
 #endif /* defined(__gfx__exception__) */

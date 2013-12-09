@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class GFXPortalView, SHTextView;
+@class GFXView, SHTextView;
 
 @interface GraphicsDocument : NSDocument <NSTextViewDelegate>
 
@@ -23,7 +23,7 @@
 
 #pragma mark - Properties
 
-@property GFXPortalView *graphicsView;
+@property GFXView *graphicsView;
 
 #pragma mark - Actions
 

@@ -49,7 +49,7 @@
 		8B12C8E6184BE15600DBD77C /* layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8AF184BE15600DBD77C /* layer.cpp */; };
 		8B12C8E7184BE15600DBD77C /* layer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B0184BE15600DBD77C /* layer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C8E8184BE15600DBD77C /* layerbacking_cg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8B1184BE15600DBD77C /* layerbacking_cg.cpp */; };
-		8B12C8E9184BE15600DBD77C /* layerbacking_cg.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B2184BE15600DBD77C /* layerbacking_cg.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B12C8E9184BE15600DBD77C /* layerbacking_cg.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B2184BE15600DBD77C /* layerbacking_cg.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B12C8EA184BE15600DBD77C /* number.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B3184BE15600DBD77C /* number.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C8EB184BE15600DBD77C /* offset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8B4184BE15600DBD77C /* offset.cpp */; };
 		8B12C8EC184BE15600DBD77C /* offset.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B5184BE15600DBD77C /* offset.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -81,14 +81,21 @@
 		8B12C91E184C18F000DBD77C /* textline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C91C184C18EF00DBD77C /* textline.cpp */; };
 		8B12C91F184C18F000DBD77C /* textline.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C91D184C18EF00DBD77C /* textline.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C924184D896800DBD77C /* layerbacking_calayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C922184D896800DBD77C /* layerbacking_calayer.mm */; };
-		8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C923184D896800DBD77C /* layerbacking_calayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C923184D896800DBD77C /* layerbacking_calayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
 		8B89D998184D8AEF0062EFB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */; };
 		8B89D99B184D8EEA0062EFB4 /* osx_wrappers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D999184D8EEA0062EFB4 /* osx_wrappers.mm */; };
-		8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B89D9A1184DA2DC0062EFB4 /* GFXPortalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */; };
-		8B89DA1F1852D8B20062EFB4 /* annotation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA1E1852D8B20062EFB4 /* annotation.h */; };
+		8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		8B89D9A0184DA2DC0062EFB4 /* GFXView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B89D9A1184DA2DC0062EFB4 /* GFXView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D99F184DA2DC0062EFB4 /* GFXView.m */; };
+		8B89DA1F1852D8B20062EFB4 /* annotation.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA1E1852D8B20062EFB4 /* annotation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B89DA221852DF150062EFB4 /* GFXValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA201852DF150062EFB4 /* GFXValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B89DA231852DF150062EFB4 /* GFXValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA211852DF150062EFB4 /* GFXValue.mm */; };
+		8B89DA261852E13F0062EFB4 /* GFXInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA241852E13F0062EFB4 /* GFXInterpreter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B89DA271852E13F0062EFB4 /* GFXInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA251852E13F0062EFB4 /* GFXInterpreter.mm */; };
+		8B89DA29185521330062EFB4 /* GFXHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA28185521330062EFB4 /* GFXHelpers.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B89DA2D18553C8C0062EFB4 /* GFXLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,9 +217,16 @@
 		8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8B89D999184D8EEA0062EFB4 /* osx_wrappers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = osx_wrappers.mm; sourceTree = "<group>"; };
 		8B89D99A184D8EEA0062EFB4 /* osx_wrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osx_wrappers.h; sourceTree = "<group>"; };
-		8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXPortalView.h; sourceTree = "<group>"; };
-		8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXPortalView.mm; sourceTree = "<group>"; };
+		8B89D99E184DA2DC0062EFB4 /* GFXView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXView.h; sourceTree = "<group>"; };
+		8B89D99F184DA2DC0062EFB4 /* GFXView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFXView.m; sourceTree = "<group>"; };
 		8B89DA1E1852D8B20062EFB4 /* annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = annotation.h; sourceTree = "<group>"; };
+		8B89DA201852DF150062EFB4 /* GFXValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXValue.h; sourceTree = "<group>"; };
+		8B89DA211852DF150062EFB4 /* GFXValue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXValue.mm; sourceTree = "<group>"; };
+		8B89DA241852E13F0062EFB4 /* GFXInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXInterpreter.h; sourceTree = "<group>"; };
+		8B89DA251852E13F0062EFB4 /* GFXInterpreter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXInterpreter.mm; sourceTree = "<group>"; };
+		8B89DA28185521330062EFB4 /* GFXHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXHelpers.h; sourceTree = "<group>"; };
+		8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXLayer.h; sourceTree = "<group>"; };
+		8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXLayer.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,7 +315,7 @@
 				8B12C8FE184BE1C900DBD77C /* Core Types */,
 				8B12C8FF184BE1F000DBD77C /* Core Interpreter */,
 				8B12C900184BE1FB00DBD77C /* Graphics Stack */,
-				8B89D99D184DA2AD0062EFB4 /* hosting */,
+				8B89D99D184DA2AD0062EFB4 /* ObjC */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -446,13 +460,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8B89D99D184DA2AD0062EFB4 /* hosting */ = {
+		8B89D99D184DA2AD0062EFB4 /* ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				8B89D99E184DA2DC0062EFB4 /* GFXPortalView.h */,
-				8B89D99F184DA2DC0062EFB4 /* GFXPortalView.mm */,
+				8B89DA28185521330062EFB4 /* GFXHelpers.h */,
+				8B89DA201852DF150062EFB4 /* GFXValue.h */,
+				8B89DA211852DF150062EFB4 /* GFXValue.mm */,
+				8B89DA241852E13F0062EFB4 /* GFXInterpreter.h */,
+				8B89DA251852E13F0062EFB4 /* GFXInterpreter.mm */,
+				8B89D99E184DA2DC0062EFB4 /* GFXView.h */,
+				8B89D99F184DA2DC0062EFB4 /* GFXView.m */,
+				8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */,
+				8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */,
 			);
-			name = hosting;
+			name = ObjC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,11 +484,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B12C8F8184BE15600DBD77C /* str.h in Headers */,
+				8B89DA1F1852D8B20062EFB4 /* annotation.h in Headers */,
+				8B89DA221852DF150062EFB4 /* GFXValue.h in Headers */,
+				8B89DA261852E13F0062EFB4 /* GFXInterpreter.h in Headers */,
 				8B12C8E7184BE15600DBD77C /* layer.h in Headers */,
 				8B12C8DD184BE15600DBD77C /* gfx.h in Headers */,
 				8B12C8F2184BE15600DBD77C /* path.h in Headers */,
 				8B12C8DC184BE15600DBD77C /* function.h in Headers */,
-				8B89DA1F1852D8B20062EFB4 /* annotation.h in Headers */,
 				8B12C8F6184BE15600DBD77C /* stackframe.h in Headers */,
 				8B12C8DA184BE15600DBD77C /* file.h in Headers */,
 				8B12C8D4184BE15600DBD77C /* dictionary.h in Headers */,
@@ -481,18 +504,16 @@
 				8B12C8F0184BE15600DBD77C /* parser.h in Headers */,
 				8B12C8FA184BE15600DBD77C /* types.h in Headers */,
 				8B12C8C7184BE15600DBD77C /* assertions.h in Headers */,
-				8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */,
 				8B12C90D184BE75300DBD77C /* filepaths.h in Headers */,
 				8B12C91F184C18F000DBD77C /* textline.h in Headers */,
-				8B89D9A0184DA2DC0062EFB4 /* GFXPortalView.h in Headers */,
+				8B89D9A0184DA2DC0062EFB4 /* GFXView.h in Headers */,
 				8B12C917184C14B000DBD77C /* font.h in Headers */,
-				8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */,
 				8B12C8C9184BE15600DBD77C /* base.h in Headers */,
 				8B12C8D8184BE15600DBD77C /* expression.h in Headers */,
 				8B12C8D1184BE15600DBD77C /* context.h in Headers */,
 				8B12C8EA184BE15600DBD77C /* number.h in Headers */,
-				8B12C8E9184BE15600DBD77C /* layerbacking_cg.h in Headers */,
 				8B12C8CB184BE15600DBD77C /* blob.h in Headers */,
+				8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */,
 				8B12C8FB184BE15600DBD77C /* word.h in Headers */,
 				8B12C8D3184BE15600DBD77C /* corefunctions.h in Headers */,
 				8B12C8E5184BE15600DBD77C /* interpreter.h in Headers */,
@@ -500,6 +521,10 @@
 				8B12C8CD184BE15600DBD77C /* cf.h in Headers */,
 				8B12C8EC184BE15600DBD77C /* offset.h in Headers */,
 				8B12C8E1184BE15600DBD77C /* graphics.h in Headers */,
+				8B89DA29185521330062EFB4 /* GFXHelpers.h in Headers */,
+				8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */,
+				8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */,
+				8B12C8E9184BE15600DBD77C /* layerbacking_cg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,11 +643,13 @@
 				8B12C8EB184BE15600DBD77C /* offset.cpp in Sources */,
 				8B12C8EF184BE15600DBD77C /* parser.cpp in Sources */,
 				8B12C924184D896800DBD77C /* layerbacking_calayer.mm in Sources */,
+				8B89DA2D18553C8C0062EFB4 /* GFXLayer.mm in Sources */,
 				8B12C8CE184BE15600DBD77C /* color.cpp in Sources */,
 				8B12C8E0184BE15600DBD77C /* graphics.cpp in Sources */,
 				8B12C91E184C18F000DBD77C /* textline.cpp in Sources */,
 				8B12C8F5184BE15600DBD77C /* stackframe.cpp in Sources */,
 				8B12C8D9184BE15600DBD77C /* file.cpp in Sources */,
+				8B89DA271852E13F0062EFB4 /* GFXInterpreter.mm in Sources */,
 				8B12C8DB184BE15600DBD77C /* function.cpp in Sources */,
 				8B12C8E2184BE15600DBD77C /* image.cpp in Sources */,
 				8B12C8E8184BE15600DBD77C /* layerbacking_cg.cpp in Sources */,
@@ -633,13 +660,14 @@
 				8B12C8E6184BE15600DBD77C /* layer.cpp in Sources */,
 				8B89D99B184D8EEA0062EFB4 /* osx_wrappers.mm in Sources */,
 				8B12C8C6184BE15600DBD77C /* assertions.cpp in Sources */,
-				8B89D9A1184DA2DC0062EFB4 /* GFXPortalView.mm in Sources */,
+				8B89D9A1184DA2DC0062EFB4 /* GFXView.m in Sources */,
 				8B12C8F9184BE15600DBD77C /* types.cpp in Sources */,
 				8B12C8F3184BE15600DBD77C /* session.cpp in Sources */,
 				8B12C8D2184BE15600DBD77C /* corefunctions.cpp in Sources */,
 				8B12C8CA184BE15600DBD77C /* blob.cpp in Sources */,
 				8B12C90F184BECF200DBD77C /* filepaths.cpp in Sources */,
 				8B12C8D7184BE15600DBD77C /* expression.cpp in Sources */,
+				8B89DA231852DF150062EFB4 /* GFXValue.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

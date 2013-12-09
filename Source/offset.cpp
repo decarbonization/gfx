@@ -22,6 +22,6 @@ namespace gfx {
         if(this->isInvalid())
             return "gfx::Offset::Invalid"_gfx;
         else
-            return String::Builder() << "gfx::Offset{line: " << line << ", offset: " << offset << "}";
+            return String::Builder() << "gfx::Offset{" << line << ", " << column << "}";
     }
 }

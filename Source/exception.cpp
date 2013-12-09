@@ -57,4 +57,8 @@ namespace gfx {
     {
         return retained_autoreleased(mUserInfo);
     }
+    
+    
+    const String *const kUserInfoKeyOffsetLine = new String(CFSTR("Offset/line"));
+    const String *const kUserInfoKeyOffsetColumn = new String(CFSTR("Offset/column"));
 }

@@ -14,7 +14,7 @@
 #import "SyntaxHighligher.h"
 #import "SHDefinition.h"
 
-@interface GraphicsDocument () <GFXPortalViewDelegate>
+@interface GraphicsDocument () <GFXViewDelegate>
 
 @property (copy) NSString *lastStringRun;
 
@@ -63,7 +63,7 @@
                                SHDefinitionNameComments: @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.65 green:0.66 blue:0.65 alpha:1.00]}};
     self.inputTextView.syntaxHighlighter = highlighter;
     
-    self.graphicsView = [[GFXPortalView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 300.0, 300.0)];
+    self.graphicsView = [[GFXView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 300.0, 300.0)];
     self.graphicsView.delegate = self;
     
     [self.canvasScrollView setDocumentView:self.graphicsView];
@@ -110,11 +110,7 @@
         return;
     
     self.lastStringRun = sourceCode;
-    
-    NSError *error = nil;
-    if(![self.graphicsView runString:sourceCode error:&error]) {
-        [self writeErrorMessageToConsole:[error localizedDescription]];
-    }
+    self.graphicsView.code = sourceCode;
 }
 
 #pragma mark - <NSTextViewDelegate>
@@ -131,13 +127,13 @@
 
 #pragma mark - <GFXPortalViewDelegate>
 
-- (void)portalViewDidDraw:(GFXPortalView *)sender
+- (void)graphicsViewDidFinishRendering:(GFXView *)sender
 {
     [self clearConsole];
     [self writeStatusMessageToConsole:@"Rendered."];
 }
 
-- (void)portalView:(GFXPortalView *)sender didEncounterError:(NSError *)error
+- (void)graphicsView:(GFXView *)sender didEncounterError:(NSError *)error
 {
     [self writeErrorMessageToConsole:error.localizedDescription];
 }
