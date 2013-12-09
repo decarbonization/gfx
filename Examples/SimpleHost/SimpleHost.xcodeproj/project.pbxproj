@@ -14,10 +14,6 @@
 		8B89D9C2184DAB550062EFB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D9C1184DAB550062EFB4 /* AppDelegate.m */; };
 		8B89D9C5184DAB550062EFB4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B89D9C3184DAB550062EFB4 /* MainMenu.xib */; };
 		8B89D9C7184DAB550062EFB4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B89D9C6184DAB550062EFB4 /* Images.xcassets */; };
-		8B89D9CE184DAB550062EFB4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9CD184DAB550062EFB4 /* XCTest.framework */; };
-		8B89D9CF184DAB550062EFB4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9AE184DAB550062EFB4 /* Cocoa.framework */; };
-		8B89D9D7184DAB550062EFB4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B89D9D5184DAB550062EFB4 /* InfoPlist.strings */; };
-		8B89D9D9184DAB550062EFB4 /* SimpleHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D9D8184DAB550062EFB4 /* SimpleHostTests.m */; };
 		8B89D9F0184DAB6B0062EFB4 /* gfx.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9ED184DAB5F0062EFB4 /* gfx.framework */; };
 		8B89D9F2184DAB7F0062EFB4 /* gfx.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8B89D9ED184DAB5F0062EFB4 /* gfx.framework */; };
 		8B89DA03184EDFD60062EFB4 /* SHTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA02184EDFD60062EFB4 /* SHTextView.m */; };
@@ -31,13 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8B89D9D0184DAB550062EFB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8B89D9A3184DAB550062EFB4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B89D9AA184DAB550062EFB4;
-			remoteInfo = SimpleHost;
-		};
 		8B89D9E8184DAB5F0062EFB4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8B89D9E2184DAB5F0062EFB4 /* gfx.xcodeproj */;
@@ -97,11 +86,7 @@
 		8B89D9C1184DAB550062EFB4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8B89D9C4184DAB550062EFB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		8B89D9C6184DAB550062EFB4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8B89D9CC184DAB550062EFB4 /* SimpleHostTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleHostTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B89D9CD184DAB550062EFB4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		8B89D9D4184DAB550062EFB4 /* SimpleHostTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimpleHostTests-Info.plist"; sourceTree = "<group>"; };
-		8B89D9D6184DAB550062EFB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8B89D9D8184DAB550062EFB4 /* SimpleHostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleHostTests.m; sourceTree = "<group>"; };
 		8B89D9E2184DAB5F0062EFB4 /* gfx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gfx.xcodeproj; path = ../../gfx.xcodeproj; sourceTree = "<group>"; };
 		8B89DA01184EDFD60062EFB4 /* SHTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHTextView.h; sourceTree = "<group>"; };
 		8B89DA02184EDFD60062EFB4 /* SHTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHTextView.m; sourceTree = "<group>"; };
@@ -128,15 +113,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8B89D9C9184DAB550062EFB4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B89D9CF184DAB550062EFB4 /* Cocoa.framework in Frameworks */,
-				8B89D9CE184DAB550062EFB4 /* XCTest.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -144,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				8B89D9B4184DAB550062EFB4 /* SimpleHost */,
-				8B89D9D2184DAB550062EFB4 /* SimpleHostTests */,
 				8B89D9AD184DAB550062EFB4 /* Frameworks */,
 				8B89D9AC184DAB550062EFB4 /* Products */,
 			);
@@ -154,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				8B89D9AB184DAB550062EFB4 /* SimpleHost.app */,
-				8B89D9CC184DAB550062EFB4 /* SimpleHostTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,24 +185,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8B89D9D2184DAB550062EFB4 /* SimpleHostTests */ = {
-			isa = PBXGroup;
-			children = (
-				8B89D9D8184DAB550062EFB4 /* SimpleHostTests.m */,
-				8B89D9D3184DAB550062EFB4 /* Supporting Files */,
-			);
-			path = SimpleHostTests;
-			sourceTree = "<group>";
-		};
-		8B89D9D3184DAB550062EFB4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				8B89D9D4184DAB550062EFB4 /* SimpleHostTests-Info.plist */,
-				8B89D9D5184DAB550062EFB4 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		8B89D9E3184DAB5F0062EFB4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,24 +231,6 @@
 			productReference = 8B89D9AB184DAB550062EFB4 /* SimpleHost.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8B89D9CB184DAB550062EFB4 /* SimpleHostTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8B89D9DF184DAB550062EFB4 /* Build configuration list for PBXNativeTarget "SimpleHostTests" */;
-			buildPhases = (
-				8B89D9C8184DAB550062EFB4 /* Sources */,
-				8B89D9C9184DAB550062EFB4 /* Frameworks */,
-				8B89D9CA184DAB550062EFB4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8B89D9D1184DAB550062EFB4 /* PBXTargetDependency */,
-			);
-			name = SimpleHostTests;
-			productName = SimpleHostTests;
-			productReference = 8B89D9CC184DAB550062EFB4 /* SimpleHostTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -301,11 +239,6 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Roundabout Software, LLC";
-				TargetAttributes = {
-					8B89D9CB184DAB550062EFB4 = {
-						TestTargetID = 8B89D9AA184DAB550062EFB4;
-					};
-				};
 			};
 			buildConfigurationList = 8B89D9A6184DAB550062EFB4 /* Build configuration list for PBXProject "SimpleHost" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -327,7 +260,6 @@
 			projectRoot = "";
 			targets = (
 				8B89D9AA184DAB550062EFB4 /* SimpleHost */,
-				8B89D9CB184DAB550062EFB4 /* SimpleHostTests */,
 			);
 		};
 /* End PBXProject section */
@@ -371,14 +303,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8B89D9CA184DAB550062EFB4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B89D9D7184DAB550062EFB4 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -396,22 +320,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8B89D9C8184DAB550062EFB4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B89D9D9184DAB550062EFB4 /* SimpleHostTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8B89D9D1184DAB550062EFB4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8B89D9AA184DAB550062EFB4 /* SimpleHost */;
-			targetProxy = 8B89D9D0184DAB550062EFB4 /* PBXContainerItemProxy */;
-		};
 		8B89D9EF184DAB650062EFB4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = gfx;
@@ -442,14 +353,6 @@
 				8B89D9C4184DAB550062EFB4 /* Base */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		8B89D9D5184DAB550062EFB4 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8B89D9D6184DAB550062EFB4 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -551,46 +454,6 @@
 			};
 			name = Release;
 		};
-		8B89D9E0184DAB550062EFB4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SimpleHost.app/Contents/MacOS/SimpleHost";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SimpleHost/SimpleHost-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "SimpleHostTests/SimpleHostTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		8B89D9E1184DAB550062EFB4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SimpleHost.app/Contents/MacOS/SimpleHost";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SimpleHost/SimpleHost-Prefix.pch";
-				INFOPLIST_FILE = "SimpleHostTests/SimpleHostTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -608,15 +471,6 @@
 			buildConfigurations = (
 				8B89D9DD184DAB550062EFB4 /* Debug */,
 				8B89D9DE184DAB550062EFB4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8B89D9DF184DAB550062EFB4 /* Build configuration list for PBXNativeTarget "SimpleHostTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8B89D9E0184DAB550062EFB4 /* Debug */,
-				8B89D9E1184DAB550062EFB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
