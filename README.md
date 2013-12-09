@@ -11,8 +11,8 @@ Gfx currently targets the Core Graphics stack on OS X and iOS. The minimum suppo
 Companion Documents
 ===================
 
-- (Core Language)[Info/Core-Language.md]
-- (Command Line Tool)[Info/Command-Line.md]
+- [Core Language](Info/Core-Language.md)
+- [Command Line Tool](Info/Command-Line.md)
 
 License
 =======
