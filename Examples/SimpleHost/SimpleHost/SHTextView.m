@@ -34,6 +34,8 @@
 
 #pragma mark - Properties
 
+/* The syntax highlighter object does all of the work. */
+
 - (void)setSyntaxHighlighter:(SyntaxHighligher *)syntaxHighlighter
 {
     _syntaxHighlighter = syntaxHighlighter;

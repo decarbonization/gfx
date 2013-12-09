@@ -2,6 +2,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+///The SBCenteringClipView class modifies NSClipView to always center
+///its document view. It also adds a drop shadow to the document view.
 @interface SBCenteringClipView : NSClipView
 
 - (void)centerDocument;

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+///The AppDelegate of the SimpleHost. Currently does nothing but exist.
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @end

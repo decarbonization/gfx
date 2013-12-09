@@ -33,15 +33,25 @@
 
 - (void)highlightTextStorage:(NSTextStorage *)textStorage
 {
+    //We apply the default attributes to the entire text storage
+    //before we do anything more specific. This allows the document
+    //to have a sane appearance, even if there are no definitions
+    //available.
     [textStorage addAttributes:_defaultAttributes range:NSMakeRange(0, textStorage.length)];
     
+    
+    //The actual highlighting is very simple. Each definition
+    //has a name, and a precompiled regular expression object.
+    //We just apply the regular expression, and then add the
+    //attributes for whatever ranges match.
     for (SHDefinition *definition in self.definitions) {
         NSArray *matches = [definition.regex matchesInString:textStorage.string
                                                      options:kNilOptions
                                                        range:NSMakeRange(0, [textStorage length])];
         for (NSTextCheckingResult *match in matches) {
-            NSDictionary *attributes = _attributes[definition.name] ?: _defaultAttributes;
-            [textStorage addAttributes:attributes range:match.range];
+            NSDictionary *attributes = _attributes[definition.name];
+            if(attributes)
+                [textStorage addAttributes:attributes range:match.range];
         }
     }
 }
