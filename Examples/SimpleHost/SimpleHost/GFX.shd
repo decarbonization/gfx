@@ -24,7 +24,7 @@
 		<key>SHDefinitionName</key>
 		<string>SHDefinitionNameCoreFunctions</string>
 		<key>SHDefinitionRegex</key>
-		<string>\b(ctx/begin|ctx/end|ctx/size|ctx/save|ctx/all|layer/frame|layer/set\-frame|layer/display|layer/render|layer|set\-fill|set\-stroke|fill\-rect|stroke\-rect|path/make|path/rect|path/round\-rect|path/oval|path/move|path/line|path/arc|path/curve|path/bounding\-box|path/current\-point|path/empty?|path/contains\-point|path/fill|path/stroke|font|text/size|text/draw|text)\b</string>
+		<string>\b(ctx/begin|ctx/end|ctx/size|ctx/save|layer/frame|layer/set\-frame|layer/display|layer/render|layer/parent|layer|set\-fill|set\-stroke|fill\-rect|stroke\-rect|path/make|path/rect|path/round\-rect|path/oval|path/move|path/line|path/arc|path/curve|path/bounding\-box|path/current\-point|path/empty?|path/contains\-point|path/fill|path/stroke|font|text/size|text/draw|text)\b</string>
 	</dict>
 	<dict>
 		<key>SHDefinitionName</key>
