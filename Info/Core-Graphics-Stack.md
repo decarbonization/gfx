@@ -65,7 +65,7 @@ RGB and RGBa colors can be created using the functions of the same name:
 - `rgb (num num num -- color)`: Takes red, green, and blue components, pushing a color onto the stack. All values are in the scale of {0, 255}.
 - `rgba (num num num num -- color)`: Takes red, green, blue, and alpha components, pushing a color onto the stack. Red, green, and blue values are in the scale of {0, 255}, alpha is in the scale of {0, 1.0}.
 
-##Using Colors
+###Using Colors
 
 Following Core Graphics, Gfx has a concept of a fill color and a stroke color. A fill color is used when flood filling a rectangle or a path, and a stroke color is used when stroking the outline of a rectangle or a path. To specify fill and stroke colors, the following functions are available:
 
@@ -85,28 +85,28 @@ Paths
 
 Bezier paths in Gfx go by the name of `path`. Paths consist of straight and curved lines that can be put together to make shapes such as rectangles and circles. 
 
-##Creation
+###Creation
 
 - `path/make ( -- path)`: Creates an empty path, pushing it onto the stack.
 - `path/rect (vec -- path)`: Takes a rect-vector and creates a path from it, pushing it onto the stack.
 - `path/round-rect (vec num -- path)`: Takes a rect-vector and corner radius number and creates a path from it, pushing it onto the stack.
 - `path/oval -- (vec -- path)`: Takes a rect-vector and creates an oval path from it, pushing it onto the stack.
 
-##Manipulating Paths
+###Manipulating Paths
 
 - `path/move (path vec -- path)`: Moves the pen (current location) of a path to a given point-vector.
 - `path/line (path vec -- path)`: Draws a line from the current location of a path, to a given point-vector.
 - `path/arc (path vec1 vec2 num -- path)`
 - `path/curve (path vec vec1 vec2 -- path)`
 
-##Introspection
+###Introspection
 
 - `path/bounding-box (path -- vec)`: Determines the area of the path, pushing a rect-vector onto the stack.
 - `path/current-point (path -- vec)`: Determines the current location of a path's pen, pushing a point-vector onto the stack.
 - `path/empty? (path -- bool)`: Indicates whether or not a path is empty.
 - `path/contains-point (path vec -- bool)`: Indicates whether or not a path contains a point.
 
-##Commands
+###Commands
 
 - `path/fill (path -- )`: Performs a fill operation on the path's contents.
 - `path/stroke (path -- )`: Strokes the outline of the path's lines.
@@ -128,21 +128,21 @@ Layers
 
 Generally speaking, most rendering in the graphics stack is into contexts maintained by layers. Layers in Gfx are similar in concept to Photoshop layers, and to CALayers. A layer contains some prerendered content, typically described by Gfx code. Layers have positioning and sizing information associated with them, and may be nested within each other. Gfx hosts generally manage the creation and positioning of layers, however, the core graphics stack provides all of the core operations needed to manipulate layers within the stack itself.
 
-##Creating Layers
+###Creating Layers
 
 - `layer (vec func -- Layer)`: Creates a simple layer object using the rect-vector `vec`, and the render callback `func`. The `func` will be run whenever the layer needs to populate its contents.
 
-##Positioning
+###Positioning
 
 - `layer/set-frame (layer vec -- )`: Updates the frame rectangle of `layer` with the rect-vector `vec`.
 - `layer/frame (layer -- vec)`: Indicates the frame rectangle of `layer`.
 
-##Rendering
+###Rendering
 
 - `layer/display (layer -- )`: Marks the contents of the layer as needing updating. Depending on the layer implementation in use, this will result in the layer immediately redrawing, or it being redrawn in the next runloop cycle.
 - `layer/render (layer -- )`: Renders the contents of the layer and its children into the current ctx.
 
-##Children
+###Children
 
 An arbitrary number of layers may be nested inside other layers.
 
