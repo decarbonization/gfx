@@ -12,13 +12,19 @@
 #include "parser.h"
 #include "interpreter.h"
 #include "stackframe.h"
+#include "annotation.h"
 
 #import "GFXValue.h"
 #import "GFXHelpers.h"
 
+NSString *const GFXAnnotationContentsUserInfoKey = @"GFXAnnotationContentsUserInfoKey";
+NSString *const GFXInterpreterFoundAnnotationNotification = @"GFXInterpreterFoundAnnotationNotification";
+
 @interface GFXInterpreter () {
     ///The underlying interpreter of the ObjC wrapper.
     GFX_strong gfx::Interpreter *_interpreter;
+    
+    gfx::Signal<const gfx::Annotation *>::ObserverReference _annotationObserver;
 }
 
 @end
@@ -31,6 +37,8 @@
 
 - (void)dealloc
 {
+    _interpreter->AnnotationFoundSignal.remove(_annotationObserver);
+    
     gfx::released(_interpreter);
     _interpreter = nullptr;
     
@@ -41,6 +49,11 @@
 {
     if((self = [super init])) {
         _interpreter = new gfx::Interpreter();
+        _annotationObserver = _interpreter->AnnotationFoundSignal.add([self](const gfx::Annotation *annotation) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:GFXInterpreterFoundAnnotationNotification
+                                                                object:self
+                                                              userInfo:@{GFXAnnotationContentsUserInfoKey: NSStringFromGFXString(annotation->contents())}];
+        });
     }
     
     return self;

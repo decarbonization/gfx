@@ -10,6 +10,16 @@
 
 @class GFXValue;
 
+///The corresponding is the string contents of an annotation encountered while evaluating gfx code.
+FOUNDATION_EXTERN NSString *const GFXAnnotationContentsUserInfoKey;
+
+///The name of the notification posted when a GFXInterpreter encounters an annotation
+///while evaluating an abstract syntax tree. The object of the notificatio is the
+///interpreter that found the annotation. The `userInfo` contains one key,
+///`GFXAnnotationContentsUserInfoKey`.
+FOUNDATION_EXTERN NSString *const GFXInterpreterFoundAnnotationNotification;
+
+
 ///The GFXInterpreter class encapsulates a barebones Objective-C interface
 ///around the `gfx::Parser` and `gfx::Interpreter` C++ classes.
 ///
@@ -50,7 +60,16 @@
 
 #pragma mark - Stack Frames
 
+///Pushes a new empty stack frame into the interpreter.
+///
+/// \result YES if the stack frame could be pushed; NO otherwise.
+///
 - (BOOL)pushEmptyStackFrame;
+
+///Pops the top most stack frame from the interpreter.
+///
+/// \result YES if the frame was popped; NO otherwise.
+///
 - (BOOL)popTopStackFrame;
 
 @end

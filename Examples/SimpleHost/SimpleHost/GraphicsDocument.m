@@ -26,6 +26,11 @@
 
 @implementation GraphicsDocument
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (id)init
 {
     if((self = [super init])) {
@@ -65,6 +70,11 @@
     
     self.graphicsView = [[GFXView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 300.0, 300.0)];
     self.graphicsView.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(interpreterFoundAnnotation:)
+                                                 name:GFXInterpreterFoundAnnotationNotification
+                                               object:self.graphicsView.interpreter];
     
     [self.canvasScrollView setDocumentView:self.graphicsView];
     NSColor *backgroundColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"CheckerBackground"]];
@@ -125,17 +135,36 @@
                                                          repeats:NO];
 }
 
-#pragma mark - <GFXPortalViewDelegate>
+#pragma mark - Graphics Callbacks
 
 - (void)graphicsViewDidFinishRendering:(GFXView *)sender
 {
-    [self clearConsole];
     [self writeStatusMessageToConsole:@"Rendered."];
 }
 
 - (void)graphicsView:(GFXView *)sender didEncounterError:(NSError *)error
 {
     [self writeErrorMessageToConsole:error.localizedDescription];
+}
+
+#pragma mark -
+
+- (void)interpreterFoundAnnotation:(NSNotification *)notification
+{
+    NSString *contents = notification.userInfo[GFXAnnotationContentsUserInfoKey];
+    NSString *trimmedContents = [contents stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([trimmedContents hasPrefix:@"size: "]) {
+        NSString *sizeSegment = [trimmedContents substringFromIndex:[@"size: " length]];
+        NSArray *sizeParts = [sizeSegment componentsSeparatedByString:@"x"];
+        if([sizeParts count] == 2) {
+            CGSize size = CGSizeMake([sizeParts.firstObject floatValue], [sizeParts.lastObject floatValue]);
+            [self.graphicsView setFrameSize:size];
+        } else {
+            [self writeErrorMessageToConsole:[NSString stringWithFormat:@"Malformed size %@", trimmedContents]];
+        }
+    } else {
+        [self writeErrorMessageToConsole:[NSString stringWithFormat:@"Unrecognized annotation '%@', ignoring.", contents]];
+    }
 }
 
 #pragma mark - Console
@@ -158,7 +187,6 @@
 
 - (void)writeErrorMessageToConsole:(NSString *)errorMessage
 {
-    [self clearConsole];
     NSDictionary *attributes = @{NSForegroundColorAttributeName: [NSColor colorWithCalibratedRed:0.93 green:0.54 blue:0.28 alpha:1.00],
                                  NSFontAttributeName: [NSFont userFixedPitchFontOfSize:11.0]};
     NSAttributedString *errorString = [[NSAttributedString alloc] initWithString:errorMessage
