@@ -26,7 +26,7 @@ Vectors
 The core graphics stack functions use vectors of numbers to represent core concepts such as Coordinate Points, Sizes, and Rectangles (Coordinate Points and a Size). The following list describes the vector variations referenced in this document:
 
 - `size-vector`: A vector of two numbers, a `width` and a `height`.
-- `point-vector`: A vector of two numbers describing a coordinate point, an `y` coordinate, and a `y` coordinate.
+- `point-vector`: A vector of two numbers describing a coordinate point, an `x` coordinate, and a `y` coordinate.
 - `rect-vector`: A vector of two or four numbers. A full rect vector contains an `x` coordinate, a `y` coordinate, a `width`, and a `height`. A short-form `rect-vector` contains just a `width` and a `height`, and zero `xy` coordinates. A short-form `rect-vector`s may be used anywhere a long-form `rect-vector` is. No built-in functions will yield short-form `rect-vector`s.
 
 ctx
