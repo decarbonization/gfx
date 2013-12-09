@@ -12,14 +12,20 @@ Companion Documents
 ===================
 
 - [Core Language](Info/Core-Language.md)
+- [Core Graphics Stack](Info/Core-Graphics-Stack.md)
 - [Command Line Tool](Info/Command-Line.md)
+
+Examples
+========
+
+- [SimpleHost](Examples/SimpleHost): A simple document-based host for OS X.
 
 License
 =======
 
 	The MIT License (MIT)
 
-	Copyright (c) 2013 Kevin MacWhinnie
+	Copyright (c) 2013 Peter "Kevin" MacWhinnie
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy of
 	this software and associated documentation files (the "Software"), to deal in

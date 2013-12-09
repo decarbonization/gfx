@@ -141,32 +141,13 @@ namespace gfx {
         file->write(data);
     }
     
-    static void ctx_getSize(StackFrame *stack)
-    {
-        /* -- vec */
-        
-        auto context = Context::currentContext();
-        auto vector = VectorFromSize(context->boundingRect().size);
-        stack->push(vector);
-    }
-    
 #pragma mark - Layer Functions
     
     static void layer_make(StackFrame *stack)
     {
         /* vec func -- Layer */
         Scoped<Function> drawFunction = stack->popFunction();
-        auto sizeOrRect = stack->popType<Array<Base>>();
-        
-        Rect frame = {};
-        if(sizeOrRect->count() == 4) {
-            frame = VectorToRect(sizeOrRect);
-        } else if(sizeOrRect->count() == 2) {
-            frame.size = VectorToSize(sizeOrRect);
-        } else {
-            throw Exception("Invalid vector given to `layer`. Must contain either 2 numbers for a size, or 4 numbers for a rect."_gfx, nullptr);
-        }
-        
+        auto frame = VectorToRect(stack->popType<Array<Base>>());
         Interpreter *interpreter = stack->interpreter();
         stack->push(make<Layer>(frame, [interpreter, drawFunction](Layer *layer, Rect rect) {
             StackFrame *frame = interpreter->currentFrame();
@@ -220,6 +201,13 @@ namespace gfx {
         layer->removeFromSuperlayer();
     }
     
+    static void layer_parent(StackFrame *stack)
+    {
+        /* layer -- layer */
+        auto layer = stack->popType<Layer>();
+        stack->push(layer->superlayer());
+    }
+    
     static void layer_children(StackFrame *stack)
     {
         /* layer -- vec */
@@ -235,7 +223,7 @@ namespace gfx {
         auto green = stack->popNumber();
         auto red = stack->popNumber();
         
-        stack->push(make<Color>(red->value(), green->value(), blue->value(), 1.0));
+        stack->push(make<Color>(red->value() / 255.0, green->value() / 255.0, blue->value() / 255.0, 1.0));
     }
     
     static void rgba(StackFrame *stack)
@@ -245,7 +233,7 @@ namespace gfx {
         auto green = stack->popNumber();
         auto red = stack->popNumber();
         
-        stack->push(make<Color>(red->value(), green->value(), blue->value(), alpha->value()));
+        stack->push(make<Color>(red->value() / 255.0, green->value() / 255.0, blue->value() / 255.0, alpha->value()));
     }
     
     static void set_fill(StackFrame *stack)
@@ -471,7 +459,6 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "ctx/end"_gfx, &ctx_end);
         Graphics::createFunctionBinding(frame, "ctx/size"_gfx, &ctx_size);
         Graphics::createFunctionBinding(frame, "ctx/save"_gfx, &ctx_save);
-        Graphics::createFunctionBinding(frame, "ctx/all"_gfx, &ctx_getSize);
         
         //Layer Functions
         Graphics::createFunctionBinding(frame, "layer"_gfx, &layer_make);
@@ -479,8 +466,10 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, "layer/set-frame"_gfx, &layer_setFrame);
         Graphics::createFunctionBinding(frame, "layer/display"_gfx, &layer_display);
         Graphics::createFunctionBinding(frame, "layer/render"_gfx, &layer_render);
+        
         Graphics::createFunctionBinding(frame, "layer/add-child"_gfx, &layer_addChild);
         Graphics::createFunctionBinding(frame, "layer/remove-as-child"_gfx, &layer_removeAsChild);
+        Graphics::createFunctionBinding(frame, "layer/parent"_gfx, &layer_parent);
         Graphics::createFunctionBinding(frame, "layer/children"_gfx, &layer_children);
         
         //Colors

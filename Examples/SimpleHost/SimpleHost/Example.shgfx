@@ -1,4 +1,4 @@
 (% size: 300x300 %)
 
-#54558f set-fill ctx/all fill-rect
+#54558f set-fill ctx/size fill-rect
 "LucidaGrande" 30 font white "hello, world" text [30 65] text/draw
