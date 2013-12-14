@@ -230,7 +230,7 @@ namespace gfx {
     {
         NewT newValue = dynamic_cast<NewT>(value);
         if(!newValue)
-            throw Exception("type mismatch"_gfx, nullptr);
+            throw Exception(str("type mismatch"), nullptr);
         
         return newValue;
     }

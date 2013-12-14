@@ -30,7 +30,7 @@ namespace gfx {
     Session *Session::shared()
     {
         if(!gSharedSession) {
-            throw Exception("Session::init must be called before Session::shared."_gfx, nullptr);
+            throw Exception(str("Session::init must be called before Session::shared."), nullptr);
         }
         
         return gSharedSession;
@@ -49,7 +49,7 @@ namespace gfx {
             AutoreleasePool pool;
             
             CFBundleRef frameworkBundle = CFBundleGetBundleWithIdentifier(CFSTR("com.roundabout.gfx"));
-            gfx_assert(frameworkBundle != NULL, "Could not find framework bundle."_gfx);
+            gfx_assert(frameworkBundle != NULL, str("Could not find framework bundle."));
             cf::AutoRef<CFURLRef> resourcesURL = CFBundleCopyResourcesDirectoryURL(frameworkBundle);
             
             UInt8 pathBuffer[PATH_MAX];
@@ -64,7 +64,7 @@ namespace gfx {
             AutoreleasePool pool;
             
             CFBundleRef mainBundle = CFBundleGetMainBundle();
-            gfx_assert(mainBundle != NULL, "Could not find main bundle."_gfx);
+            gfx_assert(mainBundle != NULL, str("Could not find main bundle."));
             cf::AutoRef<CFURLRef> resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
             
             UInt8 pathBuffer[PATH_MAX];
@@ -75,7 +75,7 @@ namespace gfx {
 #elif GFX_TARGET_SYS_LIBRARY
         
         if(!sharedResourcesPath) {
-            sharedResourcesPath = (GFX_TARGET_INSTALLATION_DIR "/share/gfx"_gfx);
+            sharedResourcesPath = (GFX_TARGET_INSTALLATION_DIR str("/share/gfx"));
         }
         
 #endif /* GFX_TARGET */
@@ -92,8 +92,8 @@ namespace gfx {
     
     void Session::parseArguments()
     {
-        static const String *const FlagPrefix = "-"_gfx;
-        static const String *const ParameterPrefix = "--"_gfx;
+        static const String *const FlagPrefix = str("-");
+        static const String *const ParameterPrefix = str("--");
         
         AutoreleasePool pool;
         

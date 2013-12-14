@@ -48,8 +48,8 @@ namespace gfx {
         mSearchPaths(make<Array<const String>>()),
         mImportAllowed(true),
         mUnboundWordHandler(),
-        AnnotationFoundSignal("gfx::Interpreter::AnnotationFoundSignal"_gfx),
-        ResetSignal("gfx::Interpreter::ResetSignal"_gfx)
+        AnnotationFoundSignal(str("gfx::Interpreter::AnnotationFoundSignal")),
+        ResetSignal(str("gfx::Interpreter::ResetSignal"))
     {
         mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
         this->pushFrame(mRootFrame);
@@ -63,8 +63,8 @@ namespace gfx {
         };
 #endif /* GFX_Include_GraphicsStack */
         
-        this->addSearchPath(""_gfx);
-        this->addSearchPath("./"_gfx);
+        this->addSearchPath(String::Empty);
+        this->addSearchPath(str("./"));
     }
     
     Interpreter::~Interpreter()
@@ -89,14 +89,14 @@ namespace gfx {
     void Interpreter::evalExpression(Base *part, EvalContext context)
     {
         StackFrame *currentFrame = this->currentFrame();
-        gfx_assert(currentFrame != nullptr, "stack frame is required"_gfx);
+        gfx_assert(currentFrame != nullptr, str("stack frame is required"));
         
         if(part->isKindOfClass<Word>()) {
             auto word = static_cast<Word *>(part);
-            if(word->string()->hasPrefix("'"_gfx)) {
+            if(word->string()->hasPrefix(str("'"))) {
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
                 currentFrame->push(make<Word>(rawWord, word->offset()));
-            } else if(word->string()->hasPrefix("&"_gfx)) {
+            } else if(word->string()->hasPrefix(str("&"))) {
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
                 this->evalExpression(make<Word>(rawWord, word->offset()), EvalContext::Vector);
             } else {
@@ -187,7 +187,7 @@ namespace gfx {
     void Interpreter::popFrame()
     {
         if(mFrames.empty())
-            throw Exception("Frame stack underflow."_gfx, nullptr);
+            throw Exception(str("Frame stack underflow."), nullptr);
         
         mFrames.top()->autorelease();
         mFrames.pop();
@@ -260,7 +260,7 @@ namespace gfx {
     {
         gfx_assert_param(searchPath);
         gfx_assert(mSearchPaths->contains(Range(0, mSearchPaths->count()), searchPath),
-                "cannot remove search path that was never in search paths array"_gfx);
+                str("cannot remove search path that was never in search paths array"));
         
         mSearchPaths->removeAt(mSearchPaths->firstIndexOf(Range(0, mSearchPaths->count()), searchPath));
     }
@@ -272,7 +272,7 @@ namespace gfx {
         gfx_assert_param(filename);
         
         if(!this->isImportAllowed())
-            throw Exception("illegal import"_gfx, nullptr);
+            throw Exception(str("illegal import"), nullptr);
         
         if(FilePaths::pathExtension(filename)->length() == 0)
             filename = String::Builder() << filename << ".gfx";

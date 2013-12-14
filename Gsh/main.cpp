@@ -58,7 +58,7 @@ void show_help()
 void run_repl(Interpreter *interpreter, gfx::Size canvasSize)
 {
     PaperTape::WriteLine(String::Builder()
-                         << ("gfx " GFX_Version " ready. canvas is "_gfx)
+                         << (str("gfx " GFX_Version " ready. canvas is "))
                          << (long)canvasSize.width << "x" << (long)canvasSize.height);
     
     rl_initialize();
@@ -70,7 +70,7 @@ void run_repl(Interpreter *interpreter, gfx::Size canvasSize)
         char *partialLine = readline("gfx> ");
         if(!partialLine || strstr(partialLine, "quit") != NULL || strstr(partialLine, "exit") != NULL) {
             if(!partialLine)
-                PaperTape::WriteLine(""_gfx);
+                PaperTape::WriteLine(String::Empty);
             
             break;
         } else if(strcmp(partialLine, "help") == 0) {
@@ -103,7 +103,7 @@ void run_repl(Interpreter *interpreter, gfx::Size canvasSize)
         buffer->deleteRange(Range(0, buffer->length()));
     }
     
-    PaperTape::WriteLine("goodbye"_gfx);
+    PaperTape::WriteLine(str("goodbye"));
 }
 
 #pragma mark - Main
@@ -134,10 +134,10 @@ int main(int argc, const char * argv[])
                 
             case Argument::Type::Parameter: {
                 const String *label = argument->label();
-                if(label->isEqual("to-file"_gfx)) {
+                if(label->isEqual(str("to-file"))) {
                     canvasOutputFilePath = argument->value();
-                } else if(label->isEqual("of-size"_gfx)) {
-                    Array<String> *sizeVector = SplitString(argument->value(), "x"_gfx);
+                } else if(label->isEqual(str("of-size"))) {
+                    Array<String> *sizeVector = SplitString(argument->value(), str("x"));
                     if(sizeVector->count() != 2) {
                         std::cerr << "*** Warning: malformed size given with \"--of-size\". Must be of format 100x100" << std::endl;
                         break;

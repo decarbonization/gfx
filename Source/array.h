@@ -142,7 +142,7 @@ namespace gfx {
         /// \throws Exception for out of bounds errors.
         T *at(Index index) const
         {
-            gfx_assert((index < this->count()), "out of range access"_gfx);
+            gfx_assert((index < this->count()), str("out of range access"));
             
             auto value = (T *)CFArrayGetValueAtIndex(mStorage, index);
             return retained_autoreleased(value);
@@ -204,7 +204,7 @@ namespace gfx {
         ///Inserts a given value at a given index within the receiver.
         void insertAt(T *value, Index index)
         {
-            gfx_assert((index < this->count()), "out of range"_gfx);
+            gfx_assert((index < this->count()), str("out of range"));
             gfx_assert_param(value);
             
             CFArrayInsertValueAtIndex(mStorage, index, value);
@@ -231,7 +231,7 @@ namespace gfx {
         /// \throws Exception for out of bounds errors.
         void removeAt(Index index)
         {
-            gfx_assert((index < this->count()), "out of range"_gfx);
+            gfx_assert((index < this->count()), str("out of range"));
             
             CFArrayRemoveValueAtIndex(mStorage, index);
         }
@@ -274,8 +274,8 @@ namespace gfx {
         /// \throws Exception for out of bounds errors.
         void exchange(Index index1, Index index2)
         {
-            gfx_assert((index1 < this->count()), "out of range"_gfx);
-            gfx_assert((index2 < this->count()), "out of range"_gfx);
+            gfx_assert((index1 < this->count()), str("out of range"));
+            gfx_assert((index2 < this->count()), str("out of range"));
             
             CFArrayExchangeValuesAtIndices(mStorage, index1, index2);
         }

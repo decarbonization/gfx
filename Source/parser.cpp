@@ -243,7 +243,7 @@ namespace gfx {
                         break;
                         
                     default:
-                        fail("unexpected escape character"_gfx);
+                        fail(str("unexpected escape character"));
                         break;
                 }
             } else {

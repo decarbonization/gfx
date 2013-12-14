@@ -27,8 +27,8 @@ namespace gfx {
         mSuperlayer(nullptr),
         mSublayers(new Array<Layer>()),
         mBacking(new LayerBacking(this, frame, scale)),
-        WillDisplaySignal("WillDisplaySignal"_gfx),
-        DidDisplaySignal("DidDisplaySignal"_gfx)
+        WillDisplaySignal(str("WillDisplaySignal")),
+        DidDisplaySignal(str("DidDisplaySignal"))
     {
         setNeedsDisplay();
     }

@@ -128,7 +128,7 @@ namespace gfx {
     void Blob::getBytes(Range range, UInt8 *outBuffer)
     {
         gfx_assert_param(outBuffer);
-        gfx_assert(range.location < length() && range.max() < length(), "out of bounds range"_gfx);
+        gfx_assert(range.location < length() && range.max() < length(), str("out of bounds range"));
         
         CFDataGetBytes(getStorage(), range, outBuffer);
     }
@@ -147,14 +147,14 @@ namespace gfx {
     
     void Blob::deleteRange(Range range)
     {
-        gfx_assert(range.location < length() && range.max() < length(), "out of bounds range"_gfx);
+        gfx_assert(range.location < length() && range.max() < length(), str("out of bounds range"));
         
         CFDataDeleteBytes(getStorage(), range);
     }
     
     void Blob::replaceRange(Range range, const UInt8 *buffer, Index length)
     {
-        gfx_assert(range.location < this->length() && range.max() < this->length(), "out of bounds range"_gfx);
+        gfx_assert(range.location < this->length() && range.max() < this->length(), str("out of bounds range"));
         
         CFDataReplaceBytes(getStorage(), range, buffer, length);
     }

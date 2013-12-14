@@ -38,7 +38,7 @@ namespace gfx {
     {
         auto colorString = autoreleased(copy(inColorString));
         
-        if(colorString->hasPrefix("#"_gfx))
+        if(colorString->hasPrefix(str("#")))
             colorString->deleteRange(Range(0, 1));
         
         if(colorString->length() == 6) {
@@ -48,7 +48,7 @@ namespace gfx {
             auto blue = (unsigned char)(colorCode);
             mColor = CGColorCreateGenericRGB(red / 255.0, green / 255.0, blue / 255.0, 1.0);
         } else {
-            throw Exception("malformed HTML color string given"_gfx, nullptr);
+            throw Exception(str("malformed HTML color string given"), nullptr);
         }
     }
     

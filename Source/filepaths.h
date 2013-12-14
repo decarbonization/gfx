@@ -28,7 +28,7 @@ namespace gfx {
         ///
         /// \param  path    The path to normalize. May not be null.
         ///
-        /// \result A new copy of path conforming to the format `"/path/components"_gfx`.
+        /// \result A new copy of path conforming to the format `str("/path/components")`.
         ///
         static const String *normalizePath(const String *path)
         {
@@ -58,7 +58,7 @@ namespace gfx {
             if(locationOfSeparator.location != kCFNotFound)
                 return path->substring(Range(locationOfSeparator.max(), path->length() - locationOfSeparator.location - locationOfSeparator.length));
             else
-                return ""_gfx;
+                return String::Empty;
         }
         
         ///Returns the last component of a given path string.

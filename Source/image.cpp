@@ -92,7 +92,7 @@ namespace gfx {
         CGImageDestinationAddImage(destination, get(), NULL);
         
         if(!CGImageDestinationFinalize(destination)) {
-            throw Exception("Could not create image blob representation"_gfx, nullptr);
+            throw Exception(str("Could not create image blob representation"), nullptr);
         }
         
         return make<Blob>(data);

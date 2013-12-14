@@ -10,6 +10,8 @@
 #include "exception.h"
 
 namespace gfx {
+    const String *const String::Empty = new String();
+    
     String::String() :
         mStorage(CFStringCreateMutable(kCFAllocatorDefault, 0))
     {
@@ -121,7 +123,7 @@ namespace gfx {
     
     UniChar String::at(Index offset) const
     {
-        gfx_assert((offset < this->length()), "out of bounds"_gfx);
+        gfx_assert((offset < this->length()), str("out of bounds"));
         
         return CFStringGetCharacterAtIndex(mStorage, offset);
     }

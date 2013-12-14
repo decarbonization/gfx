@@ -28,11 +28,11 @@ namespace gfx {
             attributes->iterate([mappedAttributes](const String *key, Base *value) {
                 if(key->isEqual(kFontAttributeName)) {
                     auto font = dynamic_cast<Font *>(value);
-                    gfx_assert(font != nullptr, "kFontAttributeName with non-font object."_gfx);
+                    gfx_assert(font != nullptr, str("kFontAttributeName with non-font object."));
                     CFDictionarySetValue(mappedAttributes, kCTFontAttributeName, font->get());
                 } else if(key->isEqual(kForegroundColorAttributeName)) {
                     auto color = dynamic_cast<Color *>(value);
-                    gfx_assert(color != nullptr, "kCTForegroundColorAttributeName with non-color object."_gfx);
+                    gfx_assert(color != nullptr, str("kCTForegroundColorAttributeName with non-color object."));
                     CFDictionarySetValue(mappedAttributes, kCTForegroundColorAttributeName, color->get());
                 } else {
                     std::cerr << "Unknown and unsupported text attribute named " << key << "given. Ignoring. This may be a hard error in the future.";

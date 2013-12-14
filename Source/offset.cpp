@@ -20,7 +20,7 @@ namespace gfx {
     const String *Offset::description() const
     {
         if(this->isInvalid())
-            return "gfx::Offset::Invalid"_gfx;
+            return str("gfx::Offset::Invalid");
         else
             return String::Builder() << "gfx::Offset{" << line << ", " << column << "}";
     }

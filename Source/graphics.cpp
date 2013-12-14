@@ -41,7 +41,7 @@ namespace gfx {
     Size VectorToSize(const Array<Base> *sizeVector)
     {
         gfx_assert_param(sizeVector);
-        gfx_assert(sizeVector->count() == 2, "wrong number of numbers in vector"_gfx);
+        gfx_assert(sizeVector->count() == 2, str("wrong number of numbers in vector"));
         
         return Size{
             dynamic_cast_or_throw<Number *>(sizeVector->at(0))->value(),
@@ -60,7 +60,7 @@ namespace gfx {
     Point VectorToPoint(const Array<Base> *pointVector)
     {
         gfx_assert_param(pointVector);
-        gfx_assert(pointVector->count() == 2, "wrong number of numbers in vector"_gfx);
+        gfx_assert(pointVector->count() == 2, str("wrong number of numbers in vector"));
         
         return Point{
             dynamic_cast_or_throw<Number *>(pointVector->at(0))->value(),
@@ -105,7 +105,7 @@ namespace gfx {
                 }
             };
         } else {
-            throw Exception("wrong number of numbers in vector for rect"_gfx, nullptr);
+            throw Exception(str("wrong number of numbers in vector for rect"), nullptr);
             return Rect{};
         }
     }
@@ -455,70 +455,70 @@ namespace gfx {
     void Graphics::addTo(StackFrame *frame)
     {
         //Context Functions
-        Graphics::createFunctionBinding(frame, "ctx/begin"_gfx, &ctx_begin);
-        Graphics::createFunctionBinding(frame, "ctx/end"_gfx, &ctx_end);
-        Graphics::createFunctionBinding(frame, "ctx/size"_gfx, &ctx_size);
-        Graphics::createFunctionBinding(frame, "ctx/save"_gfx, &ctx_save);
+        Graphics::createFunctionBinding(frame, str("ctx/begin"), &ctx_begin);
+        Graphics::createFunctionBinding(frame, str("ctx/end"), &ctx_end);
+        Graphics::createFunctionBinding(frame, str("ctx/size"), &ctx_size);
+        Graphics::createFunctionBinding(frame, str("ctx/save"), &ctx_save);
         
         //Layer Functions
-        Graphics::createFunctionBinding(frame, "layer"_gfx, &layer_make);
-        Graphics::createFunctionBinding(frame, "layer/frame"_gfx, &layer_frame);
-        Graphics::createFunctionBinding(frame, "layer/set-frame"_gfx, &layer_setFrame);
-        Graphics::createFunctionBinding(frame, "layer/display"_gfx, &layer_display);
-        Graphics::createFunctionBinding(frame, "layer/render"_gfx, &layer_render);
+        Graphics::createFunctionBinding(frame, str("layer"), &layer_make);
+        Graphics::createFunctionBinding(frame, str("layer/frame"), &layer_frame);
+        Graphics::createFunctionBinding(frame, str("layer/set-frame"), &layer_setFrame);
+        Graphics::createFunctionBinding(frame, str("layer/display"), &layer_display);
+        Graphics::createFunctionBinding(frame, str("layer/render"), &layer_render);
         
-        Graphics::createFunctionBinding(frame, "layer/add-child"_gfx, &layer_addChild);
-        Graphics::createFunctionBinding(frame, "layer/remove-as-child"_gfx, &layer_removeAsChild);
-        Graphics::createFunctionBinding(frame, "layer/parent"_gfx, &layer_parent);
-        Graphics::createFunctionBinding(frame, "layer/children"_gfx, &layer_children);
+        Graphics::createFunctionBinding(frame, str("layer/add-child"), &layer_addChild);
+        Graphics::createFunctionBinding(frame, str("layer/remove-as-child"), &layer_removeAsChild);
+        Graphics::createFunctionBinding(frame, str("layer/parent"), &layer_parent);
+        Graphics::createFunctionBinding(frame, str("layer/children"), &layer_children);
         
         //Colors
-        Graphics::createVariableBinding(frame, "white"_gfx, Color::white());
-        Graphics::createVariableBinding(frame, "black"_gfx, Color::black());
-        Graphics::createVariableBinding(frame, "translucent"_gfx, Color::clear());
-        Graphics::createVariableBinding(frame, "red"_gfx, Color::red());
-        Graphics::createVariableBinding(frame, "green"_gfx, Color::green());
-        Graphics::createVariableBinding(frame, "blue"_gfx, Color::blue());
-        Graphics::createVariableBinding(frame, "orange"_gfx, Color::orange());
-        Graphics::createVariableBinding(frame, "purple"_gfx, Color::purple());
-        Graphics::createVariableBinding(frame, "pink"_gfx, Color::pink());
-        Graphics::createVariableBinding(frame, "brown"_gfx, Color::brown());
-        Graphics::createVariableBinding(frame, "yellow"_gfx, Color::yellow());
+        Graphics::createVariableBinding(frame, str("white"), Color::white());
+        Graphics::createVariableBinding(frame, str("black"), Color::black());
+        Graphics::createVariableBinding(frame, str("translucent"), Color::clear());
+        Graphics::createVariableBinding(frame, str("red"), Color::red());
+        Graphics::createVariableBinding(frame, str("green"), Color::green());
+        Graphics::createVariableBinding(frame, str("blue"), Color::blue());
+        Graphics::createVariableBinding(frame, str("orange"), Color::orange());
+        Graphics::createVariableBinding(frame, str("purple"), Color::purple());
+        Graphics::createVariableBinding(frame, str("pink"), Color::pink());
+        Graphics::createVariableBinding(frame, str("brown"), Color::brown());
+        Graphics::createVariableBinding(frame, str("yellow"), Color::yellow());
         
-        Graphics::createFunctionBinding(frame, "rgb"_gfx, &rgb);
-        Graphics::createFunctionBinding(frame, "rgba"_gfx, &rgba);
-        Graphics::createFunctionBinding(frame, "set-fill"_gfx, &set_fill);
-        Graphics::createFunctionBinding(frame, "set-stroke"_gfx, &set_stroke);
+        Graphics::createFunctionBinding(frame, str("rgb"), &rgb);
+        Graphics::createFunctionBinding(frame, str("rgba"), &rgba);
+        Graphics::createFunctionBinding(frame, str("set-fill"), &set_fill);
+        Graphics::createFunctionBinding(frame, str("set-stroke"), &set_stroke);
         
         //Core Operations
-        Graphics::createFunctionBinding(frame, "fill-rect"_gfx, &fill);
-        Graphics::createFunctionBinding(frame, "stroke-rect"_gfx, &stroke);
+        Graphics::createFunctionBinding(frame, str("fill-rect"), &fill);
+        Graphics::createFunctionBinding(frame, str("stroke-rect"), &stroke);
         
         //Path Operations
-        Graphics::createFunctionBinding(frame, "path/make"_gfx, &path_make);
-        Graphics::createFunctionBinding(frame, "path/rect"_gfx, &path_rect);
-        Graphics::createFunctionBinding(frame, "path/round-rect"_gfx, &path_roundRect);
-        Graphics::createFunctionBinding(frame, "path/oval"_gfx, &path_oval);
+        Graphics::createFunctionBinding(frame, str("path/make"), &path_make);
+        Graphics::createFunctionBinding(frame, str("path/rect"), &path_rect);
+        Graphics::createFunctionBinding(frame, str("path/round-rect"), &path_roundRect);
+        Graphics::createFunctionBinding(frame, str("path/oval"), &path_oval);
         
-        Graphics::createFunctionBinding(frame, "path/move"_gfx, &path_move);
-        Graphics::createFunctionBinding(frame, "path/line"_gfx, &path_line);
-        Graphics::createFunctionBinding(frame, "path/arc"_gfx, &path_arc);
-        Graphics::createFunctionBinding(frame, "path/curve"_gfx, &path_curve);
+        Graphics::createFunctionBinding(frame, str("path/move"), &path_move);
+        Graphics::createFunctionBinding(frame, str("path/line"), &path_line);
+        Graphics::createFunctionBinding(frame, str("path/arc"), &path_arc);
+        Graphics::createFunctionBinding(frame, str("path/curve"), &path_curve);
         
-        Graphics::createFunctionBinding(frame, "path/bounding-box"_gfx, &path_boundingBox);
-        Graphics::createFunctionBinding(frame, "path/current-point"_gfx, &path_currentPoint);
-        Graphics::createFunctionBinding(frame, "path/empty?"_gfx, &path_isEmpty);
-        Graphics::createFunctionBinding(frame, "path/contains-point"_gfx, &path_containsPoint);
+        Graphics::createFunctionBinding(frame, str("path/bounding-box"), &path_boundingBox);
+        Graphics::createFunctionBinding(frame, str("path/current-point"), &path_currentPoint);
+        Graphics::createFunctionBinding(frame, str("path/empty?"), &path_isEmpty);
+        Graphics::createFunctionBinding(frame, str("path/contains-point"), &path_containsPoint);
         
-        Graphics::createFunctionBinding(frame, "path/fill"_gfx, &path_fill);
-        Graphics::createFunctionBinding(frame, "path/stroke"_gfx, &path_stroke);
+        Graphics::createFunctionBinding(frame, str("path/fill"), &path_fill);
+        Graphics::createFunctionBinding(frame, str("path/stroke"), &path_stroke);
         
         //Core Text Operations
-        Graphics::createFunctionBinding(frame, "font"_gfx, &font_make);
+        Graphics::createFunctionBinding(frame, str("font"), &font_make);
         
-        Graphics::createFunctionBinding(frame, "text"_gfx, &text_make);
-        Graphics::createFunctionBinding(frame, "text/size"_gfx, &text_size);
-        Graphics::createFunctionBinding(frame, "text/draw"_gfx, &text_draw);
+        Graphics::createFunctionBinding(frame, str("text"), &text_make);
+        Graphics::createFunctionBinding(frame, str("text/size"), &text_size);
+        Graphics::createFunctionBinding(frame, str("text/draw"), &text_draw);
     }
     
 #pragma mark -
@@ -527,7 +527,7 @@ namespace gfx {
     {
         Graphics::addTo(interpreter->currentFrame());
         interpreter->setUnboundWordHandler([interpreter](Word *word) -> Color * {
-            if(word->string()->hasPrefix("#"_gfx)) {
+            if(word->string()->hasPrefix(str("#"))) {
                 return make<Color>(word->string());
             } else {
                 interpreter->failForUnboundWord(word);

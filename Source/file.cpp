@@ -60,7 +60,7 @@ namespace gfx {
         if(lstat(path->getCString(), &info) == 0) {
             return S_ISDIR(info.st_mode);
         } else {
-            throw Exception("Could not lookup info on path."_gfx, nullptr);
+            throw Exception(str("Could not lookup info on path."), nullptr);
         }
     }
     
@@ -232,6 +232,6 @@ namespace gfx {
     
     size_t File::writeLine(const String *string)
     {
-        return this->writeString(String::Builder() << string << "\n"_gfx);
+        return this->writeString(String::Builder() << string << str("\n"));
     }
 }

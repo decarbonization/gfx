@@ -21,7 +21,7 @@ namespace gfx {
         mInterpreter(interpreter),
         mIsFrozen(false),
         mDestroySignalReference(),
-        DestroySignal("gfx::StackFrame::DestroySignal"_gfx)
+        DestroySignal(str("gfx::StackFrame::DestroySignal"))
     {
         if(mParent)
             mDestroySignalReference = mParent->DestroySignal.add([this](Nothing) {
@@ -60,7 +60,7 @@ namespace gfx {
         
         if(empty()) {
             if(!mParent)
-                gfx_assert(false, "stack underflow"_gfx);
+                gfx_assert(false, str("stack underflow"));
             else
                 return mParent->pop();
         }
@@ -109,7 +109,7 @@ namespace gfx {
     {
         if(empty()) {
             if(!mParent)
-                gfx_assert(false, "stack underflow"_gfx);
+                gfx_assert(false, str("stack underflow"));
             else
                 return mParent->peak();
         }
@@ -195,7 +195,7 @@ namespace gfx {
             Dictionary<const String, Base> *userInfo = nullptr;
             if(affectedBindingKey) {
                 userInfo = autoreleased(new Dictionary<const String, Base>{
-                    {"AffectedBindingKey"_gfx, (Base *)affectedBindingKey},
+                    {str("AffectedBindingKey"), (Base *)affectedBindingKey},
                 });
             }
             throw StackFrame::AccessViolationException(message, userInfo);

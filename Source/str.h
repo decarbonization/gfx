@@ -24,6 +24,8 @@ namespace gfx {
         
     public:
         
+        static const String *const Empty;
+        
         ///Constructs an empty string.
         String();
         
@@ -304,7 +306,7 @@ namespace gfx {
     
 #pragma mark - Overloads
     
-    static inline const String *operator"" _gfx(const char *rawString, size_t size)
+    static inline const String *str(const char *rawString)
     {
         return autoreleased(new String(rawString));
     }

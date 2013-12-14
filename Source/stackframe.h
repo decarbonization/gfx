@@ -147,7 +147,7 @@ namespace gfx {
         {
             Base *value = pop();
             if(!value->isKindOfClass<T>())
-                throw Exception("wrong type on stack"_gfx, nullptr);
+                throw Exception(str("wrong type on stack"), nullptr);
             
             return (T *)value;
         }
@@ -242,7 +242,7 @@ namespace gfx {
         ///
         /// \param  message The message to associate with the exception. Required.
         ///
-        void assertMutationPossible(const String *message = "Attempting to mutate a frame that has been frozen."_gfx, const String *affectedBindingKey = nullptr) const;
+        void assertMutationPossible(const String *message = str("Attempting to mutate a frame that has been frozen."), const String *affectedBindingKey = nullptr) const;
     };
 }
 
