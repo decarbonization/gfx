@@ -13,6 +13,9 @@
 #include "str.h"
 #include "exception.h"
 
+#include "stackframe.h"
+#include "number.h"
+
 namespace gfx {
     
 #pragma mark - Lifecycle
@@ -131,6 +134,63 @@ namespace gfx {
     Color::NativeType Color::get() const
     {
         return mColor;
+    }
+    
+#pragma mark - Color Functions
+    
+    static void rgb(StackFrame *stack)
+    {
+        auto blue = stack->popNumber();
+        auto green = stack->popNumber();
+        auto red = stack->popNumber();
+        
+        stack->push(make<Color>(red->value() / 255.0, green->value() / 255.0, blue->value() / 255.0, 1.0));
+    }
+    
+    static void rgba(StackFrame *stack)
+    {
+        auto alpha = stack->popNumber();
+        auto blue = stack->popNumber();
+        auto green = stack->popNumber();
+        auto red = stack->popNumber();
+        
+        stack->push(make<Color>(red->value() / 255.0, green->value() / 255.0, blue->value() / 255.0, alpha->value()));
+    }
+    
+    static void set_fill(StackFrame *stack)
+    {
+        auto color = stack->popType<Color>();
+        color->setFill();
+    }
+    
+    static void set_stroke(StackFrame *stack)
+    {
+        auto color = stack->popType<Color>();
+        color->setStroke();
+    }
+    
+#pragma mark -
+    
+    void Color::AddTo(StackFrame *frame)
+    {
+        gfx_assert_param(frame);
+        
+        frame->createVariableBinding(str("white"), Color::white());
+        frame->createVariableBinding(str("black"), Color::black());
+        frame->createVariableBinding(str("translucent"), Color::clear());
+        frame->createVariableBinding(str("red"), Color::red());
+        frame->createVariableBinding(str("green"), Color::green());
+        frame->createVariableBinding(str("blue"), Color::blue());
+        frame->createVariableBinding(str("orange"), Color::orange());
+        frame->createVariableBinding(str("purple"), Color::purple());
+        frame->createVariableBinding(str("pink"), Color::pink());
+        frame->createVariableBinding(str("brown"), Color::brown());
+        frame->createVariableBinding(str("yellow"), Color::yellow());
+        
+        frame->createFunctionBinding(str("rgb"), &rgb);
+        frame->createFunctionBinding(str("rgba"), &rgba);
+        frame->createFunctionBinding(str("set-fill"), &set_fill);
+        frame->createFunctionBinding(str("set-stroke"), &set_stroke);
     }
 }
 

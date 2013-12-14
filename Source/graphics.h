@@ -30,11 +30,11 @@ namespace gfx {
     
     class Graphics : public Base
     {
-        static void addTo(StackFrame *frame);
+        static void AddTo(StackFrame *frame);
         
     public:
         
-        static void attachTo(Interpreter *interpreter);
+        static void AttachTo(Interpreter *interpreter);
     };
 }
 

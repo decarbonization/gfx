@@ -9,6 +9,9 @@
 #include "font.h"
 #include "str.h"
 
+#include "stackframe.h"
+#include "number.h"
+
 namespace gfx {
     
 #pragma mark - Vending Fonts
@@ -105,5 +108,24 @@ namespace gfx {
     {
         cf::StringAutoRef fullName = CTFontCopyFullName(get());
         return make<String>(fullName);
+    }
+    
+#pragma mark - Functions
+    
+    static void font_make(StackFrame *stack)
+    {
+        /* str num -- font */
+        auto size = stack->popNumber();
+        auto name = stack->popString();
+        stack->push(Font::withName(name, size->value()));
+    }
+    
+#pragma mark -
+    
+    void Font::AddTo(gfx::StackFrame *frame)
+    {
+        gfx_assert_param(frame);
+        
+        frame->createFunctionBinding(str("font"), &font_make);
     }
 }

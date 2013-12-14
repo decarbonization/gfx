@@ -12,6 +12,10 @@
 #include "array.h"
 #include "image.h"
 
+#include "stackframe.h"
+#include "graphics.h"
+#include "file.h"
+
 namespace gfx {
     
 #pragma mark - Context Stack
@@ -195,11 +199,56 @@ namespace gfx {
         CGContextConcatCTM(get(), transform);
     }
     
-#pragma mark - Clearing
+#pragma mark - Functions
     
     void Context::clear(Rect rect)
     {
         CGContextClearRect(get(), rect);
+    }
+    
+    static void ctx_begin(StackFrame *stack)
+    {
+        auto sizeVector = stack->popType<Array<Base>>();
+        auto size = VectorToSize(sizeVector);
+        Context::pushContext(Context::bitmapContextWith(size));
+    }
+    
+    static void ctx_end(StackFrame *stack)
+    {
+        Context::popContext();
+    }
+    
+    static void ctx_size(StackFrame *stack)
+    {
+        auto ctxSize = Context::currentContext()->boundingRect().size;
+        stack->push(VectorFromSize(ctxSize));
+    }
+    
+#if GFX_Language_SupportsFiles
+    static void ctx_save(StackFrame *stack)
+    {
+        auto path = stack->popString();
+        
+        auto image = Context::currentContext()->makeImage();
+        auto data = image->makeRepresentation(Image::RepresentationType::PNG);
+        
+        auto file = make<File>(path, File::Mode::Write);
+        file->write(data);
+    }
+#endif /* GFX_Language_SupportsFiles */
+    
+#pragma mark -
+    
+    void Context::AddTo(StackFrame *frame)
+    {
+        gfx_assert_param(frame);
+        
+        frame->createFunctionBinding(str("ctx/begin"), &ctx_begin);
+        frame->createFunctionBinding(str("ctx/end"), &ctx_end);
+        frame->createFunctionBinding(str("ctx/size"), &ctx_size);
+#if GFX_Language_SupportsFiles
+        frame->createFunctionBinding(str("ctx/save"), &ctx_save);
+#endif /* GFX_Language_SupportsFiles */
     }
 }
 

@@ -14,6 +14,7 @@
 #include <CoreText/CoreText.h>
 
 namespace gfx {
+    class StackFrame;
     
     ///The font to use when rendering a string in a TextLine.
     ///Must be an instance of `gfx::Font` or an exception is raised.
@@ -87,6 +88,11 @@ namespace gfx {
         /// \param  rect    The rectangle to render the text within.
         ///
         void drawInRect(Rect rect);
+        
+#pragma mark - Functions
+        
+        ///Adds the text line function suite to a given stack frame.
+        static void AddTo(StackFrame *frame);
     };
 }
 

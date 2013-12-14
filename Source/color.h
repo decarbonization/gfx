@@ -16,6 +16,7 @@
 #include <CoreGraphics/CoreGraphics.h>
 
 namespace gfx {
+    class StackFrame;
     
     ///The Color class encapsulates color and alpha information.
     ///
@@ -130,6 +131,11 @@ namespace gfx {
         
         ///Returns the native object backing the Color.
         NativeType get() const;
+        
+#pragma mark - Functions
+        
+        ///Adds the color function suite to a given stack frame.
+        static void AddTo(StackFrame *frame);
     };
 }
 

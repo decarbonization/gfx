@@ -17,6 +17,11 @@
 #   include "layerbacking_calayer.h"
 #endif /* GFX_Layer_Use_CG */
 
+#include "stackframe.h"
+#include "interpreter.h"
+#include "graphics.h"
+#include "function.h"
+
 namespace gfx {
     
 #pragma mark - Lifecycle
@@ -179,5 +184,97 @@ namespace gfx {
                 sublayer->render(context);
             });
         }
+    }
+    
+#pragma mark - Layer Functions
+    
+    static void layer_make(StackFrame *stack)
+    {
+        /* vec func -- Layer */
+        Scoped<Function> drawFunction = stack->popFunction();
+        auto frame = VectorToRect(stack->popType<Array<Base>>());
+        Interpreter *interpreter = stack->interpreter();
+        stack->push(make<Layer>(frame, [interpreter, drawFunction](Layer *layer, Rect rect) {
+            StackFrame *frame = interpreter->currentFrame();
+            frame->push(VectorFromRect(rect));
+            drawFunction->apply(frame);
+            frame->safeDrop();
+        }));
+    }
+    
+    static void layer_frame(StackFrame *stack)
+    {
+        /* Layer -- vec */
+        auto layer = stack->popType<Layer>();
+        stack->push(VectorFromRect(layer->frame()));
+    }
+    
+    static void layer_setFrame(StackFrame *stack)
+    {
+        /* layer vec -- */
+        auto frameVector = stack->popType<Array<Base>>();
+        auto layer = stack->popType<Layer>();
+        layer->setFrame(VectorToRect(frameVector));
+    }
+    
+    static void layer_display(StackFrame *stack)
+    {
+        /* layer -- */
+        auto layer = stack->popType<Layer>();
+        layer->setNeedsDisplay();
+    }
+    
+    static void layer_render(StackFrame *stack)
+    {
+        /* layer -- */
+        auto layer = stack->popType<Layer>();
+        layer->render(Context::currentContext());
+    }
+    
+    static void layer_addChild(StackFrame *stack)
+    {
+        /* layer(parent) layer(child) -- */
+        auto child = stack->popType<Layer>();
+        auto parent = stack->popType<Layer>();
+        parent->addSublayer(child);
+    }
+    
+    static void layer_removeAsChild(StackFrame *stack)
+    {
+        /* layer -- */
+        auto layer = stack->popType<Layer>();
+        layer->removeFromSuperlayer();
+    }
+    
+    static void layer_parent(StackFrame *stack)
+    {
+        /* layer -- layer */
+        auto layer = stack->popType<Layer>();
+        stack->push(layer->superlayer());
+    }
+    
+    static void layer_children(StackFrame *stack)
+    {
+        /* layer -- vec */
+        auto layer = stack->popType<Layer>();
+        stack->push(copy(layer->sublayers()));
+    }
+    
+#pragma mark -
+    
+    void Layer::AddTo(StackFrame *frame)
+    {
+        gfx_assert_param(frame);
+        
+        frame->createFunctionBinding(str("layer"), &layer_make);
+        frame->createFunctionBinding(str("layer/frame"), &layer_frame);
+        frame->createFunctionBinding(str("layer/set-frame"), &layer_setFrame);
+        frame->createFunctionBinding(str("layer/display"), &layer_display);
+        frame->createFunctionBinding(str("layer/render"), &layer_render);
+        
+        frame->createFunctionBinding(str("layer/add-child"), &layer_addChild);
+        frame->createFunctionBinding(str("layer/remove-as-child"), &layer_removeAsChild);
+        frame->createFunctionBinding(str("layer/parent"), &layer_parent);
+        frame->createFunctionBinding(str("layer/children"), &layer_children);
     }
 }

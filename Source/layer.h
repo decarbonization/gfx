@@ -19,6 +19,7 @@ OBJC_EXTERN_CLASS CALayer;
 namespace gfx {
     class LayerBacking;
     class Context;
+    class StackFrame;
     
     ///The Layer class manages rasterized contents, and encapsulates rendering
     ///trees of them into `gfx::Context` objects. The Layer class is a core
@@ -210,6 +211,11 @@ namespace gfx {
         
         ///Some LayerBacking implementations need access to our members.
         friend class LayerBacking;
+        
+#pragma mark - Functions
+        
+        ///Adds the layer function suite to a given stack frame.
+        static void AddTo(StackFrame *frame);
     };
 }
 

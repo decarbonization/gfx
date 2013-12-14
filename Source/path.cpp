@@ -12,6 +12,10 @@
 #include "context.h"
 #include "str.h"
 
+#include "stackframe.h"
+#include "graphics.h"
+#include "number.h"
+
 namespace gfx {
     
     Path *Path::withRect(Rect rect)
@@ -339,6 +343,220 @@ namespace gfx {
     Transform2D Path::transform() const
     {
         return mTransform;
+    }
+    
+#pragma mark - Core Operations
+    
+    static void fn_fill(StackFrame *stack)
+    {
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        Path::fillRect(rect);
+    }
+    
+    static void fn_stroke(StackFrame *stack)
+    {
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        Path::strokeRect(rect);
+    }
+    
+#pragma mark - Paths
+    
+    static void path_make(StackFrame *stack)
+    {
+        /* -- path */
+        stack->push(make<Path>());
+    }
+    
+    static void path_rect(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withRect(rect));
+    }
+    
+    static void path_roundRect(StackFrame *stack)
+    {
+        /* vec num -- path */
+        auto radius = stack->popNumber();
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withRoundedRect(rect, radius->value(), radius->value()));
+    }
+    
+    static void path_oval(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withOval(rect));
+    }
+    
+    static void path_upTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Up));
+    }
+    
+    static void path_downTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Down));
+    }
+    
+    static void path_leftTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Left));
+    }
+    
+    static void path_rightTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Right));
+    }
+    
+#pragma mark -
+    
+    static void path_move(StackFrame *stack)
+    {
+        /* path vec -- path */
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
+        auto path = stack->popType<Path>();
+        path->moveToPoint(point);
+        stack->push(path);
+    }
+    
+    static void path_line(StackFrame *stack)
+    {
+        /* path vec -- path */
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
+        auto path = stack->popType<Path>();
+        path->lineToPoint(point);
+        stack->push(path);
+    }
+    
+    static void path_arc(StackFrame *stack)
+    {
+        /* path vec1 vec2 num -- path */
+        auto radius = stack->popNumber();
+        auto point2 = VectorToPoint(stack->popType<Array<Base>>());
+        auto point1 = VectorToPoint(stack->popType<Array<Base>>());
+        auto path = stack->popType<Path>();
+        path->arcToPoint(point1, point2, radius->value());
+        stack->push(path);
+    }
+    
+    static void path_curve(StackFrame *stack)
+    {
+        auto controlPoint2 = VectorToPoint(stack->popType<Array<Base>>());
+        auto controlPoint1 = VectorToPoint(stack->popType<Array<Base>>());
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
+        auto path = stack->popType<Path>();
+        path->curveToPoint(point, controlPoint1, controlPoint2);
+        stack->push(path);
+    }
+    
+#pragma mark -
+    
+    static void path_boundingBox(StackFrame *stack)
+    {
+        /* path -- vec */
+        auto path = stack->popType<Path>();
+        auto boundingBox = path->boundingBox();
+        auto array = VectorFromRect(boundingBox);
+        stack->push(array);
+    }
+    
+    static void path_currentPoint(StackFrame *stack)
+    {
+        /* path -- vec */
+        auto path = stack->popType<Path>();
+        auto currentPoint = path->currentPoint();
+        auto array = autoreleased(new Array<Base>{
+            make<Number>(currentPoint.x),
+            make<Number>(currentPoint.y),
+        });
+        stack->push(array);
+    }
+    
+    static void path_isEmpty(StackFrame *stack)
+    {
+        /* path -- bool */
+        auto path = stack->popType<Path>();
+        if(path->isEmpty())
+            stack->push(Number::True());
+        else
+            stack->push(Number::False());
+    }
+    
+    static void path_containsPoint(StackFrame *stack)
+    {
+        /* path vec -- bool */
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
+        auto path = stack->popType<Path>();
+        if(path->containsPoint(point))
+            stack->push(Number::True());
+        else
+            stack->push(Number::False());
+    }
+    
+#pragma mark -
+    
+    static void path_fill(StackFrame *stack)
+    {
+        /* path -- */
+        auto path = stack->popType<Path>();
+        path->fill();
+    }
+    
+    static void path_stroke(StackFrame *stack)
+    {
+        /* path -- */
+        auto path = stack->popType<Path>();
+        path->stroke();
+    }
+    
+#pragma mark -
+    
+    void Path::AddTo(StackFrame *frame)
+    {
+        gfx_assert_param(frame);
+        
+        frame->createFunctionBinding(str("fill-rect"), &fn_fill);
+        frame->createFunctionBinding(str("stroke-rect"), &fn_stroke);
+        
+        frame->createFunctionBinding(str("path/make"), &path_make);
+        frame->createFunctionBinding(str("path/rect"), &path_rect);
+        frame->createFunctionBinding(str("path/round-rect"), &path_roundRect);
+        frame->createFunctionBinding(str("path/oval"), &path_oval);
+        frame->createFunctionBinding(str("path/up-triangle"), &path_upTriangle);
+        frame->createFunctionBinding(str("path/down-triangle"), &path_downTriangle);
+        frame->createFunctionBinding(str("path/left-triangle"), &path_leftTriangle);
+        frame->createFunctionBinding(str("path/right-triangle"), &path_rightTriangle);
+        
+        frame->createFunctionBinding(str("path/move"), &path_move);
+        frame->createFunctionBinding(str("path/line"), &path_line);
+        frame->createFunctionBinding(str("path/arc"), &path_arc);
+        frame->createFunctionBinding(str("path/curve"), &path_curve);
+        
+        frame->createFunctionBinding(str("path/bounding-box"), &path_boundingBox);
+        frame->createFunctionBinding(str("path/current-point"), &path_currentPoint);
+        frame->createFunctionBinding(str("path/empty?"), &path_isEmpty);
+        frame->createFunctionBinding(str("path/contains-point"), &path_containsPoint);
+        
+        frame->createFunctionBinding(str("path/fill"), &path_fill);
+        frame->createFunctionBinding(str("path/stroke"), &path_stroke);
     }
 }
 

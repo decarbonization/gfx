@@ -15,6 +15,7 @@
 #include <CoreGraphics/CoreGraphics.h>
 
 namespace gfx {
+    class StackFrame;
     
     ///The Path class encapsulates a bézier path and the basic operations necessary to operate on it.
     ///
@@ -302,6 +303,11 @@ namespace gfx {
         ///
         ///Default value is `gfx::Transform2D::Identity`.
         Transform2D transform() const;
+        
+#pragma mark - Functions
+        
+        ///Adds the path function suite to a given stack frame.
+        static void AddTo(StackFrame *frame);
     };
 }
 

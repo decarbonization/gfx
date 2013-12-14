@@ -13,6 +13,8 @@
 #include <CoreText/CoreText.h>
 
 namespace gfx {
+    class StackFrame;
+    
     ///The Font class encapsulates fonts for the Gfx graphics stack.
     class Font : public Base
     {
@@ -75,6 +77,11 @@ namespace gfx {
         
         ///Returns the full name of the font.
         const String *fullName() const;
+        
+#pragma mark - Functions
+        
+        ///Adds the font function suite to a given stack frame.
+        static void AddTo(StackFrame *frame);
     };
 }
 

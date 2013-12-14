@@ -11,6 +11,10 @@
 #include "color.h"
 #include "context.h"
 
+#include "stackframe.h"
+#include "graphics.h"
+#include "number.h"
+
 namespace gfx {
     
     const String *const kFontAttributeName = new String("kFontAttributeName");
@@ -108,5 +112,46 @@ namespace gfx {
             CGContextClipToRect(context->get(), rect);
             CTLineDraw(get(), context->get());
         });
+    }
+    
+#pragma mark - Functions
+    
+    static void text_make(StackFrame *stack)
+    {
+        /* font color str -- text */
+        auto string = stack->popString();
+        auto color = stack->popType<Color>();
+        auto font = stack->popType<Font>();
+        
+        auto attributes = make<Dictionary<const String, Base>>();
+        attributes->set(kFontAttributeName, font);
+        attributes->set(kForegroundColorAttributeName, color);
+        stack->push(TextLine::withString(string, attributes));
+    }
+    
+    static void text_size(StackFrame *stack)
+    {
+        /* text -- vec */
+        auto text = stack->popType<TextLine>();
+        auto vector = VectorFromSize(text->bounds().size);
+        stack->push(vector);
+    }
+    
+    static void text_draw(StackFrame *stack)
+    {
+        /* text vec -- */
+        auto point = VectorToPoint(stack->popType<Array<Base>>());
+        auto text = stack->popType<TextLine>();
+        
+        text->drawAtPoint(point);
+    }
+    
+#pragma mark - 
+    
+    void TextLine::AddTo(gfx::StackFrame *frame)
+    {
+        frame->createFunctionBinding(str("text"), &text_make);
+        frame->createFunctionBinding(str("text/size"), &text_size);
+        frame->createFunctionBinding(str("text/draw"), &text_draw);
     }
 }

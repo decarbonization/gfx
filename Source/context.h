@@ -16,6 +16,7 @@
 
 namespace gfx {
     class Image;
+    class StackFrame;
     
     ///The Context class encapsulates the core 2D drawing destination used by
     ///the gfx language and drawing stack.
@@ -165,6 +166,11 @@ namespace gfx {
         
         ///Clears a given section of the context.
         void clear(Rect rect);
+        
+#pragma mark - Functions
+        
+        ///Adds the context function suite to a given stack frame.
+        static void AddTo(StackFrame *frame);
     };
 }
 

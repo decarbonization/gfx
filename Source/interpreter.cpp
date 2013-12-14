@@ -75,7 +75,7 @@ namespace gfx {
         });
         
 #if GFX_Include_GraphicsStack
-        Graphics::attachTo(this);
+        Graphics::AttachTo(this);
 #endif /* GFX_Include_GraphicsStack */
         
         this->addSearchPath(String::Empty);
