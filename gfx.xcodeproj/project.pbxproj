@@ -10,6 +10,8 @@
 		8B10B909183DC22E00DEB62F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B908183DC22E00DEB62F /* CoreGraphics.framework */; };
 		8B10B90E183DC95600DEB62F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B10B90D183DC90600DEB62F /* ImageIO.framework */; };
 		8B10B9271842E94700DEB62F /* t11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B9251842E94700DEB62F /* t11.cpp */; };
+		8B121F8818596FFF00BF2946 /* object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F8618596FFF00BF2946 /* object.cpp */; };
+		8B121F8918596FFF00BF2946 /* object.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F8718596FFF00BF2946 /* object.h */; };
 		8B12C79E184AEB2300DBD77C /* libreadline.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C79D184AEB2300DBD77C /* libreadline.dylib */; };
 		8B12C828184BDF7800DBD77C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C827184BDF7800DBD77C /* Cocoa.framework */; };
 		8B12C832184BDF7800DBD77C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B12C830184BDF7800DBD77C /* InfoPlist.strings */; };
@@ -135,6 +137,8 @@
 		8B10B91B1842E92300DEB62F /* gfx-tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "gfx-tests"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B10B9251842E94700DEB62F /* t11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = t11.cpp; sourceTree = "<group>"; };
 		8B10B9261842E94700DEB62F /* t11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t11.h; sourceTree = "<group>"; };
+		8B121F8618596FFF00BF2946 /* object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = object.cpp; sourceTree = "<group>"; };
+		8B121F8718596FFF00BF2946 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		8B12C79D184AEB2300DBD77C /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
 		8B12C826184BDF7800DBD77C /* gfx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gfx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12C827184BDF7800DBD77C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -373,6 +377,8 @@
 				8B12C8BF184BE15600DBD77C /* stackframe.h */,
 				8B12C8C4184BE15600DBD77C /* word.h */,
 				8B89DA1E1852D8B20062EFB4 /* annotation.h */,
+				8B121F8618596FFF00BF2946 /* object.cpp */,
+				8B121F8718596FFF00BF2946 /* object.h */,
 			);
 			name = "Core Interpreter";
 			sourceTree = "<group>";
@@ -492,6 +498,7 @@
 				8B12C8F2184BE15600DBD77C /* path.h in Headers */,
 				8B12C8DC184BE15600DBD77C /* function.h in Headers */,
 				8B12C8F6184BE15600DBD77C /* stackframe.h in Headers */,
+				8B121F8918596FFF00BF2946 /* object.h in Headers */,
 				8B12C8DA184BE15600DBD77C /* file.h in Headers */,
 				8B12C8D4184BE15600DBD77C /* dictionary.h in Headers */,
 				8B12C8E3184BE15600DBD77C /* image.h in Headers */,
@@ -643,6 +650,7 @@
 				8B12C8EB184BE15600DBD77C /* offset.cpp in Sources */,
 				8B12C8EF184BE15600DBD77C /* parser.cpp in Sources */,
 				8B12C924184D896800DBD77C /* layerbacking_calayer.mm in Sources */,
+				8B121F8818596FFF00BF2946 /* object.cpp in Sources */,
 				8B89DA2D18553C8C0062EFB4 /* GFXLayer.mm in Sources */,
 				8B12C8CE184BE15600DBD77C /* color.cpp in Sources */,
 				8B12C8E0184BE15600DBD77C /* graphics.cpp in Sources */,
