@@ -30,8 +30,6 @@ namespace gfx {
     
     class Graphics : public Base
     {
-        static void createVariableBinding(StackFrame *frame, const String *name, Base *value);
-        static void createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation);
         static void addTo(StackFrame *frame);
         
     public:

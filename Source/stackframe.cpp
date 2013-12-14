@@ -187,6 +187,18 @@ namespace gfx {
             return nullptr;
     }
     
+#pragma mark -
+    
+    void StackFrame::createVariableBinding(const String *name, Base *value)
+    {
+        this->setBindingToValue(name, value, false);
+    }
+    
+    void StackFrame::createFunctionBinding(const String *name, std::function<void(StackFrame *stack)> implementation)
+    {
+        this->setBindingToValue(name, make<NativeFunction>(name, implementation), false);
+    }
+    
 #pragma mark - Freezing
     
     void StackFrame::assertMutationPossible(const String *message, const String *affectedBindingKey) const

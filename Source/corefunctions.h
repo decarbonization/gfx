@@ -19,13 +19,6 @@ namespace gfx {
     ///core language functions of the Gfx language.
     class CoreFunctions
     {
-        ///Creates a new variable binding with a given name and value in a given frame.
-        static void createVariableBinding(StackFrame *frame, const String *name, Base *value);
-        
-        ///Creates a new `gfx::NativeFunction` with a given implementation,
-        ///and adds it to a given frame with a given name.
-        static void createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation);
-        
         ///Returns the shared core function frame, creating it if it does not already exist.
         ///
         ///__Important:__ The frame returned by this method __is not__ usable directly. It

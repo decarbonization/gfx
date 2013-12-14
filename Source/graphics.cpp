@@ -476,89 +476,79 @@ namespace gfx {
     
 #pragma mark - Public Interface
     
-    void Graphics::createVariableBinding(StackFrame *frame, const String *name, Base *value)
-    {
-        frame->setBindingToValue(name, value, false);
-    }
-    
-    void Graphics::createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation)
-    {
-        frame->setBindingToValue(name, make<NativeFunction>(name, implementation), false);
-    }
-    
     void Graphics::addTo(StackFrame *frame)
     {
         //Context Functions
-        Graphics::createFunctionBinding(frame, str("ctx/begin"), &ctx_begin);
-        Graphics::createFunctionBinding(frame, str("ctx/end"), &ctx_end);
-        Graphics::createFunctionBinding(frame, str("ctx/size"), &ctx_size);
+        frame->createFunctionBinding(str("ctx/begin"), &ctx_begin);
+        frame->createFunctionBinding(str("ctx/end"), &ctx_end);
+        frame->createFunctionBinding(str("ctx/size"), &ctx_size);
 #if GFX_Language_SupportsFiles
-        Graphics::createFunctionBinding(frame, str("ctx/save"), &ctx_save);
+        frame->createFunctionBinding(str("ctx/save"), &ctx_save);
 #endif /* GFX_Language_SupportsFiles */
         
         //Layer Functions
-        Graphics::createFunctionBinding(frame, str("layer"), &layer_make);
-        Graphics::createFunctionBinding(frame, str("layer/frame"), &layer_frame);
-        Graphics::createFunctionBinding(frame, str("layer/set-frame"), &layer_setFrame);
-        Graphics::createFunctionBinding(frame, str("layer/display"), &layer_display);
-        Graphics::createFunctionBinding(frame, str("layer/render"), &layer_render);
+        frame->createFunctionBinding(str("layer"), &layer_make);
+        frame->createFunctionBinding(str("layer/frame"), &layer_frame);
+        frame->createFunctionBinding(str("layer/set-frame"), &layer_setFrame);
+        frame->createFunctionBinding(str("layer/display"), &layer_display);
+        frame->createFunctionBinding(str("layer/render"), &layer_render);
         
-        Graphics::createFunctionBinding(frame, str("layer/add-child"), &layer_addChild);
-        Graphics::createFunctionBinding(frame, str("layer/remove-as-child"), &layer_removeAsChild);
-        Graphics::createFunctionBinding(frame, str("layer/parent"), &layer_parent);
-        Graphics::createFunctionBinding(frame, str("layer/children"), &layer_children);
+        frame->createFunctionBinding(str("layer/add-child"), &layer_addChild);
+        frame->createFunctionBinding(str("layer/remove-as-child"), &layer_removeAsChild);
+        frame->createFunctionBinding(str("layer/parent"), &layer_parent);
+        frame->createFunctionBinding(str("layer/children"), &layer_children);
         
         //Colors
-        Graphics::createVariableBinding(frame, str("white"), Color::white());
-        Graphics::createVariableBinding(frame, str("black"), Color::black());
-        Graphics::createVariableBinding(frame, str("translucent"), Color::clear());
-        Graphics::createVariableBinding(frame, str("red"), Color::red());
-        Graphics::createVariableBinding(frame, str("green"), Color::green());
-        Graphics::createVariableBinding(frame, str("blue"), Color::blue());
-        Graphics::createVariableBinding(frame, str("orange"), Color::orange());
-        Graphics::createVariableBinding(frame, str("purple"), Color::purple());
-        Graphics::createVariableBinding(frame, str("pink"), Color::pink());
-        Graphics::createVariableBinding(frame, str("brown"), Color::brown());
-        Graphics::createVariableBinding(frame, str("yellow"), Color::yellow());
+        frame->createVariableBinding(str("white"), Color::white());
+        frame->createVariableBinding(str("black"), Color::black());
+        frame->createVariableBinding(str("translucent"), Color::clear());
+        frame->createVariableBinding(str("red"), Color::red());
+        frame->createVariableBinding(str("green"), Color::green());
+        frame->createVariableBinding(str("blue"), Color::blue());
+        frame->createVariableBinding(str("orange"), Color::orange());
+        frame->createVariableBinding(str("purple"), Color::purple());
+        frame->createVariableBinding(str("pink"), Color::pink());
+        frame->createVariableBinding(str("brown"), Color::brown());
+        frame->createVariableBinding(str("yellow"), Color::yellow());
         
-        Graphics::createFunctionBinding(frame, str("rgb"), &rgb);
-        Graphics::createFunctionBinding(frame, str("rgba"), &rgba);
-        Graphics::createFunctionBinding(frame, str("set-fill"), &set_fill);
-        Graphics::createFunctionBinding(frame, str("set-stroke"), &set_stroke);
+        frame->createFunctionBinding(str("rgb"), &rgb);
+        frame->createFunctionBinding(str("rgba"), &rgba);
+        frame->createFunctionBinding(str("set-fill"), &set_fill);
+        frame->createFunctionBinding(str("set-stroke"), &set_stroke);
         
         //Core Operations
-        Graphics::createFunctionBinding(frame, str("fill-rect"), &fill);
-        Graphics::createFunctionBinding(frame, str("stroke-rect"), &stroke);
+        frame->createFunctionBinding(str("fill-rect"), &fill);
+        frame->createFunctionBinding(str("stroke-rect"), &stroke);
         
         //Path Operations
-        Graphics::createFunctionBinding(frame, str("path/make"), &path_make);
-        Graphics::createFunctionBinding(frame, str("path/rect"), &path_rect);
-        Graphics::createFunctionBinding(frame, str("path/round-rect"), &path_roundRect);
-        Graphics::createFunctionBinding(frame, str("path/oval"), &path_oval);
-        Graphics::createFunctionBinding(frame, str("path/up-triangle"), &path_upTriangle);
-        Graphics::createFunctionBinding(frame, str("path/down-triangle"), &path_downTriangle);
-        Graphics::createFunctionBinding(frame, str("path/left-triangle"), &path_leftTriangle);
-        Graphics::createFunctionBinding(frame, str("path/right-triangle"), &path_rightTriangle);
+        frame->createFunctionBinding(str("path/make"), &path_make);
+        frame->createFunctionBinding(str("path/rect"), &path_rect);
+        frame->createFunctionBinding(str("path/round-rect"), &path_roundRect);
+        frame->createFunctionBinding(str("path/oval"), &path_oval);
+        frame->createFunctionBinding(str("path/up-triangle"), &path_upTriangle);
+        frame->createFunctionBinding(str("path/down-triangle"), &path_downTriangle);
+        frame->createFunctionBinding(str("path/left-triangle"), &path_leftTriangle);
+        frame->createFunctionBinding(str("path/right-triangle"), &path_rightTriangle);
         
-        Graphics::createFunctionBinding(frame, str("path/move"), &path_move);
-        Graphics::createFunctionBinding(frame, str("path/line"), &path_line);
-        Graphics::createFunctionBinding(frame, str("path/arc"), &path_arc);
-        Graphics::createFunctionBinding(frame, str("path/curve"), &path_curve);
+        frame->createFunctionBinding(str("path/move"), &path_move);
+        frame->createFunctionBinding(str("path/line"), &path_line);
+        frame->createFunctionBinding(str("path/arc"), &path_arc);
+        frame->createFunctionBinding(str("path/curve"), &path_curve);
         
-        Graphics::createFunctionBinding(frame, str("path/bounding-box"), &path_boundingBox);
-        Graphics::createFunctionBinding(frame, str("path/current-point"), &path_currentPoint);
-        Graphics::createFunctionBinding(frame, str("path/empty?"), &path_isEmpty);
-        Graphics::createFunctionBinding(frame, str("path/contains-point"), &path_containsPoint);
+        frame->createFunctionBinding(str("path/bounding-box"), &path_boundingBox);
+        frame->createFunctionBinding(str("path/current-point"), &path_currentPoint);
+        frame->createFunctionBinding(str("path/empty?"), &path_isEmpty);
+        frame->createFunctionBinding(str("path/contains-point"), &path_containsPoint);
         
-        Graphics::createFunctionBinding(frame, str("path/fill"), &path_fill);
-        Graphics::createFunctionBinding(frame, str("path/stroke"), &path_stroke);
+        frame->createFunctionBinding(str("path/fill"), &path_fill);
+        frame->createFunctionBinding(str("path/stroke"), &path_stroke);
         
         //Core Text Operations
-        Graphics::createFunctionBinding(frame, str("font"), &font_make);
+        frame->createFunctionBinding(str("font"), &font_make);
         
-        Graphics::createFunctionBinding(frame, str("text"), &text_make);
-        Graphics::createFunctionBinding(frame, str("text/size"), &text_size);
-        Graphics::createFunctionBinding(frame, str("text/draw"), &text_draw);
+        frame->createFunctionBinding(str("text"), &text_make);
+        frame->createFunctionBinding(str("text/size"), &text_size);
+        frame->createFunctionBinding(str("text/draw"), &text_draw);
     }
     
 #pragma mark -

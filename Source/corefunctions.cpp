@@ -773,16 +773,6 @@ namespace gfx {
     
 #pragma mark - Public API
     
-    void CoreFunctions::createVariableBinding(StackFrame *frame, const String *name, Base *value)
-    {
-        frame->setBindingToValue(name, value, false);
-    }
-    
-    void CoreFunctions::createFunctionBinding(StackFrame *frame, const String *name, std::function<void(StackFrame *stack)> implementation)
-    {
-        frame->setBindingToValue(name, make<NativeFunction>(name, implementation), false);
-    }
-    
     void CoreFunctions::addTo(StackFrame *frame)
     {
         gfx_assert_param(frame);
@@ -790,169 +780,169 @@ namespace gfx {
         AutoreleasePool pool;
         
         //Core Constants
-        CoreFunctions::createVariableBinding(frame, str("true"), make<Number>(1));
-        CoreFunctions::createVariableBinding(frame, str("false"), make<Number>(0));
-        CoreFunctions::createVariableBinding(frame, str("null"), make<Number>(0));
+        frame->createVariableBinding(str("true"), make<Number>(1));
+        frame->createVariableBinding(str("false"), make<Number>(0));
+        frame->createVariableBinding(str("null"), make<Number>(0));
         
         //Math Constants
-        CoreFunctions::createVariableBinding(frame, str("num/min"), Number::Minimum());
-        CoreFunctions::createVariableBinding(frame, str("num/max"), Number::Maximum());
+        frame->createVariableBinding(str("num/min"), Number::Minimum());
+        frame->createVariableBinding(str("num/max"), Number::Maximum());
         
-        CoreFunctions::createVariableBinding(frame, str("math/E"), make<Number>(M_E));
-        CoreFunctions::createVariableBinding(frame, str("math/LOG2E"), make<Number>(M_LOG2E));
-        CoreFunctions::createVariableBinding(frame, str("math/LOG10E"), make<Number>(M_LOG10E));
-        CoreFunctions::createVariableBinding(frame, str("math/LN2"), make<Number>(M_LN2));
-        CoreFunctions::createVariableBinding(frame, str("math/LN10"), make<Number>(M_LN10));
-        CoreFunctions::createVariableBinding(frame, str("math/PI"), make<Number>(M_PI));
-        CoreFunctions::createVariableBinding(frame, str("math/PI2"), make<Number>(M_PI_2));
-        CoreFunctions::createVariableBinding(frame, str("math/1PI"), make<Number>(M_1_PI));
-        CoreFunctions::createVariableBinding(frame, str("math/2PI"), make<Number>(M_2_PI));
-        CoreFunctions::createVariableBinding(frame, str("math/2SQRTPI"), make<Number>(M_2_SQRTPI));
-        CoreFunctions::createVariableBinding(frame, str("math/SQRT2"), make<Number>(M_SQRT2));
-        CoreFunctions::createVariableBinding(frame, str("math/SQRT1_2"), make<Number>(M_SQRT1_2));
+        frame->createVariableBinding(str("math/E"), make<Number>(M_E));
+        frame->createVariableBinding(str("math/LOG2E"), make<Number>(M_LOG2E));
+        frame->createVariableBinding(str("math/LOG10E"), make<Number>(M_LOG10E));
+        frame->createVariableBinding(str("math/LN2"), make<Number>(M_LN2));
+        frame->createVariableBinding(str("math/LN10"), make<Number>(M_LN10));
+        frame->createVariableBinding(str("math/PI"), make<Number>(M_PI));
+        frame->createVariableBinding(str("math/PI2"), make<Number>(M_PI_2));
+        frame->createVariableBinding(str("math/1PI"), make<Number>(M_1_PI));
+        frame->createVariableBinding(str("math/2PI"), make<Number>(M_2_PI));
+        frame->createVariableBinding(str("math/2SQRTPI"), make<Number>(M_2_SQRTPI));
+        frame->createVariableBinding(str("math/SQRT2"), make<Number>(M_SQRT2));
+        frame->createVariableBinding(str("math/SQRT1_2"), make<Number>(M_SQRT1_2));
         
         //File Constants
-        CoreFunctions::createVariableBinding(frame, str("file/out"), File::consoleOut());
-        CoreFunctions::createVariableBinding(frame, str("file/in"), File::consoleIn());
-        CoreFunctions::createVariableBinding(frame, str("file/err"), File::consoleError());
+        frame->createVariableBinding(str("file/out"), File::consoleOut());
+        frame->createVariableBinding(str("file/in"), File::consoleIn());
+        frame->createVariableBinding(str("file/err"), File::consoleError());
         
         
         //Math Operations
-        CoreFunctions::createFunctionBinding(frame, str("+"), &opPlus);
-        CoreFunctions::createFunctionBinding(frame, str("-"), &opMinus);
-        CoreFunctions::createFunctionBinding(frame, str("*"), &opTimes);
-        CoreFunctions::createFunctionBinding(frame, str("/"), &opDivide);
-        CoreFunctions::createFunctionBinding(frame, str("^"), &opPow);
+        frame->createFunctionBinding(str("+"), &opPlus);
+        frame->createFunctionBinding(str("-"), &opMinus);
+        frame->createFunctionBinding(str("*"), &opTimes);
+        frame->createFunctionBinding(str("/"), &opDivide);
+        frame->createFunctionBinding(str("^"), &opPow);
         
-        CoreFunctions::createFunctionBinding(frame, str("math/cos"), &cosWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/sin"), &sinWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/tan"), &tanWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/acos"), &acosWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/asin"), &asinWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/atan"), &atanWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/atan2"), &atan2Wrapper);
+        frame->createFunctionBinding(str("math/cos"), &cosWrapper);
+        frame->createFunctionBinding(str("math/sin"), &sinWrapper);
+        frame->createFunctionBinding(str("math/tan"), &tanWrapper);
+        frame->createFunctionBinding(str("math/acos"), &acosWrapper);
+        frame->createFunctionBinding(str("math/asin"), &asinWrapper);
+        frame->createFunctionBinding(str("math/atan"), &atanWrapper);
+        frame->createFunctionBinding(str("math/atan2"), &atan2Wrapper);
         
-        CoreFunctions::createFunctionBinding(frame, str("math/cosh"), &coshWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/sinh"), &sinhWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/tanh"), &tanhWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/acosh"), &acoshWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/asinh"), &asinhWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/atanh"), &atanhWrapper);
+        frame->createFunctionBinding(str("math/cosh"), &coshWrapper);
+        frame->createFunctionBinding(str("math/sinh"), &sinhWrapper);
+        frame->createFunctionBinding(str("math/tanh"), &tanhWrapper);
+        frame->createFunctionBinding(str("math/acosh"), &acoshWrapper);
+        frame->createFunctionBinding(str("math/asinh"), &asinhWrapper);
+        frame->createFunctionBinding(str("math/atanh"), &atanhWrapper);
         
-        CoreFunctions::createFunctionBinding(frame, str("math/exp"), &expWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/log"), &logWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/log10"), &log10Wrapper);
+        frame->createFunctionBinding(str("math/exp"), &expWrapper);
+        frame->createFunctionBinding(str("math/log"), &logWrapper);
+        frame->createFunctionBinding(str("math/log10"), &log10Wrapper);
         
-        CoreFunctions::createFunctionBinding(frame, str("math/sqrt"), &sqrtWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/cbrt"), &cbrtWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/hypot"), &hypotWrapper);
+        frame->createFunctionBinding(str("math/sqrt"), &sqrtWrapper);
+        frame->createFunctionBinding(str("math/cbrt"), &cbrtWrapper);
+        frame->createFunctionBinding(str("math/hypot"), &hypotWrapper);
         
-        CoreFunctions::createFunctionBinding(frame, str("math/abs"), &absWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/ceil"), &ceilWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/floor"), &floorWrapper);
-        CoreFunctions::createFunctionBinding(frame, str("math/round"), &roundWrapper);
+        frame->createFunctionBinding(str("math/abs"), &absWrapper);
+        frame->createFunctionBinding(str("math/ceil"), &ceilWrapper);
+        frame->createFunctionBinding(str("math/floor"), &floorWrapper);
+        frame->createFunctionBinding(str("math/round"), &roundWrapper);
         
         
         //Boolean Operations
-        CoreFunctions::createFunctionBinding(frame, str("and"), &opAnd);
-        CoreFunctions::createFunctionBinding(frame, str("or"), &opOr);
-        CoreFunctions::createFunctionBinding(frame, str("not"), &opNot);
+        frame->createFunctionBinding(str("and"), &opAnd);
+        frame->createFunctionBinding(str("or"), &opOr);
+        frame->createFunctionBinding(str("not"), &opNot);
         
-        CoreFunctions::createFunctionBinding(frame, str("="), &opEqual);
-        CoreFunctions::createFunctionBinding(frame, str("!="), &opNotEqual);
-        CoreFunctions::createFunctionBinding(frame, str("<"), &opLessThan);
-        CoreFunctions::createFunctionBinding(frame, str("<="), &opLessThanOrEqual);
-        CoreFunctions::createFunctionBinding(frame, str(">"), &opGreaterThan);
-        CoreFunctions::createFunctionBinding(frame, str(">="), &opGreaterThanOrEqual);
+        frame->createFunctionBinding(str("="), &opEqual);
+        frame->createFunctionBinding(str("!="), &opNotEqual);
+        frame->createFunctionBinding(str("<"), &opLessThan);
+        frame->createFunctionBinding(str("<="), &opLessThanOrEqual);
+        frame->createFunctionBinding(str(">"), &opGreaterThan);
+        frame->createFunctionBinding(str(">="), &opGreaterThanOrEqual);
         
         
         //Stack Operations
-        CoreFunctions::createFunctionBinding(frame, str("rt/dup"), &dup);
-        CoreFunctions::createFunctionBinding(frame, str("rt/swap"), &swap);
-        CoreFunctions::createFunctionBinding(frame, str("rt/drop"), &drop);
-        CoreFunctions::createFunctionBinding(frame, str("rt/clear"), &clear);
-        CoreFunctions::createFunctionBinding(frame, str("rt/showstack"), &showstack);
-        CoreFunctions::createFunctionBinding(frame, str("rt/backtrace"), &backtrace);
-        CoreFunctions::createFunctionBinding(frame, str("rt/reset"), &reset);
+        frame->createFunctionBinding(str("rt/dup"), &dup);
+        frame->createFunctionBinding(str("rt/swap"), &swap);
+        frame->createFunctionBinding(str("rt/drop"), &drop);
+        frame->createFunctionBinding(str("rt/clear"), &clear);
+        frame->createFunctionBinding(str("rt/showstack"), &showstack);
+        frame->createFunctionBinding(str("rt/backtrace"), &backtrace);
+        frame->createFunctionBinding(str("rt/reset"), &reset);
         
         
         //Core Functions
 #if GFX_Language_SupportsImport
-        CoreFunctions::createFunctionBinding(frame, str("import"), &import);
+        frame->createFunctionBinding(str("import"), &import);
 #endif /* GFX_Language_SupportsImport */
         
-        CoreFunctions::createFunctionBinding(frame, str("print"), &print);
-        CoreFunctions::createFunctionBinding(frame, str("read"), &read);
-        CoreFunctions::createFunctionBinding(frame, str("->str"), &toString);
+        frame->createFunctionBinding(str("print"), &print);
+        frame->createFunctionBinding(str("read"), &read);
+        frame->createFunctionBinding(str("->str"), &toString);
         
-        CoreFunctions::createFunctionBinding(frame, str("if"), &_if);
-        CoreFunctions::createFunctionBinding(frame, str("ifelse"), &ifelse);
-        CoreFunctions::createFunctionBinding(frame, str("while"), &_while);
-        CoreFunctions::createFunctionBinding(frame, str("times"), &times);
-        CoreFunctions::createFunctionBinding(frame, str("fn/apply"), &apply);
+        frame->createFunctionBinding(str("if"), &_if);
+        frame->createFunctionBinding(str("ifelse"), &ifelse);
+        frame->createFunctionBinding(str("while"), &_while);
+        frame->createFunctionBinding(str("times"), &times);
+        frame->createFunctionBinding(str("fn/apply"), &apply);
         
-        CoreFunctions::createFunctionBinding(frame, str("throw"), &_throw);
-        CoreFunctions::createFunctionBinding(frame, str("rescue"), &rescue);
+        frame->createFunctionBinding(str("throw"), &_throw);
+        frame->createFunctionBinding(str("rescue"), &rescue);
         
-        CoreFunctions::createFunctionBinding(frame, str("->void"), &drop);
-        CoreFunctions::createFunctionBinding(frame, str("let"), &bind);
-        CoreFunctions::createFunctionBinding(frame, str("set!"), &set);
-        CoreFunctions::createFunctionBinding(frame, str("destruct!"), &destructure);
+        frame->createFunctionBinding(str("->void"), &drop);
+        frame->createFunctionBinding(str("let"), &bind);
+        frame->createFunctionBinding(str("set!"), &set);
+        frame->createFunctionBinding(str("destruct!"), &destructure);
         
         
         //String Functions
-        CoreFunctions::createFunctionBinding(frame, str("str/eq"), &str_eq);
-        CoreFunctions::createFunctionBinding(frame, str("str/compare"), &str_compare);
-        CoreFunctions::createFunctionBinding(frame, str("str/contains"), &str_contains);
-        CoreFunctions::createFunctionBinding(frame, str("str/starts-with"), &str_startsWith);
-        CoreFunctions::createFunctionBinding(frame, str("str/ends-with"), &str_endsWith);
+        frame->createFunctionBinding(str("str/eq"), &str_eq);
+        frame->createFunctionBinding(str("str/compare"), &str_compare);
+        frame->createFunctionBinding(str("str/contains"), &str_contains);
+        frame->createFunctionBinding(str("str/starts-with"), &str_startsWith);
+        frame->createFunctionBinding(str("str/ends-with"), &str_endsWith);
         
-        CoreFunctions::createFunctionBinding(frame, str("str/char-at"), &str_charAt);
-        CoreFunctions::createFunctionBinding(frame, str("str/index-of"), &str_indexOf);
+        frame->createFunctionBinding(str("str/char-at"), &str_charAt);
+        frame->createFunctionBinding(str("str/index-of"), &str_indexOf);
         
-        CoreFunctions::createFunctionBinding(frame, str("str/concat"), &str_concat);
-        CoreFunctions::createFunctionBinding(frame, str("str/replace"), &str_replace);
-        CoreFunctions::createFunctionBinding(frame, str("str/substr"), &str_substr);
-        CoreFunctions::createFunctionBinding(frame, str("str/split"), &str_split);
-        CoreFunctions::createFunctionBinding(frame, str("str/lower-case"), &str_lowerCase);
-        CoreFunctions::createFunctionBinding(frame, str("str/upper-case"), &str_upperCase);
-        CoreFunctions::createFunctionBinding(frame, str("str/capital-case"), &str_capitalCase);
+        frame->createFunctionBinding(str("str/concat"), &str_concat);
+        frame->createFunctionBinding(str("str/replace"), &str_replace);
+        frame->createFunctionBinding(str("str/substr"), &str_substr);
+        frame->createFunctionBinding(str("str/split"), &str_split);
+        frame->createFunctionBinding(str("str/lower-case"), &str_lowerCase);
+        frame->createFunctionBinding(str("str/upper-case"), &str_upperCase);
+        frame->createFunctionBinding(str("str/capital-case"), &str_capitalCase);
         
         
         //Vector Functions
-        CoreFunctions::createFunctionBinding(frame, str("vec/at"), &vec_at);
-        CoreFunctions::createFunctionBinding(frame, str("vec/concat"), &vec_concat);
-        CoreFunctions::createFunctionBinding(frame, str("vec/index-of"), &vec_indexOf);
-        CoreFunctions::createFunctionBinding(frame, str("vec/last-index-of"), &vec_lastIndexOf);
-        CoreFunctions::createFunctionBinding(frame, str("vec/join"), &vec_join);
-        CoreFunctions::createFunctionBinding(frame, str("vec/subset"), &vec_subset);
-        CoreFunctions::createFunctionBinding(frame, str("vec/sort"), &vec_sort);
-        CoreFunctions::createFunctionBinding(frame, str("vec/for-each"), &vec_forEach);
-        CoreFunctions::createFunctionBinding(frame, str("vec/filter"), &vec_filter);
-        CoreFunctions::createFunctionBinding(frame, str("vec/map"), &vec_map);
+        frame->createFunctionBinding(str("vec/at"), &vec_at);
+        frame->createFunctionBinding(str("vec/concat"), &vec_concat);
+        frame->createFunctionBinding(str("vec/index-of"), &vec_indexOf);
+        frame->createFunctionBinding(str("vec/last-index-of"), &vec_lastIndexOf);
+        frame->createFunctionBinding(str("vec/join"), &vec_join);
+        frame->createFunctionBinding(str("vec/subset"), &vec_subset);
+        frame->createFunctionBinding(str("vec/sort"), &vec_sort);
+        frame->createFunctionBinding(str("vec/for-each"), &vec_forEach);
+        frame->createFunctionBinding(str("vec/filter"), &vec_filter);
+        frame->createFunctionBinding(str("vec/map"), &vec_map);
         
         
         //Hash Functions
-        CoreFunctions::createFunctionBinding(frame, str("hash/begin"), &hash_begin);
-        CoreFunctions::createFunctionBinding(frame, str("hash/end"), &hash_end);
-        CoreFunctions::createFunctionBinding(frame, str("hash/get"), &hash_get);
-        CoreFunctions::createFunctionBinding(frame, str("hash/concat"), &hash_concat);
-        CoreFunctions::createFunctionBinding(frame, str("hash/each-pair"), &hash_eachPair);
+        frame->createFunctionBinding(str("hash/begin"), &hash_begin);
+        frame->createFunctionBinding(str("hash/end"), &hash_end);
+        frame->createFunctionBinding(str("hash/get"), &hash_get);
+        frame->createFunctionBinding(str("hash/concat"), &hash_concat);
+        frame->createFunctionBinding(str("hash/each-pair"), &hash_eachPair);
         
         
 #if GFX_Language_SupportsFiles
         //File Functions
-        CoreFunctions::createFunctionBinding(frame, str("file/exists?"), &file_exists);
-        CoreFunctions::createFunctionBinding(frame, str("file/dir?"), &file_isDirectory);
-        CoreFunctions::createFunctionBinding(frame, str("file/open"), &file_open);
-        CoreFunctions::createFunctionBinding(frame, str("file/close"), &file_close);
-        CoreFunctions::createFunctionBinding(frame, str("file/size"), &file_size);
-        CoreFunctions::createFunctionBinding(frame, str("file/seek"), &file_seek);
-        CoreFunctions::createFunctionBinding(frame, str("file/tell"), &file_tell);
-        CoreFunctions::createFunctionBinding(frame, str("file/read"), &file_read);
-        CoreFunctions::createFunctionBinding(frame, str("file/read-line"), &file_readLine);
-        CoreFunctions::createFunctionBinding(frame, str("file/write"), &file_write);
-        CoreFunctions::createFunctionBinding(frame, str("file/write-line"), &file_writeLine);
+        frame->createFunctionBinding(str("file/exists?"), &file_exists);
+        frame->createFunctionBinding(str("file/dir?"), &file_isDirectory);
+        frame->createFunctionBinding(str("file/open"), &file_open);
+        frame->createFunctionBinding(str("file/close"), &file_close);
+        frame->createFunctionBinding(str("file/size"), &file_size);
+        frame->createFunctionBinding(str("file/seek"), &file_seek);
+        frame->createFunctionBinding(str("file/tell"), &file_tell);
+        frame->createFunctionBinding(str("file/read"), &file_read);
+        frame->createFunctionBinding(str("file/read-line"), &file_readLine);
+        frame->createFunctionBinding(str("file/write"), &file_write);
+        frame->createFunctionBinding(str("file/write-line"), &file_writeLine);
 #endif /* GFX_Language_SupportsFiles */
     }
     

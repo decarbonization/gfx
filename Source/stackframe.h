@@ -222,6 +222,23 @@ namespace gfx {
         ///
         Base *bindingValue(const String *key, bool searchParentScopes = true) const;
         
+#pragma mark -
+        
+        ///Convenience function that creates a binding/variable with a given name in the receiver.
+        ///
+        /// \param  name    The name of the variable/binding. Required.
+        /// \param  value   The value.
+        ///
+        void createVariableBinding(const String *name, Base *value);
+        
+        ///Convenience function that creates a new function binding with a given
+        ///name and native function implementation within the receiver.
+        ///
+        /// \param  name            The name of the binding. Required.
+        /// \param  implementation  The native implementation of the function. Required.
+        ///
+        void createFunctionBinding(const String *name, std::function<void(StackFrame *stack)> implementation);
+        
 #pragma mark - Freezing
         
         ///Freezes the contents of the frame.
