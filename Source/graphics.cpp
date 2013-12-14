@@ -130,6 +130,7 @@ namespace gfx {
         stack->push(VectorFromSize(ctxSize));
     }
     
+#if GFX_Language_SupportsFiles
     static void ctx_save(StackFrame *stack)
     {
         auto path = stack->popString();
@@ -140,6 +141,7 @@ namespace gfx {
         auto file = make<File>(path, File::Mode::Write);
         file->write(data);
     }
+#endif /* GFX_Language_SupportsFiles */
     
 #pragma mark - Layer Functions
     
@@ -490,7 +492,9 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, str("ctx/begin"), &ctx_begin);
         Graphics::createFunctionBinding(frame, str("ctx/end"), &ctx_end);
         Graphics::createFunctionBinding(frame, str("ctx/size"), &ctx_size);
+#if GFX_Language_SupportsFiles
         Graphics::createFunctionBinding(frame, str("ctx/save"), &ctx_save);
+#endif /* GFX_Language_SupportsFiles */
         
         //Layer Functions
         Graphics::createFunctionBinding(frame, str("layer"), &layer_make);
@@ -562,12 +566,13 @@ namespace gfx {
     void Graphics::attachTo(Interpreter *interpreter)
     {
         Graphics::addTo(interpreter->currentFrame());
-        interpreter->setUnboundWordHandler([interpreter](Word *word) -> Color * {
+        interpreter->prependWordHandler([interpreter](StackFrame *currentFrame, Word *word) {
             if(word->string()->hasPrefix(str("#"))) {
-                return make<Color>(word->string());
+                auto color = make<Color>(word->string());
+                currentFrame->push(color);
+                return true;
             } else {
-                interpreter->failForUnboundWord(word);
-                return nullptr;
+                return false;
             }
         });
     }

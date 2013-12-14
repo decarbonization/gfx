@@ -13,7 +13,9 @@
 #include "array.h"
 #include "offset.h"
 #include "broadcastsignal.h"
+
 #include <stack>
+#include <list>
 
 namespace gfx {
     class StackFrame;
@@ -27,15 +29,8 @@ namespace gfx {
     {
     public:
         
-        ///A function to invoke when an unbound word is
-        ///referenced within an expression tree.
-        ///
-        /// \param  word    The word that has no known value. Will not be null.
-        ///
-        /// \result A value to use as the meaning of `word`.
-        ///
-        ///If no value is available, an exception should be raised.
-        typedef std::function<Base *(Word *word)> UnboundWordHandler;
+        typedef std::function<bool(StackFrame *currentFrame, Word *word)> WordHandler;
+        typedef std::list<WordHandler> WordHandlerList;
         
     protected:
         
@@ -54,8 +49,8 @@ namespace gfx {
         ///Whether or not import is disabled.
         bool mImportAllowed;
         
-        ///The functor to invoke when an unbound word is referenced in an expression tree.
-        UnboundWordHandler mUnboundWordHandler;
+        ///The functors to invoke to handle words.
+        WordHandlerList mWordHandlers;
         
         
         ///Raises an exception with a given reason, originating from a specified source offset.
@@ -141,13 +136,43 @@ namespace gfx {
         ///A signal sent whenever an interpreter is told to reset.
         Signal<Interpreter *> ResetSignal;
         
-#pragma mark - Unbound Word Handling
+#pragma mark - Word Handling
         
-        ///Sets the unbound word handler.
-        void setUnboundWordHandler(UnboundWordHandler handler);
+    protected:
         
-        ///Returns the unbound word handler.
-        UnboundWordHandler unboundWordHandler() const;
+        ///Applies a given word to receiver's word handlers, stopping
+        ///when it encounters a handler that returns `true`.
+        ///
+        /// \param  currentFrame    The frame to evaluate any side-effects within. Required.
+        /// \param  word            The word to attempt to find a value for. Required.
+        ///
+        /// \result true if the word was handled; false otherwise.
+        ///
+        ///It is assumed that the caller will raise an exception or otherwise
+        ///report an error if this method returns false.
+        bool handleWord(StackFrame *currentFrame, Word *word);
+        
+    public:
+        
+        ///Places a given word handler at the beginning of the word handler list.
+        ///
+        /// \param  wordHandler The word handler to place at the beginning of the handler list.
+        ///
+        ///The given word handler will be invoked before all others, unless this
+        ///method is invoked again with a different word handler.
+        void prependWordHandler(const WordHandler &wordHandler);
+        
+        ///Places a given word handler at the end of the word handler list.
+        ///
+        /// \param  wordHandler The word handler to place at the end of the handler list.
+        ///
+        ///The given handler will be invoked after all others, unless this
+        ///method is invoked again with a different word handler.
+        ///
+        ///If the last word handler does not return a non-null value,
+        ///the interpreter will raise an exception through the
+        ///`gfx::Interpreter::failForUnboundWord` method.
+        void appendWordHandler(const WordHandler &wordHandler);
         
         ///Raises an exception to indicate that a given word has
         ///no known word available for it. The default unbound

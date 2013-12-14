@@ -147,7 +147,7 @@ namespace gfx {
         {
             Base *value = pop();
             if(!value->isKindOfClass<T>())
-                throw Exception(str("wrong type on stack"), nullptr);
+                throw Exception((String::Builder() << "wrong type on stack. got '" << value->className() << "'."), nullptr);
             
             return (T *)value;
         }

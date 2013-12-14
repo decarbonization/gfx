@@ -47,20 +47,35 @@ namespace gfx {
         mRunningFunctions(new Array<const Function>),
         mSearchPaths(make<Array<const String>>()),
         mImportAllowed(true),
-        mUnboundWordHandler(),
+        mWordHandlers(),
         AnnotationFoundSignal(str("gfx::Interpreter::AnnotationFoundSignal")),
         ResetSignal(str("gfx::Interpreter::ResetSignal"))
     {
         mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
         this->pushFrame(mRootFrame);
         
+        this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
+            if(word->string()->hasPrefix(str("'"))) {
+                auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
+                currentFrame->push(make<Word>(rawWord, word->offset()));
+                return true;
+            } else {
+                return false;
+            }
+        });
+        
+        this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
+            auto value = currentFrame->bindingValue(word->string());
+            if(value) {
+                currentFrame->push(value);
+                return true;
+            } else {
+                return false;
+            }
+        });
+        
 #if GFX_Include_GraphicsStack
         Graphics::attachTo(this);
-#else
-        mUnboundWordHandler = [this](Word *word) {
-            failForUnboundWord(word);
-            return nullptr;
-        };
 #endif /* GFX_Include_GraphicsStack */
         
         this->addSearchPath(String::Empty);
@@ -93,21 +108,18 @@ namespace gfx {
         
         if(part->isKindOfClass<Word>()) {
             auto word = static_cast<Word *>(part);
-            if(word->string()->hasPrefix(str("'"))) {
-                auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
-                currentFrame->push(make<Word>(rawWord, word->offset()));
-            } else if(word->string()->hasPrefix(str("&"))) {
+            if(word->string()->hasPrefix(str("&"))) {
+                //Looking up functions without applying them is a special case for now.
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
                 this->evalExpression(make<Word>(rawWord, word->offset()), EvalContext::Vector);
             } else {
-                auto value = currentFrame->bindingValue(word->string());
-                if(!value) value = mUnboundWordHandler(word);
-                if(!value) failForUnboundWord(word);
+                if(!this->handleWord(currentFrame, word))
+                    failForUnboundWord(word);
                 
-                if(context != EvalContext::Vector && value->isKindOfClass<Function>())
-                    static_cast<Function *>(value)->apply(currentFrame);
-                else
-                    currentFrame->push(value);
+                if(context != EvalContext::Vector && currentFrame->peak()->isKindOfClass<Function>()) {
+                    auto function = currentFrame->popFunction();
+                    function->apply(currentFrame);
+                }
             }
         } else if(part->isKindOfClass<String>() || part->isKindOfClass<Number>()) {
             currentFrame->push(part);
@@ -160,16 +172,33 @@ namespace gfx {
         ResetSignal(this);
     }
     
-#pragma mark - Unbound Word Handling
+#pragma mark - Word Handling
     
-    void Interpreter::setUnboundWordHandler(UnboundWordHandler handler)
+    bool Interpreter::handleWord(StackFrame *currentFrame, Word *word)
     {
-        mUnboundWordHandler = handler;
+        gfx_assert_param(currentFrame);
+        gfx_assert_param(word);
+        
+        for (WordHandler &handler : mWordHandlers) {
+            if(handler(currentFrame, word))
+                return true;
+        }
+        
+        return false;
     }
     
-    Interpreter::UnboundWordHandler Interpreter::unboundWordHandler() const
+    void Interpreter::prependWordHandler(const WordHandler &wordHandler)
     {
-        return mUnboundWordHandler;
+        gfx_assert_param(wordHandler);
+        
+        mWordHandlers.push_front(wordHandler);
+    }
+    
+    void Interpreter::appendWordHandler(const WordHandler &wordHandler)
+    {
+        gfx_assert_param(wordHandler);
+        
+        mWordHandlers.push_back(wordHandler);
     }
     
     void Interpreter::failForUnboundWord(const Word *word)
