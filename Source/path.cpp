@@ -38,6 +38,53 @@ namespace gfx {
         return path;
     }
     
+    Path *Path::withTriangle(Rect rect, TriangleDirection direction)
+    {
+        Path *emptyPath = make<Path>();
+        
+        switch (direction) {
+            case TriangleDirection::Up: {
+                emptyPath->moveToPoint(Point{ rect.getMinX(), rect.getMaxY() });
+                emptyPath->lineToPoint(Point{ rect.getMaxX(), rect.getMaxY() });
+                emptyPath->lineToPoint(Point{ rect.getMidX(), rect.getMinY() });
+                emptyPath->lineToPoint(Point{ rect.getMinX(), rect.getMaxY() });
+                
+                break;
+            }
+                
+            case TriangleDirection::Down: {
+                emptyPath->moveToPoint(Point{ rect.getMinX(), rect.getMinY() });
+                emptyPath->lineToPoint(Point{ rect.getMaxX(), rect.getMinY() });
+                emptyPath->lineToPoint(Point{ rect.getMidX(), rect.getMaxY() });
+                emptyPath->lineToPoint(Point{ rect.getMinX(), rect.getMinY() });
+                
+                break;
+            }
+                
+            case TriangleDirection::Left: {
+                emptyPath->moveToPoint(Point{ rect.getMaxX(), rect.getMinY() });
+                emptyPath->lineToPoint(Point{ rect.getMinX(), rect.getMidY() });
+                emptyPath->lineToPoint(Point{ rect.getMaxX(), rect.getMaxY() });
+                emptyPath->lineToPoint(Point{ rect.getMaxX(), rect.getMinY() });
+                
+                break;
+            }
+                
+            case TriangleDirection::Right: {
+                emptyPath->moveToPoint(Point{ rect.getMinX(), rect.getMinY() });
+                emptyPath->lineToPoint(Point{ rect.getMaxX(), rect.getMidY() });
+                emptyPath->lineToPoint(Point{ rect.getMinX(), rect.getMaxY() });
+                emptyPath->lineToPoint(Point{ rect.getMinX(), rect.getMinY() });
+                
+                break;
+            }
+        }
+        
+        emptyPath->closePath();
+        
+        return emptyPath;
+    }
+    
 #pragma mark - Lifecycle
     
     Path::Path() :

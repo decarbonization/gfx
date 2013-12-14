@@ -41,12 +41,28 @@ namespace gfx {
             Bevel = kCGLineJoinBevel,
         };
         
+        ///Line cap types for stroked lines.
         enum class LineCap {
             ///A line with a square end. Default.
             Butt    = kCGLineCapButt,
             
             ///A line with a rounded end.
             Round   = kCGLineCapRound,
+        };
+        
+        ///The different directions for the point of a triangle.
+        enum class TriangleDirection {
+            ///The triangle point is on the top.
+            Up,
+            
+            ///The triangle point is on the bottom.
+            Down,
+            
+            ///The triangle point is on the left.
+            Left,
+            
+            ///The triangle point is on the right.
+            Right,
         };
         
     protected:
@@ -93,6 +109,18 @@ namespace gfx {
         /// \result A new autoreleased Path object ready for use.
         ///
         static Path *withOval(Rect rect);
+        
+        ///Creates a new autoreleased `gfx::Path` object that
+        ///will fill / stroke a given area with a triangle that
+        ///points in a given direection.
+        ///
+        /// \param  rect        A rectangle within the coordinate system of the Context that will render the path.
+        /// \param  direction   The direction of the triangle.
+        ///
+        /// \result A new autoreleased Path object ready for use.
+        ///
+        /// \seealso(gfx::Path::TriangleDirection)
+        static Path *withTriangle(Rect rect, TriangleDirection direction);
         
 #pragma mark - Lifecycle
         

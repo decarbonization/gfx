@@ -19,6 +19,7 @@ namespace gfx {
     {
         const String *mName;
         Dictionary<const String, Base> *mStorage;
+        Function *mConstructor;
         
     public:
         
@@ -35,10 +36,13 @@ namespace gfx {
         
 #pragma mark - Introspection
         
+        virtual void setName(const String *string) { autoreleased(mName); mName = retained(string); }
         virtual const String *name() const { return retained_autoreleased(mName); }
         
 #pragma mark - Cloning
         
+        virtual void setConstructor(Function *constructor);
+        virtual Function *constructor() const;
         virtual void apply(StackFrame *stack) const override;
         
 #pragma mark - Slots

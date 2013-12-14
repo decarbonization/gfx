@@ -74,21 +74,119 @@ namespace gfx {
     /// \field  x   The x offset.
     /// \field  y   The y offset.
     ///
-    typedef CGPoint             Point;
+    struct Point : CGPoint
+    {
+        ///Constructs an empty point.
+        Point() :
+            CGPoint{}
+        {
+        }
+        
+        ///Constructs a point with given x and y coordinates.
+        ///
+        /// \param  x   The x coordinate.
+        /// \param  y   The y coordinate.
+        ///
+        Point(Float x, Float y) :
+            CGPoint{x, y}
+        {
+        }
+        
+        ///Constructs a point with an instance of its superclass.
+        Point(const CGPoint &p) :
+            CGPoint(p)
+        {
+        }
+    };
     
     ///A structure that contains width and height values.
     ///
     /// \field  width   The width of the size.
     /// \field  height  The height of the size.
     ///
-    typedef CGSize              Size;
+    struct Size : CGSize
+    {
+        ///Constructs an empty size.
+        Size() :
+            CGSize{}
+        {
+        }
+        
+        ///Constructs a size with a given width and height.
+        ///
+        /// \param  width   The width.
+        /// \param  height  The height.
+        Size(Float width, float height) :
+            CGSize{width, height}
+        {
+        }
+        
+        ///Constructs a size with an instance of its superclass.
+        Size(const CGSize &s) :
+            CGSize(s)
+        {
+        }
+    };
     
     ///A structure that contains the location and dimensions of a shape.
     ///
     /// \field  origin  The coordinates of the shape.
     /// \field  size    The size of the shape.
     ///
-    typedef CGRect              Rect;
+    struct Rect : CGRect
+    {
+        ///Constructs an empty rectangle.
+        Rect() :
+            CGRect{}
+        {
+        }
+        
+        ///Constructs a rectangle with a given origin and size.
+        ///
+        /// \param  origin  The origin.
+        /// \param  size    The size.
+        ///
+        Rect(Point origin, Size size) :
+            CGRect{origin, size}
+        {
+        }
+        
+        ///Constructs a rectangle with an instance of its superclass.
+        Rect(const CGRect &r) :
+            CGRect(r)
+        {
+        }
+        
+#pragma mark -
+        
+        ///Returns the width of the rectangle.
+        Float getWidth() const { return CGRectGetWidth(*this); }
+        
+        ///Returns the height of the rectangle.
+        Float getHeight() const { return CGRectGetHeight(*this); }
+        
+#pragma mark -
+        
+        ///Returns the smallest value for the x coordinate of the rectangle.
+        Float getMinX() const { return CGRectGetMinX(*this); }
+        
+        ///Returns the middle value for the x coordinate of the rectangle.
+        Float getMidX() const { return CGRectGetMidX(*this); }
+        
+        ///Returns the largest value for the x coordinate of the rectangle.
+        Float getMaxX() const { return CGRectGetMaxX(*this); }
+        
+#pragma mark -
+        
+        ///Returns the smallest value for the y coordinate of the rectangle.
+        Float getMinY() const { return CGRectGetMinY(*this); }
+        
+        ///Returns the middle value for the y coordinate of the rectangle.
+        Float getMidY() const { return CGRectGetMidY(*this); }
+        
+        ///Returns the largest value for the y coordinate of the rectangle.
+        Float getMaxY() const { return CGRectGetMaxY(*this); }
+    };
     
     ///An opaque structure for holding an affine transformation matrix.
     struct Transform2D : CGAffineTransform

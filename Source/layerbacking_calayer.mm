@@ -114,7 +114,7 @@ namespace gfx {
         mLayer->willDisplay();
         
         Context *layerContext = Context::currentContext();
-        Rect boundingRect = { {}, frame().size };
+        Rect boundingRect{ Point{}, frame().size };
         layerContext->clear(boundingRect);
         
         layerContext->transaction([this, boundingRect](Context *context) {

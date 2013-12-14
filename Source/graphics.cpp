@@ -297,6 +297,38 @@ namespace gfx {
         stack->push(Path::withOval(rect));
     }
     
+    static void path_upTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Up));
+    }
+    
+    static void path_downTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Down));
+    }
+    
+    static void path_leftTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Left));
+    }
+    
+    static void path_rightTriangle(StackFrame *stack)
+    {
+        /* vec -- path */
+        auto rectVector = stack->popType<Array<Base>>();
+        Rect rect = VectorToRect(rectVector);
+        stack->push(Path::withTriangle(rect, Path::TriangleDirection::Right));
+    }
+    
 #pragma mark -
     
     static void path_move(StackFrame *stack)
@@ -499,6 +531,10 @@ namespace gfx {
         Graphics::createFunctionBinding(frame, str("path/rect"), &path_rect);
         Graphics::createFunctionBinding(frame, str("path/round-rect"), &path_roundRect);
         Graphics::createFunctionBinding(frame, str("path/oval"), &path_oval);
+        Graphics::createFunctionBinding(frame, str("path/up-triangle"), &path_upTriangle);
+        Graphics::createFunctionBinding(frame, str("path/down-triangle"), &path_downTriangle);
+        Graphics::createFunctionBinding(frame, str("path/left-triangle"), &path_leftTriangle);
+        Graphics::createFunctionBinding(frame, str("path/right-triangle"), &path_rightTriangle);
         
         Graphics::createFunctionBinding(frame, str("path/move"), &path_move);
         Graphics::createFunctionBinding(frame, str("path/line"), &path_line);

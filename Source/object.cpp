@@ -14,13 +14,15 @@
 namespace gfx {
     Object::Object(const String *name) :
         mName(copy(name)),
-        mStorage(new Dictionary<const String, Base>())
+        mStorage(new Dictionary<const String, Base>()),
+        mConstructor(nullptr)
     {
     }
     
     Object::Object(const Object *object) :
         mName(copy(object->mName)),
-        mStorage(copy(object->mStorage))
+        mStorage(copy(object->mStorage)),
+        mConstructor(retained(object->constructor()))
     {
     }
     
@@ -31,6 +33,9 @@ namespace gfx {
         
         released(mStorage);
         mStorage = nullptr;
+        
+        released(mConstructor);
+        mConstructor = nullptr;
     }
     
 #pragma mark - Identity
@@ -64,9 +69,26 @@ namespace gfx {
     
 #pragma mark - Cloning
     
+    void Object::setConstructor(Function *constructor)
+    {
+        autoreleased(mConstructor);
+        mConstructor = retained(constructor);
+    }
+    
+    Function *Object::constructor() const
+    {
+        return retained_autoreleased(mConstructor);
+    }
+    
     void Object::apply(StackFrame *stack) const
     {
-        stack->push(copy(this));
+        auto clone = copy(this);
+        
+        if(auto constructor = clone->constructor()) {
+            constructor->apply(stack);
+        }
+        
+        stack->push(clone);
     }
     
 #pragma mark - Slots
