@@ -24,6 +24,8 @@ namespace gfx {
     ///Platform and architecture independent type The basic type
     ///for all floating point values used in the graphics stack.
     typedef CGFloat     Float;
+#define GFX_FLOAT_MIN   CGFLOAT_MIN
+#define GFX_FLOAT_MAX   CGFLOAT_MAX
     
     ///A type for hashes returned by the `Base::hash() const` method.
     typedef CFHashCode  HashCode;

@@ -23,7 +23,7 @@
 #include "image.h"
 #include "layer.h"
 
-#include "textline.h"
+#include "attributedstr.h"
 #include "font.h"
 
 namespace gfx {
@@ -119,7 +119,7 @@ namespace gfx {
         Layer::AddTo(frame);
         Path::AddTo(frame);
         Font::AddTo(frame);
-        TextLine::AddTo(frame);
+        AttributedString::AddTo(frame);
     }
     
 #pragma mark -

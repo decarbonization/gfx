@@ -12,6 +12,8 @@
 		8B10B9271842E94700DEB62F /* t11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B10B9251842E94700DEB62F /* t11.cpp */; };
 		8B121F8818596FFF00BF2946 /* object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F8618596FFF00BF2946 /* object.cpp */; };
 		8B121F8918596FFF00BF2946 /* object.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F8718596FFF00BF2946 /* object.h */; };
+		8B121F96185E454400BF2946 /* attributedstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F94185E454400BF2946 /* attributedstr.cpp */; };
+		8B121F97185E454400BF2946 /* attributedstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F95185E454400BF2946 /* attributedstr.h */; };
 		8B12C79E184AEB2300DBD77C /* libreadline.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C79D184AEB2300DBD77C /* libreadline.dylib */; };
 		8B12C828184BDF7800DBD77C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C827184BDF7800DBD77C /* Cocoa.framework */; };
 		8B12C832184BDF7800DBD77C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B12C830184BDF7800DBD77C /* InfoPlist.strings */; };
@@ -80,8 +82,6 @@
 		8B12C911184C148E00DBD77C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C910184C148E00DBD77C /* CoreText.framework */; };
 		8B12C916184C14B000DBD77C /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C914184C14B000DBD77C /* font.cpp */; };
 		8B12C917184C14B000DBD77C /* font.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C915184C14B000DBD77C /* font.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8B12C91E184C18F000DBD77C /* textline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C91C184C18EF00DBD77C /* textline.cpp */; };
-		8B12C91F184C18F000DBD77C /* textline.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C91D184C18EF00DBD77C /* textline.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C924184D896800DBD77C /* layerbacking_calayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C922184D896800DBD77C /* layerbacking_calayer.mm */; };
 		8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B12C923184D896800DBD77C /* layerbacking_calayer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B420024183488540020D1D1 /* CoreFoundation.framework */; };
@@ -139,6 +139,8 @@
 		8B10B9261842E94700DEB62F /* t11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = t11.h; sourceTree = "<group>"; };
 		8B121F8618596FFF00BF2946 /* object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = object.cpp; sourceTree = "<group>"; };
 		8B121F8718596FFF00BF2946 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
+		8B121F94185E454400BF2946 /* attributedstr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attributedstr.cpp; sourceTree = "<group>"; };
+		8B121F95185E454400BF2946 /* attributedstr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attributedstr.h; sourceTree = "<group>"; };
 		8B12C79D184AEB2300DBD77C /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
 		8B12C826184BDF7800DBD77C /* gfx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gfx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12C827184BDF7800DBD77C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -212,8 +214,6 @@
 		8B12C910184C148E00DBD77C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		8B12C914184C14B000DBD77C /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = font.cpp; sourceTree = "<group>"; };
 		8B12C915184C14B000DBD77C /* font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = font.h; sourceTree = "<group>"; };
-		8B12C91C184C18EF00DBD77C /* textline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textline.cpp; sourceTree = "<group>"; };
-		8B12C91D184C18EF00DBD77C /* textline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textline.h; sourceTree = "<group>"; };
 		8B12C922184D896800DBD77C /* layerbacking_calayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = layerbacking_calayer.mm; sourceTree = "<group>"; };
 		8B12C923184D896800DBD77C /* layerbacking_calayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = layerbacking_calayer.h; sourceTree = "<group>"; };
 		8B420021183488540020D1D1 /* gsh */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gsh; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -418,10 +418,10 @@
 		8B12C913184C14A200DBD77C /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				8B121F94185E454400BF2946 /* attributedstr.cpp */,
+				8B121F95185E454400BF2946 /* attributedstr.h */,
 				8B12C914184C14B000DBD77C /* font.cpp */,
 				8B12C915184C14B000DBD77C /* font.h */,
-				8B12C91C184C18EF00DBD77C /* textline.cpp */,
-				8B12C91D184C18EF00DBD77C /* textline.h */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -497,6 +497,7 @@
 				8B12C8DD184BE15600DBD77C /* gfx.h in Headers */,
 				8B12C8F2184BE15600DBD77C /* path.h in Headers */,
 				8B12C8DC184BE15600DBD77C /* function.h in Headers */,
+				8B121F97185E454400BF2946 /* attributedstr.h in Headers */,
 				8B12C8F6184BE15600DBD77C /* stackframe.h in Headers */,
 				8B121F8918596FFF00BF2946 /* object.h in Headers */,
 				8B12C8DA184BE15600DBD77C /* file.h in Headers */,
@@ -512,7 +513,6 @@
 				8B12C8FA184BE15600DBD77C /* types.h in Headers */,
 				8B12C8C7184BE15600DBD77C /* assertions.h in Headers */,
 				8B12C90D184BE75300DBD77C /* filepaths.h in Headers */,
-				8B12C91F184C18F000DBD77C /* textline.h in Headers */,
 				8B89D9A0184DA2DC0062EFB4 /* GFXView.h in Headers */,
 				8B12C917184C14B000DBD77C /* font.h in Headers */,
 				8B12C8C9184BE15600DBD77C /* base.h in Headers */,
@@ -646,6 +646,7 @@
 				8B12C8E4184BE15600DBD77C /* interpreter.cpp in Sources */,
 				8B12C8C8184BE15600DBD77C /* base.cpp in Sources */,
 				8B12C8ED184BE15600DBD77C /* papertape.cpp in Sources */,
+				8B121F96185E454400BF2946 /* attributedstr.cpp in Sources */,
 				8B12C916184C14B000DBD77C /* font.cpp in Sources */,
 				8B12C8EB184BE15600DBD77C /* offset.cpp in Sources */,
 				8B12C8EF184BE15600DBD77C /* parser.cpp in Sources */,
@@ -654,7 +655,6 @@
 				8B89DA2D18553C8C0062EFB4 /* GFXLayer.mm in Sources */,
 				8B12C8CE184BE15600DBD77C /* color.cpp in Sources */,
 				8B12C8E0184BE15600DBD77C /* graphics.cpp in Sources */,
-				8B12C91E184C18F000DBD77C /* textline.cpp in Sources */,
 				8B12C8F5184BE15600DBD77C /* stackframe.cpp in Sources */,
 				8B12C8D9184BE15600DBD77C /* file.cpp in Sources */,
 				8B89DA271852E13F0062EFB4 /* GFXInterpreter.mm in Sources */,
