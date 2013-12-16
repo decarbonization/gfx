@@ -28,7 +28,6 @@ namespace gfx {
         mFont(nullptr),
         mForegroundColor(nullptr)
     {
-        
     }
     
     TextAttributes::TextAttributes(const TextAttributes *attributes) :
@@ -36,7 +35,6 @@ namespace gfx {
         mFont(retained(attributes->font())),
         mForegroundColor(retained(attributes->foregroundColor()))
     {
-        
     }
     
     TextAttributes::TextAttributes(CFDictionaryRef dictionary) :
