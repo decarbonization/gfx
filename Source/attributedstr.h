@@ -99,6 +99,8 @@ namespace gfx {
         ///Returns the foreground color.
         virtual Color *foregroundColor() const;
         
+#pragma mark -
+        
     private:
         
         ///Creates a new attributes dictionary using the contents of the receiver, returning it.
@@ -197,8 +199,8 @@ namespace gfx {
         ///
         /// \result The bounding box the attributed string uses when drawn.
         ///
-        Size size(LineBreakMode lineBreakMode,
-                  Size constraintSize = {GFX_FLOAT_MAX, GFX_FLOAT_MAX});
+        virtual Size size(LineBreakMode lineBreakMode,
+                          Size constraintSize = {GFX_FLOAT_MAX, GFX_FLOAT_MAX});
         
         ///Draws the contents of the attributed string into the current context,
         ///positioned according to a given coordinate point, constrained to a
@@ -211,10 +213,10 @@ namespace gfx {
         ///
         /// \result The size of the rendered text.
         ///
-        Size drawAtPoint(Point point,
-                         Float maximumWidth = GFX_FLOAT_MAX,
-                         LineBreakMode lineBreakMode = LineBreakMode::WordWrap,
-                         TextAlignment alignment = TextAlignment::Left);
+        virtual Size drawAtPoint(Point point,
+                                 Float maximumWidth = GFX_FLOAT_MAX,
+                                 LineBreakMode lineBreakMode = LineBreakMode::WordWrap,
+                                 TextAlignment alignment = TextAlignment::Left);
         
         ///Draws the contents of the attributed string into the current context,
         ///positioned and constrained within a given rectangle.
@@ -225,9 +227,9 @@ namespace gfx {
         ///
         /// \result The size of the rendered text.
         ///
-        Size drawInRect(Rect rect,
-                        LineBreakMode lineBreakMode = LineBreakMode::WordWrap,
-                        TextAlignment alignment = TextAlignment::Left);
+        virtual Size drawInRect(Rect rect,
+                                LineBreakMode lineBreakMode = LineBreakMode::WordWrap,
+                                TextAlignment alignment = TextAlignment::Left);
         
 #pragma mark - Functions
         

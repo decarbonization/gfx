@@ -13,7 +13,9 @@
 		8B121F8818596FFF00BF2946 /* object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F8618596FFF00BF2946 /* object.cpp */; };
 		8B121F8918596FFF00BF2946 /* object.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F8718596FFF00BF2946 /* object.h */; };
 		8B121F96185E454400BF2946 /* attributedstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F94185E454400BF2946 /* attributedstr.cpp */; };
-		8B121F97185E454400BF2946 /* attributedstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F95185E454400BF2946 /* attributedstr.h */; };
+		8B121F97185E454400BF2946 /* attributedstr.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F95185E454400BF2946 /* attributedstr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B121F9B185E8A0500BF2946 /* gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F99185E8A0500BF2946 /* gradient.cpp */; };
+		8B121F9C185E8A0500BF2946 /* gradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F9A185E8A0500BF2946 /* gradient.h */; };
 		8B12C79E184AEB2300DBD77C /* libreadline.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C79D184AEB2300DBD77C /* libreadline.dylib */; };
 		8B12C828184BDF7800DBD77C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C827184BDF7800DBD77C /* Cocoa.framework */; };
 		8B12C832184BDF7800DBD77C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B12C830184BDF7800DBD77C /* InfoPlist.strings */; };
@@ -141,6 +143,8 @@
 		8B121F8718596FFF00BF2946 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		8B121F94185E454400BF2946 /* attributedstr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attributedstr.cpp; sourceTree = "<group>"; };
 		8B121F95185E454400BF2946 /* attributedstr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attributedstr.h; sourceTree = "<group>"; };
+		8B121F99185E8A0500BF2946 /* gradient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gradient.cpp; sourceTree = "<group>"; };
+		8B121F9A185E8A0500BF2946 /* gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gradient.h; sourceTree = "<group>"; };
 		8B12C79D184AEB2300DBD77C /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
 		8B12C826184BDF7800DBD77C /* gfx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gfx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12C827184BDF7800DBD77C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -280,6 +284,15 @@
 			path = "gfx-tests";
 			sourceTree = "<group>";
 		};
+		8B121F98185E89ED00BF2946 /* Gradients & Shadows */ = {
+			isa = PBXGroup;
+			children = (
+				8B121F99185E8A0500BF2946 /* gradient.cpp */,
+				8B121F9A185E8A0500BF2946 /* gradient.h */,
+			);
+			name = "Gradients & Shadows";
+			sourceTree = "<group>";
+		};
 		8B12C829184BDF7800DBD77C /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +403,7 @@
 				8B12C8AA184BE15600DBD77C /* graphics.h */,
 				8B12C912184C149C00DBD77C /* Core */,
 				8B12C913184C14A200DBD77C /* Text */,
+				8B121F98185E89ED00BF2946 /* Gradients & Shadows */,
 			);
 			name = "Graphics Stack";
 			sourceTree = "<group>";
@@ -497,7 +511,6 @@
 				8B12C8DD184BE15600DBD77C /* gfx.h in Headers */,
 				8B12C8F2184BE15600DBD77C /* path.h in Headers */,
 				8B12C8DC184BE15600DBD77C /* function.h in Headers */,
-				8B121F97185E454400BF2946 /* attributedstr.h in Headers */,
 				8B12C8F6184BE15600DBD77C /* stackframe.h in Headers */,
 				8B121F8918596FFF00BF2946 /* object.h in Headers */,
 				8B12C8DA184BE15600DBD77C /* file.h in Headers */,
@@ -518,6 +531,7 @@
 				8B12C8C9184BE15600DBD77C /* base.h in Headers */,
 				8B12C8D8184BE15600DBD77C /* expression.h in Headers */,
 				8B12C8D1184BE15600DBD77C /* context.h in Headers */,
+				8B121F97185E454400BF2946 /* attributedstr.h in Headers */,
 				8B12C8EA184BE15600DBD77C /* number.h in Headers */,
 				8B12C8CB184BE15600DBD77C /* blob.h in Headers */,
 				8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */,
@@ -531,6 +545,7 @@
 				8B89DA29185521330062EFB4 /* GFXHelpers.h in Headers */,
 				8B89D99C184D8EEA0062EFB4 /* osx_wrappers.h in Headers */,
 				8B12C925184D896800DBD77C /* layerbacking_calayer.h in Headers */,
+				8B121F9C185E8A0500BF2946 /* gradient.h in Headers */,
 				8B12C8E9184BE15600DBD77C /* layerbacking_cg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,6 +673,7 @@
 				8B12C8F5184BE15600DBD77C /* stackframe.cpp in Sources */,
 				8B12C8D9184BE15600DBD77C /* file.cpp in Sources */,
 				8B89DA271852E13F0062EFB4 /* GFXInterpreter.mm in Sources */,
+				8B121F9B185E8A0500BF2946 /* gradient.cpp in Sources */,
 				8B12C8DB184BE15600DBD77C /* function.cpp in Sources */,
 				8B12C8E2184BE15600DBD77C /* image.cpp in Sources */,
 				8B12C8E8184BE15600DBD77C /* layerbacking_cg.cpp in Sources */,

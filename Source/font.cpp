@@ -49,7 +49,7 @@ namespace gfx {
     
     HashCode Font::hash() const
     {
-        return CFHash(mFont);
+        return CFHash(get());
     }
     
     bool Font::isEqual(const Font *other) const

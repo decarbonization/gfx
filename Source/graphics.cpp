@@ -23,6 +23,8 @@
 #include "image.h"
 #include "layer.h"
 
+#include "gradient.h"
+
 #include "attributedstr.h"
 #include "font.h"
 
@@ -118,8 +120,11 @@ namespace gfx {
         Context::AddTo(frame);
         Layer::AddTo(frame);
         Path::AddTo(frame);
+        
         Font::AddTo(frame);
         AttributedString::AddTo(frame);
+        
+        Gradient::AddTo(frame);
     }
     
 #pragma mark -

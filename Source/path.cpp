@@ -241,6 +241,7 @@ namespace gfx {
         CGContextSetLineCap(context->get(), (CGLineCap)lineCapStyle());
         CGContextSetLineJoin(context->get(), (CGLineJoin)lineJoinStyle());
         CGContextSetLineWidth(context->get(), lineWidth());
+        CGContextClip(context->get());
     }
     
     void Path::fill() const

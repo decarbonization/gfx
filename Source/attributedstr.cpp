@@ -367,10 +367,12 @@ namespace gfx {
     
     Size AttributedString::drawInRect(Rect rect, LineBreakMode lineBreakMode, TextAlignment alignment)
     {
+        AutoreleasePool pool;
+        
         CGSize renderSize = {};
         cf::ArrayAutoRef lines = CreateLinesForString(get(), lineBreakMode, rect.size, &renderSize);
         
-        CTFontRef font = (CTFontRef)CFAttributedStringGetAttribute(get(), 0, kCTFontAttributeName, NULL);
+        auto font = (CTFontRef)CFAttributedStringGetAttribute(get(), 0, kCTFontAttributeName, NULL);
         gfx_assert(font, str("cannot render text without a font."));
         
         Context::currentContext()->transaction([rect, lines, font, alignment](Context *ctx) {
