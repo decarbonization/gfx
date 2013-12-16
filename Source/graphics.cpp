@@ -24,6 +24,7 @@
 #include "layer.h"
 
 #include "gradient.h"
+#include "shadow.h"
 
 #include "attributedstr.h"
 #include "font.h"
@@ -124,6 +125,7 @@ namespace gfx {
         Font::AddTo(frame);
         AttributedString::AddTo(frame);
         
+        Shadow::AddTo(frame);
         Gradient::AddTo(frame);
     }
     

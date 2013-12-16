@@ -34,6 +34,9 @@
 #   include <gfx/image.h>
 #   include <gfx/layer.h>
 #   include <gfx/color.h>
+
+#   include <gfx/gradient.h>
+#   include <gfx/shadow.h>
 #endif /* __cplusplus */
 
 #if __OBJC__

@@ -156,3 +156,13 @@ The core graphics stack includes a very simple gradient type that can draw simpl
 - `gradient (vec -- gradient)`: Takes a vector of the form `[color num ...]` and yields a gradient. E.g. `[red 0.0 yellow 1.0] gradient`.
 - `gradient/draw-linear (gradient vec|path angle -- )`: Takes a gradient, a rect-vector or path, and an angle. Draws the gradient into the rect-vector or path with the given angle.
 - `gradient/draw-radial (gradient vec|path vec -- )`: Takes a gradient, a rect-vector or path, and a point-vector. Draws the gradient into the rect-vector or path using the offset percentages described in the final vector. E.g. `... ctx/all [0.5 0.5] gradient/draw-radial`
+
+Shadows
+=======
+
+The core graphics stack includes a simple shadow type that can be applied to almost anything.
+
+- `shadow (vec num color -- shadow)`: Takes a point-vector describing the offset of the shadow, a number describing its blur radius, and a color. Yields a shadow.
+- `shadow/set (shadow -- )`: Applies the shadow to the current context. Any drawing after this will have the shadow applied to its edges.
+- `shadow/unset ( -- )`: Removes any currently active shadow in the current context.
+
