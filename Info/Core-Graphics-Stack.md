@@ -16,9 +16,7 @@ The following is a mostly exhaustive list of the classes in the `Gfx` stack that
 - `gfx::Path`: Encapsulates bezier paths.
 - `gfx::Image`: Encapsulates creation and rendering of bitmap images.
 - `gfx::Font`: Encapsulates font information.
-- `gfx::TextLine`: Encapsulates a single line of text to be rendered.
-
-The core methods of each of the above classes is exposed in the `Gfx` language whenever it is compiled with `GFX_Include_GraphicsStack` set to `1`.
+- `gfx::Attributedstring`: Encapsulates a blob of text to be rendered.
 
 Vectors
 =======
@@ -114,14 +112,13 @@ Bezier paths in Gfx go by the name of `path`. Paths consist of straight and curv
 Text
 ====
 
-The text portion of the Gfx graphics stack is currently severely under-developed. The following are the functions available:
+The text portion of the graphics stack is currently a bit anemic. Only basic text operations are currently available. This is mostly a matter of figuring out the best way to expose the complex APIs into the language.
 
 - `font (str num -- font)`: Looks up a font with name `str` of size `num` and pushes it onto the stack. Throws an exception of the font cannot be found. The name of the font is the post-script name.
-- `text/make (font color str -- text)`: Creates a new text line with a font, color, and string.
-- `text/size (text -- vec)`: Indicates the visual size of a text line.
-- `text/draw (text vec -- )`: Renders the text line at point-vector `vec`.
-
-These functions are subject to change.
+- `text/make (font color str -- text)`: Creates a new text with a font, color, and string.
+- `text/size (text -- vec)`: Indicates the bounding box of a text.
+- `text/draw-at (text vec -- )`: Renders the text at point-vector `vec`. The text will be rendered starting from the given point-vector. It will wrap if its width exceeds the area between the x-coordinate and the right edge of the containing context. __Note:__ this function may be removed due to its behavior being borderline too magical.
+- `text/draw-in (text vec -- )`: Renders the text within a given rect-vector `vec`.
 
 Layers
 ======
