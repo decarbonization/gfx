@@ -33,6 +33,7 @@ namespace gfx {
         
         kDecimalSeparator = '.',
         kNumberDivider = '_',
+        kPercentageMarker = '%',
     };
     
     static bool is_newline(UniChar c)
@@ -259,7 +260,13 @@ namespace gfx {
     Number *Parser::parseNumber()
     {
         auto numberString = this->accumulateWhile(&is_number);
-        return make<Number>(numberString->doubleValue());
+        auto number = make<Number>(numberString->doubleValue());
+        if(this->current() == kPercentageMarker) {
+            number = make<Number>(number->value() / 100.0);
+            this->next();
+        }
+        
+        return number;
     }
     
     Annotation *Parser::parseAnnotation()

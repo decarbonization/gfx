@@ -17,7 +17,7 @@ Gfx has a bare-minimum set of literals. The available literals are as follows:
 
 ##Numbers
 
-Numbers may be of the format `12`, or `3.50`. Internally, they are always represented as double precision floating point numbers. Underscores may be introduced to improve readability, e.g. `10_000`. Numbers may not begin with underscores, but otherwise there are no positional restrictions on where they may be placed.
+Numbers may be of the format `12`, or `3.50`. Internally, they are always represented as double precision floating point numbers. Underscores may be introduced to improve readability, e.g. `10_000`. Numbers may not begin with underscores, but otherwise there are no positional restrictions on where they may be placed. If a number is immediately followed by a percentage sign (`%`), the value of the number will be divided by 100. E.g. `50%` = `0.5`.
 
 ##Strings
 
