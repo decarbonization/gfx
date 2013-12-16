@@ -98,6 +98,28 @@ namespace gfx {
     
 #pragma mark -
     
+    Float Font::ascent() const
+    {
+        return CTFontGetAscent(get());
+    }
+    
+    Float Font::descent() const
+    {
+        return CTFontGetDescent(get());
+    }
+    
+    Float Font::leading() const
+    {
+        return CTFontGetLeading(get());
+    }
+    
+    Float Font::lineHeight() const
+    {
+        return ascent() + descent() + leading();
+    }
+    
+#pragma mark -
+    
     const String *Font::displayName() const
     {
         cf::StringAutoRef displayName = CTFontCopyFullName(get());

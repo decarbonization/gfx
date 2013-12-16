@@ -20,79 +20,143 @@
 #include "stackframe.h"
 
 namespace gfx {
-    const String *const kFontAttributeName = new String("kFontAttributeName");
-    const String *const kForegroundColorAttributeName = new String("kForegroundColorAttributeName");
     
-    static CFStringRef GfxAttributeNameToCTAttribute(const String *name)
+#pragma mark - • TextAttributes
+    
+    TextAttributes::TextAttributes() :
+        Base(),
+        mFont(nullptr),
+        mForegroundColor(nullptr)
     {
-        if(!name)
-            return NULL;
         
-        if(name->isEqual(kFontAttributeName))
-            return kCTFontAttributeName;
-        else if(name->isEqual(kForegroundColorAttributeName))
-            return kCTForegroundColorAttributeName;
-        else
-            throw Exception((String::Builder() << "Unknown attribute with name '" << name << "'."), nullptr);
     }
     
-    static Base *GfxObjectFromNativeType(CFTypeRef value)
+    TextAttributes::TextAttributes(const TextAttributes *attributes) :
+        Base(),
+        mFont(retained(attributes->font())),
+        mForegroundColor(retained(attributes->foregroundColor()))
     {
-        if(!value)
-            return nullptr;
         
-        if(CFGetTypeID(value) == CGColorGetTypeID()) {
-            return make<Color>(CGColorRef(value));
-        } else if(CFGetTypeID(value) == CTFontGetTypeID()) {
-            return make<Font>(CTFontRef(value));
-        } else if(CFGetTypeID(value) == CFStringGetTypeID()) {
-            return make<String>(CFStringRef(value));
-        } else if(CFGetTypeID(value) == CFNumberGetTypeID()) {
-            double numberValue = 0.0;
-            CFNumberGetValue(CFNumberRef(value), kCFNumberDoubleType, &numberValue);
-            return make<Number>(numberValue);
-        } else {
-            throw Exception(str("Unsupported attribute type"), nullptr);
+    }
+    
+    TextAttributes::TextAttributes(CFDictionaryRef dictionary) :
+        TextAttributes()
+    {
+        if(dictionary) {
+            auto font = (CTFontRef)CFDictionaryGetValue(dictionary, kCTFontAttributeName);
+            if(font)
+                this->setFont(make<Font>(font));
+            
+            auto foregroundColor = (CGColorRef)CFDictionaryGetValue(dictionary, kCTForegroundColorAttributeName);
+            if(foregroundColor)
+                this->setForegroundColor(make<Color>(foregroundColor));
         }
     }
     
-#pragma mark - Internal
-    
-    static CFMutableAttributedStringRef MakeMutableAttributedStringWithAttributes(const String *string, const Dictionary<const String, Base> *attributes)
+    TextAttributes::~TextAttributes()
     {
-        gfx_assert_param(string);
+        released(mFont);
+        mFont = nullptr;
         
-        cf::MutableDictionaryAutoRef mappedAttributes = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+        released(mForegroundColor);
+        mForegroundColor = nullptr;
+    }
+    
+#pragma mark - Identity
+    
+    HashCode TextAttributes::hash() const
+    {
+        HashCode hash = (HashCode)this;
         
-        if(attributes) {
-            attributes->iterate([mappedAttributes](const String *key, Base *value) {
-                if(key->isEqual(kFontAttributeName)) {
-                    auto font = dynamic_cast<Font *>(value);
-                    gfx_assert(font != nullptr, str("kFontAttributeName with non-font object."));
-                    CFDictionarySetValue(mappedAttributes, kCTFontAttributeName, font->get());
-                } else if(key->isEqual(kForegroundColorAttributeName)) {
-                    auto color = dynamic_cast<Color *>(value);
-                    gfx_assert(color != nullptr, str("kCTForegroundColorAttributeName with non-color object."));
-                    CFDictionarySetValue(mappedAttributes, kCTForegroundColorAttributeName, color->get());
-                } else {
-                    std::cerr << "Unknown and unsupported text attribute named " << key << "given. Ignoring. This may be a hard error in the future.";
-                }
-            });
-        }
+        if(mFont) hash ^= mFont->hash();
+        if(mForegroundColor) hash ^= mForegroundColor->hash();
         
-        auto attributedString = CFAttributedStringCreateMutable(kCFAllocatorDefault, string->length());
-        CFAttributedStringReplaceString(attributedString, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), string->getStorage());
-        CFAttributedStringSetAttributes(attributedString, CFRangeMake(0, CFAttributedStringGetLength(attributedString)), mappedAttributes, true);
-        return attributedString;
+        return hash;
+    }
+    
+    bool TextAttributes::isEqual(const TextAttributes *other) const
+    {
+        if(!other)
+            return false;
+        
+        return ((other->mFont && other->mFont->isEqual(mFont)) &&
+                (other->mForegroundColor && other->mForegroundColor->isEqual(mForegroundColor)));
+    }
+    
+    bool TextAttributes::isEqual(const Base *other) const
+    {
+        if(other && other->isKindOfClass<TextAttributes>())
+            return this->isEqual((const TextAttributes *)other);
+        
+        return false;
+    }
+    
+    const String *TextAttributes::description() const
+    {
+        String::Builder descriptionString;
+        
+        descriptionString << "<" << this->className() << ":" << (void *)this << " ";
+        descriptionString << "font => '" << mFont << "', ";
+        descriptionString << "foregroundColor => '" << mForegroundColor << "'";
+        descriptionString << ">";
+        
+        return descriptionString;
+    }
+    
+#pragma mark - Attributes
+    
+    void TextAttributes::setFont(Font *font)
+    {
+        autoreleased(mFont);
+        mFont = retained(font);
+    }
+    
+    Font *TextAttributes::font() const
+    {
+        return retained_autoreleased(mFont);
+    }
+    
+#pragma mark -
+    
+    void TextAttributes::setForegroundColor(Color *color)
+    {
+        autoreleased(mForegroundColor);
+        mForegroundColor = retained(color);
+    }
+    
+    Color *TextAttributes::foregroundColor() const
+    {
+        return retained_autoreleased(mForegroundColor);
+    }
+    
+#pragma mark -
+    
+    CFDictionaryRef TextAttributes::copyAttributesDictionary() const
+    {
+        CFMutableDictionaryRef attributes = CFDictionaryCreateMutable(kCFAllocatorDefault, 0,
+                                                                      &kCFTypeDictionaryKeyCallBacks,
+                                                                      &kCFTypeDictionaryValueCallBacks);
+        
+        auto font = this->font();
+        if(font)
+            CFDictionarySetValue(attributes, kCTFontAttributeName, font->get());
+        
+        auto foregroundColor = this->foregroundColor();
+        if(foregroundColor)
+            CFDictionarySetValue(attributes, kCTForegroundColorAttributeName, foregroundColor->get());
+        
+        return attributes;
     }
     
 #pragma mark - Lifecycle
     
-    AttributedString::AttributedString(const String *string, const Dictionary<const String, Base> *attributes) :
+    AttributedString::AttributedString(const String *string, const TextAttributes *attributes) :
         Base(),
-        mStorage(MakeMutableAttributedStringWithAttributes(string, attributes))
+        mStorage(CFAttributedStringCreateMutable(kCFAllocatorDefault, 0))
     {
-        
+        cf::DictionaryAutoRef attributesDictionary = attributes->copyAttributesDictionary();
+        CFAttributedStringReplaceString(mStorage, CFRangeMake(0, CFAttributedStringGetLength(mStorage)), string->getStorage());
+        CFAttributedStringSetAttributes(mStorage, CFRangeMake(0, CFAttributedStringGetLength(mStorage)), attributesDictionary, true);
     }
     
     AttributedString::AttributedString(const AttributedString *other) :
@@ -169,13 +233,12 @@ namespace gfx {
     
 #pragma mark - Attributes
     
-    Base *AttributedString::attributeValue(Index locationInString, const String *attributeName)
+    TextAttributes *AttributedString::attributesAt(Index locationInString)
     {
         gfx_assert(locationInString < length(), str("Out of bounds access"));
-        gfx_assert_param(attributeName);
         
-        auto attribute = CFAttributedStringGetAttribute(get(), locationInString, GfxAttributeNameToCTAttribute(attributeName), NULL);
-        return GfxObjectFromNativeType(attribute);
+        auto attributes = CFAttributedStringGetAttributes(get(), locationInString, NULL);
+        return make<TextAttributes>(attributes);
     }
     
 #pragma mark - Drawing
@@ -276,27 +339,27 @@ namespace gfx {
     
 #pragma mark -
     
-    static CGFloat AlignmentToFlush(Alignment alignment) {
+    static CGFloat TextAlignmentToFlush(TextAlignment alignment) {
         switch (alignment) {
-            case Alignment::Left:
+            case TextAlignment::Left:
                 return 0.0;
-            case Alignment::Center:
+            case TextAlignment::Center:
                 return 0.5;
-            case Alignment::Right:
+            case TextAlignment::Right:
                 return 1.0;
         }
     }
     
 #pragma mark -
     
-    Size AttributedString::size(LineBreakMode lineBreakMode, Size constraintSize) const
+    Size AttributedString::size(LineBreakMode lineBreakMode, Size constraintSize)
     {
         CGSize renderSize = {};
         cf::ArrayAutoRef unusedLines = CreateLinesForString(get(), lineBreakMode, constraintSize, &renderSize);
         return { MIN(renderSize.width, constraintSize.width), MIN(renderSize.height, constraintSize.height) };
     }
     
-    Size AttributedString::drawAtPoint(Point point, Float maximumWidth, LineBreakMode lineBreakMode, Alignment alignment)
+    Size AttributedString::drawAtPoint(Point point, Float maximumWidth, LineBreakMode lineBreakMode, TextAlignment alignment)
     {
         CTFontRef font = (CTFontRef)CFAttributedStringGetAttribute(get(), 0, kCTFontAttributeName, NULL);
         gfx_assert(font, str("cannot render text without a font."));
@@ -304,7 +367,7 @@ namespace gfx {
         return drawInRect(Rect{{point.x, point.y}, {maximumWidth, xCTFontGetLineHeight(font)}}, lineBreakMode, alignment);
     }
     
-    Size AttributedString::drawInRect(Rect rect, LineBreakMode lineBreakMode, Alignment alignment)
+    Size AttributedString::drawInRect(Rect rect, LineBreakMode lineBreakMode, TextAlignment alignment)
     {
         CGSize renderSize = {};
         cf::ArrayAutoRef lines = CreateLinesForString(get(), lineBreakMode, rect.size, &renderSize);
@@ -319,7 +382,7 @@ namespace gfx {
             
             CGFloat lineOffset = 0.0;
             CGFloat lineHeight = xCTFontGetLineHeight(font);
-            CGFloat flush = AlignmentToFlush(alignment);
+            CGFloat flush = TextAlignmentToFlush(alignment);
             for (CFIndex i = 0, c = CFArrayGetCount(lines); i < c; i++) {
                 CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, i);
                 
@@ -344,9 +407,9 @@ namespace gfx {
         auto color = stack->popType<Color>();
         auto font = stack->popType<Font>();
         
-        auto attributes = make<Dictionary<const String, Base>>();
-        attributes->set(kFontAttributeName, font);
-        attributes->set(kForegroundColorAttributeName, color);
+        auto attributes = make<TextAttributes>();
+        attributes->setFont(font);
+        attributes->setForegroundColor(color);
         stack->push(make<AttributedString>(string, attributes));
     }
     
@@ -370,6 +433,15 @@ namespace gfx {
         text->drawInRect(rect);
     }
     
+    static void text_drawIn(StackFrame *stack)
+    {
+        /* text vec -- */
+        auto rect = VectorToRect(stack->popType<Array<Base>>());
+        auto text = stack->popType<AttributedString>();
+        
+        text->drawInRect(rect);
+    }
+    
 #pragma mark -
     
     void AttributedString::AddTo(gfx::StackFrame *frame)
@@ -377,5 +449,6 @@ namespace gfx {
         frame->createFunctionBinding(str("text"), &text_make);
         frame->createFunctionBinding(str("text/size"), &text_size);
         frame->createFunctionBinding(str("text/draw-at"), &text_drawAt);
+        frame->createFunctionBinding(str("text/draw-in"), &text_drawIn);
     }
 }

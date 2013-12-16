@@ -78,6 +78,20 @@ namespace gfx {
         ///Returns the full name of the font.
         const String *fullName() const;
         
+#pragma mark -
+        
+        ///Returns the top y-coordinate of the font's longest ascender.
+        Float ascent() const;
+        
+        ///Returns the bottom y-coordinate of the font's longest ascender.
+        Float descent() const;
+        
+        ///Returns the font's leading.
+        Float leading() const;
+        
+        ///Returns the esimated line height for the font.
+        Float lineHeight() const;
+        
 #pragma mark - Functions
         
         ///Adds the font function suite to a given stack frame.

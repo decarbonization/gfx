@@ -293,7 +293,10 @@ namespace gfx {
             ///Append a `const Base *` instance's description.
             Builder &operator<<(const Base *object)
             {
-                mString->append(object->description());
+                if(object)
+                    mString->append(object->description());
+                else
+                    mString->append(make<String>("(null)"));
                 
                 return *this;
             }
