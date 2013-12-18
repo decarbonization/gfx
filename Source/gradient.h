@@ -94,7 +94,7 @@ namespace gfx {
 #pragma mark - Functions
         
         ///Adds the functions in the gradient suite to a given frame.
-        static void AddTo(StackFrame *frame);
+        static void addTo(StackFrame *frame);
     };
 }
 

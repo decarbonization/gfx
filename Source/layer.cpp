@@ -262,7 +262,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void Layer::AddTo(StackFrame *frame)
+    void Layer::addTo(StackFrame *frame)
     {
         gfx_assert_param(frame);
         

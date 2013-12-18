@@ -60,6 +60,11 @@ namespace gfx {
                 return (CFTypeRef)mValue;
             }
             
+            operator bool() const
+            {
+                return (mValue != nullptr);
+            }
+            
             T operator->() const
             {
                 return mValue;

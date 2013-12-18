@@ -169,3 +169,12 @@ The core graphics stack includes a simple shadow type that can be applied to alm
 - `shadow/set (shadow -- )`: Applies the shadow to the current context. Any drawing after this will have the shadow applied to its edges.
 - `shadow/unset ( -- )`: Removes any currently active shadow in the current context.
 
+Images
+======
+
+The core graphics stack includes a barebones Image type that is capable of reading and writing PNGs.
+
+- `image/from-file ( file -- image )`: Attempts to parse the contents of a `file` into an image. Yields the image if successfull, null otherwise.
+- `image/size ( image -- vec )`: Yields the size of the image as a size-vector.
+- `image/draw-in ( image vec -- )`: Draws the image into the rect-vector `vec`.
+- `image/save-to ( image file -- ) `: Attempts ot save the `image` into the `file`. Throws an exception if there are any issues.

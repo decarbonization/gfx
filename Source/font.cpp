@@ -182,7 +182,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void Font::AddTo(gfx::StackFrame *frame)
+    void Font::addTo(gfx::StackFrame *frame)
     {
         gfx_assert_param(frame);
         

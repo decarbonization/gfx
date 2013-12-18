@@ -307,7 +307,7 @@ namespace gfx {
 #pragma mark - Functions
         
         ///Adds the path function suite to a given stack frame.
-        static void AddTo(StackFrame *frame);
+        static void addTo(StackFrame *frame);
     };
 }
 

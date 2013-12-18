@@ -171,7 +171,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void Color::AddTo(StackFrame *frame)
+    void Color::addTo(StackFrame *frame)
     {
         gfx_assert_param(frame);
         

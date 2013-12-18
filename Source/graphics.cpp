@@ -115,25 +115,26 @@ namespace gfx {
     
 #pragma mark - Public Interface
     
-    void Graphics::AddTo(StackFrame *frame)
+    void Graphics::addTo(StackFrame *frame)
     {
-        Color::AddTo(frame);
-        Context::AddTo(frame);
-        Layer::AddTo(frame);
-        Path::AddTo(frame);
+        Color::addTo(frame);
+        Context::addTo(frame);
+        Layer::addTo(frame);
+        Path::addTo(frame);
+        Image::addTo(frame);
         
-        Font::AddTo(frame);
-        AttributedString::AddTo(frame);
+        Font::addTo(frame);
+        AttributedString::addTo(frame);
         
-        Shadow::AddTo(frame);
-        Gradient::AddTo(frame);
+        Shadow::addTo(frame);
+        Gradient::addTo(frame);
     }
     
 #pragma mark -
     
     void Graphics::AttachTo(Interpreter *interpreter)
     {
-        Graphics::AddTo(interpreter->currentFrame());
+        Graphics::addTo(interpreter->currentFrame());
         interpreter->prependWordHandler([interpreter](StackFrame *currentFrame, Word *word) {
             if(word->string()->hasPrefix(str("#"))) {
                 auto color = make<Color>(word->string());

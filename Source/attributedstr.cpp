@@ -444,7 +444,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void AttributedString::AddTo(gfx::StackFrame *frame)
+    void AttributedString::addTo(gfx::StackFrame *frame)
     {
         frame->createFunctionBinding(str("text"), &text_make);
         frame->createFunctionBinding(str("text/size"), &text_size);

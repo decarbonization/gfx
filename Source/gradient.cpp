@@ -238,7 +238,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void Gradient::AddTo(StackFrame *frame)
+    void Gradient::addTo(StackFrame *frame)
     {
         gfx_assert_param(frame);
         

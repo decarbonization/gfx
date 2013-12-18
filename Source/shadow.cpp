@@ -109,7 +109,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void Shadow::AddTo(StackFrame *frame)
+    void Shadow::addTo(StackFrame *frame)
     {
         gfx_assert_param(frame);
         

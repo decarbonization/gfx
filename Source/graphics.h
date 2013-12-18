@@ -30,7 +30,7 @@ namespace gfx {
     
     class Graphics : public Base
     {
-        static void AddTo(StackFrame *frame);
+        static void addTo(StackFrame *frame);
         
     public:
         

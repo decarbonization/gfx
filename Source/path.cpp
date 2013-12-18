@@ -530,7 +530,7 @@ namespace gfx {
     
 #pragma mark -
     
-    void Path::AddTo(StackFrame *frame)
+    void Path::addTo(StackFrame *frame)
     {
         gfx_assert_param(frame);
         
