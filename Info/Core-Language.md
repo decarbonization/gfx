@@ -192,20 +192,19 @@ The following functions are available for vectors:
 
 ##Hashes (hash)
 
-Gfx hashes are unordered maps of keys and values. There are currently no literal representations of hashes. Hashes are created using the `hash/begin` and `hash/end` functions. Example usage:
+Gfx hashes are unordered maps of keys and values. Hash literals are almost identical to Vector literals. They are enclosed in square brackets, prefixed by a number sign. __Important:__ functions are not evaluated within hash literals. Example usage:
 
-	hash/begin
+	#[
 		"one"	1
 		"two"	2
 		"three"	3
-	hash/end
+	]
 
 The following functions are available for hashes:
 
-* `hash/begin ( -- HashThunk )`: yields a thunk onto the stack. See `hash/end`.
-* `hash/end ( HashThunk ... - Hash)`: yields a new hash from all of the values on the stack going back to the thunk pushed on by `hash/begin`. You must have an even number of values on the stack, or an error is raised.
 * `hash/get ( val -- val )`: yields the value contained in the hash by the given name, or `null` if no such value exists.
 * `hash/concat ( hash hash -- hash )`: yields a new hash by merging two existing hashes.
+* `hash/without ( hash vec|val -- hash )`: yields a new hash by removing a single key, or a vector of keys.
 * `hash/for-each ( hash functor -- )`: applies a given functor to each key-value pair contained in the hash.
 
 ##Files (file)

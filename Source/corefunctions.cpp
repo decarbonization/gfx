@@ -617,11 +617,30 @@ namespace gfx {
     
     static void hash_concat(StackFrame *frame)
     {
+        /* hash hash -- hash */
         Dictionary<Base, Base> *hash2 = frame->popType<Dictionary<Base, Base>>();
         Dictionary<Base, Base> *hash1 = frame->popType<Dictionary<Base, Base>>();
         Dictionary<Base, Base> *newHash = make<Dictionary<Base, Base>>();
         newHash->takeValuesFrom(hash1);
         newHash->takeValuesFrom(hash2);
+        frame->push(newHash);
+    }
+    
+    static void hash_without(StackFrame *frame)
+    {
+        /* hash vec|val -- hash */
+        
+        Base *vectorOrValue = frame->pop();
+        Dictionary<Base, Base> *newHash = copy(frame->popType<Dictionary<Base, Base>>());
+        
+        if(vectorOrValue->isKindOfClass<Array<Base>>()) {
+            auto keysToRemove = static_cast<Array<Base> *>(vectorOrValue);
+            for (Base *key : keysToRemove)
+                newHash->remove(key);
+        } else {
+            newHash->remove(vectorOrValue);
+        }
+        
         frame->push(newHash);
     }
     
@@ -888,6 +907,7 @@ namespace gfx {
         //Hash Functions
         frame->createFunctionBinding(str("hash/get"), &hash_get);
         frame->createFunctionBinding(str("hash/concat"), &hash_concat);
+        frame->createFunctionBinding(str("hash/without"), &hash_without);
         frame->createFunctionBinding(str("hash/each-pair"), &hash_eachPair);
         
         
