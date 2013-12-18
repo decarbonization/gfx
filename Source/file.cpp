@@ -18,17 +18,20 @@ namespace gfx {
     
     File *File::consoleIn()
     {
-        return make<File>(stdin);
+        static File *sharedConsoleIn = new File(stdin, false);
+        return sharedConsoleIn;
     }
     
     File *File::consoleOut()
     {
-        return make<File>(stdout);
+        static File *sharedConsoleOut = new File(stdout, false);
+        return sharedConsoleOut;
     }
     
     File *File::consoleError()
     {
-        return make<File>(stderr);
+        static File *sharedConsoleError = new File(stderr, false);
+        return sharedConsoleError;
     }
     
 #pragma mark -
