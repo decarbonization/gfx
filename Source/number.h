@@ -25,25 +25,29 @@ namespace gfx {
         ///Returns the minimum representable number.
         static Number *Minimum()
         {
-            return make<Number>(DBL_MIN);
+            static Number *sharedMinimum = new Number(DBL_MIN);
+            return sharedMinimum;
         }
         
         ///Returns the maximum representable number.
         static Number *Maximum()
         {
-            return make<Number>(DBL_MAX);
+            static Number *sharedMaximum = new Number(DBL_MAX);
+            return sharedMaximum;
         }
         
         ///Returns a number representing false.
         static Number *False()
         {
-            return make<Number>(0.0);
+            static Number *sharedFalse = new Number(0.0);
+            return sharedFalse;
         }
         
         ///Returns a number representing true.
         static Number *True()
         {
-            return make<Number>(1.0);
+            static Number *sharedTrue = new Number(1.0);
+            return sharedTrue;
         }
         
         ///Construct a zero number.

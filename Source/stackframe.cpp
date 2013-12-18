@@ -10,6 +10,7 @@
 #include "dictionary.h"
 #include "exception.h"
 #include "number.h"
+#include "null.h"
 #include "function.h"
 
 namespace gfx {
@@ -49,7 +50,7 @@ namespace gfx {
         assertMutationPossible();
         
         if(!value)
-            mStorage->append(make<Number>(0));
+            mStorage->append(Null::shared());
         else
             mStorage->append(value);
     }

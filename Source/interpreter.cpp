@@ -12,6 +12,7 @@
 #include "number.h"
 #include "expression.h"
 #include "annotation.h"
+#include "null.h"
 
 #include "stackframe.h"
 #include "function.h"
@@ -32,7 +33,9 @@ namespace gfx {
         if(!value)
             return false;
         
-        if(value->isKindOfClass<Number>()) {
+        if(value == Null::shared()) {
+            return false;
+        } else if(value->isKindOfClass<Number>()) {
             return (static_cast<Number *>(value)->value() != 0.0);
         } else {
             return true;

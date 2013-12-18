@@ -18,6 +18,8 @@
 		8B121F9C185E8A0500BF2946 /* gradient.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F9A185E8A0500BF2946 /* gradient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B121F9F185E9D3C00BF2946 /* shadow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F9D185E9D3C00BF2946 /* shadow.cpp */; };
 		8B121FA0185E9D3C00BF2946 /* shadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121F9E185E9D3C00BF2946 /* shadow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B121FA518615F0900BF2946 /* null.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121FA318615F0900BF2946 /* null.cpp */; };
+		8B121FA618615F0900BF2946 /* null.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B121FA418615F0900BF2946 /* null.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B12C79E184AEB2300DBD77C /* libreadline.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C79D184AEB2300DBD77C /* libreadline.dylib */; };
 		8B12C828184BDF7800DBD77C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B12C827184BDF7800DBD77C /* Cocoa.framework */; };
 		8B12C832184BDF7800DBD77C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B12C830184BDF7800DBD77C /* InfoPlist.strings */; };
@@ -149,6 +151,8 @@
 		8B121F9A185E8A0500BF2946 /* gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gradient.h; sourceTree = "<group>"; };
 		8B121F9D185E9D3C00BF2946 /* shadow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shadow.cpp; sourceTree = "<group>"; };
 		8B121F9E185E9D3C00BF2946 /* shadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shadow.h; sourceTree = "<group>"; };
+		8B121FA318615F0900BF2946 /* null.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = null.cpp; sourceTree = "<group>"; };
+		8B121FA418615F0900BF2946 /* null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = null.h; sourceTree = "<group>"; };
 		8B12C79D184AEB2300DBD77C /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
 		8B12C826184BDF7800DBD77C /* gfx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = gfx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B12C827184BDF7800DBD77C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -371,6 +375,8 @@
 				8B12C8C3184BE15600DBD77C /* types.h */,
 				8B12C90E184BECF200DBD77C /* filepaths.cpp */,
 				8B12C90C184BE75300DBD77C /* filepaths.h */,
+				8B121FA318615F0900BF2946 /* null.cpp */,
+				8B121FA418615F0900BF2946 /* null.h */,
 			);
 			name = "Core Types";
 			sourceTree = "<group>";
@@ -541,6 +547,7 @@
 				8B12C8EA184BE15600DBD77C /* number.h in Headers */,
 				8B12C8CB184BE15600DBD77C /* blob.h in Headers */,
 				8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */,
+				8B121FA618615F0900BF2946 /* null.h in Headers */,
 				8B12C8FB184BE15600DBD77C /* word.h in Headers */,
 				8B12C8D3184BE15600DBD77C /* corefunctions.h in Headers */,
 				8B12C8E5184BE15600DBD77C /* interpreter.h in Headers */,
@@ -685,6 +692,7 @@
 				8B12C8DB184BE15600DBD77C /* function.cpp in Sources */,
 				8B12C8E2184BE15600DBD77C /* image.cpp in Sources */,
 				8B12C8E8184BE15600DBD77C /* layerbacking_cg.cpp in Sources */,
+				8B121FA518615F0900BF2946 /* null.cpp in Sources */,
 				8B12C8D0184BE15600DBD77C /* context.cpp in Sources */,
 				8B12C8F7184BE15600DBD77C /* str.cpp in Sources */,
 				8B12C8D5184BE15600DBD77C /* exception.cpp in Sources */,

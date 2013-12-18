@@ -14,6 +14,7 @@
 #include "word.h"
 #include "str.h"
 #include "number.h"
+#include "null.h"
 #include "papertape.h"
 #include "file.h"
 
@@ -219,17 +220,6 @@ namespace gfx {
         stackDescription << "-- end stack --";
         
         PaperTape::WriteLine(stackDescription);
-    }
-    
-    static void backtrace(StackFrame *frame)
-    {
-        PaperTape::WriteLine(frame->interpreter()->backtrace());
-    }
-    
-    static void reset(StackFrame *frame)
-    {
-        PaperTape::WriteLine(str("Resetting..."));
-        frame->interpreter()->reset();
     }
     
 #pragma mark - Core Functions
@@ -780,9 +770,9 @@ namespace gfx {
         AutoreleasePool pool;
         
         //Core Constants
-        frame->createVariableBinding(str("true"), make<Number>(1));
-        frame->createVariableBinding(str("false"), make<Number>(0));
-        frame->createVariableBinding(str("null"), make<Number>(0));
+        frame->createVariableBinding(str("true"), Number::True());
+        frame->createVariableBinding(str("false"), Number::False());
+        frame->createVariableBinding(str("null"), Null::shared());
         
         //Math Constants
         frame->createVariableBinding(str("num/min"), Number::Minimum());
@@ -857,13 +847,11 @@ namespace gfx {
         
         
         //Stack Operations
-        frame->createFunctionBinding(str("rt/dup"), &dup);
-        frame->createFunctionBinding(str("rt/swap"), &swap);
-        frame->createFunctionBinding(str("rt/drop"), &drop);
-        frame->createFunctionBinding(str("rt/clear"), &clear);
-        frame->createFunctionBinding(str("rt/showstack"), &showstack);
-        frame->createFunctionBinding(str("rt/backtrace"), &backtrace);
-        frame->createFunctionBinding(str("rt/reset"), &reset);
+        frame->createFunctionBinding(str("__dup"), &dup);
+        frame->createFunctionBinding(str("__swap"), &swap);
+        frame->createFunctionBinding(str("__drop"), &drop);
+        frame->createFunctionBinding(str("__clear"), &clear);
+        frame->createFunctionBinding(str("__showstack"), &showstack);
         
         
         //Core Functions
