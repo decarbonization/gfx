@@ -24,6 +24,23 @@ namespace gfx {
         return make<Font>(nativeFont);
     }
     
+#pragma mark -
+    
+    Font *Font::regular(Float size)
+    {
+        return Font::withName(str("HelveticaNeue"), size);
+    }
+    
+    Font *Font::bold(Float size)
+    {
+        return Font::withName(str("HelveticaNeue-Bold"), size);
+    }
+    
+    Font *Font::italic(Float size)
+    {
+        return Font::withName(str("HelveticaNeue-Italic"), size);
+    }
+    
 #pragma mark - Lifecycle
     
     Font::Font(NativeType font) :
@@ -142,6 +159,27 @@ namespace gfx {
         stack->push(Font::withName(name, size->value()));
     }
     
+    static void font_regular(StackFrame *stack)
+    {
+        /* num -- font */
+        auto size = stack->popNumber();
+        stack->push(Font::regular(size->value()));
+    }
+    
+    static void font_bold(StackFrame *stack)
+    {
+        /* num -- font */
+        auto size = stack->popNumber();
+        stack->push(Font::bold(size->value()));
+    }
+    
+    static void font_italic(StackFrame *stack)
+    {
+        /* num -- font */
+        auto size = stack->popNumber();
+        stack->push(Font::italic(size->value()));
+    }
+    
 #pragma mark -
     
     void Font::AddTo(gfx::StackFrame *frame)
@@ -149,5 +187,8 @@ namespace gfx {
         gfx_assert_param(frame);
         
         frame->createFunctionBinding(str("font"), &font_make);
+        frame->createFunctionBinding(str("font/regular"), &font_regular);
+        frame->createFunctionBinding(str("font/bold"), &font_bold);
+        frame->createFunctionBinding(str("font/italic"), &font_italic);
     }
 }

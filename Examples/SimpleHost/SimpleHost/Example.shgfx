@@ -2,4 +2,4 @@
 
 [#b9b8b9 0% #f1f1f1 100%] gradient ctx/size 90 gradient/draw-linear
 [0 1] 1 white shadow shadow/set
-"LucidaGrande" 30 font black "hello, world" text [62 132] text/draw-at
+30 font/bold black "hello, world" text [62 132] text/draw-at

@@ -16,7 +16,7 @@ namespace gfx {
     class StackFrame;
     
     ///The Font class encapsulates fonts for the Gfx graphics stack.
-    class Font : public Base
+    class Font final : public Base
     {
     public:
         
@@ -40,6 +40,32 @@ namespace gfx {
         /// \result A new autoreleased Font instance if a font by `name` could be found; null otherwise.
         ///
         static Font *withName(const String *name, Float size);
+        
+#pragma mark -
+        
+        ///Returns a new autoreleased platform-specific regular weight font of a given size.
+        ///
+        /// \param  size    The size to use for the font.
+        ///
+        /// \result A new autoreleased Font instance.
+        ///
+        static Font *regular(Float size);
+        
+        ///Returns a new autoreleased platform-specific bold weight font of a given size.
+        ///
+        /// \param  size    The size to use for the font.
+        ///
+        /// \result A new autoreleased Font instance.
+        ///
+        static Font *bold(Float size);
+        
+        ///Returns a new autoreleased platform-specific italic weight font of a given size.
+        ///
+        /// \param  size    The size to use for the font.
+        ///
+        /// \result A new autoreleased Font instance.
+        ///
+        static Font *italic(Float size);
         
 #pragma mark - Lifecycle
         

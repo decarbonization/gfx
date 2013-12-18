@@ -115,6 +115,9 @@ Text
 The text portion of the graphics stack is currently a bit anemic. Only basic text operations are currently available. This is mostly a matter of figuring out the best way to expose the complex APIs into the language.
 
 - `font (str num -- font)`: Looks up a font with name `str` of size `num` and pushes it onto the stack. Throws an exception of the font cannot be found. The name of the font is the post-script name.
+- `font/regular (num -- font)`: Looks up the platform specific regular weight system font with a given size `num`, yielding the result.
+ `font/bold (num -- font)`: Looks up the platform specific bold weight system font with a given size `num`, yielding the result.
+  `font/italic (num -- font)`: Looks up the platform specific italic weight system font with a given size `num`, yielding the result.
 - `text (font color str -- text)`: Creates a new text with a font, color, and string.
 - `text/size (text -- vec)`: Indicates the bounding box of a text.
 - `text/draw-at (text vec -- )`: Renders the text at point-vector `vec`. The text will be rendered starting from the given point-vector. It will wrap if its width exceeds the area between the x-coordinate and the right edge of the containing context. __Note:__ this function may be removed due to its behavior being borderline too magical.
