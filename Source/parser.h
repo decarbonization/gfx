@@ -101,6 +101,7 @@ namespace gfx {
         ///Parses a number at the current parser position, returning it.
         Number *parseNumber();
         
+        ///Parses an annotation at the current parser position, returning it.
         Annotation *parseAnnotation();
         
         ///Parses a subexpression at the current position.

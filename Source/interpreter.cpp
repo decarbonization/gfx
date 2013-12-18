@@ -129,16 +129,43 @@ namespace gfx {
         } else if(part->isKindOfClass<Expression>()) {
             Expression *expression = static_cast<Expression *>(part);
             
-            if(expression->type() == Expression::Type::Vector) {
-                auto vector = make<Array<Base>>();
-                for (Base *subexpression : expression->subexpressions()) {
-                    this->evalExpression(subexpression, EvalContext::Vector);
-                    vector->append(currentFrame->pop());
+            switch (expression->type()) {
+                case Expression::Type::Vector: {
+                    auto vector = make<Array<Base>>();
+                    for (Base *subexpression : expression->subexpressions()) {
+                        this->evalExpression(subexpression, EvalContext::Vector);
+                        vector->append(currentFrame->pop());
+                    }
+                    
+                    currentFrame->push(vector);
+                    
+                    break;
                 }
-                
-                currentFrame->push(vector);
-            } else if(expression->type() == Expression::Type::Function) {
-                currentFrame->push(make<InterpretedFunction>(expression));
+                    
+                case Expression::Type::Hash: {
+                    auto subexpressions = expression->subexpressions();
+                    auto count = subexpressions->count();
+                    if((count % 2) != 0) {
+                        fail(str("Malformed hash literal"), expression->offset());
+                    }
+                    
+                    auto dictionary = make<Dictionary<Base, Base>>();
+                    for (Index i = 0; i < count; i += 2) {
+                        auto key = subexpressions->at(i);
+                        auto value = subexpressions->at(i + 1);
+                        dictionary->set(key, value);
+                    }
+                    
+                    currentFrame->push(dictionary);
+                    
+                    break;
+                }
+                    
+                case Expression::Type::Function: {
+                    currentFrame->push(make<InterpretedFunction>(expression));
+                    
+                    break;
+                }
             }
         } else if(part->isKindOfClass<Annotation>() && context == EvalContext::Normal) {
             AnnotationFoundSignal(static_cast<Annotation *>(part));

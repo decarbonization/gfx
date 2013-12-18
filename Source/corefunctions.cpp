@@ -607,32 +607,6 @@ namespace gfx {
     
 #pragma mark - Hash Functions
     
-    
-    static Base *const kHashThunk = new Base();
-    static void hash_begin(StackFrame *frame)
-    {
-        /* -- HashThunk */
-        frame->push(kHashThunk);
-    }
-    
-    static void hash_end(StackFrame *frame)
-    {
-        /* HashThunk ... -- hash */
-        Dictionary<Base, Base> *hash = make<Dictionary<Base, Base>>();
-        for (;;) {
-            Base *value = frame->pop();
-            if(value == kHashThunk)
-                break;
-            
-            Base *key = frame->pop();
-            gfx_assert(key != kHashThunk, str("odd number keys in hash"));
-            
-            hash->set(key, value);
-        }
-        
-        frame->push(hash);
-    }
-    
     static void hash_get(StackFrame *frame)
     {
         /* hash val -- val */
@@ -912,8 +886,6 @@ namespace gfx {
         
         
         //Hash Functions
-        frame->createFunctionBinding(str("hash/begin"), &hash_begin);
-        frame->createFunctionBinding(str("hash/end"), &hash_end);
         frame->createFunctionBinding(str("hash/get"), &hash_get);
         frame->createFunctionBinding(str("hash/concat"), &hash_concat);
         frame->createFunctionBinding(str("hash/each-pair"), &hash_eachPair);

@@ -26,6 +26,9 @@ namespace gfx {
             ///The Expression is a vector.
             Vector,
             
+            ///The Expression is a hash.
+            Hash,
+            
             ///The expression is a function.
             Function,
         };

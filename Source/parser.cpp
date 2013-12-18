@@ -21,6 +21,7 @@ namespace gfx {
         kCommentEnd = ')',
         kAnnotationMarker = '%',
         
+        kHashMarker = '#',
         kVectorBegin = '[',
         kVectorEnd = ']',
         
@@ -323,6 +324,9 @@ namespace gfx {
                     this->moveToNext(kCommentEnd);
                     this->next();
                 }
+            } else if(c == kHashMarker && peek(1) == kVectorBegin) {
+                next(); // kHashMarker
+                return this->parseSubexpression(Expression::Type::Hash, kVectorBegin, kVectorEnd);
             } else if(is_vector(c)) {
                 return this->parseSubexpression(Expression::Type::Vector, kVectorBegin, kVectorEnd);
             } else if(is_function(c)) {
