@@ -333,7 +333,7 @@ namespace gfx {
         if(wordOrWords && wordOrWords->isKindOfClass<Array<Base>>()) {
             auto words = static_cast<Array<Base> *>(wordOrWords);
             for (Index index = words->count() - 1; index >= 0; index--) {
-                Word *word = static_cast<Word *>(words->at(index));
+                Word *word = dynamic_cast_or_throw<Word *>(words->at(index));
                 frame->setBindingToValue(word->string(), frame->pop(), false);
             }
         } else if(wordOrWords && wordOrWords->isKindOfClass<Word>()) {
@@ -874,6 +874,7 @@ namespace gfx {
         
         frame->createFunctionBinding(str("->void"), &drop);
         frame->createFunctionBinding(str("let"), &bind);
+        frame->createFunctionBinding(str("=>"), &bind);
         frame->createFunctionBinding(str("set!"), &set);
         frame->createFunctionBinding(str("destruct!"), &destructure);
         
