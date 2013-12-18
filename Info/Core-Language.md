@@ -66,7 +66,7 @@ Boolean literals come in the form of two reserved words, `true` and `false`. The
 
 ##Words
 
-Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `rt/showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a tick, like `'hello`. Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3. Words beginning with `#` are currently reserved for the Gfx language for future usage.
+Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `__showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a tick, like `'hello`. Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3. Words beginning with `#` are currently reserved for the Gfx language for future usage.
 
 ##Other Types
 
@@ -246,13 +246,11 @@ Gfx comes with a small set of core functions that emulate various syntax level f
 
 Gfx exposes a small set of stack functions to allow manipulating the stack directly. These functions are:
 
-* `rt/dup ( val -- val val )`: duplicates the top most value on the stack.
-* `rt/swap ( a b -- b a )`: swaps two values on the stack.
-* `rt/drop ( val -- )`: removes a value from the stack.
-* `rt/clear ( ... -- )`: removes all values from the stack.
-* `rt/showstack ( -- )`: prints the contents of the stack to the papertape.
-* `rt/backtrace ( -- )`: prints the current function backtrace to the papertape.
-* `rt/reset ( -- )`: destroys the current stack and its children, and clears whatever graphics were previously drawn.
+* `__dup ( val -- val val )`: duplicates the top most value on the stack.
+* `__swap ( a b -- b a )`: swaps two values on the stack.
+* `__drop ( val -- )`: removes a value from the stack.
+* `__clear ( ... -- )`: removes all values from the stack.
+* `__showstack ( -- )`: prints the contents of the stack to the papertape.
 
 ##Type Conversion Functions
 
