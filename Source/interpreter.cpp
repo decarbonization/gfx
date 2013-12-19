@@ -68,6 +68,33 @@ namespace gfx {
         });
         
         this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
+            auto wordString = word->string();
+            if(wordString->find(str("."), Range(0, wordString->length()))) {
+                auto pieces = SplitString(wordString, str("."));
+                Base *result = currentFrame->bindingValue(pieces->first()) ?: Null::shared();
+                if(pieces->count() > 1) {
+                    pieces->iterate(Range(1, pieces->count() - 1), [this, word, currentFrame, &result](String *subword, Index index, bool *stop) {
+                        if(result->isKindOfClass<Dictionary<Base, Base>>()) {
+                            auto dictionary = static_cast<Dictionary<Base, Base> *>(result);
+                            result = dictionary->get(subword);
+                        } else if(result == Null::shared()) {
+                            *stop = true;
+                            return;
+                        } else {
+                            this->fail((String::Builder() << "Non-dictionary object used in dot-lookup: " << result), word->offset());
+                        }
+                    });
+                }
+                
+                currentFrame->push(result);
+                
+                return true;
+            } else {
+                return false;
+            }
+        });
+        
+        this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
             auto value = currentFrame->bindingValue(word->string());
             if(value) {
                 currentFrame->push(value);
@@ -151,8 +178,12 @@ namespace gfx {
                     
                     auto dictionary = make<Dictionary<Base, Base>>();
                     for (Index i = 0; i < count; i += 2) {
-                        auto key = subexpressions->at(i);
-                        auto value = subexpressions->at(i + 1);
+                        this->evalExpression(subexpressions->at(i), EvalContext::Vector);
+                        auto key = currentFrame->pop();
+                        
+                        this->evalExpression(subexpressions->at(i + 1), EvalContext::Vector);
+                        auto value = currentFrame->pop();
+                        
                         dictionary->set(key, value);
                     }
                     

@@ -130,7 +130,7 @@ namespace gfx {
     
     void StackFrame::iterate(std::function<void(Base *value, Index index, bool *stop)> function) const
     {
-        mStorage->iterate(function);
+        mStorage->iterate(mStorage->all(), function);
     }
     
 #pragma mark - Parent

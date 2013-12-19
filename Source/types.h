@@ -33,6 +33,11 @@ namespace gfx {
     ///A type used for indexes, counts, etc.
     typedef CFIndex     Index;
     
+    enum {
+        ///Special value used to indicate something could not be found.
+        NotFound = kCFNotFound
+    };
+    
     ///A type for ranges of bytes, characters, etc.
     struct Range : CFRange
     {
@@ -64,6 +69,11 @@ namespace gfx {
         bool contains(Index index) const
         {
             return (index >= this->location && index <= this->max());
+        }
+        
+        operator bool() const
+        {
+            return (this->location != NotFound);
         }
     };
     

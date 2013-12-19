@@ -25,7 +25,7 @@ namespace gfx {
         
         cf::AutoRef<CGColorSpaceRef> colorSpace = CGColorSpaceCreateDeviceRGB();
         cf::MutableArrayAutoRef nativeColors = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-        colors->iterate([nativeColors](Color *color, Index index, bool *stop) {
+        colors->iterate(colors->all(), [nativeColors](Color *color, Index index, bool *stop) {
             CFArrayAppendValue(nativeColors, color->get());
         });
         mStorage = CGGradientCreateWithColors(colorSpace, nativeColors, &locations[0]);

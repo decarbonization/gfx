@@ -80,7 +80,7 @@ namespace gfx {
             String::Builder description;
             description << "{\n";
             
-            iterate([&description](T *value, Index index, bool *stop) {
+            iterate(all(), [&description](T *value, Index index, bool *stop) {
                 AutoreleasePool pool;
                 
                 description << "\t";
@@ -299,11 +299,19 @@ namespace gfx {
         
     public:
         
-        ///Enumerates the contents of the receiver, applying a given function with each value.
-        void iterate(std::function<void(T *value, Index index, bool *stop)> function) const
+        ///Returns a range that encompasses the entirety of the array's contents.
+        Range all() const
         {
+            return Range(0, count());
+        }
+        
+        ///Enumerates the contents of the receiver, applying a given function with each value.
+        void iterate(Range range, std::function<void(T *value, Index index, bool *stop)> function) const
+        {
+            gfx_assert(range.max() <= count(), str("bad range"));
+            
             bool stop = false;
-            for (Index index = 0, count = this->count(); index < count; index++) {
+            for (Index index = range.location, count = range.max(); index < count; index++) {
                 function(this->at(index), index, &stop);
                 
                 if(stop)
@@ -313,12 +321,14 @@ namespace gfx {
         
         ///Maps the contents of the receiver, applying a given function with each value,
         ///and placing the returned value of the function into a new array.
-        const Array *map(std::function<T *(T *value, Index index, bool *stop)> function) const
+        const Array *map(Range range, std::function<T *(T *value, Index index, bool *stop)> function) const
         {
+            gfx_assert(range.max() <= count(), str("bad range"));
+            
             Array<T> *newArray = make<Array<T>>();
             
             bool stop = false;
-            for (Index index = 0, count = this->count(); index < count; index++) {
+            for (Index index = range.location, count = range.max(); index < count; index++) {
                 T *newValue = function(this->at(index), index, &stop);
                 newArray->append(newValue);
                 if(stop)
@@ -330,12 +340,14 @@ namespace gfx {
         
         ///Filters the contents of the receiver, applying a given function with each value,
         ///and placing the values for which the function returns true in a new array.
-        const Array *filter(std::function<bool(T *value, Index index, bool *stop)> function) const
+        const Array *filter(Range range, std::function<bool(T *value, Index index, bool *stop)> function) const
         {
+            gfx_assert(range.max() <= count(), str("bad range"));
+            
             Array<T> *newArray = make<Array<T>>();
             
             bool stop = false;
-            for (Index index = 0, count = this->count(); index < count; index++) {
+            for (Index index = range.location, count = range.max(); index < count; index++) {
                 T *value =this->at(index);
                 if(function(value, index, &stop))
                    newArray->append(value);
@@ -453,7 +465,7 @@ namespace gfx {
         gfx_assert_param(separatorString);
         
         cf::MutableArrayAutoRef cfStrings = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-        values->iterate([cfStrings](Base *value, Index index, bool *stop) {
+        values->iterate(values->all(), [cfStrings](Base *value, Index index, bool *stop) {
             CFArrayAppendValue(cfStrings, value->description()->getStorage());
         });
         

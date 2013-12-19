@@ -180,7 +180,7 @@ namespace gfx {
         mBacking->render(context);
         
         if(!LayerBacking::RendersOwnSublayers) {
-            mSublayers->iterate([context](Layer *sublayer, Index index, bool *stop) {
+            mSublayers->iterate(mSublayers->all(), [context](Layer *sublayer, Index index, bool *stop) {
                 sublayer->render(context);
             });
         }

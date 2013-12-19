@@ -337,8 +337,13 @@ namespace gfx {
                 frame->setBindingToValue(word->string(), frame->pop(), false);
             }
         } else if(wordOrWords && wordOrWords->isKindOfClass<Word>()) {
+            auto wordString = static_cast<Word *>(wordOrWords)->string();
+            if(wordString->find(str("."), Range(0, wordString->length()))) {
+                throw Exception(str("Dot-syntax is only supported for lookup, cannot use with let."), nullptr);
+            }
+            
             Base *value = frame->pop();
-            frame->setBindingToValue(static_cast<Word *>(wordOrWords)->string(), value, false);
+            frame->setBindingToValue(wordString, value, false);
         } else {
             gfx_assert(false, str("bind is being used incorrectly"));
         }
@@ -347,6 +352,11 @@ namespace gfx {
     static void set(StackFrame *frame)
     {
         Word *word = frame->popType<Word>();
+        auto wordString = word->string();
+        if(wordString->find(str("."), Range(0, wordString->length()))) {
+            throw Exception(str("Dot-syntax is only supported for lookup, cannot use with set."), nullptr);
+        }
+        
         Base *value = frame->pop();
         frame->setBindingToValue(word->string(), value);
     }
@@ -572,7 +582,7 @@ namespace gfx {
         /* vec func -- */
         Function *function = frame->popFunction();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        vector->iterate([frame, function](Base *value, Index index, bool *stop) {
+        vector->iterate(vector->all(), [frame, function](Base *value, Index index, bool *stop) {
             frame->push(value);
             function->apply(frame);
             frame->safeDrop();
@@ -584,7 +594,7 @@ namespace gfx {
         /* vec func -- vec */
         Function *function = frame->popFunction();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        const Array<Base> *result = vector->filter([frame, function](Base *value, Index index, bool *stop) {
+        const Array<Base> *result = vector->filter(vector->all(), [frame, function](Base *value, Index index, bool *stop) {
             frame->push(value);
             function->apply(frame);
             return (bool)frame->popNumber()->value();
@@ -597,7 +607,7 @@ namespace gfx {
         /* vec func -- vec */
         Function *function = frame->popFunction();
         Array<Base> *vector = frame->popType<Array<Base>>();
-        const Array<Base> *result = vector->map([frame, function](Base *value, Index index, bool *stop) -> Base * {
+        const Array<Base> *result = vector->map(vector->all(), [frame, function](Base *value, Index index, bool *stop) -> Base * {
             frame->push(value);
             function->apply(frame);
             return frame->pop();
