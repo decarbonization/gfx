@@ -1,5 +1,5 @@
 //
-//  osx_wrappers.h
+//  platform/osx.h
 //  gfx
 //
 //  Created by Kevin MacWhinnie on 12/2/13.

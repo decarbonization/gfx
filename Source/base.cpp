@@ -14,7 +14,7 @@
 #include "str.h"
 
 #if TARGET_OS_MAC
-#   import "osx_wrappers.h"
+#   import "platform/osx.h"
 #endif /* TARGET_OS_MAC */
 
 namespace gfx {
