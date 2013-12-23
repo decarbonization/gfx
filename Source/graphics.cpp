@@ -134,7 +134,7 @@ namespace gfx {
     
     void Graphics::AttachTo(Interpreter *interpreter)
     {
-        Graphics::addTo(interpreter->currentFrame());
+        Graphics::addTo(interpreter->rootFrame());
         interpreter->prependWordHandler([interpreter](StackFrame *currentFrame, Word *word) {
             if(word->string()->hasPrefix(str("#"))) {
                 auto color = make<Color>(word->string());

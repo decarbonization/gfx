@@ -45,9 +45,14 @@
         _gfxLayer = nullptr;
     }
     
-    self.interpreter = nil;
-    self.code = nil;
-    self.parsedCode = nil;
+    [_interpreter release];
+    _interpreter = nil;
+    
+    [_parsedCode release];
+    _parsedCode = nil;
+    
+    [_code release];
+    _code = nil;
     
     [super dealloc];
 }
@@ -107,15 +112,12 @@
 - (void)drawGraphicsLayer:(gfx::Layer *)layer inRect:(gfx::Rect)rect
 {
     if(_parsedCode) {
-        [_interpreter pushEmptyStackFrame];
-        
         NSError *error = nil;
-        if([_interpreter evaluate:_parsedCode error:&error])
+        GFXValue *stackFrame = [_interpreter emptyStackFrameWithParentFrame:[_interpreter rootStackFrame]];
+        if([_interpreter evaluate:_parsedCode withStackFrame:stackFrame error:&error])
             [self.delegate layerDidFinishRendering:self];
         else
             [self handleRenderTimeError:error];
-        
-        [_interpreter popTopStackFrame];
     } else {
         gfx::Color::white()->set();
         gfx::Path::fillRect(rect);

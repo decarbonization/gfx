@@ -31,6 +31,8 @@ namespace gfx {
         }
     };
     
+#pragma mark - Overrides
+    
     void NativeFunction::apply(StackFrame *stack) const
     {
         stack->interpreter()->enteredFunction(this);
@@ -46,7 +48,7 @@ namespace gfx {
         return (String::Builder() << "&'" << mName << "'");
     }
     
-#pragma mark -
+#pragma mark - Lifecycle
     
     InterpretedFunction::InterpretedFunction(Expression *source) :
         mSource(retained(source))
@@ -56,7 +58,10 @@ namespace gfx {
     InterpretedFunction::~InterpretedFunction()
     {
         released(mSource);
+        mSource = nullptr;
     }
+    
+#pragma mark - Overrides
     
     void InterpretedFunction::apply(StackFrame *stack) const
     {
@@ -66,16 +71,14 @@ namespace gfx {
         interpreter->enteredFunction(this);
         
         StackFrame *functionFrame = make<StackFrame>(stack, interpreter);
-        interpreter->pushFrame(functionFrame);
         at_end finally([stack, this, interpreter, functionFrame] {
-            interpreter->popFrame();
             interpreter->exitedFunction(this);
             
             if(!functionFrame->empty())
                 stack->push(functionFrame->pop());
         });
         
-        interpreter->eval(mSource->subexpressions(), Interpreter::EvalContext::Function);
+        interpreter->eval(functionFrame, mSource->subexpressions(), Interpreter::EvalContext::Function);
     }
     
     const String *InterpretedFunction::description() const

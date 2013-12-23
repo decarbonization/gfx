@@ -43,33 +43,29 @@ FOUNDATION_EXTERN NSString *const GFXInterpreterFoundAnnotationNotification;
 ///Evaluates an abstract syntax tree returned by `-[self parseString:error:]`.
 ///
 /// \param  value       The abstract syntax tree. Required.
+/// \param  stackFrame  The stack frame. Required.
 /// \param  outError    On returns, contains any evaluation errors that occurred.
 ///
 /// \result YES if the abstract syntax tree could be evaluated; NO otherwise.
-- (BOOL)evaluate:(GFXValue *)value error:(NSError **)outError;
+- (BOOL)evaluate:(GFXValue *)value withStackFrame:(GFXValue *)stackFrame error:(NSError **)outError;
 
 #pragma mark -
 
 ///Parse and evaluates the contents of a given string.
 ///
 /// \param  string      The string to parse and evaluate. Required.
+/// \param  stackFrame  The stack frame. Required.
 /// \param  outError    On return, contains any parsing and evaluation errors that occurred.
 ///
 /// \result YES if the string could be parsed and evaluated; NO otherwise.
-- (BOOL)evaluateString:(NSString *)string error:(NSError **)outError;
+- (BOOL)evaluateString:(NSString *)string withStackFrame:(GFXValue *)stackFrame error:(NSError **)outError;
 
 #pragma mark - Stack Frames
 
-///Pushes a new empty stack frame into the interpreter.
-///
-/// \result YES if the stack frame could be pushed; NO otherwise.
-///
-- (BOOL)pushEmptyStackFrame;
+///Returns the root stack frame of the interpreter.
+- (GFXValue *)rootStackFrame;
 
-///Pops the top most stack frame from the interpreter.
-///
-/// \result YES if the frame was popped; NO otherwise.
-///
-- (BOOL)popTopStackFrame;
+///Returns a new autoreleased stack frame suitable for use with the evaluation methods on GFXInterpreter.
+- (GFXValue *)emptyStackFrameWithParentFrame:(GFXValue *)parentFrame;
 
 @end

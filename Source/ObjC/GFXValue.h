@@ -123,7 +123,7 @@ namespace gfx {
             return nullptr;
         
         auto object = value.object;
-        auto result = dynamic_cast<T *>(object);
+        auto result = dynamic_cast<T *>(const_cast<Base *>(object));
         if(result == nullptr)
             [NSException raise:NSInternalInconsistencyException format:@"Type mismatch in lift_value."];
         

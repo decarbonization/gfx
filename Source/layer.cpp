@@ -191,14 +191,13 @@ namespace gfx {
     static void layer_make(StackFrame *stack)
     {
         /* vec func -- Layer */
+        Scoped<StackFrame> stackFrame = stack;
         Scoped<Function> drawFunction = stack->popFunction();
         auto frame = VectorToRect(stack->popType<Array<Base>>());
-        Interpreter *interpreter = stack->interpreter();
-        stack->push(make<Layer>(frame, [interpreter, drawFunction](Layer *layer, Rect rect) {
-            StackFrame *frame = interpreter->currentFrame();
-            frame->push(VectorFromRect(rect));
-            drawFunction->apply(frame);
-            frame->safeDrop();
+        stack->push(make<Layer>(frame, [stackFrame, drawFunction](Layer *layer, Rect rect) {
+            stackFrame->push(VectorFromRect(rect));
+            drawFunction->apply(stackFrame);
+            stackFrame->safeDrop();
         }));
     }
     

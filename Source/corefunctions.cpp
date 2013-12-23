@@ -228,7 +228,7 @@ namespace gfx {
     static void import(StackFrame *frame)
     {
         String *filename = frame->popString();
-        if(frame->interpreter()->import(filename))
+        if(frame->interpreter()->import(frame, filename))
             frame->push(Number::True());
         else
             frame->push(Number::False());

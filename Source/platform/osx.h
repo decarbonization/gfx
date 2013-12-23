@@ -23,6 +23,10 @@ namespace gfx {
         void autorelease_pool_drain(NSAutoreleasePool **ioPool);
         void autorelease_pool_add(NSAutoreleasePool *pool, const Base *object);
         void autorelease_pool_current_add(const Base *object);
+        
+#pragma mark -
+        
+        float display_default_scale_get();
     }
 }
 

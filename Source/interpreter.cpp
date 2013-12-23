@@ -45,18 +45,14 @@ namespace gfx {
 #pragma mark - Lifecycle
     
     Interpreter::Interpreter() :
-        mRootFrame(),
-        mFrames(),
+        Base(),
+        mRootFrame(retained(CoreFunctions::createCoreFunctionFrame(this))),
         mRunningFunctions(new Array<const Function>),
-        mSearchPaths(make<Array<const String>>()),
+        mSearchPaths(new Array<const String>()),
         mImportAllowed(true),
         mWordHandlers(),
-        AnnotationFoundSignal(str("gfx::Interpreter::AnnotationFoundSignal")),
-        ResetSignal(str("gfx::Interpreter::ResetSignal"))
+        AnnotationFoundSignal(str("gfx::Interpreter::AnnotationFoundSignal"))
     {
-        mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
-        this->pushFrame(mRootFrame);
-        
         this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
             if(word->string()->hasPrefix(str("'"))) {
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
@@ -114,8 +110,14 @@ namespace gfx {
     
     Interpreter::~Interpreter()
     {
-        while (!mFrames.empty())
-            this->popFrame();
+        released(mRootFrame);
+        mRootFrame = nullptr;
+        
+        released(mRunningFunctions);
+        mRunningFunctions = nullptr;
+        
+        released(mSearchPaths);
+        mSearchPaths = nullptr;
     }
     
 #pragma mark - Interpretation
@@ -131,17 +133,16 @@ namespace gfx {
         throw Exception(extendedReason, userInfo);
     }
     
-    void Interpreter::evalExpression(Base *part, EvalContext context)
+    void Interpreter::evalExpression(StackFrame *currentFrame, Base *part, EvalContext context)
     {
-        StackFrame *currentFrame = this->currentFrame();
-        gfx_assert(currentFrame != nullptr, str("stack frame is required"));
+        gfx_assert_param(currentFrame);
         
         if(part->isKindOfClass<Word>()) {
             auto word = static_cast<Word *>(part);
             if(word->string()->hasPrefix(str("&"))) {
                 //Looking up functions without applying them is a special case for now.
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
-                this->evalExpression(make<Word>(rawWord, word->offset()), EvalContext::Vector);
+                this->evalExpression(currentFrame, make<Word>(rawWord, word->offset()), EvalContext::Vector);
             } else {
                 if(!this->handleWord(currentFrame, word))
                     failForUnboundWord(word);
@@ -160,7 +161,7 @@ namespace gfx {
                 case Expression::Type::Vector: {
                     auto vector = make<Array<Base>>();
                     for (Base *subexpression : expression->subexpressions()) {
-                        this->evalExpression(subexpression, EvalContext::Vector);
+                        this->evalExpression(currentFrame, subexpression, EvalContext::Vector);
                         vector->append(currentFrame->pop());
                     }
                     
@@ -178,10 +179,10 @@ namespace gfx {
                     
                     auto dictionary = make<Dictionary<Base, Base>>();
                     for (Index i = 0; i < count; i += 2) {
-                        this->evalExpression(subexpressions->at(i), EvalContext::Vector);
+                        this->evalExpression(currentFrame, subexpressions->at(i), EvalContext::Vector);
                         auto key = currentFrame->pop();
                         
-                        this->evalExpression(subexpressions->at(i + 1), EvalContext::Vector);
+                        this->evalExpression(currentFrame, subexpressions->at(i + 1), EvalContext::Vector);
                         auto value = currentFrame->pop();
                         
                         dictionary->set(key, value);
@@ -203,34 +204,16 @@ namespace gfx {
         }
     }
     
-    void Interpreter::eval(const Array<Base> *expressions, EvalContext context)
+    void Interpreter::eval(StackFrame *currentFrame, const Array<Base> *expressions, EvalContext context)
     {
+        gfx_assert_param(currentFrame);
+        
         if(!expressions)
             return;
         
         for (Base *expression : expressions) {
-            this->evalExpression(expression, context);
+            this->evalExpression(currentFrame, expression, context);
         }
-    }
-    
-#pragma mark - Resetting
-    
-    void Interpreter::reset()
-    {
-        AutoreleasePool pool;
-#if GFX_Include_GraphicsStack
-        Context::emptyContextStack();
-#endif /* GFX_Include_GraphicsStack */
-        
-        while (!mFrames.empty())
-            this->popFrame();
-        
-        mRootFrame = CoreFunctions::createCoreFunctionFrame(this);
-        this->pushFrame(mRootFrame);
-        
-        mRunningFunctions->removeAll();
-        
-        ResetSignal(this);
     }
     
 #pragma mark - Word Handling
@@ -269,31 +252,9 @@ namespace gfx {
     
 #pragma mark - Stack Frames
     
-    void Interpreter::pushFrame(StackFrame *frame)
+    StackFrame *Interpreter::rootFrame() const
     {
-        mFrames.push(retained(frame));
-    }
-    
-    void Interpreter::popFrame()
-    {
-        if(mFrames.empty())
-            throw Exception(str("Frame stack underflow."), nullptr);
-        
-        mFrames.top()->autorelease();
-        mFrames.pop();
-    }
-    
-    StackFrame *Interpreter::currentFrame() const
-    {
-        return mFrames.top();
-    }
-    
-    Base *Interpreter::lastValue() const
-    {
-        if(this->currentFrame()->empty())
-            return nullptr;
-        else
-            return this->currentFrame()->peak();
+        return retained_autoreleased(mRootFrame);
     }
     
 #pragma mark - Backtrace Tracking
@@ -357,7 +318,7 @@ namespace gfx {
     
 #pragma mark -
     
-    bool Interpreter::import(const String *filename)
+    bool Interpreter::import(StackFrame *frame, const String *filename)
     {
         gfx_assert_param(filename);
         
@@ -373,7 +334,7 @@ namespace gfx {
             if(File::exists(path)) {
                 try {
                     const String *source = File::readFileAtPath(filename);
-                    this->eval(Parser(source).parse());
+                    this->eval(frame, Parser(source).parse());
                 } catch (Exception e) {
                     return false;
                 }

@@ -63,6 +63,7 @@ void run_repl(Interpreter *interpreter, gfx::Size canvasSize)
     
     rl_initialize();
     
+    auto frame = make<StackFrame>(interpreter->rootFrame(), interpreter);
     String *buffer = make<String>();
     for (;;) {
         AutoreleasePool pool;
@@ -89,8 +90,8 @@ void run_repl(Interpreter *interpreter, gfx::Size canvasSize)
         add_history(buffer->getCString());
         
         try {
-            interpreter->eval(Parser(buffer).parse());
-            interpreter->currentFrame()->iterate([](Base *value, Index index, bool *stop) {
+            interpreter->eval(frame, Parser(buffer).parse());
+            frame->iterate([](Base *value, Index index, bool *stop) {
                 PaperTape::WriteLine(value->description());
             });
         } catch (Exception e) {
@@ -153,9 +154,6 @@ int main(int argc, const char * argv[])
     }
     
     Context::pushContext(Context::bitmapContextWith(canvasSize));
-    interpreter->ResetSignal += [canvasSize](Interpreter *unused) {
-        Context::pushContext(Context::bitmapContextWith(canvasSize));
-    };
     
     for (const String *filePath : files) {
         File *file = nullptr;
@@ -166,8 +164,10 @@ int main(int argc, const char * argv[])
         }
         
         try {
-            if(file)
-                interpreter->eval(Parser(file->readString(file->length())).parse());
+            if(file) {
+                auto frame = make<StackFrame>(interpreter->rootFrame(), interpreter);
+                interpreter->eval(frame, Parser(file->readString(file->length())).parse());
+            }
         } catch (Exception e) {
             std::cerr << filePath << " !!! " << e.reason()->getCString() << std::endl;
         }

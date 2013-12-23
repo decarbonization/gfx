@@ -16,6 +16,8 @@
 #include "graphics.h"
 #include "file.h"
 
+#include "osx.h"
+
 namespace gfx {
     
 #pragma mark - Context Stack
@@ -53,19 +55,7 @@ namespace gfx {
     
     Float Context::defaultScale()
     {
-#if TARGET_OS_MAC && !TARGET_OS_IPHONE
-        CGDirectDisplayID mainDisplay = CGMainDisplayID();
-        CGDisplayModeRef displayMode = CGDisplayCopyDisplayMode(mainDisplay);
-        
-        size_t scale = CGDisplayModeGetPixelHeight(displayMode) / CGDisplayModeGetHeight(displayMode);
-        
-        CGDisplayModeRelease(displayMode);
-        
-        return scale;
-#else
-#warning Current platform does not have a functional implementation for `Context::defaultScale`.
-        return 1.0
-#endif
+        return platform::display_default_scale_get();
     }
     
     Context *Context::bitmapContextWith(Size size, Float scale)

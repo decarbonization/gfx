@@ -10,8 +10,12 @@
 #include "str.h"
 #include "assertions.h"
 
+#if TARGET_OS_IPHONE
+#   import <UIKit/UIKit.h>
+#endif /* TARGET_OS_IPHONE */
+
 ///Set to 1 to include the class name in the `GFXBaseWrapper`. Useful for debugging crashes.
-#define Debug_IncludeClassName  0
+#define Debug_IncludeClassName  1
 
 @interface GFXBaseWrapper : NSObject {
     const gfx::Base *_object;
@@ -87,6 +91,26 @@ namespace gfx {
         void autorelease_pool_current_add(const Base *object)
         {
             if(object) [[[GFXBaseWrapper alloc] initWithBaseObject:object] autorelease];
+        }
+        
+#pragma mark -
+        
+        float display_default_scale_get()
+        {
+#if TARGET_OS_IPHONE
+            return [UIScreen mainScreen].scale;
+#elif TARGET_OS_MAC
+            CGDirectDisplayID mainDisplay = CGMainDisplayID();
+            CGDisplayModeRef displayMode = CGDisplayCopyDisplayMode(mainDisplay);
+            
+            size_t scale = CGDisplayModeGetPixelHeight(displayMode) / CGDisplayModeGetHeight(displayMode);
+            
+            CGDisplayModeRelease(displayMode);
+            
+            return scale;
+#else
+#   error Unsupported platform.
+#endif
         }
     }
 }

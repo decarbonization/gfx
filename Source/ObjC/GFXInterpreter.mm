@@ -95,15 +95,16 @@ NSString *const GFXInterpreterFoundAnnotationNotification = @"GFXInterpreterFoun
     }
 }
 
-- (BOOL)evaluate:(GFXValue *)value error:(NSError **)outError
+- (BOOL)evaluate:(GFXValue *)value withStackFrame:(GFXValue *)stackFrame error:(NSError **)outError
 {
     NSParameterAssert(value);
+    NSParameterAssert(stackFrame);
     
     [self requireMainThread];
     
     try {
-        auto expressions = gfx::lift_value<const gfx::Array<gfx::Base>>(value);
-        _interpreter->eval(expressions);
+        auto expressions = gfx::lift_value<gfx::Array<gfx::Base>>(value);
+        _interpreter->eval(gfx::lift_value<gfx::StackFrame>(stackFrame), expressions);
         
         return YES;
     } catch (gfx::Exception e) {
@@ -115,40 +116,29 @@ NSString *const GFXInterpreterFoundAnnotationNotification = @"GFXInterpreterFoun
 
 #pragma mark -
 
-- (BOOL)evaluateString:(NSString *)string error:(NSError **)outError
+- (BOOL)evaluateString:(NSString *)string withStackFrame:(GFXValue *)stackFrame error:(NSError **)outError
 {
     NSParameterAssert(string);
+    NSParameterAssert(stackFrame);
     
     GFXValue *expressions = [self parseString:string error:outError];
     if(!expressions)
         return NO;
     
-    return [self evaluate:expressions error:outError];
+    return [self evaluate:expressions withStackFrame:stackFrame error:outError];
 }
 
 #pragma mark - Stack Frames
 
-- (BOOL)pushEmptyStackFrame
+- (GFXValue *)rootStackFrame
 {
-    try {
-        auto newFrame = gfx::make<gfx::StackFrame>(_interpreter->currentFrame(), _interpreter);
-        _interpreter->pushFrame(newFrame);
-        
-        return YES;
-    } catch (gfx::Exception e) {
-        return NO;
-    }
+    return [GFXValue valueWithObject:_interpreter->rootFrame() takeOwnership:NO];
 }
 
-- (BOOL)popTopStackFrame
+- (GFXValue *)emptyStackFrameWithParentFrame:(GFXValue *)parentFrame
 {
-    try {
-        _interpreter->popFrame();
-        
-        return YES;
-    } catch (gfx::Exception e) {
-        return NO;
-    }
+    auto unboxedParentFrame = parentFrame? gfx::lift_value<gfx::StackFrame>(parentFrame) : nullptr;
+    return [GFXValue valueWithObject:(new gfx::StackFrame(unboxedParentFrame, _interpreter)) takeOwnership:YES];
 }
 
 @end

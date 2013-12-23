@@ -84,6 +84,8 @@ namespace gfx {
         ///Returns the name of the native function.
         const String *name() const { return retained_autoreleased(mName); }
         
+#pragma mark - Overrides
+        
         virtual const String *description() const override;
         virtual void apply(StackFrame *stack) const override;
     };
@@ -102,14 +104,19 @@ namespace gfx {
         GFX_strong Expression *mSource;
         
     public:
+        
+#pragma mark - Lifecycle
+        
         ///Constructs an interpreted function with a given source expression.
         ///
-        /// \param  source   The expression to evaluate when applied. Should not be null.
+        /// \param  source      The expression to evaluate when applied. Should not be null.
         ///
         explicit InterpretedFunction(Expression *source);
         
         ///The destructor.
         virtual ~InterpretedFunction();
+        
+#pragma mark - Overrides
         
         virtual void apply(StackFrame *stack) const override;
         virtual const String *description() const override;

@@ -14,7 +14,6 @@
 #include "offset.h"
 #include "broadcastsignal.h"
 
-#include <stack>
 #include <list>
 
 namespace gfx {
@@ -35,10 +34,7 @@ namespace gfx {
     protected:
         
         ///The root frame of the interpreter. This contains the core and graphics stack functions.
-        GFX_weak StackFrame *mRootFrame;
-        
-        ///The stack frames currently in use.
-        std::stack<StackFrame *> mFrames;
+        GFX_strong StackFrame *mRootFrame;
         
         ///The currently executing function stack trace.
         GFX_strong Array<const Function> *mRunningFunctions;
@@ -94,14 +90,15 @@ namespace gfx {
         
         ///Evaluates the a given expression object in a given context.
         ///
-        /// \param  expression  The expression to evaluate. May not be null.
-        /// \param  context     The context the expression is to be evaluated in.
+        /// \param  currentFrame    The frame to evaluate the expression within. May not be null.
+        /// \param  expression      The expression to evaluate. May not be null.
+        /// \param  context         The context the expression is to be evaluated in.
         ///
         ///The result of evaluating the expression may be retrieved through
         ///the interpreter's current stack frame's top most value.
         ///
         /// \seealso(gfx::Interpreter::lastValue)
-        void evalExpression(Base *expression, EvalContext context);
+        void evalExpression(StackFrame *currentFrame, Base *expression, EvalContext context);
         
     public:
         
@@ -112,29 +109,16 @@ namespace gfx {
         
         ///Evaluates a given array of expressions in a given context.
         ///
-        /// \param  expressions The expressions to evaluate. May not be null.
-        /// \param  context     The context to evaluate the expressions in. Default
-        ///                     value is `gfx::Interpreter::EvalContext::Normal`.
+        /// \param  currentFrame    The frame to evaluate the expressions within. May not be null.
+        /// \param  expressions     The expressions to evaluate. May not be null.
+        /// \param  context         The context to evaluate the expressions in. Default
+        ///                         value is `gfx::Interpreter::EvalContext::Normal`.
         ///
         ///The result of evaluating the expressions may be retrieved through
         ///the interpreter's current stack frame's top most value.
         ///
         /// \seealso(gfx::Interpreter::lastValue)
-        void eval(const Array<Base> *expressions, EvalContext context = EvalContext::Normal);
-        
-#pragma mark - Resetting
-        
-        ///Destroys all state associated with the interpreter,
-        ///effectively rendering it as though it were just
-        ///constructed. This method does not destroy any non-
-        ///code related state. E.g. import allowed status,
-        ///search paths will remain.
-        ///
-        /// \seealso(gfx::Interpreter::ResetSignal)
-        void reset();
-        
-        ///A signal sent whenever an interpreter is told to reset.
-        Signal<Interpreter *> ResetSignal;
+        void eval(StackFrame *currentFrame, const Array<Base> *expressions, EvalContext context = EvalContext::Normal);
         
 #pragma mark - Word Handling
         
@@ -186,20 +170,8 @@ namespace gfx {
         
 #pragma mark - Stack Frames
         
-        ///Pushes a frame onto the interpreter's frame stack. This
-        ///frame will be the target for all in-place stack operations.
-        void pushFrame(StackFrame *frame);
-        
-        ///Pops the top most frame from the interpreter's frame stack.
-        ///
-        /// \throws `gfx::Exception` if there are no frames on the stack.
-        void popFrame();
-        
-        ///Returns the top most frame on the interpreter's frame stack, if any.
-        StackFrame *currentFrame() const;
-        
-        ///Returns the top most value of the interpreter's current frame, if any.
-        Base *lastValue() const;
+        ///Returns the root frame of the interpreter.
+        StackFrame *rootFrame() const;
         
 #pragma mark - Backtrace Tracking
         
@@ -244,10 +216,11 @@ namespace gfx {
         ///Attempts to import the contents of a gfx file
         ///known by a given name into the interpreter.
         ///
+        /// \param  frame       The frame to evaluate the file within. Required.
         /// \param  filename    The name of the gfx file. Required.
         ///
         /// \result true if the file could be found and imported; false otherwise.
-        bool import(const String *filename);
+        bool import(StackFrame *frame, const String *filename);
     };
     
     template<typename NewT, typename OldT>
