@@ -167,6 +167,8 @@ namespace gfx {
 #pragma mark -
         
         ///Informs the layer that its draw functor will soon be invoked.
+        ///
+        ///This method may be invoked from a background thread.
         virtual void willDisplay();
         
         ///Draws the contents of the receiver into the current context.
@@ -176,7 +178,7 @@ namespace gfx {
         
         ///Informs the layer that its draw functor was invoked.
         ///
-        ///This method broadcasts the `gfx::Layer::DidDisplaySignal`.
+        ///This method may be invoked from a background thread.
         virtual void didDisplay();
         
         ///Marks the layer's contents as invalid, eventually invoking
@@ -201,11 +203,15 @@ namespace gfx {
         ///A signal that broadcasts whenever the Layer's contents will be redrawn.
         ///
         ///The signal parameter is the Layer that sent the signal.
+        ///
+        ///This signal may be sent from a background thread.
         Signal<Layer *> WillDisplaySignal;
         
         ///A signal that broadcasts whenever the Layer's contents are redrawn.
         ///
         ///The signal parameter is the Layer that sent the signal.
+        ///
+        ///This signal may be sent from a background thread.
         Signal<Layer *> DidDisplaySignal;
         
         

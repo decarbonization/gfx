@@ -49,7 +49,7 @@ namespace gfx {
     bool const LayerBacking::RendersOwnSublayers = true;
     
     LayerBacking::LayerBacking(Layer *layer, Rect frame, Float scale) :
-        mTexture([CALayer new]),
+        mTexture([CATiledLayer new]),
         mDelegateAdaptor([GFXLayerBackingDelegateAdaptor new]),
         mLayer(layer)
     {
@@ -111,6 +111,8 @@ namespace gfx {
     
     void LayerBacking::display()
     {
+        /* This will be called from a background thread. */
+        
         mLayer->willDisplay();
         
         Context *layerContext = Context::currentContext();
@@ -126,7 +128,7 @@ namespace gfx {
     
     void LayerBacking::setNeedsDisplay()
     {
-        [mTexture setNeedsDisplay];
+        [mTexture setNeedsDisplayInRect:mTexture.bounds];
     }
     
     void LayerBacking::render(Context *context)

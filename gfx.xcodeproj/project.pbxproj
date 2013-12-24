@@ -102,6 +102,46 @@
 		8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B89DA2D18553C8C0062EFB4 /* GFXLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */; };
 		8BCC9AD51864EDDA00AA6EDF /* osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC9AD41864EDDA00AA6EDF /* osx.mm */; };
+		8BDE764C186A4C9A0069A285 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE764B186A4C9A0069A285 /* Foundation.framework */; };
+		8BDE766F186A4D4F0069A285 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE766E186A4D4F0069A285 /* QuartzCore.framework */; };
+		8BDE7671186A4D520069A285 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE7670186A4D520069A285 /* UIKit.framework */; };
+		8BDE7673186A4D560069A285 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE7672186A4D560069A285 /* CoreText.framework */; };
+		8BDE7675186A4D5A0069A285 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE7674186A4D5A0069A285 /* ImageIO.framework */; };
+		8BDE7678186A4D800069A285 /* osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC9AD41864EDDA00AA6EDF /* osx.mm */; };
+		8BDE767B186A4D800069A285 /* assertions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C88F184BE15600DBD77C /* assertions.cpp */; };
+		8BDE767D186A4D800069A285 /* base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C891184BE15600DBD77C /* base.cpp */; };
+		8BDE767F186A4D800069A285 /* blob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C893184BE15600DBD77C /* blob.cpp */; };
+		8BDE7683186A4D800069A285 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8A2184BE15600DBD77C /* file.cpp */; };
+		8BDE7686186A4D800069A285 /* session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8BC184BE15600DBD77C /* session.cpp */; };
+		8BDE7689186A4D800069A285 /* exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C89E184BE15600DBD77C /* exception.cpp */; };
+		8BDE768B186A4D800069A285 /* str.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8C0184BE15600DBD77C /* str.cpp */; };
+		8BDE768D186A4D800069A285 /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8C2184BE15600DBD77C /* types.cpp */; };
+		8BDE768F186A4D800069A285 /* filepaths.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C90E184BECF200DBD77C /* filepaths.cpp */; };
+		8BDE7691186A4D800069A285 /* null.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121FA318615F0900BF2946 /* null.cpp */; };
+		8BDE7693186A4D800069A285 /* corefunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C89B184BE15600DBD77C /* corefunctions.cpp */; };
+		8BDE7695186A4D800069A285 /* expression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8A0184BE15600DBD77C /* expression.cpp */; };
+		8BDE7697186A4D800069A285 /* function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8A4184BE15600DBD77C /* function.cpp */; };
+		8BDE7699186A4D800069A285 /* interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8AD184BE15600DBD77C /* interpreter.cpp */; };
+		8BDE769B186A4D800069A285 /* offset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8B4184BE15600DBD77C /* offset.cpp */; };
+		8BDE769D186A4D800069A285 /* papertape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8B6184BE15600DBD77C /* papertape.cpp */; };
+		8BDE769F186A4D800069A285 /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8B8184BE15600DBD77C /* parser.cpp */; };
+		8BDE76A1186A4D800069A285 /* stackframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8BE184BE15600DBD77C /* stackframe.cpp */; };
+		8BDE76A5186A4D800069A285 /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8A9184BE15600DBD77C /* graphics.cpp */; };
+		8BDE76A7186A4D800069A285 /* color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C897184BE15600DBD77C /* color.cpp */; };
+		8BDE76A9186A4D800069A285 /* context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C899184BE15600DBD77C /* context.cpp */; };
+		8BDE76AB186A4D800069A285 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8AB184BE15600DBD77C /* image.cpp */; };
+		8BDE76AD186A4D800069A285 /* layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8AF184BE15600DBD77C /* layer.cpp */; };
+		8BDE76AF186A4D800069A285 /* layerbacking_calayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C922184D896800DBD77C /* layerbacking_calayer.mm */; };
+		8BDE76B1186A4D800069A285 /* layerbacking_cg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8B1184BE15600DBD77C /* layerbacking_cg.cpp */; };
+		8BDE76B3186A4D800069A285 /* path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C8BA184BE15600DBD77C /* path.cpp */; };
+		8BDE76B5186A4D800069A285 /* attributedstr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F94185E454400BF2946 /* attributedstr.cpp */; };
+		8BDE76B7186A4D800069A285 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B12C914184C14B000DBD77C /* font.cpp */; };
+		8BDE76B9186A4D800069A285 /* gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F99185E8A0500BF2946 /* gradient.cpp */; };
+		8BDE76BB186A4D800069A285 /* shadow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B121F9D185E9D3C00BF2946 /* shadow.cpp */; };
+		8BDE76BF186A4D800069A285 /* GFXValue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA211852DF150062EFB4 /* GFXValue.mm */; };
+		8BDE76C1186A4D800069A285 /* GFXInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA251852E13F0062EFB4 /* GFXInterpreter.mm */; };
+		8BDE76C3186A4D800069A285 /* GFXLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */; };
+		8BDE76C4186A4F360069A285 /* GFXView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D99F184DA2DC0062EFB4 /* GFXView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +172,15 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		8BDE7648186A4C9A0069A285 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -239,6 +288,13 @@
 		8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXLayer.h; sourceTree = "<group>"; };
 		8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXLayer.mm; sourceTree = "<group>"; };
 		8BCC9AD41864EDDA00AA6EDF /* osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = osx.mm; path = platform/osx.mm; sourceTree = "<group>"; };
+		8BDE764A186A4C9A0069A285 /* libgfx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgfx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BDE764B186A4C9A0069A285 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8BDE765B186A4C9A0069A285 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		8BDE766E186A4D4F0069A285 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		8BDE7670186A4D520069A285 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		8BDE7672186A4D560069A285 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
+		8BDE7674186A4D5A0069A285 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +328,18 @@
 				8B10B90E183DC95600DEB62F /* ImageIO.framework in Frameworks */,
 				8B10B909183DC22E00DEB62F /* CoreGraphics.framework in Frameworks */,
 				8B420025183488540020D1D1 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BDE7647186A4C9A0069A285 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BDE7675186A4D5A0069A285 /* ImageIO.framework in Frameworks */,
+				8BDE7673186A4D560069A285 /* CoreText.framework in Frameworks */,
+				8BDE7671186A4D520069A285 /* UIKit.framework in Frameworks */,
+				8BDE766F186A4D4F0069A285 /* QuartzCore.framework in Frameworks */,
+				8BDE764C186A4C9A0069A285 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +532,7 @@
 				8B420021183488540020D1D1 /* gsh */,
 				8B10B91B1842E92300DEB62F /* gfx-tests */,
 				8B12C826184BDF7800DBD77C /* gfx.framework */,
+				8BDE764A186A4C9A0069A285 /* libgfx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -471,6 +540,10 @@
 		8B420023183488540020D1D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8BDE7674186A4D5A0069A285 /* ImageIO.framework */,
+				8BDE7672186A4D560069A285 /* CoreText.framework */,
+				8BDE7670186A4D520069A285 /* UIKit.framework */,
+				8BDE766E186A4D4F0069A285 /* QuartzCore.framework */,
 				8B89D997184D8AEF0062EFB4 /* QuartzCore.framework */,
 				8B12C910184C148E00DBD77C /* CoreText.framework */,
 				8B12C90A184BE69900DBD77C /* libSystem.dylib */,
@@ -481,6 +554,8 @@
 				8B420024183488540020D1D1 /* CoreFoundation.framework */,
 				8B12C827184BDF7800DBD77C /* Cocoa.framework */,
 				8B12C83C184BDF7800DBD77C /* XCTest.framework */,
+				8BDE764B186A4C9A0069A285 /* Foundation.framework */,
+				8BDE765B186A4C9A0069A285 /* UIKit.framework */,
 				8B12C829184BDF7800DBD77C /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -613,6 +688,23 @@
 			productReference = 8B420021183488540020D1D1 /* gsh */;
 			productType = "com.apple.product-type.tool";
 		};
+		8BDE7649186A4C9A0069A285 /* gfx-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BDE766C186A4C9A0069A285 /* Build configuration list for PBXNativeTarget "gfx-ios" */;
+			buildPhases = (
+				8BDE7646186A4C9A0069A285 /* Sources */,
+				8BDE7647186A4C9A0069A285 /* Frameworks */,
+				8BDE7648186A4C9A0069A285 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "gfx-ios";
+			productName = "gfx-ios";
+			productReference = 8BDE764A186A4C9A0069A285 /* libgfx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -637,6 +729,7 @@
 				8B420020183488540020D1D1 /* gsh */,
 				8B10B91A1842E92300DEB62F /* gfx-tests */,
 				8B12C825184BDF7800DBD77C /* gfx */,
+				8BDE7649186A4C9A0069A285 /* gfx-ios */,
 			);
 		};
 /* End PBXProject section */
@@ -708,6 +801,48 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B12C88C184BE13A00DBD77C /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8BDE7646186A4C9A0069A285 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BDE7678186A4D800069A285 /* osx.mm in Sources */,
+				8BDE767B186A4D800069A285 /* assertions.cpp in Sources */,
+				8BDE767D186A4D800069A285 /* base.cpp in Sources */,
+				8BDE767F186A4D800069A285 /* blob.cpp in Sources */,
+				8BDE7683186A4D800069A285 /* file.cpp in Sources */,
+				8BDE7686186A4D800069A285 /* session.cpp in Sources */,
+				8BDE7689186A4D800069A285 /* exception.cpp in Sources */,
+				8BDE768B186A4D800069A285 /* str.cpp in Sources */,
+				8BDE768D186A4D800069A285 /* types.cpp in Sources */,
+				8BDE76C4186A4F360069A285 /* GFXView.m in Sources */,
+				8BDE768F186A4D800069A285 /* filepaths.cpp in Sources */,
+				8BDE7691186A4D800069A285 /* null.cpp in Sources */,
+				8BDE7693186A4D800069A285 /* corefunctions.cpp in Sources */,
+				8BDE7695186A4D800069A285 /* expression.cpp in Sources */,
+				8BDE7697186A4D800069A285 /* function.cpp in Sources */,
+				8BDE7699186A4D800069A285 /* interpreter.cpp in Sources */,
+				8BDE769B186A4D800069A285 /* offset.cpp in Sources */,
+				8BDE769D186A4D800069A285 /* papertape.cpp in Sources */,
+				8BDE769F186A4D800069A285 /* parser.cpp in Sources */,
+				8BDE76A1186A4D800069A285 /* stackframe.cpp in Sources */,
+				8BDE76A5186A4D800069A285 /* graphics.cpp in Sources */,
+				8BDE76A7186A4D800069A285 /* color.cpp in Sources */,
+				8BDE76A9186A4D800069A285 /* context.cpp in Sources */,
+				8BDE76AB186A4D800069A285 /* image.cpp in Sources */,
+				8BDE76AD186A4D800069A285 /* layer.cpp in Sources */,
+				8BDE76AF186A4D800069A285 /* layerbacking_calayer.mm in Sources */,
+				8BDE76B1186A4D800069A285 /* layerbacking_cg.cpp in Sources */,
+				8BDE76B3186A4D800069A285 /* path.cpp in Sources */,
+				8BDE76B5186A4D800069A285 /* attributedstr.cpp in Sources */,
+				8BDE76B7186A4D800069A285 /* font.cpp in Sources */,
+				8BDE76B9186A4D800069A285 /* gradient.cpp in Sources */,
+				8BDE76BB186A4D800069A285 /* shadow.cpp in Sources */,
+				8BDE76BF186A4D800069A285 /* GFXValue.mm in Sources */,
+				8BDE76C1186A4D800069A285 /* GFXInterpreter.mm in Sources */,
+				8BDE76C3186A4D800069A285 /* GFXLayer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -888,6 +1023,47 @@
 			};
 			name = Release;
 		};
+		8BDE7668186A4C9A0069A285 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DSTROOT = /tmp/gfx_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"GFX_TARGET_IOS_LIBRARY=1",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = gfx;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		8BDE7669186A4C9A0069A285 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DSTROOT = /tmp/gfx_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "GFX_TARGET_IOS_LIBRARY=1";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = gfx;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -923,6 +1099,15 @@
 			buildConfigurations = (
 				8B42002E183488540020D1D1 /* Debug */,
 				8B42002F183488540020D1D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BDE766C186A4C9A0069A285 /* Build configuration list for PBXNativeTarget "gfx-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BDE7668186A4C9A0069A285 /* Debug */,
+				8BDE7669186A4C9A0069A285 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

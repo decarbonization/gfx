@@ -6,14 +6,28 @@
 //  Copyright (c) 2013 Roundabout Software, LLC. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#if TARGET_OS_IPHONE
+#   import <UIKit/UIKit.h>
+#else
+#   import <Cocoa/Cocoa.h>
+#endif /* TARGET_OS_IPHONE */
 
 @protocol GFXViewDelegate;
 @class GFXLayer, GFXInterpreter;
 
 ///The GFXView class encapsulates a GFXLayer and GFXInterpreter
 ///and provides a very simple host to run gfx code within.
+///
+///On OS X, the `layer` of the view is an instance of `GFXLayer`.
+///Changing the value of the layer property will break the view.
+///On iOS, the GFXLayer is a child-layer of the view's root layer.
+///On both platforms, it is not recommended that subviews be added
+///to GFXView. Doing so will lead to undefined behavior.
+#if TARGET_OS_IPHONE
+@interface GFXView : UIView
+#else
 @interface GFXView : NSView
+#endif /* TARGET_OS_IPHONE */
 
 ///Initialize the receiver with a frame and interpreter.
 ///
@@ -23,15 +37,15 @@
 /// \result A fully initialized GFXView.
 ///
 ///This is the designated initializer.
-- (instancetype)initWithFrame:(NSRect)frameRect interpreter:(GFXInterpreter *)interpreter;
+- (instancetype)initWithFrame:(CGRect)frameRect interpreter:(GFXInterpreter *)interpreter;
 
 ///Initialize the receiver with a frame and create a new interpreter.
-- (instancetype)initWithFrame:(NSRect)frameRect;
+- (instancetype)initWithFrame:(CGRect)frameRect;
 
 #pragma mark - Properties
 
 ///The GFXLayer that is providing the contents of the view.
-@property (nonatomic, strong) GFXLayer *layer;
+@property (nonatomic, readonly) GFXLayer *graphicsLayer;
 
 #pragma mark -
 

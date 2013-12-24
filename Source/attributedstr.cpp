@@ -8,6 +8,7 @@
 
 #include "attributedstr.h"
 #include <CoreText/CoreText.h>
+#include <algorithm>
 
 #include "number.h"
 #include "font.h"
@@ -316,7 +317,7 @@ namespace gfx {
             }
             
             if(line) {
-                renderSize.width = MAX(renderSize.width, CTLineGetTypographicBounds(line, NULL, NULL, NULL));
+                renderSize.width = std::max<CGFloat>(renderSize.width, CTLineGetTypographicBounds(line, NULL, NULL, NULL));
                 
                 CFArrayAppendValue(lines, line);
                 CFRelease(line);
@@ -354,7 +355,7 @@ namespace gfx {
     {
         CGSize renderSize = {};
         cf::ArrayAutoRef unusedLines = CreateLinesForString(get(), lineBreakMode, constraintSize, &renderSize);
-        return { MIN(renderSize.width, constraintSize.width), MIN(renderSize.height, constraintSize.height) };
+        return { std::min(renderSize.width, constraintSize.width), std::min(renderSize.height, constraintSize.height) };
     }
     
     Size AttributedString::drawAtPoint(Point point, Float maximumWidth, LineBreakMode lineBreakMode, TextAlignment alignment)

@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>gfx-ios.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -38,6 +43,16 @@
 			<true/>
 		</dict>
 		<key>8B420020183488540020D1D1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8BDE7649186A4C9A0069A285</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8BDE7657186A4C9A0069A285</key>
 		<dict>
 			<key>primary</key>
 			<true/>

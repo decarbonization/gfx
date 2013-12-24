@@ -31,8 +31,10 @@ namespace gfx {
         Base(),
         mColor(NULL)
     {
-        CGColorRef color = CGColorCreateGenericRGB(red, green, blue, alpha);
-        mColor = color;
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGFloat components[4] = { red, green, blue, alpha };
+        mColor = CGColorCreate(colorSpace, components);
+        CGColorSpaceRelease(colorSpace);
     }
     
     Color::Color(const String *inColorString) :
@@ -49,7 +51,11 @@ namespace gfx {
             auto red = (unsigned char)(colorCode >> 16);
             auto green = (unsigned char)(colorCode >> 8);
             auto blue = (unsigned char)(colorCode);
-            mColor = CGColorCreateGenericRGB(red / 255.0, green / 255.0, blue / 255.0, 1.0);
+            
+            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+            CGFloat components[4] = { CGFloat(red / 255.0), CGFloat(green / 255.0), CGFloat(blue / 255.0), 1.0 };
+            mColor = CGColorCreate(colorSpace, components);
+            CGColorSpaceRelease(colorSpace);
         } else {
             throw Exception(str("malformed HTML color string given"), nullptr);
         }
