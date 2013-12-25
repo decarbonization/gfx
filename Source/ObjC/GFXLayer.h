@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @class GFXInterpreter;
-@protocol GFXLayerDelegate;
+@protocol GFXRenderLayerDelegate;
 
 ///The GFXLayer class is a layer that runs gfx code to populate its contents.
 ///
@@ -63,15 +63,15 @@
 @property (nonatomic, copy) NSString *code;
 
 ///The delegate of the layer.
-@property (assign) id <GFXLayerDelegate> delegate;
+@property (assign) id <GFXRenderLayerDelegate> renderDelegate;
 
 @end
 
 #pragma mark -
 
-///The GFXLayerDelegate protoocl describes the delegate methods
-///that GFXLayer provides beyond the CALayerDelegate.
-@protocol GFXLayerDelegate <NSObject>
+///The GFXRenderLayerDelegate protocol describes the signals that
+///GFXLayer produces during the course of rendering.
+@protocol GFXRenderLayerDelegate <NSObject>
 
 ///The specified layer has finished rendering.
 ///

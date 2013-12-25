@@ -117,7 +117,7 @@
         BOOL success = [_interpreter evaluate:_parsedCode withStackFrame:stackFrame error:&error];
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             if(success)
-                [self.delegate layerDidFinishRendering:self];
+                [self.renderDelegate layerDidFinishRendering:self];
             else
                 [self handleRenderTimeError:error];
         }];
@@ -131,14 +131,10 @@
 {
     self.parsedCode = nil;
     
-    [self.delegate layer:self didEncounterError:error];
+    [self.renderDelegate layer:self didEncounterError:error];
 }
 
 #pragma mark - Properties
-
-@dynamic delegate;
-
-#pragma mark -
 
 - (void)setCode:(NSString *)code
 {

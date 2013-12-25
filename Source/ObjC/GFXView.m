@@ -10,7 +10,7 @@
 #import "GFXInterpreter.h"
 #import "GFXLayer.h"
 
-@interface GFXView () <GFXLayerDelegate>
+@interface GFXView () <GFXRenderLayerDelegate>
 
 #pragma mark - readwrite
 
@@ -46,18 +46,16 @@
 #if TARGET_OS_IPHONE
         _graphicsLayer = [[GFXLayer layerWithInterpreter:_interpreter] retain];
         _graphicsLayer.frame = self.bounds;
-        _graphicsLayer.delegate = self;
+        _graphicsLayer.renderDelegate = self;
         [self.layer addSublayer:_graphicsLayer];
         
         self.backgroundColor = [UIColor whiteColor];
 #else
         [self setWantsLayer:YES];
         self.layer = [GFXLayer layerWithInterpreter:_interpreter];
-        self.layer.delegate = self;
-        
-        self.layer.backgroundColor = [NSColor whiteColor].CGColor;
-        
         _graphicsLayer = (GFXLayer *)self.layer;
+        _graphicsLayer.renderDelegate = self;
+        _graphicsLayer.backgroundColor = [NSColor whiteColor].CGColor;
 #endif /* TARGET_OS_IPHONE */
     }
     

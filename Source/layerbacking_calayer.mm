@@ -53,7 +53,9 @@ namespace gfx {
         mDelegateAdaptor([GFXLayerBackingDelegateAdaptor new]),
         mLayer(layer)
     {
+#if !TARGET_OS_IPHONE
         mTexture.geometryFlipped = YES;
+#endif /* !TARGET_OS_IPHONE */
         mTexture.frame = frame;
         mTexture.tileSize = frame.size;
         mTexture.needsDisplayOnBoundsChange = YES;

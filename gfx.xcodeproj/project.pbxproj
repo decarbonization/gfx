@@ -145,6 +145,50 @@
 		8BDE76C9186A59AF0069A285 /* threading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BDE76C7186A59AF0069A285 /* threading.cpp */; };
 		8BDE76CA186A59AF0069A285 /* threading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BDE76C7186A59AF0069A285 /* threading.cpp */; };
 		8BDE76CB186A59AF0069A285 /* threading.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BDE76C8186A59AF0069A285 /* threading.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8BDE76CC186A5D200069A285 /* gfx.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8A6184BE15600DBD77C /* gfx.h */; };
+		8BDE76CD186A5D200069A285 /* gfx_defines.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8A7184BE15600DBD77C /* gfx_defines.h */; };
+		8BDE76CE186A5D200069A285 /* osx.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99A184D8EEA0062EFB4 /* osx.h */; };
+		8BDE76CF186A5D200069A285 /* array.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C88E184BE15600DBD77C /* array.h */; };
+		8BDE76D0186A5D200069A285 /* assertions.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C890184BE15600DBD77C /* assertions.h */; };
+		8BDE76D1186A5D200069A285 /* base.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C892184BE15600DBD77C /* base.h */; };
+		8BDE76D2186A5D200069A285 /* blob.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C894184BE15600DBD77C /* blob.h */; };
+		8BDE76D3186A5D200069A285 /* broadcastsignal.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C895184BE15600DBD77C /* broadcastsignal.h */; };
+		8BDE76D4186A5D200069A285 /* cf.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C896184BE15600DBD77C /* cf.h */; };
+		8BDE76D5186A5D200069A285 /* file.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8A3184BE15600DBD77C /* file.h */; };
+		8BDE76D6186A5D200069A285 /* number.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B3184BE15600DBD77C /* number.h */; };
+		8BDE76D7186A5D200069A285 /* session.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8BD184BE15600DBD77C /* session.h */; };
+		8BDE76D8186A5D200069A285 /* dictionary.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C89D184BE15600DBD77C /* dictionary.h */; };
+		8BDE76D9186A5D210069A285 /* exception.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C89F184BE15600DBD77C /* exception.h */; };
+		8BDE76DA186A5D210069A285 /* str.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8C1184BE15600DBD77C /* str.h */; };
+		8BDE76DB186A5D210069A285 /* types.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8C3184BE15600DBD77C /* types.h */; };
+		8BDE76DC186A5D210069A285 /* filepaths.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C90C184BE75300DBD77C /* filepaths.h */; };
+		8BDE76DD186A5D210069A285 /* null.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B121FA418615F0900BF2946 /* null.h */; };
+		8BDE76DE186A5D210069A285 /* threading.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8BDE76C8186A59AF0069A285 /* threading.h */; };
+		8BDE76DF186A5D210069A285 /* corefunctions.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C89C184BE15600DBD77C /* corefunctions.h */; };
+		8BDE76E0186A5D210069A285 /* expression.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8A1184BE15600DBD77C /* expression.h */; };
+		8BDE76E1186A5D210069A285 /* function.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8A5184BE15600DBD77C /* function.h */; };
+		8BDE76E2186A5D210069A285 /* interpreter.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8AE184BE15600DBD77C /* interpreter.h */; };
+		8BDE76E3186A5D210069A285 /* offset.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B5184BE15600DBD77C /* offset.h */; };
+		8BDE76E4186A5D210069A285 /* papertape.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B7184BE15600DBD77C /* papertape.h */; };
+		8BDE76E5186A5D210069A285 /* parser.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B9184BE15600DBD77C /* parser.h */; };
+		8BDE76E6186A5D210069A285 /* stackframe.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8BF184BE15600DBD77C /* stackframe.h */; };
+		8BDE76E7186A5D210069A285 /* word.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8C4184BE15600DBD77C /* word.h */; };
+		8BDE76E8186A5D210069A285 /* annotation.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA1E1852D8B20062EFB4 /* annotation.h */; };
+		8BDE76E9186A5D210069A285 /* graphics.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8AA184BE15600DBD77C /* graphics.h */; };
+		8BDE76EA186A5D210069A285 /* color.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C898184BE15600DBD77C /* color.h */; };
+		8BDE76EB186A5D210069A285 /* context.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C89A184BE15600DBD77C /* context.h */; };
+		8BDE76EC186A5D210069A285 /* image.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8AC184BE15600DBD77C /* image.h */; };
+		8BDE76ED186A5D210069A285 /* layer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8B0184BE15600DBD77C /* layer.h */; };
+		8BDE76EE186A5D210069A285 /* path.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C8BB184BE15600DBD77C /* path.h */; };
+		8BDE76EF186A5D210069A285 /* attributedstr.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B121F95185E454400BF2946 /* attributedstr.h */; };
+		8BDE76F0186A5D210069A285 /* font.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B12C915184C14B000DBD77C /* font.h */; };
+		8BDE76F1186A5D210069A285 /* gradient.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B121F9A185E8A0500BF2946 /* gradient.h */; };
+		8BDE76F2186A5D210069A285 /* shadow.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B121F9E185E9D3C00BF2946 /* shadow.h */; };
+		8BDE76F3186A5D210069A285 /* GFXHelpers.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA28185521330062EFB4 /* GFXHelpers.h */; };
+		8BDE76F4186A5D210069A285 /* GFXValue.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA201852DF150062EFB4 /* GFXValue.h */; };
+		8BDE76F5186A5D210069A285 /* GFXInterpreter.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA241852E13F0062EFB4 /* GFXInterpreter.h */; };
+		8BDE76F6186A5D210069A285 /* GFXView.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXView.h */; };
+		8BDE76F7186A5D210069A285 /* GFXLayer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,13 +220,58 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		8BDE7648186A4C9A0069A285 /* CopyFiles */ = {
+		8BDE7648186A4C9A0069A285 /* Copy Headers */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				8BDE76CC186A5D200069A285 /* gfx.h in Copy Headers */,
+				8BDE76CD186A5D200069A285 /* gfx_defines.h in Copy Headers */,
+				8BDE76CE186A5D200069A285 /* osx.h in Copy Headers */,
+				8BDE76CF186A5D200069A285 /* array.h in Copy Headers */,
+				8BDE76D0186A5D200069A285 /* assertions.h in Copy Headers */,
+				8BDE76D1186A5D200069A285 /* base.h in Copy Headers */,
+				8BDE76D2186A5D200069A285 /* blob.h in Copy Headers */,
+				8BDE76D3186A5D200069A285 /* broadcastsignal.h in Copy Headers */,
+				8BDE76D4186A5D200069A285 /* cf.h in Copy Headers */,
+				8BDE76D5186A5D200069A285 /* file.h in Copy Headers */,
+				8BDE76D6186A5D200069A285 /* number.h in Copy Headers */,
+				8BDE76D7186A5D200069A285 /* session.h in Copy Headers */,
+				8BDE76D8186A5D200069A285 /* dictionary.h in Copy Headers */,
+				8BDE76D9186A5D210069A285 /* exception.h in Copy Headers */,
+				8BDE76DA186A5D210069A285 /* str.h in Copy Headers */,
+				8BDE76DB186A5D210069A285 /* types.h in Copy Headers */,
+				8BDE76DC186A5D210069A285 /* filepaths.h in Copy Headers */,
+				8BDE76DD186A5D210069A285 /* null.h in Copy Headers */,
+				8BDE76DE186A5D210069A285 /* threading.h in Copy Headers */,
+				8BDE76DF186A5D210069A285 /* corefunctions.h in Copy Headers */,
+				8BDE76E0186A5D210069A285 /* expression.h in Copy Headers */,
+				8BDE76E1186A5D210069A285 /* function.h in Copy Headers */,
+				8BDE76E2186A5D210069A285 /* interpreter.h in Copy Headers */,
+				8BDE76E3186A5D210069A285 /* offset.h in Copy Headers */,
+				8BDE76E4186A5D210069A285 /* papertape.h in Copy Headers */,
+				8BDE76E5186A5D210069A285 /* parser.h in Copy Headers */,
+				8BDE76E6186A5D210069A285 /* stackframe.h in Copy Headers */,
+				8BDE76E7186A5D210069A285 /* word.h in Copy Headers */,
+				8BDE76E8186A5D210069A285 /* annotation.h in Copy Headers */,
+				8BDE76E9186A5D210069A285 /* graphics.h in Copy Headers */,
+				8BDE76EA186A5D210069A285 /* color.h in Copy Headers */,
+				8BDE76EB186A5D210069A285 /* context.h in Copy Headers */,
+				8BDE76EC186A5D210069A285 /* image.h in Copy Headers */,
+				8BDE76ED186A5D210069A285 /* layer.h in Copy Headers */,
+				8BDE76EE186A5D210069A285 /* path.h in Copy Headers */,
+				8BDE76EF186A5D210069A285 /* attributedstr.h in Copy Headers */,
+				8BDE76F0186A5D210069A285 /* font.h in Copy Headers */,
+				8BDE76F1186A5D210069A285 /* gradient.h in Copy Headers */,
+				8BDE76F2186A5D210069A285 /* shadow.h in Copy Headers */,
+				8BDE76F3186A5D210069A285 /* GFXHelpers.h in Copy Headers */,
+				8BDE76F4186A5D210069A285 /* GFXValue.h in Copy Headers */,
+				8BDE76F5186A5D210069A285 /* GFXInterpreter.h in Copy Headers */,
+				8BDE76F6186A5D210069A285 /* GFXView.h in Copy Headers */,
+				8BDE76F7186A5D210069A285 /* GFXLayer.h in Copy Headers */,
 			);
+			name = "Copy Headers";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -702,7 +791,7 @@
 			buildPhases = (
 				8BDE7646186A4C9A0069A285 /* Sources */,
 				8BDE7647186A4C9A0069A285 /* Frameworks */,
-				8BDE7648186A4C9A0069A285 /* CopyFiles */,
+				8BDE7648186A4C9A0069A285 /* Copy Headers */,
 			);
 			buildRules = (
 			);
