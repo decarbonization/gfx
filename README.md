@@ -19,6 +19,7 @@ Examples
 ========
 
 - [SimpleHost](Examples/SimpleHost): A simple document-based host for OS X.
+- [SimpleHost-iPhone](Examples/SimpleHost-iPhone): A simple host that runs on iOS devices.
 
 License
 =======
