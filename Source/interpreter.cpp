@@ -47,7 +47,6 @@ namespace gfx {
     Interpreter::Interpreter() :
         Base(),
         mRootFrame(retained(CoreFunctions::createCoreFunctionFrame(this))),
-        mRunningFunctions(new Array<const Function>),
         mSearchPaths(new Array<const String>()),
         mImportAllowed(true),
         mWordHandlers(),
@@ -112,9 +111,6 @@ namespace gfx {
     {
         released(mRootFrame);
         mRootFrame = nullptr;
-        
-        released(mRunningFunctions);
-        mRunningFunctions = nullptr;
         
         released(mSearchPaths);
         mSearchPaths = nullptr;
@@ -261,24 +257,15 @@ namespace gfx {
     
     void Interpreter::enteredFunction(const Function *function)
     {
-        mRunningFunctions->append(function);
     }
     
     void Interpreter::exitedFunction(const Function *function)
     {
-        mRunningFunctions->removeLast();
     }
+    
     const String *Interpreter::backtrace() const
     {
-        String::Builder backtrace;
-        
-        backtrace << "-- backtrace for " << this << " --\n";
-        for (Index index = mRunningFunctions->count() - 1; index >= 0; index--) {
-            backtrace << mRunningFunctions->at(index) << "\n";
-        }
-        backtrace << "-- end backtrace --";
-        
-        return backtrace;
+        return str("unavailable");
     }
     
 #pragma mark - Import Support

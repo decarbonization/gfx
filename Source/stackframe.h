@@ -15,6 +15,7 @@
 #include "broadcastsignal.h"
 #include "exception.h"
 #include <tuple>
+#include <mutex>
 
 namespace gfx {
     class Interpreter;
@@ -42,8 +43,8 @@ namespace gfx {
     ///They will also clear the reference to their parent, as such it is
     ///safe to retain and continue to use the frame.
     ///
-    ///__Important:__ stack frames *are not* thread-safe. This means it is
-    ///_never_ safe to invoke a `gfx::Function` object from a secondary thread.
+    ///StackFrame includes a locking mechanism around its read and write
+    ///operations. It is guaranteed to be thread-safe.
     class StackFrame : public Base
     {
         ///The type of the exception raised by `gfx::StackFrame`
@@ -55,6 +56,9 @@ namespace gfx {
         };
         
     protected:
+        
+        ///The mutex that ensures thread-safety across read-write operations.
+        mutable std::recursive_mutex mReadWriteMutex;
         
         ///The storage for the LiFO stack of the frame.
         GFX_strong Array<Base> *mStorage;

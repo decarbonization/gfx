@@ -55,6 +55,7 @@ namespace gfx {
     {
         mTexture.geometryFlipped = YES;
         mTexture.frame = frame;
+        mTexture.tileSize = frame.size;
         mTexture.needsDisplayOnBoundsChange = YES;
         
         mDelegateAdaptor.layerBacking = this;
@@ -100,6 +101,7 @@ namespace gfx {
     void LayerBacking::setFrame(Rect frame)
     {
         mTexture.frame = frame;
+        mTexture.tileSize = frame.size;
     }
     
     Rect LayerBacking::frame() const
@@ -128,7 +130,7 @@ namespace gfx {
     
     void LayerBacking::setNeedsDisplay()
     {
-        [mTexture setNeedsDisplayInRect:mTexture.bounds];
+        [mTexture setNeedsDisplayInRect:Rect{ {}, frame().size }];
     }
     
     void LayerBacking::render(Context *context)

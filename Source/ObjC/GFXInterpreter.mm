@@ -70,17 +70,6 @@ NSString *const GFXInterpreterFoundAnnotationNotification = @"GFXInterpreterFoun
 
 #pragma mark - Evaluation
 
-///Checks if the current thread is the main thread,
-///raises a NSObjectNotAvailableException if not.
-- (void)requireMainThread
-{
-    if(![NSThread isMainThread])
-        [NSException raise:NSObjectNotAvailableException
-                    format:@"GFXInterpreter is a main thread only class. %@ accessed from non main thread", self];
-}
-
-#pragma mark -
-
 - (GFXValue *)parseString:(NSString *)string error:(NSError **)outError
 {
     NSParameterAssert(string);
@@ -99,8 +88,6 @@ NSString *const GFXInterpreterFoundAnnotationNotification = @"GFXInterpreterFoun
 {
     NSParameterAssert(value);
     NSParameterAssert(stackFrame);
-    
-    [self requireMainThread];
     
     try {
         auto expressions = gfx::lift_value<gfx::Array<gfx::Base>>(value);

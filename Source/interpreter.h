@@ -24,6 +24,11 @@ namespace gfx {
     
     ///The Interpreter class encapsulates evaluation of already-parsed GFX code
     ///from the `gfx::Parser` class, as well as management of shared global state.
+    ///
+    ///Actual interpretation of gfx code is thread-safe due to the CALayer backing
+    ///of `gfx::Layer` using background rendering. The methods that mutate the state
+    ///of `gfx::Interpreter` *are not* thread-safe. Any client that uses them post-
+    ///construction must provide their own synchronization.
     class Interpreter : public Base
     {
     public:
@@ -35,9 +40,6 @@ namespace gfx {
         
         ///The root frame of the interpreter. This contains the core and graphics stack functions.
         GFX_strong StackFrame *mRootFrame;
-        
-        ///The currently executing function stack trace.
-        GFX_strong Array<const Function> *mRunningFunctions;
         
         ///The search paths used by the import method.
         GFX_strong Array<const String> *mSearchPaths;
@@ -174,6 +176,8 @@ namespace gfx {
         StackFrame *rootFrame() const;
         
 #pragma mark - Backtrace Tracking
+        
+        //TODO: entered/exitedFunction need thread-safe implementation.
         
         ///Informs the interpreter that a given function has been entered.
         ///

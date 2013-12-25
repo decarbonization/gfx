@@ -9,6 +9,8 @@
 #if GFX_Include_GraphicsStack
 
 #include "context.h"
+#include "threading.h"
+
 #include "array.h"
 #include "image.h"
 
@@ -22,28 +24,45 @@ namespace gfx {
     
 #pragma mark - Context Stack
     
-    static auto gContextStack = new Array<Context>();
+    ///Returns the context stack for the calling thread.
+    ///
+    ///Each thread has its own context stack, mimicking the
+    ///context stack in UIKit. Context stack lifecycle is tied
+    ///to the thread lifecycle.
+    static Array<Context> *SharedContextStackForCurrentThread()
+    {
+        auto threadStorage = threading::threadStorage();
+        auto stack = (Array<Context> *)threadStorage->get(str("gfx::Context::contextStack"));
+        if(stack == nullptr) {
+            stack = make<Array<Context>>();
+            threadStorage->set(str("gfx::Context::contextStack"), stack);
+        }
+        
+        return stack;
+    }
+    
+#pragma mark -
     
     void Context::pushContext(Context *context)
     {
         gfx_assert_param(context);
         
-        gContextStack->append(context);
+        SharedContextStackForCurrentThread()->append(context);
     }
     
     void Context::popContext()
     {
-        gContextStack->removeLast();
+        SharedContextStackForCurrentThread()->removeLast();
     }
     
     void Context::emptyContextStack()
     {
-        gContextStack->removeAll();
+        SharedContextStackForCurrentThread()->removeAll();
     }
     
     Context *Context::currentContext()
     {
-        Context *context = gContextStack->last();
+        Context *context = SharedContextStackForCurrentThread()->last();
         if(!context) {
             context = Context::bitmapContextWith({1.0, 1.0});
             Context::pushContext(context);

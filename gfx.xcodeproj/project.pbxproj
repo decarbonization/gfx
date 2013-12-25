@@ -142,6 +142,9 @@
 		8BDE76C1186A4D800069A285 /* GFXInterpreter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA251852E13F0062EFB4 /* GFXInterpreter.mm */; };
 		8BDE76C3186A4D800069A285 /* GFXLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */; };
 		8BDE76C4186A4F360069A285 /* GFXView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89D99F184DA2DC0062EFB4 /* GFXView.m */; };
+		8BDE76C9186A59AF0069A285 /* threading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BDE76C7186A59AF0069A285 /* threading.cpp */; };
+		8BDE76CA186A59AF0069A285 /* threading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BDE76C7186A59AF0069A285 /* threading.cpp */; };
+		8BDE76CB186A59AF0069A285 /* threading.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BDE76C8186A59AF0069A285 /* threading.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -295,6 +298,8 @@
 		8BDE7670186A4D520069A285 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8BDE7672186A4D560069A285 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		8BDE7674186A4D5A0069A285 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
+		8BDE76C7186A59AF0069A285 /* threading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threading.cpp; sourceTree = "<group>"; };
+		8BDE76C8186A59AF0069A285 /* threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -441,6 +446,8 @@
 				8B12C90C184BE75300DBD77C /* filepaths.h */,
 				8B121FA318615F0900BF2946 /* null.cpp */,
 				8B121FA418615F0900BF2946 /* null.h */,
+				8BDE76C7186A59AF0069A285 /* threading.cpp */,
+				8BDE76C8186A59AF0069A285 /* threading.h */,
 			);
 			name = "Core Types";
 			sourceTree = "<group>";
@@ -617,6 +624,7 @@
 				8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */,
 				8B121FA618615F0900BF2946 /* null.h in Headers */,
 				8B12C8FB184BE15600DBD77C /* word.h in Headers */,
+				8BDE76CB186A59AF0069A285 /* threading.h in Headers */,
 				8B12C8D3184BE15600DBD77C /* corefunctions.h in Headers */,
 				8B12C8E5184BE15600DBD77C /* interpreter.h in Headers */,
 				8B121FA0185E9D3C00BF2946 /* shadow.h in Headers */,
@@ -782,6 +790,7 @@
 				8B12C8F7184BE15600DBD77C /* str.cpp in Sources */,
 				8B12C8D5184BE15600DBD77C /* exception.cpp in Sources */,
 				8B12C8F1184BE15600DBD77C /* path.cpp in Sources */,
+				8BDE76C9186A59AF0069A285 /* threading.cpp in Sources */,
 				8B12C8E6184BE15600DBD77C /* layer.cpp in Sources */,
 				8B12C8C6184BE15600DBD77C /* assertions.cpp in Sources */,
 				8B89D9A1184DA2DC0062EFB4 /* GFXView.m in Sources */,
@@ -832,6 +841,7 @@
 				8BDE76A7186A4D800069A285 /* color.cpp in Sources */,
 				8BDE76A9186A4D800069A285 /* context.cpp in Sources */,
 				8BDE76AB186A4D800069A285 /* image.cpp in Sources */,
+				8BDE76CA186A59AF0069A285 /* threading.cpp in Sources */,
 				8BDE76AD186A4D800069A285 /* layer.cpp in Sources */,
 				8BDE76AF186A4D800069A285 /* layerbacking_calayer.mm in Sources */,
 				8BDE76B1186A4D800069A285 /* layerbacking_cg.cpp in Sources */,

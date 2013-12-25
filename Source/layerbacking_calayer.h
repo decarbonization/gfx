@@ -14,7 +14,7 @@
 #include "base.h"
 #include "types.h"
 
-OBJC_EXTERN_CLASS CALayer;
+OBJC_EXTERN_CLASS CATiledLayer;
 OBJC_EXTERN_CLASS GFXLayerBackingDelegateAdaptor;
 
 namespace gfx {
@@ -32,7 +32,7 @@ namespace gfx {
     class LayerBacking
     {
         ///The backing's backing.
-        CALayer *mTexture;
+        CATiledLayer *mTexture;
         
         ///The delegate adaptor of the CALayer.
         GFXLayerBackingDelegateAdaptor *mDelegateAdaptor;

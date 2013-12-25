@@ -114,10 +114,13 @@
     if(_parsedCode) {
         NSError *error = nil;
         GFXValue *stackFrame = [_interpreter emptyStackFrameWithParentFrame:[_interpreter rootStackFrame]];
-        if([_interpreter evaluate:_parsedCode withStackFrame:stackFrame error:&error])
-            [self.delegate layerDidFinishRendering:self];
-        else
-            [self handleRenderTimeError:error];
+        BOOL success = [_interpreter evaluate:_parsedCode withStackFrame:stackFrame error:&error];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            if(success)
+                [self.delegate layerDidFinishRendering:self];
+            else
+                [self handleRenderTimeError:error];
+        }];
     } else {
         gfx::Color::white()->set();
         gfx::Path::fillRect(rect);

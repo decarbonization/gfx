@@ -23,11 +23,12 @@ namespace gfx {
     ///
     ///Context instances are drawn to by manipulating the current context stack,
     ///which is exposed through the static methods `gfx::Context::pushContext`,
-    ///`gfx::Context::popContext`, and `gfx::Context::currentContext`. The stack
-    ///is currently not thread safe, and should only be used from the main thread.
+    ///`gfx::Context::popContext`, and `gfx::Context::currentContext`. Each thread
+    ///that uses the context stack methods will get its own thread-local stack that
+    ///will exist for as long as the thread is alive.
     ///
-    ///Instances of Context are not thread-safe. Instances may be created on
-    ///non-main threads, but they must never be shared between threads.
+    ///Instances of Context *are not* re-entrant. While it is possible to use a context
+    ///from a background thread, you must never pass context objects between threads.
     ///
     ///The underlying type of Context is platform independent. On iOS and OS X
     ///it is an instance of the CGContext class-type.
