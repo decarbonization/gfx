@@ -10,6 +10,7 @@
 #define gfx_GFXHelpers_h
 
 #import <Foundation/Foundation.h>
+#import "GFXDefines.h"
 #if __cplusplus
 #   include "str.h"
 #   include "number.h"
@@ -22,28 +23,6 @@
  
  \seealso(GFXValue)
  */
-
-#pragma mark - Errors
-
-///The error domain used by errors returned from the GFX ObjC API.
-///
-/// \seealso(GFXErrorCode)
-#define GFXErrorDomain  @"GFXErrorDomain"
-
-///The different types of errors in the `GFXErrorDomain`.
-typedef NS_ENUM(NSInteger, GFXErrorCode) {
-    ///A generic error.
-    GFXErrorGeneric,
-    
-    ///A parsing error.
-    GFXErrorParsingDidFail,
-    
-    ///An interpretation error.
-    GFXErrorInterpretationDidFail,
-    
-    ///A render failure error.
-    GFXErrorRenderingDidFail,
-};
 
 #pragma mark - String Conversions
 
@@ -81,14 +60,6 @@ static inline gfx::String *NSStringToGFXString(NSString *string)
 
 #pragma mark -
 
-///The corresponding value is an NSNumber describing the line the error originated from.
-///
-///The number will be `(-1)` if the origin of the error is unknown.
-#define GFXOffsetLineKey    @"GFXOffsetLineKey"
-
-///The corresponding value is an NSNumber describing the line-column the error originated from.
-#define GFXOffsetColumnKey  @"GFXOffsetColumnKey"
-
 ///Converts a given `gfx::Exception` object into an NSError.
 ///
 /// \param  errorCode   The code to give the resultant NSError.
@@ -99,18 +70,25 @@ static inline gfx::String *NSStringToGFXString(NSString *string)
 ///__Important:__ The full user info of the exception is not copied, only error offset information.
 static inline NSError *NSErrorFromGFXException(GFXErrorCode errorCode, const gfx::Exception &e)
 {
+    auto userInfo = e.userInfo();
+    
     NSInteger line = -1;
     NSInteger column = 0;
-    if(e.userInfo()->get(gfx::kUserInfoKeyOffsetLine) && e.userInfo()->get(gfx::kUserInfoKeyOffsetColumn)) {
+    NSString *backtrace = @"";
+    if(userInfo->get(gfx::kUserInfoKeyOffsetLine) && userInfo->get(gfx::kUserInfoKeyOffsetColumn)) {
         line = static_cast<gfx::Number *>(e.userInfo()->get(gfx::kUserInfoKeyOffsetLine))->value();
         column = static_cast<gfx::Number *>(e.userInfo()->get(gfx::kUserInfoKeyOffsetColumn))->value();
+    }
+    if(auto underlyingBacktrace = static_cast<gfx::String *>(userInfo->get(gfx::kUserInfoKeyBacktraceString))) {
+        backtrace = NSStringFromGFXString(underlyingBacktrace);
     }
     
     return [NSError errorWithDomain:GFXErrorDomain
                                code:errorCode
                            userInfo:@{NSLocalizedDescriptionKey: NSStringFromGFXString(e.reason()),
-                                      GFXOffsetLineKey: @(line),
-                                      GFXOffsetColumnKey: @(column)}];
+                                      GFXErrorUserInfoOffsetLineKey: @(line),
+                                      GFXErrorUserInfoOffsetColumnKey: @(column),
+                                      GFXErrorUserInfoBacktraceKey: backtrace}];
 }
 
 #endif /* __cplusplus && __OBJC__ */

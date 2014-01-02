@@ -180,7 +180,10 @@
 ///console.
 - (void)graphicsView:(GFXView *)sender didEncounterError:(NSError *)error
 {
-    [self writeErrorMessageToConsole:error.localizedDescription];
+    NSString *errorMessage = [NSString stringWithFormat:@"%@\n%@",
+                              error.localizedDescription,
+                              error.userInfo[GFXErrorUserInfoBacktraceKey]];
+    [self writeErrorMessageToConsole:errorMessage];
 }
 
 #pragma mark -

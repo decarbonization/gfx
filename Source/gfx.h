@@ -40,6 +40,7 @@
 #endif /* __cplusplus */
 
 #if __OBJC__
+#   import "GFXDefines.h"
 #   import "GFXValue.h"
 #   import "GFXInterpreter.h"
 #   import "GFXLayer.h"

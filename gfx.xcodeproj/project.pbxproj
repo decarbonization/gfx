@@ -189,6 +189,7 @@
 		8BDE76F5186A5D210069A285 /* GFXInterpreter.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA241852E13F0062EFB4 /* GFXInterpreter.h */; };
 		8BDE76F6186A5D210069A285 /* GFXView.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89D99E184DA2DC0062EFB4 /* GFXView.h */; };
 		8BDE76F7186A5D210069A285 /* GFXLayer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */; };
+		8BDE775C18760DC20069A285 /* GFXDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BDE775B18760DC20069A285 /* GFXDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -389,6 +390,7 @@
 		8BDE7674186A4D5A0069A285 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 		8BDE76C7186A59AF0069A285 /* threading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threading.cpp; sourceTree = "<group>"; };
 		8BDE76C8186A59AF0069A285 /* threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		8BDE775B18760DC20069A285 /* GFXDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -660,6 +662,7 @@
 		8B89D99D184DA2AD0062EFB4 /* ObjC */ = {
 			isa = PBXGroup;
 			children = (
+				8BDE775B18760DC20069A285 /* GFXDefines.h */,
 				8B89DA28185521330062EFB4 /* GFXHelpers.h */,
 				8B89DA201852DF150062EFB4 /* GFXValue.h */,
 				8B89DA211852DF150062EFB4 /* GFXValue.mm */,
@@ -711,6 +714,7 @@
 				8B12C8EA184BE15600DBD77C /* number.h in Headers */,
 				8B12C8CB184BE15600DBD77C /* blob.h in Headers */,
 				8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */,
+				8BDE775C18760DC20069A285 /* GFXDefines.h in Headers */,
 				8B121FA618615F0900BF2946 /* null.h in Headers */,
 				8B12C8FB184BE15600DBD77C /* word.h in Headers */,
 				8BDE76CB186A59AF0069A285 /* threading.h in Headers */,
