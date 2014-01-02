@@ -101,6 +101,7 @@
 		8B89DA29185521330062EFB4 /* GFXHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA28185521330062EFB4 /* GFXHelpers.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B89DA2D18553C8C0062EFB4 /* GFXLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */; };
+		8B91A3C51876234200C87D47 /* GFXDefines.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8BDE775B18760DC20069A285 /* GFXDefines.h */; };
 		8BCC9AD51864EDDA00AA6EDF /* osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC9AD41864EDDA00AA6EDF /* osx.mm */; };
 		8BDE764C186A4C9A0069A285 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE764B186A4C9A0069A285 /* Foundation.framework */; };
 		8BDE766F186A4D4F0069A285 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE766E186A4D4F0069A285 /* QuartzCore.framework */; };
@@ -260,6 +261,7 @@
 				8BDE76EA186A5D210069A285 /* color.h in Copy Headers */,
 				8BDE76EB186A5D210069A285 /* context.h in Copy Headers */,
 				8BDE76EC186A5D210069A285 /* image.h in Copy Headers */,
+				8B91A3C51876234200C87D47 /* GFXDefines.h in Copy Headers */,
 				8BDE76ED186A5D210069A285 /* layer.h in Copy Headers */,
 				8BDE76EE186A5D210069A285 /* path.h in Copy Headers */,
 				8BDE76EF186A5D210069A285 /* attributedstr.h in Copy Headers */,
