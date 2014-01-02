@@ -36,11 +36,8 @@ namespace gfx {
     void NativeFunction::apply(StackFrame *stack) const
     {
         stack->interpreter()->enteredFunction(this);
-        at_end finally([stack, this] {
-            stack->interpreter()->exitedFunction(this);
-        });
-        
         mImplementation(stack);
+        stack->interpreter()->exitedFunction(this);
     }
     
     const String *NativeFunction::description() const
@@ -71,14 +68,14 @@ namespace gfx {
         interpreter->enteredFunction(this);
         
         StackFrame *functionFrame = make<StackFrame>(stack, interpreter);
-        at_end finally([stack, this, interpreter, functionFrame] {
-            interpreter->exitedFunction(this);
-            
+        at_end finally([stack, this, functionFrame] {
             if(!functionFrame->empty())
                 stack->push(functionFrame->pop());
         });
         
         interpreter->eval(functionFrame, mSource->subexpressions(), Interpreter::EvalContext::Function);
+        
+        interpreter->exitedFunction(this);
     }
     
     const String *InterpretedFunction::description() const

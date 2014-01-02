@@ -19,7 +19,7 @@ namespace gfx {
     namespace threading {
         ///Short-hand for the dictionary type used by
         ///the `gfx::threading::threadStorage` function.
-        typedef Dictionary<const String, Base> StorageDictionary;
+        typedef Dictionary<const Base, Base> StorageDictionary;
         
         ///Returns the storage dictionary for the current thread,
         ///creating it if it does not already exist.

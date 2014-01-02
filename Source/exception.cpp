@@ -13,12 +13,12 @@
 namespace gfx {
     Exception::Exception(const String *reason, const Dictionary<const String, Base> *userInfo) :
         mReason(retained(reason)),
-        mUserInfo(retained(userInfo))
+        mUserInfo(copy(userInfo) ?: new Dictionary<>())
     {
     }
     
     Exception::Exception(const Exception &other) :
-        Exception(other.mReason, other.mUserInfo)
+        Exception(other.mReason, copy(other.mUserInfo))
     {
     }
     
@@ -28,7 +28,7 @@ namespace gfx {
         released(mUserInfo);
         
         mReason = retained(other.mReason);
-        mUserInfo = retained(other.mUserInfo);
+        mUserInfo = copy(other.mUserInfo);
         
         return *this;
     }
@@ -36,7 +36,10 @@ namespace gfx {
     Exception::~Exception()
     {
         released(mReason);
+        mReason = nullptr;
+        
         released(mUserInfo);
+        mUserInfo = nullptr;
     }
     
 #pragma mark - Overrides
@@ -53,12 +56,13 @@ namespace gfx {
         return retained_autoreleased(mReason);
     }
     
-    const Dictionary<const String, Base> *Exception::userInfo() const
+    Dictionary<const String, Base> *Exception::userInfo() const
     {
         return retained_autoreleased(mUserInfo);
     }
     
     
-    const String *const kUserInfoKeyOffsetLine = new String(CFSTR("Offset/line"));
-    const String *const kUserInfoKeyOffsetColumn = new String(CFSTR("Offset/column"));
+    const String *const kUserInfoKeyOffsetLine = new String(CFSTR("gfx::Offset/line"));
+    const String *const kUserInfoKeyOffsetColumn = new String(CFSTR("gfx::Offset/column"));
+    const String *const kUserInfoKeyBacktraceString = new String(CFSTR("gfx::Interpreter/backtrace"));
 }

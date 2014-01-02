@@ -13,6 +13,7 @@
 #include "expression.h"
 #include "annotation.h"
 #include "null.h"
+#include "threading.h"
 
 #include "stackframe.h"
 #include "function.h"
@@ -116,6 +117,21 @@ namespace gfx {
         mSearchPaths = nullptr;
     }
     
+#pragma mark - Thread Local Storage
+    
+    Dictionary<const Base, Base> *Interpreter::threadStorage() const
+    {
+        auto commonStorage = threading::threadStorage();
+        auto key = threading::StorageDictionary::weakKeyForObject(this);
+        auto interpreterStorage = static_cast<threading::StorageDictionary *>(commonStorage->get(key));
+        if(!interpreterStorage) {
+            interpreterStorage = make<threading::StorageDictionary>();
+            commonStorage->set(key, interpreterStorage);
+        }
+        
+        return interpreterStorage;
+    }
+    
 #pragma mark - Interpretation
     
     void Interpreter::fail(const String *reason, Offset source)
@@ -207,8 +223,13 @@ namespace gfx {
         if(!expressions)
             return;
         
-        for (Base *expression : expressions) {
-            this->evalExpression(currentFrame, expression, context);
+        try {
+            for (Base *expression : expressions) {
+                this->evalExpression(currentFrame, expression, context);
+            }
+        } catch (Exception &e) {
+            resetFunctionStack(e);
+            throw;
         }
     }
     
@@ -255,17 +276,52 @@ namespace gfx {
     
 #pragma mark - Backtrace Tracking
     
+    Array<const Function> *Interpreter::threadLocalFunctionStack() const
+    {
+        auto storage = threadStorage();
+        auto stack = static_cast<Array<const Function> *>(storage->get(str("threadLocalFunctionStack")));
+        if(!stack) {
+            stack = make<Array<const Function>>();
+            storage->set(str("threadLocalFunctionStack"), stack);
+        }
+        
+        return stack;
+    }
+    
+    void Interpreter::resetFunctionStack(Exception &e) noexcept
+    {
+        if(auto backtrace = const_cast<String *>(this->backtrace()))
+            e.userInfo()->set(kUserInfoKeyBacktraceString, backtrace);
+            
+        threadLocalFunctionStack()->removeAll();
+    }
+    
+#pragma mark -
+    
     void Interpreter::enteredFunction(const Function *function)
     {
+        threadLocalFunctionStack()->append(function);
     }
     
     void Interpreter::exitedFunction(const Function *function)
     {
+        threadLocalFunctionStack()->remove(function);
     }
     
     const String *Interpreter::backtrace() const
     {
-        return str("unavailable");
+        auto stack = threadLocalFunctionStack();
+        if(stack->count() == 0)
+            return nullptr;
+        
+        String::Builder backtrace;
+        
+        backtrace << "backtrace:";
+        stack->iterate(stack->all(), [&backtrace](const Function *function, Index index, bool *stop) {
+            backtrace << "\n" << (index + 1) << "  " << (void *)function << ": " << function;
+        });
+        
+        return backtrace;
     }
     
 #pragma mark - Import Support

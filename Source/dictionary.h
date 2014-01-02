@@ -13,7 +13,7 @@
 #include <initializer_list>
 #include "base.h"
 #include "str.h"
-#include "dictionary.h"
+#include "number.h"
 
 namespace gfx {
     
@@ -243,6 +243,24 @@ namespace gfx {
         void removeAll()
         {
             CFDictionaryRemoveAllValues(mStorage);
+        }
+        
+#pragma mark - Utilities
+        
+        ///Creates and returns a new object that can be used in place of a given object
+        ///within a dictionary when it is not appropriate the retain the given object.
+        ///
+        /// \param  object  The object it is not appropriate to retain. May not be null.
+        ///
+        /// \result A new object guaranteed to always have the same hash code given the same object.
+        ///
+        ///The object returned by this function is an implementation detail and subject to change.
+        static Base *weakKeyForObject(const Base *object)
+        {
+            gfx_assert_param(object);
+            
+            return (String::Builder() << (void *)object);
+
         }
     };
 }

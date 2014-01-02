@@ -77,7 +77,7 @@ namespace gfx {
         assertMutationPossible();
         
         if(empty()) {
-            if(!mParent)
+            if(!mParent || mParent->isFrozen())
                 gfx_assert(false, str("stack underflow"));
             else
                 return mParent->pop();
@@ -132,7 +132,7 @@ namespace gfx {
         SCOPED_READ_GUARD;
         
         if(empty()) {
-            if(!mParent)
+            if(!mParent || mParent->isFrozen())
                 gfx_assert(false, str("stack underflow"));
             else
                 return mParent->peak();

@@ -204,7 +204,7 @@ namespace gfx {
         ///Inserts a given value at a given index within the receiver.
         void insertAt(T *value, Index index)
         {
-            gfx_assert((index < this->count()), str("out of range"));
+            gfx_assert((index <= this->count()), str("out of range"));
             gfx_assert_param(value);
             
             CFArrayInsertValueAtIndex(mStorage, index, value);

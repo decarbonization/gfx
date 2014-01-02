@@ -15,6 +15,11 @@
 namespace gfx {
     class String;
     
+    ///Whether or not assertions should be printed when they are raised.
+    ///
+    ///Default value is `true`. Changing this global is not thread-safe.
+    extern bool PrintAssertions;
+    
     ///Logs an error message that includes the name of the function, the name of the file, and the line number.
     ///
     /// \throws Exception

@@ -25,11 +25,15 @@ namespace gfx {
         const String *mReason;
         
         ///The user info associated with the exception.
-        const Dictionary<const String, Base> *mUserInfo;
+        Dictionary<const String, Base> *mUserInfo;
         
     public:
         
         ///Constructs an exception with a given `reason` String and `userInfo` Dictionary.
+        ///
+        /// \param  reason      The reason for the exception.
+        /// \param  userInfo    The user info of the exception. Will be copied.
+        ///
         Exception(const String *reason, const Dictionary<const String, Base> *userInfo);
         
         ///Constructs an exception by copying the contents of another exception.
@@ -52,11 +56,22 @@ namespace gfx {
         virtual const String *reason() const;
         
         ///Returns the user info of the exception.
-        virtual const Dictionary<const String, Base> *userInfo() const;
+        ///
+        ///The user info may be modified by outside parties.
+        virtual Dictionary<const String, Base> *userInfo() const;
     };
     
+    ///The corresponding value is the offset-line from the code where the exception originated.
     extern const String *const kUserInfoKeyOffsetLine;
+    
+    ///The corresponding value is the offset-column from the code where the exception originated.
     extern const String *const kUserInfoKeyOffsetColumn;
+    
+    ///The corresponding value is a backtrace string from the interpreter.
+    ///
+    ///This value is automatically populated when the Interpreter
+    ///observes an exception has been raised.
+    extern const String *const kUserInfoKeyBacktraceString;
 }
 
 #endif /* defined(__gfx__exception__) */

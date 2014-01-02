@@ -12,11 +12,15 @@
 #include "file.h"
 
 namespace gfx {
+    bool PrintAssertions = true;
+    
     void handleAssertionHandler(const char *function, const char *file, long lineNumber, const String *reason)
     {
-        String::Builder message;
-        message << "*** Assertion failure in function "<< function << " from file " << file << " on line " << lineNumber << ": " << reason;
-        File::consoleError()->writeLine(message);
+        if(PrintAssertions) {
+            String::Builder message;
+            message << "*** Assertion failure in function "<< function << " from file " << file << " on line " << lineNumber << ": " << reason;
+            File::consoleError()->writeLine(message);
+        }
         
         throw Exception(reason, nullptr);
     }

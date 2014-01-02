@@ -74,6 +74,11 @@ namespace gfx {
         ///The destructor.
         virtual ~Interpreter();
         
+#pragma mark - Thread Local Storage
+        
+        ///Returns the thread-local storage for the current interpreter.
+        Dictionary<const Base, Base> *threadStorage() const;
+        
 #pragma mark - Interpretation
         
         ///The context from which an expression is being evaluated.
@@ -96,10 +101,10 @@ namespace gfx {
         /// \param  expression      The expression to evaluate. May not be null.
         /// \param  context         The context the expression is to be evaluated in.
         ///
-        ///The result of evaluating the expression may be retrieved through
-        ///the interpreter's current stack frame's top most value.
-        ///
-        /// \seealso(gfx::Interpreter::lastValue)
+        ///##Important:
+        ///This method should never be called by anything other than itself, or by
+        ///`gfx::Interpreter::eval`. Violation of this contract will result in the
+        ///interpreter having inconsistent state if and when an exception is raised.
         void evalExpression(StackFrame *currentFrame, Base *expression, EvalContext context);
         
     public:
@@ -118,6 +123,9 @@ namespace gfx {
         ///
         ///The result of evaluating the expressions may be retrieved through
         ///the interpreter's current stack frame's top most value.
+        ///
+        ///This method will clean up any relevant interpreter state if a `gfx::Exception`
+        ///is raised during interpretation.
         ///
         /// \seealso(gfx::Interpreter::lastValue)
         void eval(StackFrame *currentFrame, const Array<Base> *expressions, EvalContext context = EvalContext::Normal);
@@ -177,7 +185,21 @@ namespace gfx {
         
 #pragma mark - Backtrace Tracking
         
-        //TODO: entered/exitedFunction need thread-safe implementation.
+    protected:
+        
+        ///Returns the function stack for the current thread + Interpreter.
+        Array<const Function> *threadLocalFunctionStack() const;
+        
+        ///Resets the function stack in response to an exception being raised.
+        ///
+        ///This function wipes out the current stack trace in response
+        ///to an exception being raised while interpreting. The stack trace
+        ///will be saved and attached to the exception before it is wiped out.
+        ///
+        ///This method does not raise exceptions of its own.
+        void resetFunctionStack(Exception &e) noexcept;
+        
+    public:
         
         ///Informs the interpreter that a given function has been entered.
         ///
@@ -192,6 +214,9 @@ namespace gfx {
         void exitedFunction(const Function *function);
         
         ///Returns the current function backtrace.
+        ///
+        /// \result The backtrace for the current thread, or null if there is no backtrace.
+        ///
         const String *backtrace() const;
         
 #pragma mark - Files & Import Support

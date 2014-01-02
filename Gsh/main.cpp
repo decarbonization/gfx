@@ -96,8 +96,12 @@ void run_repl(Interpreter *interpreter, gfx::Size canvasSize)
             });
         } catch (Exception e) {
             String::Builder errorMessage;
-            errorMessage << "!!! ";
             errorMessage << e.reason();
+            
+            if(auto backtrace = static_cast<const String *>(e.userInfo()->get(kUserInfoKeyBacktraceString))) {
+                errorMessage << "\n" << backtrace;
+            }
+            
             PaperTape::WriteLine(errorMessage);
         }
         
@@ -112,6 +116,7 @@ void run_repl(Interpreter *interpreter, gfx::Size canvasSize)
 int main(int argc, const char * argv[])
 {
     Session::init(argc, argv);
+    PrintAssertions = false;
     
     AutoreleasePool pool;
     
