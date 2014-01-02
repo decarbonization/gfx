@@ -53,6 +53,9 @@ namespace gfx {
         mWordHandlers(),
         AnnotationFoundSignal(str("gfx::Interpreter::AnnotationFoundSignal"))
     {
+        ///Handles words that begin with `'` by stripping the `'` off
+        ///and pushing the resulting `gfx::Word` onto the stack. Useful
+        ///for functions related to the interpreter.
         this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
             if(word->string()->hasPrefix(str("'"))) {
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
@@ -63,6 +66,24 @@ namespace gfx {
             }
         });
         
+        
+        ///Handles words that begin with `=>` by creating a new variable
+        ///binding with the text after the arrow. The (exact) word `=>`
+        ///is ignored and will be handled by another word-handler.
+        this->appendWordHandler([](StackFrame *currentFrame, Word *word) {
+            auto wordString = word->string();
+            if(wordString->length() > 2 && wordString->hasPrefix(str("=>"))) {
+                auto bindingName = wordString->substring(Range(2, wordString->length() - 2));
+                currentFrame->setBindingToValue(bindingName, currentFrame->pop());
+                return true;
+            }
+            
+            return false;
+        });
+        
+        
+        ///Handles words that contain a dot (`.`). The dot is used to access
+        ///data within a hash without invoking the `hash/get` functor.
         this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
             auto wordString = word->string();
             if(wordString->find(str("."), Range(0, wordString->length()))) {
@@ -90,6 +111,9 @@ namespace gfx {
             }
         });
         
+        ///Looks up the word in the current frame, pushing the value if one is found.
+        ///
+        ///This handler should always be last.
         this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
             auto value = currentFrame->bindingValue(word->string());
             if(value) {
@@ -99,6 +123,9 @@ namespace gfx {
                 return false;
             }
         });
+        
+        
+        
         
 #if GFX_Include_GraphicsStack
         Graphics::AttachTo(this);
@@ -159,7 +186,9 @@ namespace gfx {
                 if(!this->handleWord(currentFrame, word))
                     failForUnboundWord(word);
                 
-                if(context != EvalContext::Vector && currentFrame->peak()->isKindOfClass<Function>()) {
+                if(context != EvalContext::Vector &&
+                   !currentFrame->empty() &&
+                   currentFrame->peak()->isKindOfClass<Function>()) {
                     auto function = currentFrame->popFunction();
                     function->apply(currentFrame);
                 }

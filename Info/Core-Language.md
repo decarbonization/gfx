@@ -237,7 +237,7 @@ Gfx comes with a small set of core functions that emulate various syntax level f
 * `fn/apply ( functor -- val )`: applies the functor, yielding its return value. Calls to this function are normally implicit.
 * `throw ( str -- )`: raises an error using the given string.
 * `rescue ( functor1 functor2 -- val? )`: catches any issues raised in functor1, applying functor2 if any are caught. In `functor2`, the issue may be accessed through the name `__exception`.
-* `let ( val word|[word] -- )`: binds `val` to the `word`. E.g. `12 'twelve let` or `1 2 3 ['one 'two 'three] let`. Used to introduce variables or create new named functions.
+* `=> ( val word|[word] -- )`: binds `val` to the `word`. E.g. `12 'twelve =>` or `1 2 3 ['one 'two 'three] =>`. Used to introduce variables or create new named functions. In addition to this function, it is possible to introduce variables like `12 =>twelve`. The form is `=>`_name_.
 * `set! ( val word -- )`: updates the binding referred to by `word` to `val`. Creates a new binding if `word` does not already exist. E.g. `13 'twelve set!`. Always updates the top most variable with the name `word`.
 * `destruct! ( vec -- ... )`: pushes each value contained in `vec` onto the stack. E.g. `[1 2 3] destruct ['one 'two 'three] let`.
 

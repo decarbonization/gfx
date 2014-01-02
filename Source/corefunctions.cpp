@@ -876,7 +876,6 @@ namespace gfx {
         frame->createFunctionBinding(str("rescue"), &rescue);
         
         frame->createFunctionBinding(str("->void"), &drop);
-        frame->createFunctionBinding(str("let"), &bind);
         frame->createFunctionBinding(str("=>"), &bind);
         frame->createFunctionBinding(str("set!"), &set);
         frame->createFunctionBinding(str("destruct!"), &destructure);
