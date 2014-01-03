@@ -43,6 +43,9 @@
 
 #pragma mark -
 
+///Unavailable.
++ (id)new UNAVAILABLE_ATTRIBUTE;
+
 ///Unavailable. Use `+[self layerWithInterpreter:]`.
 + (id)layer UNAVAILABLE_ATTRIBUTE;
 
