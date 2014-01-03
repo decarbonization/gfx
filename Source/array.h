@@ -465,7 +465,7 @@ namespace gfx {
         gfx_assert_param(separatorString);
         
         cf::MutableArrayAutoRef cfStrings = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-        values->iterate(values->all(), [cfStrings](Base *value, Index index, bool *stop) {
+        values->iterate(values->all(), [cfStrings](T *value, Index index, bool *stop) {
             CFArrayAppendValue(cfStrings, value->description()->getStorage());
         });
         
