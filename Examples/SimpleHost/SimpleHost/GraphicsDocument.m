@@ -167,6 +167,12 @@
 
 #pragma mark - Graphics Callbacks
 
+///The gfx view tells us when it has begun rendering its contents.
+- (void)graphicsViewDidBeginRendering:(GFXView *)sender
+{
+    
+}
+
 ///The gfx view tells us when it has rendered its contents
 ///using the code the user has provided. Just a simple
 ///feedback mechanism here.

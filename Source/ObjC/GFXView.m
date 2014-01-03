@@ -107,6 +107,11 @@
 
 #pragma mark - <GFXLayerDelegate>
 
+- (void)layerDidBeginRendering:(GFXLayer *)layer
+{
+    [self.delegate graphicsViewDidBeginRendering:self];
+}
+
 - (void)layerDidFinishRendering:(GFXLayer *)layer
 {
     [self.delegate graphicsViewDidFinishRendering:self];

@@ -79,6 +79,8 @@
         _gfxLayer = new gfx::Layer(self.frame, drawFunctor, self.contentsScale);
         _gfxLayer->setDrawExceptionHandler(exceptionHandler);
         [self addSublayer:_gfxLayer->CALayer()];
+        
+        _wantsEmptyPlaceholder = YES;
     }
     
     return self;
@@ -112,6 +114,10 @@
 - (void)drawGraphicsLayer:(gfx::Layer *)layer inRect:(gfx::Rect)rect
 {
     if(_parsedCode) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self.renderDelegate layerDidBeginRendering:self];
+        }];
+        
         NSError *error = nil;
         GFXValue *stackFrame = [_interpreter emptyStackFrameWithParentFrame:[_interpreter rootStackFrame]];
         BOOL success = [_interpreter evaluate:_parsedCode withStackFrame:stackFrame error:&error];
@@ -121,7 +127,7 @@
             else
                 [self handleRenderTimeError:error];
         }];
-    } else {
+    } else if(self.wantsEmptyPlaceholder) {
         gfx::Color::white()->set();
         gfx::Path::fillRect(rect);
     }
@@ -156,6 +162,15 @@
     }
     
     _gfxLayer->setNeedsDisplay();
+}
+
+- (void)setWantsEmptyPlaceholder:(BOOL)wantsEmptyPlaceholder
+{
+    if(_wantsEmptyPlaceholder != wantsEmptyPlaceholder) {
+        _wantsEmptyPlaceholder = wantsEmptyPlaceholder;
+        
+        _gfxLayer->setNeedsDisplay();
+    }
 }
 
 @end

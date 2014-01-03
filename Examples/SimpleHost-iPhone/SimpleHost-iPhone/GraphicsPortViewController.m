@@ -73,6 +73,10 @@
 
 #pragma mark - <GFXViewDelegate>
 
+- (void)graphicsViewDidBeginRendering:(GFXView *)sender
+{
+}
+
 - (void)graphicsViewDidFinishRendering:(GFXView *)sender
 {
 }

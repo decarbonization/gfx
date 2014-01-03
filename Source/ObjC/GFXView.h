@@ -72,6 +72,12 @@
 ///The methods a delegate of GFXView must implement.
 @protocol GFXViewDelegate <NSObject>
 
+///The specified view has started rendering.
+///
+/// \param  sender  The view that has started rendering.
+///
+- (void)graphicsViewDidBeginRendering:(GFXView *)sender;
+
 ///The specified view has finished rendering.
 ///
 /// \param  sender  The view that has finished rendering.

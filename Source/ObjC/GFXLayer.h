@@ -57,6 +57,10 @@
 ///The interpreter that evaluates the code assigned to the layer.
 @property (nonatomic, readonly, strong) GFXInterpreter *interpreter;
 
+///Whether or not the layer should draw a solid white background
+///when it has no Gfx code to render. Default value is YES.
+@property (nonatomic) BOOL wantsEmptyPlaceholder;
+
 ///The code to run to populate the contents of the layer.
 ///
 ///When this property is set, the contents of the string are
@@ -75,6 +79,12 @@
 ///The GFXRenderLayerDelegate protocol describes the signals that
 ///GFXLayer produces during the course of rendering.
 @protocol GFXRenderLayerDelegate <NSObject>
+
+///The specified layer has started rendering.
+///
+/// \param  layer   The layer that has started rendering.
+///
+- (void)layerDidBeginRendering:(GFXLayer *)layer;
 
 ///The specified layer has finished rendering.
 ///
