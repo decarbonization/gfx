@@ -141,14 +141,18 @@
     [_code autorelease];
     _code = nil;
     
-    NSError *error = nil;
-    GFXValue *parsedCode = nil;
-    if((parsedCode = [self.interpreter parseString:code error:&error])) {
-        _code = [code copy];
-        self.parsedCode = parsedCode;
+    if(code) {
+        NSError *error = nil;
+        GFXValue *parsedCode = nil;
+        if((parsedCode = [self.interpreter parseString:code error:&error])) {
+            _code = [code copy];
+            self.parsedCode = parsedCode;
+        } else {
+            self.parsedCode = nil;
+            [self handleRenderTimeError:error];
+        }
     } else {
         self.parsedCode = nil;
-        [self handleRenderTimeError:error];
     }
     
     _gfxLayer->setNeedsDisplay();
