@@ -87,6 +87,8 @@ Numbers are currently represented as double precision floating point numbers. Th
 * `num/min ( num num -- num )`: yields the lesser of two numbers
 * `num/max ( num num -- num )`: yields the greater of two numbers
 
+The type for numbers is `<num>`.
+
 ###The following mathematical functions are exposed for numbers:
 
 * `math/cos ( num -- num )`
@@ -136,9 +138,13 @@ Gfx does not have a separate type for bools, but represents them as `1` for `tru
 * `or ( bool bool -- bool )`: yields true if one of two bools are true; false otherwise.
 * `not ( bool -- bool )`: negates a boolean value.
 
+The type for bools is `<num>`.
+
 ##null
 
 Gfx does not have a separate type for `null`. `null` is represented as `0`.
+
+The type for null is `<num>`.
 
 ##Identity Functions
 
@@ -173,6 +179,8 @@ Gfx strings are UTF16 character arrays. Strings literals are enclosed within quo
 * `str/upper-case ( str -- str )`: converts a string to lower case.
 * `str/capital-case ( str -- str )`: converts a string to capital case.
 
+The type for strings is `<str>`.
+
 ##Vectors (vec)
 
 Gfx vectors are immutable sequences of values. Vector literals are enclosed in brackets. E.g. `[1 2 3 4]`. __Important:__ functions are not evaluated within vector literals. So `[+]` would yield a vector that contains the `+` function, and not the sum of whatever is on the stack.
@@ -189,6 +197,8 @@ The following functions are available for vectors:
 * `vec/for-each ( vec func -- )`: applies a function to each item in a vector
 * `vec/filter ( vec func -- vec )`: yields a new vector by applying a function to each item in the vector, and building a new vector from the values which the function yielded `true` for.
 * `vec/map ( vec func -- vec )`: yields a new vector by applying a function to each item in the vector, and collecting those values into the new vector.
+
+The type for vectors is `<vec>`.
 
 ##Hashes (hash)
 
@@ -207,6 +217,8 @@ The following functions are available for hashes:
 * `hash/without ( hash vec|val -- hash )`: yields a new hash by removing a single key, or a vector of keys.
 * `hash/for-each ( hash functor -- )`: applies a given functor to each key-value pair contained in the hash.
 
+The type for hash is `<hash>`.
+
 ##Files (file)
 
 Gfx provides a simple file type that can be used for both simple console IO, and for basic string-based file IO. It is currently only possible to open a file readonly, or writeonly. The following functions are available for files:
@@ -222,6 +234,8 @@ Gfx provides a simple file type that can be used for both simple console IO, and
 * `file/write-line ( file str -- num )`: writes a str followed by a newline to a file, yielding the number of bytes written.
 
 __Important:__ Files may be disabled in gfx when the interpreter is built.
+
+The type for files is `<file>`.
 
 ##Core Functions
 
@@ -257,3 +271,9 @@ Gfx exposes a small set of functions to convert between function types. These fu
 
 * `->str ( val -- str )`: converts the top most value on the stack to a str, yielding it.
 * `->void ( val -- )`: converts the top most value on the stack to nothing. Synonym for `rt/drop`
+
+##Type Introspection
+
+Gfx has a very simple system for accessing and comparing types. For every conceptual type in the language, there is a literal type. For example, the type for a string is &lt;str&gt;, matching the function suite. This is applicable to all core and graphics types. The following functions are available for working with types:
+
+* `is-a? ( val type -- bool )`: Takes a value, and a type, and yields a bool indicating whether or not the value is of the type. E.g. `"test" <str> is-a? (=> true)`.

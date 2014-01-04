@@ -113,6 +113,8 @@ namespace gfx {
     {
         gfx_assert_param(frame);
         
+        frame->createVariableBinding(str("<shadow>"), str("gfx::Shadow"));
+        
         frame->createFunctionBinding(str("shadow"), &shadow_make);
         
         frame->createFunctionBinding(str("shadow/set"), &shadow_set);

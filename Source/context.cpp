@@ -252,6 +252,8 @@ namespace gfx {
     {
         gfx_assert_param(frame);
         
+        frame->createVariableBinding(str("<ctx>"), str("gfx::Context"));
+        
         frame->createFunctionBinding(str("ctx/begin"), &ctx_begin);
         frame->createFunctionBinding(str("ctx/end"), &ctx_end);
         frame->createFunctionBinding(str("ctx/size"), &ctx_size);

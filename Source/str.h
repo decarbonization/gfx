@@ -309,7 +309,7 @@ namespace gfx {
     
 #pragma mark - Overloads
     
-    static inline const String *str(const char *rawString)
+    static inline String *str(const char *rawString)
     {
         return autoreleased(new String(rawString));
     }

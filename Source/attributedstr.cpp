@@ -447,6 +447,8 @@ namespace gfx {
     
     void AttributedString::addTo(gfx::StackFrame *frame)
     {
+        frame->createVariableBinding(str("<text>"), str("gfx::AttributedString"));
+        
         frame->createFunctionBinding(str("text"), &text_make);
         frame->createFunctionBinding(str("text/size"), &text_size);
         frame->createFunctionBinding(str("text/draw-at"), &text_drawAt);

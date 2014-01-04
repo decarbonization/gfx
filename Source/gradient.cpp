@@ -242,6 +242,8 @@ namespace gfx {
     {
         gfx_assert_param(frame);
         
+        frame->createVariableBinding(str("<gradient>"), str("gfx::Gradient"));
+        
         frame->createFunctionBinding(str("gradient"), &gradient_make);
         
         frame->createFunctionBinding(str("gradient/draw-linear"), &gradient_drawLinear);

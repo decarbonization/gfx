@@ -224,6 +224,19 @@ namespace gfx {
     
 #pragma mark - Core Functions
     
+    static void is_a(StackFrame *frame)
+    {
+        /* val type -- bool */
+        
+        auto typeName = frame->popString();
+        auto value = frame->pop();
+        
+        if(value->className()->isEqual(typeName))
+            frame->push(Number::True());
+        else
+            frame->push(Number::False());
+    }
+    
 #if GFX_Language_SupportsImport
     static void import(StackFrame *frame)
     {
@@ -777,6 +790,15 @@ namespace gfx {
         frame->createVariableBinding(str("false"), Number::False());
         frame->createVariableBinding(str("null"), Null::shared());
         
+        //Type Constants
+        /* This really could not be any more implementation specific, but it will work for now. */
+        frame->createVariableBinding(str("<str>"), str("gfx::String"));
+        frame->createVariableBinding(str("<num>"), str("gfx::Number"));
+        frame->createVariableBinding(str("<vec>"), str("gfx::Array<gfx::Base>"));
+        frame->createVariableBinding(str("<hash>"), str("gfx::Dictionary<gfx::Base, gfx::Base>"));
+        frame->createVariableBinding(str("<file>"), str("gfx::File"));
+        frame->createVariableBinding(str("<blob>"), str("gfx::Blob"));
+        
         //Math Constants
         frame->createVariableBinding(str("num/min"), Number::Minimum());
         frame->createVariableBinding(str("num/max"), Number::Maximum());
@@ -858,6 +880,8 @@ namespace gfx {
         
         
         //Core Functions
+        frame->createFunctionBinding(str("is-a?"), &is_a);
+        
 #if GFX_Language_SupportsImport
         frame->createFunctionBinding(str("import"), &import);
 #endif /* GFX_Language_SupportsImport */

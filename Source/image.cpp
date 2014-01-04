@@ -168,6 +168,8 @@ namespace gfx {
     
     void Image::addTo(StackFrame *frame)
     {
+        frame->createVariableBinding(str("<image>"), str("gfx::Image"));
+        
         frame->createFunctionBinding(str("image/from-file"), &image_fromFile);
         
         frame->createFunctionBinding(str("image/size"), &image_size);
