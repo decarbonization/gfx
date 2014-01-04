@@ -73,8 +73,17 @@ namespace gfx {
                 stack->push(functionFrame->pop());
         });
         
-        interpreter->eval(functionFrame, mSource->subexpressions(), Interpreter::EvalContext::Function);
-        
+#if GFX_Language_SupportsRecursion
+    recurse:
+        try {
+#endif /* GFX_Language_SupportsRecursion */
+            interpreter->eval(functionFrame, mSource->subexpressions(), Interpreter::EvalContext::Function);
+#if GFX_Language_SupportsRecursion
+            
+        } catch (RecursionMarkerException) {
+            goto recurse;
+        }
+#endif /* GFX_Language_SupportsRecursion */
         interpreter->exitedFunction(this);
     }
     

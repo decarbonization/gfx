@@ -10,10 +10,28 @@
 #define gfx_function_h
 
 #include "base.h"
+#include <exception>
 
 namespace gfx {
     class StackFrame;
     class Expression;
+    
+#if GFX_Language_SupportsRecursion
+    
+    ///The RecursionMarkerException is used by the __recurse
+    ///core function to indicate that a tail-recursion is
+    ///requested. If thrown outside of an interpreted function
+    ///context, the interpreter will catch the exception and
+    ///raise a more informative one.
+    class RecursionMarkerException : public std::exception
+    {
+    public:
+        
+        using std::exception::exception;
+        virtual const char *what() noexcept { return "recursion marker exception"; }
+    };
+    
+#endif /* GFX_Language_SupportsRecursion */
     
     ///The Function abstract class describes the methods necessary
     ///to implement a functor value in the gfx language.

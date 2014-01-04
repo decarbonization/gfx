@@ -39,30 +39,36 @@
 #pragma mark - Information
 
 ///A C-string literal containing the current version of Gfx.
-#define GFX_Version                 "0.0.1"
+#define GFX_Version                     "0.0.1"
 
 ///The major component of the current version of Gfx.
-#define GFX_Version_Major           0
+#define GFX_Version_Major               0
 
 ///The minor component of the current version of Gfx.
-#define GFX_Version_Minor           0
+#define GFX_Version_Minor               0
 
 ///The bug fix component of the current version of Gfx.
-#define GFX_Version_BugFix          1
+#define GFX_Version_BugFix              1
 
 #pragma mark - Feature Toggles
 
 ///Whether or not support for basic file operations
 ///should be exposed to the Gfx language.
-#define GFX_Language_SupportsFiles  1
+#define GFX_Language_SupportsFiles      1
 
 ///Whether or not the import directive should
 ///be exposed to the Gfx language.
-#define GFX_Language_SupportsImport 1
+#define GFX_Language_SupportsImport     1
+
+///Whether or not the __recurse function
+///should be exposed to allow for efficient
+///tail recursion. Has a performance penalty
+///for platforms where exceptions are not free.
+#define GFX_Language_SupportsRecursion  1
 
 ///Whether or not the graphics stack should be
 ///compiled and included with the language.
-#define GFX_Include_GraphicsStack   1
+#define GFX_Include_GraphicsStack       1
 
 #pragma mark - Mac Config Options
 
@@ -70,12 +76,12 @@
 ///Whether or not to use the implementation of `gfx::Layer`
 ///that is backed by an instance of `CGLayer`. Mutually-
 ///exclusive with `GFX_Layer_Use_CA`.
-#   define GFX_Layer_Use_CG         0
+#   define GFX_Layer_Use_CG             0
 
 ///Whether or not to use the implementation of `gfx::Layer`
 ///that is backed by an instance of `CALayer`. Mutually-
 ///exclusive with `GFX_Layer_Use_CG`.
-#   define GFX_Layer_Use_CA         1
+#   define GFX_Layer_Use_CA             1
 #endif /* TARGET_OS_MAC && !TARGET_OS_IPHONE */
 
 #pragma mark - Lifecycle Markers

@@ -260,6 +260,16 @@ namespace gfx {
             resetFunctionStack(e);
             throw;
         }
+#if GFX_Language_SupportsRecursion
+        catch (RecursionMarkerException) {
+            if(context == EvalContext::Function)
+                throw;
+            
+            Exception e(str("__recurse used outside of function"), nullptr);
+            resetFunctionStack(e);
+            throw e;
+        }
+#endif /* GFX_Language_SupportsRecursion */
     }
     
 #pragma mark - Word Handling

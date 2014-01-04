@@ -254,6 +254,7 @@ Gfx comes with a small set of core functions that emulate various syntax level f
 * `=> ( val word|[word] -- )`: binds `val` to the `word`. E.g. `12 'twelve =>` or `1 2 3 ['one 'two 'three] =>`. Used to introduce variables or create new named functions. In addition to this function, it is possible to introduce variables like `12 =>twelve`. The form is `=>`_name_.
 * `set! ( val word -- )`: updates the binding referred to by `word` to `val`. Creates a new binding if `word` does not already exist. E.g. `13 'twelve set!`. Always updates the top most variable with the name `word`.
 * `destruct! ( vec -- ... )`: pushes each value contained in `vec` onto the stack. E.g. `[1 2 3] destruct ['one 'two 'three] let`.
+* `__recurse ( -- )`: Resets the execution of the current function to the beginning. Only usable within an interpreted function. Provides a means of using constant-space tail-recursion. Using this function outside of the appropriate context will raise an exception.
 
 ##Stack Functions
 

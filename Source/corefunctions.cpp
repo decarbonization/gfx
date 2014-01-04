@@ -317,6 +317,13 @@ namespace gfx {
         frame->popFunction()->apply(frame);
     }
     
+    static void recurse(StackFrame *frame)
+    {
+        /* -- */
+        
+        throw RecursionMarkerException();
+    }
+    
 #pragma mark -
     
     static void _throw(StackFrame *frame)
@@ -895,6 +902,7 @@ namespace gfx {
         frame->createFunctionBinding(str("while"), &_while);
         frame->createFunctionBinding(str("times"), &times);
         frame->createFunctionBinding(str("fn/apply"), &apply);
+        frame->createFunctionBinding(str("__recurse"), &recurse);
         
         frame->createFunctionBinding(str("throw"), &_throw);
         frame->createFunctionBinding(str("rescue"), &rescue);
