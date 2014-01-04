@@ -14,6 +14,7 @@
 #include "layerbacking_calayer.h"
 #include "layer.h"
 #include "context.h"
+#include "threading.h"
 
 @interface GFXLayerBackingDelegateAdaptor : NSObject
 
@@ -132,7 +133,17 @@ namespace gfx {
     
     void LayerBacking::setNeedsDisplay()
     {
-        [mTexture setNeedsDisplayInRect:Rect{ {}, frame().size }];
+        //It appears that CATiledLayer does not actually invalidate
+        //its contents if -setNeedsDisplay is called from a background
+        //thread. So we force the call onto the main thread and hope
+        //for the best.
+        if(threading::isMainThread()) {
+            [mTexture setNeedsDisplay];
+        } else {
+            threading::performOnMainThread([this] {
+                [mTexture setNeedsDisplay];
+            });
+        }
     }
     
     void LayerBacking::render(Context *context)

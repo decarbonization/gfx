@@ -100,15 +100,6 @@
     return nil;
 }
 
-#pragma mark - Layout
-
-- (void)layoutSublayers
-{
-    [super layoutSublayers];
-    
-    _gfxLayer->setFrame(self.bounds);
-}
-
 #pragma mark - Callbacks
 
 - (void)drawGraphicsLayer:(gfx::Layer *)layer inRect:(gfx::Rect)rect
@@ -171,6 +162,14 @@
         
         _gfxLayer->setNeedsDisplay();
     }
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    
+    CGRect graphicsLayerFrame = {CGPointZero, frame.size};
+    _gfxLayer->setFrame(graphicsLayerFrame);
 }
 
 @end

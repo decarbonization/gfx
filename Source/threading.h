@@ -31,6 +31,10 @@ namespace gfx {
         
 #pragma mark -
         
+        ///Returns a bool indicating whether or not the
+        ///current thread of execution is the main thread.
+        extern bool isMainThread();
+        
         ///Schedules a task function to be performed on the main thread.
         ///
         /// \param  task    The function to invoke on the main thread. Ignored if invalid.

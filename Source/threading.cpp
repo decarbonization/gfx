@@ -43,6 +43,11 @@ namespace gfx {
         
 #pragma mark -
         
+        bool isMainThread()
+        {
+            return pthread_main_np();
+        }
+        
         void performOnMainThread(std::function<void()> task)
         {
             if(!task)
