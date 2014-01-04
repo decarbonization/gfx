@@ -76,8 +76,10 @@ namespace gfx {
         {
             gfx_assert_param(ioPool);
             
-            [*ioPool drain];
-            *ioPool = nil;
+            if(ioPool) {
+                [*ioPool drain];
+                *ioPool = nil;
+            }
         }
         
         void autorelease_pool_add(NSAutoreleasePool *pool, const Base *object)

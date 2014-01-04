@@ -94,6 +94,7 @@ namespace gfx {
         char *className = abi::__cxa_demangle(typeid(*this).name(), NULL, &length, &status);
         if(className) {
             cf::StringAutoRef string = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8 *)className, length - 1, kCFStringEncodingUTF8, false);
+            free(className);
             return make<String>(string);
         } else {
             return nullptr;
