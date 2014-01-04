@@ -36,7 +36,8 @@ namespace gfx {
     
     Path *Path::withOval(Rect rect)
     {
-        CGPathRef ovalPath = CGPathCreateWithEllipseInRect(rect, NULL);
+        CGAffineTransform transform = Context::currentContext()->currentTransformationMatrix();
+        CGPathRef ovalPath = CGPathCreateWithEllipseInRect(rect, &transform);
         Path *path = make<Path>(ovalPath);
         CFRelease(ovalPath);
         return path;
@@ -105,7 +106,7 @@ namespace gfx {
     Path::Path(ConstNativeType path) :
         Base(),
         mPath(CGPathCreateMutableCopy(path)),
-        mTransform(CGAffineTransformIdentity),
+        mTransform(Transform2D::Identity),
         mLineCapStyle(LineCap::Butt),
         mLineJoinStyle(LineJoin::Miter),
         mLineWidth(1.0)
@@ -248,7 +249,10 @@ namespace gfx {
     {
         Context *context = Context::currentContext();
         context->transaction([this](Context *context) {
-            set();
+            CGContextAddPath(context->get(), get());
+            CGContextSetLineCap(context->get(), (CGLineCap)lineCapStyle());
+            CGContextSetLineJoin(context->get(), (CGLineJoin)lineJoinStyle());
+            CGContextSetLineWidth(context->get(), lineWidth());
             CGContextFillPath(context->get());
         });
     }
@@ -257,7 +261,10 @@ namespace gfx {
     {
         Context *context = Context::currentContext();
         context->transaction([this](Context *context) {
-            set();
+            CGContextAddPath(context->get(), get());
+            CGContextSetLineCap(context->get(), (CGLineCap)lineCapStyle());
+            CGContextSetLineJoin(context->get(), (CGLineJoin)lineJoinStyle());
+            CGContextSetLineWidth(context->get(), lineWidth());
             CGContextStrokePath(context->get());
         });
     }
