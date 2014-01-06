@@ -4,6 +4,6 @@
     - Swipe to leave the canvas screen.
 )
 
-[#b9b8b9 0% #f1f1f1 100%] gradient ctx/size 90 gradient/draw-linear
+[#b9b8b9 0% #f1f1f1 100%] 90 linear-gradient ctx/size gradient/draw
 [0 1] 1 white shadow shadow/set
 30 font/bold black "hello, world" text [75 250] text/draw-at

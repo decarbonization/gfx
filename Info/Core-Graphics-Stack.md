@@ -156,9 +156,9 @@ Gradients
 
 The core graphics stack includes a very simple gradient type that can draw simple rectangles, or can be used to fill complex paths.
 
-- `gradient (vec -- gradient)`: Takes a vector of the form `[color num ...]` and yields a gradient. E.g. `[red 0.0 yellow 1.0] gradient`.
-- `gradient/draw-linear (gradient vec|path angle -- )`: Takes a gradient, a rect-vector or path, and an angle. Draws the gradient into the rect-vector or path with the given angle.
-- `gradient/draw-radial (gradient vec|path vec -- )`: Takes a gradient, a rect-vector or path, and a point-vector. Draws the gradient into the rect-vector or path using the offset percentages described in the final vector. E.g. `... ctx/all [0.5 0.5] gradient/draw-radial`
+- `linear-gradient (vec num -- gradient)`: Takes a vector of the form `[color num ...]`, an angle number, and yields a gradient. E.g. `[red 0.0 yellow 1.0] 90 linear-gradient`.
+- `radial-gradient (vec vec -- gradient)`: Takes a vector of the form `[color num ...]`, a point-vector number, and yields a gradient. E.g. `[red 0.0 yellow 1.0] [0.5 0.5] radial-gradient`.
+- `gradient/draw (gradient angle -- )`: Takes a gradient, a rect-vector or path. Draws the gradient into the rect-vector or path with.
 
 Shadows
 =======

@@ -17,9 +17,10 @@
 #include "number.h"
 
 namespace gfx {
-    Gradient::Gradient(const Array<Color> *colors, const std::vector<Float> &locations) :
+    Gradient::Gradient(const Array<Color> *colors, const std::vector<Float> &locations, const DrawingInformation &info) :
         Base(),
-        mStorage()
+        mStorage(),
+        mDrawingInformation(info)
     {
         gfx_assert(colors->count() == locations.size(), str("colors and locations must be the same size"));
         
@@ -166,11 +167,49 @@ namespace gfx {
         });
     }
     
+#pragma mark -
+    
+    const Gradient::DrawingInformation &Gradient::drawingInformation() const
+    {
+        return mDrawingInformation;
+    }
+    
+    void Gradient::drawInRect(Rect rect)
+    {
+        switch (mDrawingInformation.type()) {
+            case DrawingInformation::Type::kLinearFloat: {
+                this->drawLinearInRect(rect, mDrawingInformation.angle());
+                break;
+            }
+                
+            case DrawingInformation::Type::kRadialPoint: {
+                this->drawRadialInRect(rect, mDrawingInformation.relativeCenterLocation());
+                break;
+            }
+        }
+    }
+    
+    void Gradient::drawInPath(const Path *path)
+    {
+        switch (mDrawingInformation.type()) {
+            case DrawingInformation::Type::kLinearFloat: {
+                this->drawLinearInPath(path, mDrawingInformation.angle());
+                break;
+            }
+                
+            case DrawingInformation::Type::kRadialPoint: {
+                this->drawRadialInPath(path, mDrawingInformation.relativeCenterLocation());
+                break;
+            }
+        }
+    }
+    
 #pragma mark - Functions
     
-    static void gradient_make(StackFrame *stack)
+    static void gradient_makeLinear(StackFrame *stack)
     {
-        /* vec -- gradient */
+        /* vec angle -- gradient */
+        auto angle = stack->popNumber();
         auto info = stack->popType<Array<Base>>();
         
         auto colors = make<Array<Color>>();
@@ -195,44 +234,54 @@ namespace gfx {
             }
         }
         
-        stack->push(make<Gradient>(colors, locations));
+        stack->push(make<Gradient>(colors, locations, angle->value()));
     }
     
-#pragma mark -
-    
-    static void gradient_drawLinear(StackFrame *stack)
+    static void gradient_makeRadial(StackFrame *stack)
     {
-        /* gradient vec|path angle -- */
+        /* vec vec -- gradient */
+        auto relativeCenterLocation = VectorToPoint(stack->popType<Array<Base>>());
+        auto info = stack->popType<Array<Base>>();
         
-        auto angle = stack->popNumber();
-        auto rectOrPath = stack->pop();
-        auto gradient = stack->popType<Gradient>();
-        if(rectOrPath->isKindOfClass<Array<Base>>()) {
-            auto rect = VectorToRect(static_cast<Array<Base> *>(rectOrPath));
-            gradient->drawLinearInRect(rect, angle->value());
-        } else if(rectOrPath->isKindOfClass<Path>()) {
-            auto path = static_cast<Path *>(rectOrPath);
-            gradient->drawLinearInPath(path, angle->value());
-        } else {
-            throw Exception(str("unexpected type to gradient/draw-linear"), nullptr);
+        auto colors = make<Array<Color>>();
+        std::vector<Float> locations{};
+        
+        bool lookingForColor = true;
+        for (Base *value : info) {
+            if(lookingForColor) {
+                auto color = dynamic_cast<Color *>(value);
+                gfx_assert(color != nullptr, str("malformed input to `gradient`, expected color not number."));
+                
+                colors->append(color);
+                
+                lookingForColor = false;
+            } else {
+                auto location = dynamic_cast<Number *>(value);
+                gfx_assert(location != nullptr, str("malformed input to `gradient`, expected number not color."));
+                
+                locations.push_back(location->value());
+                
+                lookingForColor = true;
+            }
         }
+        
+        stack->push(make<Gradient>(colors, locations, relativeCenterLocation));
     }
     
-    static void gradient_drawRadial(StackFrame *stack)
+    static void gradient_draw(StackFrame *stack)
     {
-        /* gradient vec|path vec -- */
+        /* gradient vec|path -- */
         
-        auto relativeCenterPoint = VectorToPoint(stack->popType<Array<Base>>());
         auto rectOrPath = stack->pop();
         auto gradient = stack->popType<Gradient>();
         if(rectOrPath->isKindOfClass<Array<Base>>()) {
             auto rect = VectorToRect(static_cast<Array<Base> *>(rectOrPath));
-            gradient->drawRadialInRect(rect, relativeCenterPoint);
+            gradient->drawInRect(rect);
         } else if(rectOrPath->isKindOfClass<Path>()) {
             auto path = static_cast<Path *>(rectOrPath);
-            gradient->drawRadialInPath(path, relativeCenterPoint);
+            gradient->drawInPath(path);
         } else {
-            throw Exception(str("unexpected type to gradient/draw-radial"), nullptr);
+            throw Exception(str("unexpected type to gradient/draw"), nullptr);
         }
     }
     
@@ -244,9 +293,9 @@ namespace gfx {
         
         frame->createVariableBinding(str("<gradient>"), str("gfx::Gradient"));
         
-        frame->createFunctionBinding(str("gradient"), &gradient_make);
+        frame->createFunctionBinding(str("linear-gradient"), &gradient_makeLinear);
+        frame->createFunctionBinding(str("radial-gradient"), &gradient_makeRadial);
         
-        frame->createFunctionBinding(str("gradient/draw-linear"), &gradient_drawLinear);
-        frame->createFunctionBinding(str("gradient/draw-radial"), &gradient_drawRadial);
+        frame->createFunctionBinding(str("gradient/draw"), &gradient_draw);
     }
 }

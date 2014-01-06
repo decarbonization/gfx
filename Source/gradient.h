@@ -29,19 +29,82 @@ namespace gfx {
         ///The underlying native type of the gradient class.
         typedef CGGradientRef NativeType;
         
+        ///The DrawingInformation class encapsulates the information necessary to
+        ///render a gradient using one of its generic public drawing methods.
+        ///Conceptually this is a discriminated union that can either be uninitialized,
+        ///a Float (angle), or a Point (relativeCenterLocation).
+        class DrawingInformation
+        {
+        public:
+            
+            ///The data type contained within the drawing information.
+            enum class Type
+            {
+                ///The data is a Float value representing the angle for drawing a linear gradient.
+                kLinearFloat,
+                
+                ///The data is a Point value representing the relative
+                ///center location for drawing a radial gradient.
+                kRadialPoint,
+            };
+            
+        protected:
+            
+            ///The type of data contained in the drawing information.
+            Type mType;
+            
+            ///The value of the drawing information.
+            union {
+                ///An angle for drawing a linear gradient.
+                Float angle;
+                
+                ///A relative center location for drawing a radial gradient.
+                Point relativeCenterLocation;
+            } mData;
+            
+        public:
+            
+            ///Constructs a linear drawing information object.
+            DrawingInformation(Float angle) :
+                mType(Type::kLinearFloat),
+                mData{.angle = angle}
+            {
+            }
+            
+            ///Constructs a radial drawing information object.
+            DrawingInformation(Point relativeCenterLocation) :
+                mType(Type::kRadialPoint),
+                mData{.relativeCenterLocation = relativeCenterLocation}
+            {
+            }
+            
+            ///Returns the type of data contained by the drawing information.
+            Type type() const { return mType; }
+            
+            ///Returns the angle data.
+            Float angle() const { return mData.angle; }
+            
+            ///Returns the relative center location data.
+            Point relativeCenterLocation() const { return mData.relativeCenterLocation; }
+        };
+        
     protected:
         
         ///The underlying native type of the gradient.
         NativeType mStorage;
         
+        ///The information used for the generic drawing methods of the gradient.
+        DrawingInformation mDrawingInformation;
+        
     public:
         
         ///Constructs a new gradient with an array of colors, and their locations.
         ///
-        /// \param  colors  The colors to place into the gradient. Should not be null.
+        /// \param  colors      The colors to place into the gradient. Should not be null.
         /// \param  locations   The corresponding locations for each color. Locations are in the range of {0.0, 1.0}.
+        /// \param  info        The drawing information used to render the gradient through one of its generic drawing methods.
         ///
-        Gradient(const Array<Color> *colors, const std::vector<Float> &locations);
+        Gradient(const Array<Color> *colors, const std::vector<Float> &locations, const DrawingInformation &info);
         
         ///The destructor.
         ~Gradient();
@@ -90,6 +153,25 @@ namespace gfx {
         ///                             Both x and y are in the range of {0.0, 1.0}.
         ///
         void drawRadialInPath(const Path *path, Point relativeCenterPoint);
+        
+#pragma mark -
+        
+        ///Returns the drawing information associated with the gradient.
+        const DrawingInformation &drawingInformation() const;
+        
+        ///Draws the receiver using its DrawingInformation into a given rectangle.
+        ///
+        /// \param  rect    The rectangle to draw the gradient within.
+        ///
+        ///This method throws an exception if there is no drawing information provided.
+        void drawInRect(Rect rect);
+        
+        ///Draws the receiver using its DrawingInformation into a given PAth.
+        ///
+        /// \param  path    The path to draw the gradient within.
+        ///
+        ///This method throws an exception if there is no drawing information provided.
+        void drawInPath(const Path *path);
         
 #pragma mark - Functions
         

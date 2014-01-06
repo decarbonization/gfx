@@ -16,6 +16,21 @@
 #include "context.h"
 #include "threading.h"
 
+@interface GFXTiledLayer : CATiledLayer
+
+@end
+
+@implementation GFXTiledLayer
+
++ (CFTimeInterval)fadeDuration
+{
+    return 0.0;
+}
+
+@end
+
+#pragma mark -
+
 @interface GFXLayerBackingDelegateAdaptor : NSObject
 
 @property (nonatomic) gfx::LayerBacking *layerBacking;
@@ -50,7 +65,7 @@ namespace gfx {
     bool const LayerBacking::RendersOwnSublayers = true;
     
     LayerBacking::LayerBacking(Layer *layer, Rect frame, Float scale) :
-        mTexture([CATiledLayer new]),
+        mTexture([GFXTiledLayer new]),
         mDelegateAdaptor([GFXLayerBackingDelegateAdaptor new]),
         mLayer(layer)
     {
