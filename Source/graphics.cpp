@@ -113,6 +113,36 @@ namespace gfx {
         }
     }
     
+#pragma mark - Misc Functions
+    
+    static void noise(StackFrame *frame)
+    {
+        /* num vec -- */
+        auto rect = VectorToRect(frame->popType<Array<Base>>());
+        auto factor = frame->popNumber();
+        
+        size_t width = rect.getWidth(), height = rect.getHeight();
+        size_t numberOfBits = width * height;
+        
+        uint32_t *bitmapData = new uint32_t[numberOfBits]();
+        
+        Index max = factor->value() * 255.0;
+        for (Index i = 0; i < numberOfBits; i++) {
+            uint8_t *pixel = (uint8_t *)&bitmapData[i];
+            
+            Byte intensity = arc4random() % max;
+            pixel[0] = intensity;
+        }
+        
+        //This is (obviously) not portable at all.
+        cf::AutoRef<CGColorSpaceRef> colorSpace{ CGColorSpaceCreateDeviceRGB() };
+        cf::AutoRef<CGContextRef> context{ CGBitmapContextCreate(bitmapData, width, height, 8, width * sizeof(uint32_t), colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedLast) };
+        cf::AutoRef<CGImageRef> image{ CGBitmapContextCreateImage(context) };
+        CGContextDrawImage(Context::currentContext()->get(), rect, image);
+        
+        delete[] bitmapData;
+    }
+    
 #pragma mark - Public Interface
     
     void Graphics::addTo(StackFrame *frame)
@@ -128,6 +158,10 @@ namespace gfx {
         
         Shadow::addTo(frame);
         Gradient::addTo(frame);
+        
+        
+        //Misc Functions
+        frame->createFunctionBinding(str("noise"), &noise);
     }
     
 #pragma mark -
