@@ -1,16 +1,8 @@
-class Directive
-  attr_accessor :name
-  attr_accessor :contents
-  
-  def initialize(name, contents)
-    @name = name
-    @contents = contents
-  end
-end
+require_relative 'model/directive'
 
 class Parser
-  GFX_DOCSTR_EXP = /\(%([^%]+)%\)/
-  DIRECTIVE_EXP = /\\([^\s]+)\s\"((\\.|[^\"])*)\"/
+  GFX_DOCSTR_EXP = /\(%([^%]+)%\)/m
+  DIRECTIVE_EXP = /\\([^\s]+)\s+\"((\\.|[^\"])*)\"/m
   
   attr_reader :string
   
@@ -18,10 +10,14 @@ class Parser
     @string = string
   end
   
-  def parse
+  def go
     doc_strs = @string.scan(GFX_DOCSTR_EXP).map {|matches| matches[0].strip}
-    doc_strs.map {|doc_str|
-      doc_str.scan(DIRECTIVE_EXP).map {|d| Directive.new(d[0], d[1].gsub('\"', '"')) }
-    }
+    doc_strs.map do |doc_str|
+      doc_str.scan(DIRECTIVE_EXP).map do |match|
+        name = match[0]
+        contents = match[1].gsub('\"', '"')
+        Directive.new(name, contents)
+      end
+    end
   end
 end

@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title><%= the_module.name %></title>
+</head>
+<body>
+	<h1><%= the_module.name %></h1>
+	<h2><%= the_module.abstract %></h2>
+	<h3><%= the_module.discussion %></h3>
+	<hr>
+	<ol>
+		<% items.each do |item| %>
+		<li>
+			<h4><%= item.name %></h4>
+			<h5><%= item.abstract %></h5>
+			<p><%= item.discussion %></p>
+		</li>
+		<% end %>
+	</ol>
+</body>
+</html>
