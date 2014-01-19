@@ -48,7 +48,11 @@ Function literals are enclosed in curly braces, like `{"hello world" print}`. Fu
 
 ##Comments
 
-Comment literals are enclosed in parentheses, like `(this is ignored)`, and are otherwise ignored by the language under normal circumstances. It is customary to describe how a function will manipulate the stack using comments of the form `(before -- after)`. E.g. `(num num -- num)` could describe all of the basic math operations. Comments of the form `(%  %)` are reserved for machine readable information. These comments may be used to add metadata to files, such as documentation, or structural information for an editor. E.g.
+Comment literals are enclosed in parentheses with asterisks on both sides, like `(* this is ignored *)`, and are otherwise ignored by the language under normal circumstances. It is customary to describe how a function will manipulate the stack using comments of the form `(* before -- after *)`. E.g. `(* num num -- num *)` could describe all of the basic math operations. Comments may contain nested parentheses as long as they are balanced.
+
+##Annotations
+
+Annotations are a comment-like syntactical construct that enables non-gfx-code machine readable information to be embedded. Annotations may be used to add metadata to files, such as documentation, or structural information for an editor. E.g.
 
 	(%
 		\function	add-three (num num num -- num)
@@ -66,7 +70,7 @@ Boolean literals come in the form of two reserved words, `true` and `false`. The
 
 ##Words
 
-Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `__showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a tick, like `'hello`. Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3. Words beginning with `#` are currently reserved for the Gfx language for future usage.
+Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `__showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a colon, like `:hello`. Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3. Words beginning with `#` are currently reserved for the Gfx language for future usage.
 
 ##Other Types
 

@@ -30,7 +30,7 @@
 		<key>SHDefinitionName</key>
 		<string>SHDefinitionNameComments</string>
 		<key>SHDefinitionRegex</key>
-		<string>(\([^)]+\))</string>
+		<string>\(\*([^*]+)\*\)</string>
 	</dict>
 	<dict>
 		<key>SHDefinitionName</key>

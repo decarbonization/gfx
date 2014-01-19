@@ -17,8 +17,9 @@ namespace gfx {
 #pragma mark - Tools
     
     enum Tokens : UniChar {
-        kCommentBegin = '(',
-        kCommentEnd = ')',
+        kOpenParen = '(',
+        kCloseParen = ')',
+        kCommentMarker = '*',
         kAnnotationMarker = '%',
         
         kHashMarker = '#',
@@ -70,11 +71,6 @@ namespace gfx {
     static bool is_vector(UniChar c)
     {
         return (c == kVectorBegin);
-    }
-    
-    static bool is_comment(UniChar c)
-    {
-        return (c == kCommentBegin);
     }
     
     static bool is_function(UniChar c)
@@ -270,12 +266,40 @@ namespace gfx {
         return number;
     }
     
+    void Parser::parseComment()
+    {
+        // (* this is a comment *)
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        // ^ <- Parsing starts here.
+        
+        next(); //(
+        
+        Index nestedParenCount = 0;
+        while (more() && next() != 0) {
+            UniChar c = current();
+            if(c == kOpenParen) {
+                nestedParenCount++;
+                continue;
+            } else if(c == kCloseParen) {
+                if(nestedParenCount > 0)
+                    nestedParenCount--;
+                else if(peek(-1) == kCommentMarker)
+                    break;
+            }
+        }
+        
+        requireCondition(this->current() == kCloseParen, str("expected ')', found end of file."));
+        
+        next(); //)
+    }
+    
     Annotation *Parser::parseAnnotation()
     {
         // (% this is an annotation %)
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // ^ <- Parsing starts here.
         
+        next(); //(
         next(); //%
         
         const String *contents = accumulateWhile([](UniChar c, bool isFirst) { return (c != kAnnotationMarker); });
@@ -317,12 +341,13 @@ namespace gfx {
             
             if(is_whitespace(c)) {
                 this->next();
-            } else if(is_comment(c)) {
-                if(next() == kAnnotationMarker) {
+            } else if(c == kOpenParen) {
+                if(peek(1) == kAnnotationMarker) {
                     return this->parseAnnotation();
+                } else if(peek(1) == kCommentMarker) {
+                    this->parseComment();
                 } else {
-                    this->moveToNext(kCommentEnd);
-                    this->next();
+                    fail(str("parentheses enclosed expressions currently unsupported."));
                 }
             } else if(c == kHashMarker && peek(1) == kVectorBegin) {
                 next(); // kHashMarker

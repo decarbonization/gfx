@@ -101,6 +101,9 @@ namespace gfx {
         ///Parses a number at the current parser position, returning it.
         Number *parseNumber();
         
+        ///Parses a comment, disguarding its contents.
+        void parseComment();
+        
         ///Parses an annotation at the current parser position, returning it.
         Annotation *parseAnnotation();
         
