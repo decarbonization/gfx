@@ -53,11 +53,11 @@ namespace gfx {
         mWordHandlers(),
         AnnotationFoundSignal(str("gfx::Interpreter::AnnotationFoundSignal"))
     {
-        ///Handles words that begin with `'` by stripping the `'` off
+        ///Handles words that begin with `:` by stripping the `:` off
         ///and pushing the resulting `gfx::Word` onto the stack. Useful
         ///for functions related to the interpreter.
         this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
-            if(word->string()->hasPrefix(str("'"))) {
+            if(word->string()->hasPrefix(str(":"))) {
                 auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
                 currentFrame->push(make<Word>(rawWord, word->offset()));
                 return true;

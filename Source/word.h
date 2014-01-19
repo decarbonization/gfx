@@ -54,7 +54,7 @@ namespace gfx {
         
         virtual HashCode hash() const override
         {
-            return mString->hash() + 'word';
+            return mString->hash() >> 1;
         }
         
         virtual bool isEqual(const Word *other) const
