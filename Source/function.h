@@ -119,7 +119,7 @@ namespace gfx {
     class InterpretedFunction : public Function
     {
         ///The source Expression object.
-        GFX_strong Expression *mSource;
+        Expression *mSource;
         
     public:
         

@@ -16,7 +16,7 @@
 
 #include "stackframe.h"
 #include "graphics.h"
-#include "file.h"
+#include "filepolicy.h"
 
 #include "osx.h"
 
@@ -233,7 +233,6 @@ namespace gfx {
         stack->push(VectorFromSize(ctxSize));
     }
     
-#if GFX_Language_SupportsFiles
     static void ctx_save(StackFrame *stack)
     {
         auto path = stack->popString();
@@ -241,10 +240,9 @@ namespace gfx {
         auto image = Context::currentContext()->makeImage();
         auto data = image->makeRepresentation(Image::RepresentationType::PNG);
         
-        auto file = make<File>(path, File::Mode::Write);
+        auto file = FilePolicy::ActiveFilePolicy()->openFileAtPath(path, File::Mode::Write);
         file->write(data);
     }
-#endif /* GFX_Language_SupportsFiles */
     
 #pragma mark -
     
@@ -257,9 +255,7 @@ namespace gfx {
         frame->createFunctionBinding(str("ctx/begin"), &ctx_begin);
         frame->createFunctionBinding(str("ctx/end"), &ctx_end);
         frame->createFunctionBinding(str("ctx/size"), &ctx_size);
-#if GFX_Language_SupportsFiles
         frame->createFunctionBinding(str("ctx/save"), &ctx_save);
-#endif /* GFX_Language_SupportsFiles */
     }
 }
 

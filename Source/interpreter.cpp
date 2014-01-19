@@ -20,7 +20,7 @@
 #include "corefunctions.h"
 #include "parser.h"
 
-#include "file.h"
+#include "filepolicy.h"
 
 #if GFX_Include_GraphicsStack
 #   include "graphics.h"
@@ -415,7 +415,8 @@ namespace gfx {
             const String *path = FilePaths::combinePaths(searchPath, filename);
             if(File::exists(path)) {
                 try {
-                    const String *source = File::readFileAtPath(filename);
+                    auto file = FilePolicy::ActiveFilePolicy()->openFileAtPath(filename, File::Mode::Read);
+                    const String *source = file->readString(file->length());
                     this->eval(frame, Parser(source).parse());
                 } catch (Exception e) {
                     return false;

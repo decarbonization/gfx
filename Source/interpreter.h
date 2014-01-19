@@ -39,10 +39,10 @@ namespace gfx {
     protected:
         
         ///The root frame of the interpreter. This contains the core and graphics stack functions.
-        GFX_strong StackFrame *mRootFrame;
+        StackFrame *mRootFrame;
         
         ///The search paths used by the import method.
-        GFX_strong Array<const String> *mSearchPaths;
+        Array<const String> *mSearchPaths;
         
         ///Whether or not import is disabled.
         bool mImportAllowed;

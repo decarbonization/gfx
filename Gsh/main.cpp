@@ -163,7 +163,7 @@ int main(int argc, const char * argv[])
     for (const String *filePath : files) {
         File *file = nullptr;
         try {
-            file = make<File>(filePath, File::Mode::Read);
+            file = FilePolicy::ActiveFilePolicy()->openFileAtPath(filePath, File::Mode::Read);
         } catch (Exception e) {
             std::cerr << "!!! Could not read file '" << filePath->getCString() << "'." << std::endl;
         }

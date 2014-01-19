@@ -22,7 +22,7 @@ NSString *const GFXInterpreterFoundAnnotationNotification = @"GFXInterpreterFoun
 
 @interface GFXInterpreter () {
     ///The underlying interpreter of the ObjC wrapper.
-    GFX_strong gfx::Interpreter *_interpreter;
+    gfx::Interpreter *_interpreter;
     
     gfx::Signal<const gfx::Annotation *>::ObserverReference _annotationObserver;
 }

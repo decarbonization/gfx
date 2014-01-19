@@ -18,7 +18,7 @@
 #   include <gfx/exception.h>
 #   include <gfx/array.h>
 #   include <gfx/dictionary.h>
-#   include <gfx/file.h>
+#   include <gfx/filepolicy.h>
 #   include <gfx/session.h>
 
 #   include <gfx/parser.h>

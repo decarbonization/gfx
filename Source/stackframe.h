@@ -61,10 +61,10 @@ namespace gfx {
         mutable std::recursive_mutex mReadWriteMutex;
         
         ///The storage for the LiFO stack of the frame.
-        GFX_strong Array<Base> *mStorage;
+        Array<Base> *mStorage;
         
         ///The variable bindings of the frame.
-        GFX_strong Dictionary<const String, Base> *mBindings;
+        Dictionary<const String, Base> *mBindings;
         
         ///The parent frame of this frame. Used for pop/
         ///peak operations, and binding lookups/assignments.
@@ -72,10 +72,10 @@ namespace gfx {
         ///Child frames observe their parent's `DestroySignal`
         ///and autorelease themselves. This prevents dangling
         ///pointers and allows frames to be implicitly destroyed.
-        GFX_safe_weak StackFrame *mParent;
+        /* zeroing weak */ StackFrame *mParent;
         
         ///The interpreter that the stack frame is attached to.
-        GFX_weak Interpreter *mInterpreter;
+        /* weak */ Interpreter *mInterpreter;
         
         ///Whether or not the frame's contents are frozen.
         bool mIsFrozen;

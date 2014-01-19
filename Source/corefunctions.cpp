@@ -16,7 +16,7 @@
 #include "number.h"
 #include "null.h"
 #include "papertape.h"
-#include "file.h"
+#include "filepolicy.h"
 
 #include "gfx_defines.h"
 
@@ -689,14 +689,13 @@ namespace gfx {
         });
     }
     
-#if GFX_Language_SupportsFiles
 #pragma mark - File Operations
     
     static void file_exists(StackFrame *frame)
     {
         /* str -- bool */
         String *path = frame->popString();
-        if(File::exists(path))
+        if(FilePolicy::ActiveFilePolicy()->pathExists(path))
             frame->push(Number::True());
         else
             frame->push(Number::False());
@@ -706,7 +705,7 @@ namespace gfx {
     {
         /* str -- bool */
         String *path = frame->popString();
-        if(File::isDirectory(path))
+        if(FilePolicy::ActiveFilePolicy()->isPathDirectory(path))
             frame->push(Number::True());
         else
             frame->push(Number::False());
@@ -716,7 +715,7 @@ namespace gfx {
     {
         /* str -- file */
         String *path = frame->popString();
-        frame->push(make<File>(path, File::Mode::ReadWrite));
+        frame->push(FilePolicy::ActiveFilePolicy()->openFileAtPath(path, File::Mode::ReadWrite));
     }
     
     static void file_close(StackFrame *frame)
@@ -781,8 +780,6 @@ namespace gfx {
         size_t amountWritten = file->writeLine(string);
         frame->push(make<Number>(amountWritten));
     }
-    
-#endif /* GFX_Language_SupportsFiles */
     
 #pragma mark - Public API
     
@@ -952,7 +949,6 @@ namespace gfx {
         frame->createFunctionBinding(str("hash/each-pair"), &hash_eachPair);
         
         
-#if GFX_Language_SupportsFiles
         //File Functions
         frame->createFunctionBinding(str("file/exists?"), &file_exists);
         frame->createFunctionBinding(str("file/dir?"), &file_isDirectory);
@@ -965,7 +961,6 @@ namespace gfx {
         frame->createFunctionBinding(str("file/read-line"), &file_readLine);
         frame->createFunctionBinding(str("file/write"), &file_write);
         frame->createFunctionBinding(str("file/write-line"), &file_writeLine);
-#endif /* GFX_Language_SupportsFiles */
     }
     
     StackFrame *CoreFunctions::sharedCoreFunctionFrame()

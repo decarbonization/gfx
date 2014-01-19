@@ -42,7 +42,7 @@ namespace gfx {
         Type mType;
         
         ///The syntax components contained in the Expression.
-        GFX_strong Array<Base> *mSubexpressions;
+        Array<Base> *mSubexpressions;
         
     public:
         ///Construct an Expression with a given offset, type, and subexpressions array.

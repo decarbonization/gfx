@@ -102,6 +102,10 @@
 		8B89DA2C18553C8C0062EFB4 /* GFXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B89DA2D18553C8C0062EFB4 /* GFXLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */; };
 		8B91A3C51876234200C87D47 /* GFXDefines.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8BDE775B18760DC20069A285 /* GFXDefines.h */; };
+		8B985BFB188C821700A79899 /* filepolicy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B985BF9188C821700A79899 /* filepolicy.cpp */; };
+		8B985BFC188C821700A79899 /* filepolicy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B985BF9188C821700A79899 /* filepolicy.cpp */; };
+		8B985BFD188C821700A79899 /* filepolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B985BFA188C821700A79899 /* filepolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8B985BFE188C86A600A79899 /* filepolicy.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B985BFA188C821700A79899 /* filepolicy.h */; };
 		8BCC9AD51864EDDA00AA6EDF /* osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC9AD41864EDDA00AA6EDF /* osx.mm */; };
 		8BDE764C186A4C9A0069A285 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE764B186A4C9A0069A285 /* Foundation.framework */; };
 		8BDE766F186A4D4F0069A285 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE766E186A4D4F0069A285 /* QuartzCore.framework */; };
@@ -264,6 +268,7 @@
 				8B91A3C51876234200C87D47 /* GFXDefines.h in Copy Headers */,
 				8BDE76ED186A5D210069A285 /* layer.h in Copy Headers */,
 				8BDE76EE186A5D210069A285 /* path.h in Copy Headers */,
+				8B985BFE188C86A600A79899 /* filepolicy.h in Copy Headers */,
 				8BDE76EF186A5D210069A285 /* attributedstr.h in Copy Headers */,
 				8BDE76F0186A5D210069A285 /* font.h in Copy Headers */,
 				8BDE76F1186A5D210069A285 /* gradient.h in Copy Headers */,
@@ -382,6 +387,8 @@
 		8B89DA28185521330062EFB4 /* GFXHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXHelpers.h; sourceTree = "<group>"; };
 		8B89DA2A18553C8C0062EFB4 /* GFXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFXLayer.h; sourceTree = "<group>"; };
 		8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXLayer.mm; sourceTree = "<group>"; };
+		8B985BF9188C821700A79899 /* filepolicy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filepolicy.cpp; sourceTree = "<group>"; };
+		8B985BFA188C821700A79899 /* filepolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filepolicy.h; sourceTree = "<group>"; };
 		8BCC9AD41864EDDA00AA6EDF /* osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = osx.mm; path = platform/osx.mm; sourceTree = "<group>"; };
 		8BDE764A186A4C9A0069A285 /* libgfx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgfx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BDE764B186A4C9A0069A285 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -566,6 +573,8 @@
 				8B12C8BF184BE15600DBD77C /* stackframe.h */,
 				8B12C8C4184BE15600DBD77C /* word.h */,
 				8B89DA1E1852D8B20062EFB4 /* annotation.h */,
+				8B985BF9188C821700A79899 /* filepolicy.cpp */,
+				8B985BFA188C821700A79899 /* filepolicy.h */,
 			);
 			name = "Core Interpreter";
 			sourceTree = "<group>";
@@ -719,6 +728,7 @@
 				8BDE775C18760DC20069A285 /* GFXDefines.h in Headers */,
 				8B121FA618615F0900BF2946 /* null.h in Headers */,
 				8B12C8FB184BE15600DBD77C /* word.h in Headers */,
+				8B985BFD188C821700A79899 /* filepolicy.h in Headers */,
 				8BDE76CB186A59AF0069A285 /* threading.h in Headers */,
 				8B12C8D3184BE15600DBD77C /* corefunctions.h in Headers */,
 				8B12C8E5184BE15600DBD77C /* interpreter.h in Headers */,
@@ -892,6 +902,7 @@
 				8B12C8F9184BE15600DBD77C /* types.cpp in Sources */,
 				8B12C8F3184BE15600DBD77C /* session.cpp in Sources */,
 				8B12C8D2184BE15600DBD77C /* corefunctions.cpp in Sources */,
+				8B985BFB188C821700A79899 /* filepolicy.cpp in Sources */,
 				8BCC9AD51864EDDA00AA6EDF /* osx.mm in Sources */,
 				8B12C8CA184BE15600DBD77C /* blob.cpp in Sources */,
 				8B12C90F184BECF200DBD77C /* filepaths.cpp in Sources */,
@@ -943,6 +954,7 @@
 				8BDE76B3186A4D800069A285 /* path.cpp in Sources */,
 				8BDE76B5186A4D800069A285 /* attributedstr.cpp in Sources */,
 				8BDE76B7186A4D800069A285 /* font.cpp in Sources */,
+				8B985BFC188C821700A79899 /* filepolicy.cpp in Sources */,
 				8BDE76B9186A4D800069A285 /* gradient.cpp in Sources */,
 				8BDE76BB186A4D800069A285 /* shadow.cpp in Sources */,
 				8BDE76BF186A4D800069A285 /* GFXValue.mm in Sources */,

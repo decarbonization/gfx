@@ -19,7 +19,7 @@
 
 @interface GFXLayer () {
     ///The underlying gfx::Layer of the wrapper.
-    GFX_strong gfx::Layer *_gfxLayer;
+    gfx::Layer *_gfxLayer;
 }
 
 ///The result of parsing the layer's code string.

@@ -52,10 +52,6 @@
 
 #pragma mark - Feature Toggles
 
-///Whether or not support for basic file operations
-///should be exposed to the Gfx language.
-#define GFX_Language_SupportsFiles      1
-
 ///Whether or not the import directive should
 ///be exposed to the Gfx language.
 #define GFX_Language_SupportsImport     1
@@ -83,16 +79,5 @@
 ///exclusive with `GFX_Layer_Use_CG`.
 #   define GFX_Layer_Use_CA             1
 #endif /* TARGET_OS_MAC && !TARGET_OS_IPHONE */
-
-#pragma mark - Lifecycle Markers
-
-///Marks a variable as being a strong reference.
-#define GFX_strong          /* strong */
-
-///Marks a variable as being a weak reference.
-#define GFX_weak            /* weak */
-
-///Marks a variable as being a zeroing weak reference.
-#define GFX_safe_weak       /* safe_weak */
 
 #endif
