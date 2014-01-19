@@ -177,7 +177,7 @@ namespace gfx {
     AutoreleasePool::~AutoreleasePool()
     {
 #if TARGET_OS_MAC
-        platform::autorelease_pool_drain(&mPool);
+        platform::autorelease_pool_drain(static_cast<platform::AutoreleasePool **>(&mPool));
 #else
         for (const Base *object : mStorage) {
             object->release();
@@ -190,7 +190,7 @@ namespace gfx {
     void AutoreleasePool::add(const Base *object)
     {
 #if TARGET_OS_MAC
-        platform::autorelease_pool_add(mPool, object);
+        platform::autorelease_pool_add(static_cast<platform::AutoreleasePool *>(mPool), object);
 #else
         mStorage.push_back(object);
 #endif /* TARGET_OS_MAC */

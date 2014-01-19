@@ -17,10 +17,6 @@
 #include "assertions.h"
 #include "types.h"
 
-#if !__OBJC__ && TARGET_OS_MAC
-class NSAutoreleasePool;
-#endif /* TARGET_OS_MAC */
-
 namespace gfx {
     class String;
     
@@ -131,7 +127,7 @@ namespace gfx {
     class AutoreleasePool final
     {
 #if TARGET_OS_MAC
-        NSAutoreleasePool *mPool;
+        void *mPool;
 #else
         std::list<const Base *> mStorage;
 #endif /* TARGET_OS_MAC */

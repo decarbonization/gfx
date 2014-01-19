@@ -13,15 +13,15 @@
 #   import <Foundation/Foundation.h>
 #endif
 
-OBJC_EXTERN_CLASS NSAutoreleasePool;
-
 namespace gfx {
     class Base;
     
     namespace platform {
-        NSAutoreleasePool *autorelease_pool_make();
-        void autorelease_pool_drain(NSAutoreleasePool **ioPool);
-        void autorelease_pool_add(NSAutoreleasePool *pool, const Base *object);
+        typedef void AutoreleasePool;
+        
+        AutoreleasePool *autorelease_pool_make();
+        void autorelease_pool_drain(AutoreleasePool **ioPool);
+        void autorelease_pool_add(AutoreleasePool *pool, const Base *object);
         void autorelease_pool_current_add(const Base *object);
         
 #pragma mark -

@@ -67,22 +67,22 @@
 
 namespace gfx {
     namespace platform {
-        NSAutoreleasePool *autorelease_pool_make()
+        AutoreleasePool *autorelease_pool_make()
         {
-            return [NSAutoreleasePool new];
+            return (AutoreleasePool *)[NSAutoreleasePool new];
         }
         
-        void autorelease_pool_drain(NSAutoreleasePool **ioPool)
+        void autorelease_pool_drain(AutoreleasePool **ioPool)
         {
             gfx_assert_param(ioPool);
             
             if(ioPool) {
-                [*ioPool drain];
+                [(NSAutoreleasePool *)*ioPool drain];
                 *ioPool = nil;
             }
         }
         
-        void autorelease_pool_add(NSAutoreleasePool *pool, const Base *object)
+        void autorelease_pool_add(AutoreleasePool *pool, const Base *object)
         {
             gfx_assert_param(pool);
             
