@@ -310,7 +310,7 @@ namespace gfx {
         return make<Annotation>(mOffset, contents);
     }
     
-    Expression *Parser::parseSubexpression(Expression::Type type, UniChar start, UniChar end)
+    Base *Parser::parseSubexpression(Expression::Type type, UniChar start, UniChar end)
     {
         Offset offset = mOffset;
         auto accumulator = make<Array<Base>>();
@@ -318,11 +318,8 @@ namespace gfx {
             if(is_whitespace(current()))
                 continue;
             
-            auto expression = this->parseExpression();
-            if(expression) {
-                accumulator->append(expression);
+            if(this->parseExpression(accumulator))
                 this->previous();
-            }
         }
         
         requireCondition(this->current() == end, (String::Builder() << "expected '" << end << "', found end of file."));
@@ -334,16 +331,17 @@ namespace gfx {
     
 #pragma mark - Parsing
     
-    Base *Parser::parseExpression()
+    bool Parser::parseExpression(Array<Base> *exprStack, UniChar terminator)
     {
-        while (this->more()) {
+        Base *result = nullptr;
+        if(this->more() && this->current() != terminator) {
             UniChar c = this->current();
             
             if(is_whitespace(c)) {
                 this->next();
             } else if(c == kOpenParen) {
                 if(peek(1) == kAnnotationMarker) {
-                    return this->parseAnnotation();
+                    result = this->parseAnnotation();
                 } else if(peek(1) == kCommentMarker) {
                     this->parseComment();
                 } else {
@@ -351,35 +349,39 @@ namespace gfx {
                 }
             } else if(c == kHashMarker && peek(1) == kVectorBegin) {
                 next(); // kHashMarker
-                return this->parseSubexpression(Expression::Type::Hash, kVectorBegin, kVectorEnd);
+                result = this->parseSubexpression(Expression::Type::Hash, kVectorBegin, kVectorEnd);
             } else if(is_vector(c)) {
-                return this->parseSubexpression(Expression::Type::Vector, kVectorBegin, kVectorEnd);
+                result = this->parseSubexpression(Expression::Type::Vector, kVectorBegin, kVectorEnd);
             } else if(is_function(c)) {
-                return this->parseSubexpression(Expression::Type::Function, kFunctionBegin, kFunctionEnd);
+                result = this->parseSubexpression(Expression::Type::Function, kFunctionBegin, kFunctionEnd);
             } else if(is_string(c, true)) {
-                return this->parseString();
+                result = this->parseString();
             } else if(is_word(c, true)) {
-                return this->parseWord();
+                result = this->parseWord();
             } else if(is_number(c, true)) {
-                return this->parseNumber();
+                result = this->parseNumber();
             } else {
                 fail((String::Builder() << "unexpected character " << c));
             }
         }
         
-        return nullptr;
+        if(result) {
+            exprStack->append(result);
+            
+            return true;
+        } else {
+            return false;
+        }
     }
     
     Array<Base> *Parser::parse()
     {
-        auto expressionStack = make<Array<Base>>();
+        auto exprStack = make<Array<Base>>();
         
         while (this->more()) {
-            auto expression = this->parseExpression();
-            if(expression)
-                expressionStack->append(expression);
+            this->parseExpression(exprStack);
         }
         
-        return expressionStack;
+        return exprStack;
     }
 }

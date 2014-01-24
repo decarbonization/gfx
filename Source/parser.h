@@ -112,12 +112,13 @@ namespace gfx {
         /// \param  type    The type of expression to parse.
         /// \param  start   The opening character of the subexpression, if applicable.
         /// \param  end     The closing character of the subexpression, if applicable.
-        ///
-        /// \result A new autoreleaesd `gfx::Expression` object.
-        Expression *parseSubexpression(Expression::Type type, UniChar start, UniChar end);
+        Base *parseSubexpression(Expression::Type type, UniChar start, UniChar end);
         
         ///Parses a single expression object, returning it.
-        Base *parseExpression();
+        ///
+        /// \param  exprStack   Accumulator for all expressions parsed.
+        /// \param  terminator  A character to terminate expression parsing when encountered. Default is 0.
+        bool parseExpression(Array<Base> *exprStack, UniChar terminator = 0);
         
     public:
         ///Constructs the parser with a given source string.
