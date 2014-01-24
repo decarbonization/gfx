@@ -344,7 +344,7 @@ namespace gfx {
     
 #pragma mark - Parsing
     
-    bool Parser::parseExpression(Array<Base> *exprStack)
+    bool Parser::parseExpression(Array<Base> *exprAccumulator)
     {
         Base *result = nullptr;
         while (this->more()) {
@@ -392,9 +392,9 @@ namespace gfx {
                         this->next(); // )
                     } else {
                         auto exprs = this->accumulateSubexpressions(kWordApplyBegin, kWordApplyEnd);
-                        exprStack->appendArray(exprs);
+                        exprAccumulator->appendArray(exprs);
                     }
-                    exprStack->append(word);
+                    exprAccumulator->append(word);
                     return true;
                 } else {
                     result = word;
@@ -409,7 +409,7 @@ namespace gfx {
         }
         
         if(result) {
-            exprStack->append(result);
+            exprAccumulator->append(result);
             
             return true;
         } else {
@@ -419,12 +419,12 @@ namespace gfx {
     
     Array<Base> *Parser::parse()
     {
-        auto exprStack = make<Array<Base>>();
+        auto accumulator = make<Array<Base>>();
         
         while (this->more()) {
-            this->parseExpression(exprStack);
+            this->parseExpression(accumulator);
         }
         
-        return exprStack;
+        return accumulator;
     }
 }

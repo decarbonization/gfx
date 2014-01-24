@@ -371,13 +371,25 @@ namespace gfx {
     
     static void set(StackFrame *frame)
     {
-        Word *word = frame->popType<Word>();
+        auto word = frame->popType<Word>();
         auto wordString = word->string();
         if(wordString->find(str("."), Range(0, wordString->length()))) {
             throw Exception(str("Dot-syntax is only supported for lookup, cannot use with set."), nullptr);
         }
         
-        Base *value = frame->pop();
+        auto value = frame->pop();
+        frame->setBindingToValue(word->string(), value);
+    }
+    
+    static void define(StackFrame *frame)
+    {
+        auto value = frame->pop();
+        auto word = frame->popType<Word>();
+        auto wordString = word->string();
+        if(wordString->find(str("."), Range(0, wordString->length()))) {
+            throw Exception(str("Dot-syntax is only supported for lookup, cannot use with set."), nullptr);
+        }
+        
         frame->setBindingToValue(word->string(), value);
     }
     
@@ -907,6 +919,7 @@ namespace gfx {
         frame->createFunctionBinding(str("->void"), &drop);
         frame->createFunctionBinding(str("=>"), &bind);
         frame->createFunctionBinding(str("set!"), &set);
+        frame->createFunctionBinding(str("def"), &define);
         frame->createFunctionBinding(str("destruct!"), &destructure);
         
         

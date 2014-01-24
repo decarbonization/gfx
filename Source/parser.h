@@ -124,10 +124,10 @@ namespace gfx {
         
         ///Parses a single expression object, returning it.
         ///
-        /// \param  exprStack   Accumulator for all expressions parsed.
+        /// \param  exprAccumulator Accumulator for all expressions parsed.
         ///
         /// \result Whether or not an expression was parsed and placed onto the expression accumulator.
-        bool parseExpression(Array<Base> *exprStack);
+        bool parseExpression(Array<Base> *exprAccumulator);
         
     public:
         ///Constructs the parser with a given source string.

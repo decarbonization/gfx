@@ -70,7 +70,13 @@ Boolean literals come in the form of two reserved words, `true` and `false`. The
 
 ##Words
 
-Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `__showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a colon, like `:hello`. Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3. Words beginning with `#` are currently reserved for the Gfx language for future usage.
+Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `__showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a colon, like `:hello`.
+
+Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3.
+
+Words beginning with `#` are currently reserved for the Gfx language for future usage.
+
+The Gfx parser has a special case for words that end with parentheses. It will rewrite expressions of the form `str/concat("hello " "world")` into the form `"hello " "world" str/concat`. This allows prefix notation to be used whenever it is more natural. __Note:__ This syntax is currently considered experimental, and may be updated in the near future.
 
 ##Other Types
 
