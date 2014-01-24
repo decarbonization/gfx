@@ -12,13 +12,15 @@
 #include "number.h"
 #include "annotation.h"
 
+#include "papertape.h"
+
 namespace gfx {
     
 #pragma mark - Tools
     
     enum Tokens : UniChar {
-        kOpenParen = '(',
-        kCloseParen = ')',
+        kCommentAnnotationBegin = '(',
+        kCommentAnnotationEnd = ')',
         kCommentMarker = '*',
         kAnnotationMarker = '%',
         
@@ -28,6 +30,9 @@ namespace gfx {
         
         kFunctionBegin = '{',
         kFunctionEnd = '}',
+        
+        kWordApplyBegin = '(',
+        kWordApplyEnd = ')',
         
         kStringBegin = '"',
         kStringEnd = '"',
@@ -55,7 +60,9 @@ namespace gfx {
                 c != kFunctionBegin &&
                 c != kFunctionEnd &&
                 c != kVectorBegin &&
-                c != kVectorEnd);
+                c != kVectorEnd &&
+                c != kWordApplyBegin &&
+                c != kWordApplyEnd);
     }
     
     static bool is_number(UniChar c, bool isFirstCharacter)
@@ -128,7 +135,7 @@ namespace gfx {
     UniChar Parser::peek(Index delta)
     {
         Index offset = mCurrentIndex + delta;
-        if(offset < mString->length())
+        if(offset >= 0 && offset < mString->length())
             return mString->at(offset);
         else
             return 0;
@@ -148,7 +155,7 @@ namespace gfx {
         requireCondition(this->current() == c, (String::Builder() << "expected '" << c << "', found end of file."));
     }
     
-    const String *Parser::accumulateWhile(std::function<bool(UniChar c, bool isFirstCharacter)> predicate)
+    String *Parser::accumulateWhile(Predicate predicate)
     {
         String::Builder accumulator;
         
@@ -277,10 +284,10 @@ namespace gfx {
         Index nestedParenCount = 0;
         while (more() && next() != 0) {
             UniChar c = current();
-            if(c == kOpenParen) {
+            if(c == kCommentAnnotationBegin) {
                 nestedParenCount++;
                 continue;
-            } else if(c == kCloseParen) {
+            } else if(c == kCommentAnnotationEnd) {
                 if(nestedParenCount > 0)
                     nestedParenCount--;
                 else if(peek(-1) == kCommentMarker)
@@ -288,7 +295,7 @@ namespace gfx {
             }
         }
         
-        requireCondition(this->current() == kCloseParen, str("expected ')', found end of file."));
+        requireCondition(this->current() == kCommentAnnotationEnd, str("expected ')', found end of file."));
         
         next(); //)
     }
@@ -310,9 +317,8 @@ namespace gfx {
         return make<Annotation>(mOffset, contents);
     }
     
-    Base *Parser::parseSubexpression(Expression::Type type, UniChar start, UniChar end)
+    Array<Base> *Parser::accumulateSubexpressions(UniChar start, UniChar end)
     {
-        Offset offset = mOffset;
         auto accumulator = make<Array<Base>>();
         while (this->more() && this->next() != end) {
             if(is_whitespace(current()))
@@ -326,27 +332,48 @@ namespace gfx {
         
         this->next();
         
-        return make<Expression>(offset, type, accumulator);
+        return accumulator;
+    }
+    
+    Expression *Parser::parseSubexpression(Expression::Type type, UniChar start, UniChar end)
+    {
+        Offset offset(mOffset);
+        auto exprs = this->accumulateSubexpressions(start, end);
+        return make<Expression>(offset, type, exprs);
     }
     
 #pragma mark - Parsing
     
-    bool Parser::parseExpression(Array<Base> *exprStack, UniChar terminator)
+    bool Parser::parseExpression(Array<Base> *exprStack)
     {
         Base *result = nullptr;
-        if(this->more() && this->current() != terminator) {
+        while (this->more()) {
             UniChar c = this->current();
             
             if(is_whitespace(c)) {
                 this->next();
-            } else if(c == kOpenParen) {
-                if(peek(1) == kAnnotationMarker) {
+                continue;
+            } else if(c == kCommentAnnotationBegin && peek(1) == kAnnotationMarker) {
                     result = this->parseAnnotation();
-                } else if(peek(1) == kCommentMarker) {
-                    this->parseComment();
-                } else {
-                    fail(str("parentheses enclosed expressions currently unsupported."));
+            } else if(c == kCommentAnnotationBegin && peek(1) == kCommentMarker) {
+                this->parseComment();
+                continue;
+            } else if(c == kWordApplyBegin) {
+                Index i = -1;
+                for (;;) {
+                    auto c = peek(i);
+                    if(c == 0) {
+                        break;
+                    } else if(is_whitespace(c)) {
+                        i--;
+                        continue;
+                    } else if(is_word(c, false)) {
+                        fail(str("Unexpected whitespace between parentheses and word."));
+                        break;
+                    }
                 }
+                
+                fail(str("Expressions enclosed in free-standing parentheses are not supported."));
             } else if(c == kHashMarker && peek(1) == kVectorBegin) {
                 next(); // kHashMarker
                 result = this->parseSubexpression(Expression::Type::Hash, kVectorBegin, kVectorEnd);
@@ -357,12 +384,28 @@ namespace gfx {
             } else if(is_string(c, true)) {
                 result = this->parseString();
             } else if(is_word(c, true)) {
-                result = this->parseWord();
+                auto word = this->parseWord();
+                
+                if(this->current() == kWordApplyBegin) {
+                    if(this->peek(1) == kWordApplyEnd) {
+                        this->next(); // (
+                        this->next(); // )
+                    } else {
+                        auto exprs = this->accumulateSubexpressions(kWordApplyBegin, kWordApplyEnd);
+                        exprStack->appendArray(exprs);
+                    }
+                    exprStack->append(word);
+                    return true;
+                } else {
+                    result = word;
+                }
             } else if(is_number(c, true)) {
                 result = this->parseNumber();
             } else {
                 fail((String::Builder() << "unexpected character " << c));
             }
+            
+            break;
         }
         
         if(result) {

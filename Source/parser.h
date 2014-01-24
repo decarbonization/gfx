@@ -28,6 +28,10 @@ namespace gfx {
     ///Parsers are one use, and should be stack allocated.
     class Parser : public Base
     {
+        ///A predicate function used in simple parsing rules.
+        typedef std::function<bool(UniChar c, bool isFirstCharacter)> Predicate;
+        
+        
         ///The string being parsed.
         const String *mString;
         
@@ -75,7 +79,11 @@ namespace gfx {
         ///
         /// \result The characters accumulated while `predicate` returned true.
         ///
-        const String *accumulateWhile(std::function<bool(UniChar c, bool isFirstCharacter)> predicate);
+        String *accumulateWhile(Predicate predicate);
+        
+        ///Accumulates a series of [sub-]expressions between a start and,
+        ///an end character, returning them in an `Array<Base>` object.
+        Array<Base> *accumulateSubexpressions(UniChar start, UniChar end);
         
 #pragma mark - Parsers
         
@@ -110,15 +118,16 @@ namespace gfx {
         ///Parses a subexpression at the current position.
         ///
         /// \param  type    The type of expression to parse.
-        /// \param  start   The opening character of the subexpression, if applicable.
-        /// \param  end     The closing character of the subexpression, if applicable.
-        Base *parseSubexpression(Expression::Type type, UniChar start, UniChar end);
+        /// \param  start   The opening character of the subexpression.
+        /// \param  end     The closing character of the subexpression.
+        Expression *parseSubexpression(Expression::Type type, UniChar start, UniChar end);
         
         ///Parses a single expression object, returning it.
         ///
         /// \param  exprStack   Accumulator for all expressions parsed.
-        /// \param  terminator  A character to terminate expression parsing when encountered. Default is 0.
-        bool parseExpression(Array<Base> *exprStack, UniChar terminator = 0);
+        ///
+        /// \result Whether or not an expression was parsed and placed onto the expression accumulator.
+        bool parseExpression(Array<Base> *exprStack);
         
     public:
         ///Constructs the parser with a given source string.

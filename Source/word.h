@@ -18,7 +18,7 @@ namespace gfx {
     class Word : public Base
     {
         ///The underlying string of the word.
-        const String *mString;
+        String *mString;
         
         ///Where the word originated.
         Offset mOffset;
@@ -26,7 +26,7 @@ namespace gfx {
     public:
         
         ///Constructs the receiver with a given string, and offset origin.
-        Word(const String *inString, Offset offset) :
+        Word(String *inString, Offset offset) :
             mString(retained(inString)),
             mOffset(offset)
         {
@@ -81,6 +81,21 @@ namespace gfx {
         {
             return retained_autoreleased(mString);
         }
+        
+#pragma mark - Internals
+        
+    protected:
+        
+        ///Returns the string of the word without the const keyword.
+        ///Provided as a means for the Parser to optimize its creation
+        ///of unnecessary temporary objects.
+        String *mutableString()
+        {
+            return mString;
+        }
+        
+        ///For purposes of optimization.
+        friend class Parser;
     };
 }
 
