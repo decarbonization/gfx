@@ -74,9 +74,7 @@ Word literals are any sequence of characters that do not correspond to any of th
 
 Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3.
 
-Words beginning with `#` are currently reserved for the Gfx language for future usage.
-
-The Gfx parser has a special case for words that end with parentheses. It will rewrite expressions of the form `str/concat("hello " "world")` into the form `"hello " "world" str/concat`. This allows prefix notation to be used whenever it is more natural. Additionally, the prefix notation supports a block syntax similar to ruby. E.g. `def(:add) {+}` is valid syntax. __Note:__ This syntax is currently considered experimental, and may be updated in the near future.
+The Gfx parser has a special case for words that end with parentheses. It will rewrite expressions of the form `str/concat("hello " "world")` into the form `"hello " "world" str/concat`. This allows prefix notation to be used whenever it is more natural. Additionally, the prefix notation supports adding one additional parameter if the closing parenthesis is immediately followed by a colon. E.g. `def(#add): {+}` or `def(:x): 12`. __Note:__ This syntax is currently considered experimental, and may be updated in the near future.
 
 ##Other Types
 

@@ -36,6 +36,7 @@ namespace gfx {
         
         kWordApplyBegin = '(',
         kWordApplyEnd = ')',
+        kWordFunctionMarker = ':',
         
         kStringBegin = '"',
         kStringEnd = '"',
@@ -398,9 +399,9 @@ namespace gfx {
                         exprAccumulator->appendArray(exprs);
                     }
                     
-                    if(this->current() == kFunctionBegin || this->peek(1) == kFunctionBegin) {
-                        this->moveToNext(kFunctionBegin);
-                        exprAccumulator->append(this->parseSubexpression(Expression::Type::Function, kFunctionBegin, kFunctionEnd));
+                    if(this->current() == kWordFunctionMarker) {
+                        this->next(); // :
+                        this->parseExpression(exprAccumulator);
                     }
                     
                     exprAccumulator->append(word);
