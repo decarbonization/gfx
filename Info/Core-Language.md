@@ -21,7 +21,7 @@ Numbers may be of the format `12`, or `3.50`. Internally, they are always repres
 
 ##Strings
 
-String literals are enclosed in double quotes, like `"hello world"`. The following escape sequences are available:
+String literals are either enclosed in double quotes – like `"hello world"` – or if they don't contain spaces may be prefixed by a colon – like `:test`. The following escape sequences are available in double quoted strings:
 
 * `\a`
 * `\b`
@@ -36,7 +36,7 @@ String literals are enclosed in double quotes, like `"hello world"`. The followi
 * `\?`
 * `\%`
 
-String literals currently do not implement interpolation. In the future, interpolation will be implemented using the form "hello %(greeting)". As such, the % as a literal within a string is reserved, and should be prefixed with a backslash.
+_String literals currently do not implement interpolation. In the future, interpolation will be implemented using the form "hello %(greeting)". As such, the % as a literal within a string is reserved, and should be prefixed with a backslash._
 
 ##Vectors
 
@@ -70,11 +70,11 @@ Boolean literals come in the form of two reserved words, `true` and `false`. The
 
 ##Words
 
-Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `__showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack. If a literal word is needed, it may be prefixed with a colon, like `:hello`.
+Word literals are any sequence of characters that do not correspond to any of the other literals. Word literals are normally interpreted to mean apply a function by name, or lookup a variable by name. E.g. `__showstack` will print the stack, and `math/PI` will push `3.14...` onto the stack.
 
 Words beginning with `&` bypass function application. This allows passing existing functions into other functions, e.g. `[1 2 3] &print vec/for-each` will print 1, 2, and 3.
 
-The Gfx parser has a special case for words that end with parentheses. It will rewrite expressions of the form `str/concat("hello " "world")` into the form `"hello " "world" str/concat`. This allows prefix notation to be used whenever it is more natural. Additionally, the prefix notation supports adding one additional parameter if the closing parenthesis is immediately followed by a colon. E.g. `def(#add): {+}` or `def(:x): 12`. __Note:__ This syntax is currently considered experimental, and may be updated in the near future.
+The Gfx parser has a special case for words that end with parentheses. It will rewrite expressions of the form `str/concat("hello ", "world")` into the form `"hello " "world" str/concat`. This allows prefix notation to be used whenever it is more natural. Additionally, a single function may be placed immediately after the parentheses. This allows forms such as `if(true) { "truth!" }` to be valid. __Important:__ The function must either immediately follow the closing parenthesis, or may be separated by a single space. _Parameters in parentheses should always be separated by commas to prevent ambiguity about what a function is associated with._ It is currently not supported to place a function application within a hash or vector literal.
 
 ##Other Types
 

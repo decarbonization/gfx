@@ -392,26 +392,24 @@ namespace gfx {
     
     static void set(StackFrame *frame)
     {
-        auto word = frame->popType<Word>();
-        auto wordString = word->string();
-        if(wordString->find(str("."), Range(0, wordString->length()))) {
+        auto name = frame->popString();
+        if(name->find(str("."), Range(0, name->length()))) {
             throw Exception(str("Dot-syntax is only supported for lookup, cannot use with set."), nullptr);
         }
         
         auto value = frame->pop();
-        frame->setBindingToValue(word->string(), value);
+        frame->setBindingToValue(name, value);
     }
     
     static void define(StackFrame *frame)
     {
         auto value = frame->pop();
-        auto word = frame->popType<Word>();
-        auto wordString = word->string();
-        if(wordString->find(str("."), Range(0, wordString->length()))) {
+        auto name = frame->popString();
+        if(name->find(str("."), Range(0, name->length()))) {
             throw Exception(str("Dot-syntax is only supported for lookup, cannot use with set."), nullptr);
         }
         
-        frame->setBindingToValue(word->string(), value);
+        frame->setBindingToValue(name, value);
     }
     
     static void destructure(StackFrame *frame)

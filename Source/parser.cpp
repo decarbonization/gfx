@@ -36,7 +36,6 @@ namespace gfx {
         
         kWordApplyBegin = '(',
         kWordApplyEnd = ')',
-        kWordFunctionMarker = ':',
         
         kStringBegin = '"',
         kStringEnd = '"',
@@ -54,7 +53,7 @@ namespace gfx {
     
     static bool is_whitespace(UniChar c)
     {
-        return (c == ' ' || c == '\t' || is_newline(c));
+        return (c == ' ' || c == '\t' || is_newline(c) || c == ',');
     }
     
     static bool is_word(UniChar c, bool isFirstCharacter)
@@ -399,8 +398,8 @@ namespace gfx {
                         exprAccumulator->appendArray(exprs);
                     }
                     
-                    if(this->current() == kWordFunctionMarker) {
-                        this->next(); // :
+                    auto current = this->current();
+                    if(current == kFunctionBegin || (current == ' ' && this->peek(1) == kFunctionBegin)) {
                         this->parseExpression(exprAccumulator);
                     }
                     
