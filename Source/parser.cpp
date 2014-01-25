@@ -394,6 +394,12 @@ namespace gfx {
                         auto exprs = this->accumulateSubexpressions(kWordApplyBegin, kWordApplyEnd);
                         exprAccumulator->appendArray(exprs);
                     }
+                    
+                    if(this->current() == kFunctionBegin || this->peek(1) == kFunctionBegin) {
+                        this->moveToNext(kFunctionBegin);
+                        exprAccumulator->append(this->parseSubexpression(Expression::Type::Function, kFunctionBegin, kFunctionEnd));
+                    }
+                    
                     exprAccumulator->append(word);
                     return true;
                 } else {
