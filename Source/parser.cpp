@@ -25,6 +25,9 @@ namespace gfx {
         kAnnotationMarker = '%',
         
         kHashMarker = '#',
+        kHashBegin = '[',
+        kHashEnd = ']',
+        
         kVectorBegin = '[',
         kVectorEnd = ']',
         
@@ -374,9 +377,9 @@ namespace gfx {
                 }
                 
                 fail(str("Expressions enclosed in free-standing parentheses are not supported."));
-            } else if(c == kHashMarker && peek(1) == kVectorBegin) {
+            } else if(c == kHashMarker && peek(1) == kHashBegin) {
                 next(); // kHashMarker
-                result = this->parseSubexpression(Expression::Type::Hash, kVectorBegin, kVectorEnd);
+                result = this->parseSubexpression(Expression::Type::Hash, kHashBegin, kHashEnd);
             } else if(is_vector(c)) {
                 result = this->parseSubexpression(Expression::Type::Vector, kVectorBegin, kVectorEnd);
             } else if(is_function(c)) {
