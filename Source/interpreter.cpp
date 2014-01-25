@@ -14,6 +14,7 @@
 #include "annotation.h"
 #include "null.h"
 #include "threading.h"
+#include "type.h"
 
 #include "stackframe.h"
 #include "function.h"
@@ -48,6 +49,7 @@ namespace gfx {
     Interpreter::Interpreter() :
         Base(),
         mRootFrame(retained(CoreFunctions::createCoreFunctionFrame(this))),
+        mTypeResolutionMap(TypeResolutionMap::CreateCoreResolutionMap()),
         mSearchPaths(new Array<const String>()),
         mImportAllowed(true),
         mWordHandlers(),
@@ -111,6 +113,22 @@ namespace gfx {
             }
         });
         
+        ///Handles words enclosed in angle brackets, aka types.
+        this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
+            auto wordString = word->string();
+            if(wordString->hasPrefix(str("<")) && wordString->hasSuffix(str(">"))) {
+                auto type = mTypeResolutionMap->lookupTypeByName(wordString);
+                if(type)
+                    currentFrame->push(const_cast<Type *>(type));
+                else
+                    this->fail((String::Builder() << "Unknown type: " << wordString), word->offset());
+                
+                return true;
+            } else {
+                return false;
+            }
+        });
+        
         ///Looks up the word in the current frame, pushing the value if one is found.
         ///
         ///This handler should always be last.
@@ -137,6 +155,9 @@ namespace gfx {
     
     Interpreter::~Interpreter()
     {
+        released(mTypeResolutionMap);
+        mTypeResolutionMap = nullptr;
+        
         released(mRootFrame);
         mRootFrame = nullptr;
         
@@ -311,6 +332,11 @@ namespace gfx {
     StackFrame *Interpreter::rootFrame() const
     {
         return retained_autoreleased(mRootFrame);
+    }
+    
+    const TypeResolutionMap *Interpreter::typeResolutionMap() const
+    {
+        return retained_autoreleased(mTypeResolutionMap);
     }
     
 #pragma mark - Backtrace Tracking

@@ -17,6 +17,7 @@
 #include "null.h"
 #include "papertape.h"
 #include "filepolicy.h"
+#include "type.h"
 
 #include "gfx_defines.h"
 
@@ -224,18 +225,38 @@ namespace gfx {
     
 #pragma mark - Core Functions
     
+    ///A wrapper around the `typeid` core construct that special cases
+    ///subtypes of `gfx::Function` to always refer to the root type.
+#define BASE__TYPEID(obj) (obj->isKindOfClass<Function>()? typeid(Function) : typeid(*obj))
+    
+    static void type_of(StackFrame *frame)
+    {
+        /* val -- type */
+        
+        auto value = frame->pop();
+        
+        auto typeMap = frame->interpreter()->typeResolutionMap();
+        auto valueType = typeMap->lookupType(BASE__TYPEID(value));
+        frame->push(const_cast<Type *>(valueType));
+    }
+    
     static void is_a(StackFrame *frame)
     {
         /* val type -- bool */
         
-        auto typeName = frame->popString();
+        auto type = frame->popType<Type>();
         auto value = frame->pop();
         
-        if(value->className()->isEqual(typeName))
+        auto typeMap = frame->interpreter()->typeResolutionMap();
+        auto valueType = typeMap->lookupType(BASE__TYPEID(value));
+        if(valueType && valueType->isKindOf(type)) {
             frame->push(Number::True());
-        else
+        } else {
             frame->push(Number::False());
+        }
     }
+    
+#undef BASE__TYPEID
     
 #if GFX_Language_SupportsImport
     static void import(StackFrame *frame)
@@ -806,15 +827,6 @@ namespace gfx {
         frame->createVariableBinding(str("false"), Number::False());
         frame->createVariableBinding(str("null"), Null::shared());
         
-        //Type Constants
-        /* This really could not be any more implementation specific, but it will work for now. */
-        frame->createVariableBinding(str("<str>"), str("gfx::String"));
-        frame->createVariableBinding(str("<num>"), str("gfx::Number"));
-        frame->createVariableBinding(str("<vec>"), str("gfx::Array<gfx::Base>"));
-        frame->createVariableBinding(str("<hash>"), str("gfx::Dictionary<gfx::Base, gfx::Base>"));
-        frame->createVariableBinding(str("<file>"), str("gfx::File"));
-        frame->createVariableBinding(str("<blob>"), str("gfx::Blob"));
-        
         //Math Constants
         frame->createVariableBinding(str("num/min"), Number::Minimum());
         frame->createVariableBinding(str("num/max"), Number::Maximum());
@@ -896,6 +908,7 @@ namespace gfx {
         
         
         //Core Functions
+        frame->createFunctionBinding(str("type-of"), &type_of);
         frame->createFunctionBinding(str("is-a?"), &is_a);
         
 #if GFX_Language_SupportsImport

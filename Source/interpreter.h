@@ -21,6 +21,7 @@ namespace gfx {
     class Function;
     class Word;
     class Annotation;
+    class TypeResolutionMap;
     
     ///The Interpreter class encapsulates evaluation of already-parsed GFX code
     ///from the `gfx::Parser` class, as well as management of shared global state.
@@ -40,6 +41,9 @@ namespace gfx {
         
         ///The root frame of the interpreter. This contains the core and graphics stack functions.
         StackFrame *mRootFrame;
+        
+        ///The type resolution map used by the interpreter.
+        TypeResolutionMap *mTypeResolutionMap;
         
         ///The search paths used by the import method.
         Array<const String> *mSearchPaths;
@@ -182,6 +186,9 @@ namespace gfx {
         
         ///Returns the root frame of the interpreter.
         StackFrame *rootFrame() const;
+        
+        ///Returns the type resolution map of the interpreter.
+        const TypeResolutionMap *typeResolutionMap() const;
         
 #pragma mark - Backtrace Tracking
         

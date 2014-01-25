@@ -106,6 +106,9 @@
 		8B985BFC188C821700A79899 /* filepolicy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B985BF9188C821700A79899 /* filepolicy.cpp */; };
 		8B985BFD188C821700A79899 /* filepolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B985BFA188C821700A79899 /* filepolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8B985BFE188C86A600A79899 /* filepolicy.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8B985BFA188C821700A79899 /* filepolicy.h */; };
+		8B985C1A1893793600A79899 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B985C181893793600A79899 /* type.cpp */; };
+		8B985C1B1893793600A79899 /* type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B985C181893793600A79899 /* type.cpp */; };
+		8B985C1C1893793600A79899 /* type.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B985C191893793600A79899 /* type.h */; };
 		8BCC9AD51864EDDA00AA6EDF /* osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC9AD41864EDDA00AA6EDF /* osx.mm */; };
 		8BDE764C186A4C9A0069A285 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE764B186A4C9A0069A285 /* Foundation.framework */; };
 		8BDE766F186A4D4F0069A285 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDE766E186A4D4F0069A285 /* QuartzCore.framework */; };
@@ -389,6 +392,8 @@
 		8B89DA2B18553C8C0062EFB4 /* GFXLayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GFXLayer.mm; sourceTree = "<group>"; };
 		8B985BF9188C821700A79899 /* filepolicy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filepolicy.cpp; sourceTree = "<group>"; };
 		8B985BFA188C821700A79899 /* filepolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filepolicy.h; sourceTree = "<group>"; };
+		8B985C181893793600A79899 /* type.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = type.cpp; sourceTree = "<group>"; };
+		8B985C191893793600A79899 /* type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type.h; sourceTree = "<group>"; };
 		8BCC9AD41864EDDA00AA6EDF /* osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = osx.mm; path = platform/osx.mm; sourceTree = "<group>"; };
 		8BDE764A186A4C9A0069A285 /* libgfx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgfx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BDE764B186A4C9A0069A285 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -575,6 +580,8 @@
 				8B89DA1E1852D8B20062EFB4 /* annotation.h */,
 				8B985BF9188C821700A79899 /* filepolicy.cpp */,
 				8B985BFA188C821700A79899 /* filepolicy.h */,
+				8B985C181893793600A79899 /* type.cpp */,
+				8B985C191893793600A79899 /* type.h */,
 			);
 			name = "Core Interpreter";
 			sourceTree = "<group>";
@@ -713,6 +720,7 @@
 				8B12C8D6184BE15600DBD77C /* exception.h in Headers */,
 				8B12C8EE184BE15600DBD77C /* papertape.h in Headers */,
 				8B12C8F0184BE15600DBD77C /* parser.h in Headers */,
+				8B985C1C1893793600A79899 /* type.h in Headers */,
 				8B12C8FA184BE15600DBD77C /* types.h in Headers */,
 				8B12C8C7184BE15600DBD77C /* assertions.h in Headers */,
 				8B12C90D184BE75300DBD77C /* filepaths.h in Headers */,
@@ -884,6 +892,7 @@
 				8B12C8E0184BE15600DBD77C /* graphics.cpp in Sources */,
 				8B12C8F5184BE15600DBD77C /* stackframe.cpp in Sources */,
 				8B12C8D9184BE15600DBD77C /* file.cpp in Sources */,
+				8B985C1A1893793600A79899 /* type.cpp in Sources */,
 				8B89DA271852E13F0062EFB4 /* GFXInterpreter.mm in Sources */,
 				8B121F9F185E9D3C00BF2946 /* shadow.cpp in Sources */,
 				8B121F9B185E8A0500BF2946 /* gradient.cpp in Sources */,
@@ -936,6 +945,7 @@
 				8BDE768F186A4D800069A285 /* filepaths.cpp in Sources */,
 				8BDE7691186A4D800069A285 /* null.cpp in Sources */,
 				8BDE7693186A4D800069A285 /* corefunctions.cpp in Sources */,
+				8B985C1B1893793600A79899 /* type.cpp in Sources */,
 				8BDE7695186A4D800069A285 /* expression.cpp in Sources */,
 				8BDE7697186A4D800069A285 /* function.cpp in Sources */,
 				8BDE7699186A4D800069A285 /* interpreter.cpp in Sources */,
