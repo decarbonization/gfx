@@ -60,8 +60,8 @@ namespace gfx {
         ///for functions related to the interpreter.
         this->appendWordHandler([this](StackFrame *currentFrame, Word *word) {
             if(word->string()->hasPrefix(str(":"))) {
-                auto rawWord = word->string()->substring(Range(1, word->string()->length() - 1));
-                currentFrame->push(make<Word>(rawWord, word->offset()));
+                auto string = word->string()->substring(Range(1, word->string()->length() - 1));
+                currentFrame->push(string);
                 return true;
             } else {
                 return false;
