@@ -76,7 +76,7 @@ Words beginning with `&` bypass function application. This allows passing existi
 
 Words beginning with `#` are currently reserved for the Gfx language for future usage.
 
-The Gfx parser has a special case for words that end with parentheses. It will rewrite expressions of the form `str/concat("hello " "world")` into the form `"hello " "world" str/concat`. This allows prefix notation to be used whenever it is more natural. __Note:__ This syntax is currently considered experimental, and may be updated in the near future.
+The Gfx parser has a special case for words that end with parentheses. It will rewrite expressions of the form `str/concat("hello " "world")` into the form `"hello " "world" str/concat`. This allows prefix notation to be used whenever it is more natural. Additionally, the prefix notation supports a block syntax similar to ruby. E.g. `def(:add) {+}` is valid syntax. __Note:__ This syntax is currently considered experimental, and may be updated in the near future.
 
 ##Other Types
 
@@ -212,13 +212,13 @@ The type for vectors is `<vec>`.
 
 ##Hashes (hash)
 
-Gfx hashes are unordered maps of keys and values. Hash literals are almost identical to Vector literals. They are enclosed in square brackets, prefixed by a number sign. __Important:__ functions are not evaluated within hash literals. Example usage:
+Gfx hashes are unordered maps of keys and values. Hash literals are almost identical to Vector literals. They are enclosed in parentheses, prefixed by a number sign. __Important:__ functions are not evaluated within hash literals. Example usage:
 
-	#[
+	#(
 		"one"	1
 		"two"	2
 		"three"	3
-	]
+	)
 
 The following functions are available for hashes:
 

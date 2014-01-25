@@ -25,8 +25,8 @@ namespace gfx {
         kAnnotationMarker = '%',
         
         kHashMarker = '#',
-        kHashBegin = '[',
-        kHashEnd = ']',
+        kHashBegin = '(',
+        kHashEnd = ')',
         
         kVectorBegin = '[',
         kVectorEnd = ']',
