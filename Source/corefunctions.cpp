@@ -225,10 +225,6 @@ namespace gfx {
     
 #pragma mark - Core Functions
     
-    ///A wrapper around the `typeid` core construct that special cases
-    ///subtypes of `gfx::Function` to always refer to the root type.
-#define BASE__TYPEID(obj) (obj->isKindOfClass<Function>()? typeid(Function) : typeid(*obj))
-    
     static void type_of(StackFrame *frame)
     {
         /* val -- type */
@@ -236,7 +232,7 @@ namespace gfx {
         auto value = frame->pop();
         
         auto typeMap = frame->interpreter()->typeResolutionMap();
-        auto valueType = typeMap->lookupType(BASE__TYPEID(value));
+        auto valueType = typeMap->lookupType(GFX_BASE__TYPEID(value));
         frame->push(const_cast<Type *>(valueType));
     }
     
@@ -248,15 +244,13 @@ namespace gfx {
         auto value = frame->pop();
         
         auto typeMap = frame->interpreter()->typeResolutionMap();
-        auto valueType = typeMap->lookupType(BASE__TYPEID(value));
+        auto valueType = typeMap->lookupType(GFX_BASE__TYPEID(value));
         if(valueType && valueType->isKindOf(type)) {
             frame->push(Number::True());
         } else {
             frame->push(Number::False());
         }
     }
-    
-#undef BASE__TYPEID
     
 #if GFX_Language_SupportsImport
     static void import(StackFrame *frame)
@@ -374,17 +368,17 @@ namespace gfx {
         if(wordOrWords && wordOrWords->isKindOfClass<Array<Base>>()) {
             auto words = static_cast<Array<Base> *>(wordOrWords);
             for (Index index = words->count() - 1; index >= 0; index--) {
-                Word *word = dynamic_cast_or_throw<Word *>(words->at(index));
-                frame->setBindingToValue(word->string(), frame->pop(), false);
+                String *name = dynamic_cast_or_throw<String *>(words->at(index));
+                frame->setBindingToValue(name, frame->pop(), false);
             }
-        } else if(wordOrWords && wordOrWords->isKindOfClass<Word>()) {
-            auto wordString = static_cast<Word *>(wordOrWords)->string();
-            if(wordString->find(str("."), Range(0, wordString->length()))) {
+        } else if(wordOrWords && wordOrWords->isKindOfClass<String>()) {
+            auto name = static_cast<String *>(wordOrWords);
+            if(name->find(str("."), Range(0, name->length()))) {
                 throw Exception(str("Dot-syntax is only supported for lookup, cannot use with let."), nullptr);
             }
             
             Base *value = frame->pop();
-            frame->setBindingToValue(wordString, value, false);
+            frame->setBindingToValue(name, value, false);
         } else {
             gfx_assert(false, str("bind is being used incorrectly"));
         }

@@ -188,7 +188,7 @@ namespace gfx {
         StackFrame *rootFrame() const;
         
         ///Returns the type resolution map of the interpreter.
-        const TypeResolutionMap *typeResolutionMap() const;
+        TypeResolutionMap *typeResolutionMap() const;
         
 #pragma mark - Backtrace Tracking
         

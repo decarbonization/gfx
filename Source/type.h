@@ -15,6 +15,10 @@
 #include <typeinfo>
 
 namespace gfx {
+    ///A wrapper around the `typeid` core construct that special cases
+    ///subtypes of `gfx::Function` to always refer to the root type.
+#define GFX_BASE__TYPEID(obj) (obj->isKindOfClass<Function>()? typeid(Function) : typeid(*obj))
+    
     ///The Type class functions as something of a metaclass for types
     ///in the Gfx runtime. Each core class has an associated `Type` object.
     ///

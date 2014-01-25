@@ -334,7 +334,7 @@ namespace gfx {
         return retained_autoreleased(mRootFrame);
     }
     
-    const TypeResolutionMap *Interpreter::typeResolutionMap() const
+    TypeResolutionMap *Interpreter::typeResolutionMap() const
     {
         return retained_autoreleased(mTypeResolutionMap);
     }

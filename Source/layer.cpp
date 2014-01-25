@@ -265,8 +265,6 @@ namespace gfx {
     {
         gfx_assert_param(frame);
         
-        frame->createVariableBinding(str("<layer>"), str("gfx::Layer"));
-        
         frame->createFunctionBinding(str("layer"), &layer_make);
         frame->createFunctionBinding(str("layer/frame"), &layer_frame);
         frame->createFunctionBinding(str("layer/set-frame"), &layer_setFrame);

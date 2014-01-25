@@ -181,8 +181,6 @@ namespace gfx {
     {
         gfx_assert_param(frame);
         
-        frame->createVariableBinding(str("<color>"), str("gfx::Color"));
-        
         frame->createVariableBinding(str("white"), Color::white());
         frame->createVariableBinding(str("black"), Color::black());
         frame->createVariableBinding(str("translucent"), Color::clear());

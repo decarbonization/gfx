@@ -541,8 +541,6 @@ namespace gfx {
     {
         gfx_assert_param(frame);
         
-        frame->createVariableBinding(str("<path>"), str("gfx::Path"));
-        
         frame->createFunctionBinding(str("fill-rect"), &fn_fill);
         frame->createFunctionBinding(str("stroke-rect"), &fn_stroke);
         

@@ -29,6 +29,8 @@
 #include "attributedstr.h"
 #include "font.h"
 
+#include "type.h"
+
 namespace gfx {
     
 #pragma mark - Utility Functions
@@ -169,6 +171,7 @@ namespace gfx {
     void Graphics::AttachTo(Interpreter *interpreter)
     {
         Graphics::addTo(interpreter->rootFrame());
+        
         interpreter->prependWordHandler([interpreter](StackFrame *currentFrame, Word *word) {
             if(word->string()->hasPrefix(str("#"))) {
                 auto color = make<Color>(word->string());
@@ -178,6 +181,19 @@ namespace gfx {
                 return false;
             }
         });
+        
+        auto typeMap = interpreter->typeResolutionMap();
+        auto baseType = Type::BaseType();
+        
+        typeMap->registerType(typeid(Color), make<Type>(baseType, str("<color>")));
+        typeMap->registerType(typeid(Context), make<Type>(baseType, str("<context>")));
+        typeMap->registerType(typeid(Layer), make<Type>(baseType, str("<layer>")));
+        typeMap->registerType(typeid(Path), make<Type>(baseType, str("<path>")));
+        typeMap->registerType(typeid(Image), make<Type>(baseType, str("<image>")));
+        typeMap->registerType(typeid(Font), make<Type>(baseType, str("<font>")));
+        typeMap->registerType(typeid(AttributedString), make<Type>(baseType, str("<text>")));
+        typeMap->registerType(typeid(Shadow), make<Type>(baseType, str("<shadow>")));
+        typeMap->registerType(typeid(Gradient), make<Type>(baseType, str("<gradient>")));
     }
 }
 

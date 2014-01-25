@@ -186,8 +186,6 @@ namespace gfx {
     {
         gfx_assert_param(frame);
         
-        frame->createVariableBinding(str("<font>"), str("gfx::Font"));
-        
         frame->createFunctionBinding(str("font"), &font_make);
         frame->createFunctionBinding(str("font/regular"), &font_regular);
         frame->createFunctionBinding(str("font/bold"), &font_bold);
