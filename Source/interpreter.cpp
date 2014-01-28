@@ -260,6 +260,12 @@ namespace gfx {
                     
                     break;
                 }
+                    
+                case Expression::Type::Subexpression: {
+                    this->eval(currentFrame, expression->subexpressions(), EvalContext::Normal);
+                    
+                    break;
+                }
             }
         } else if(part->isKindOfClass<Annotation>() && context == EvalContext::Normal) {
             AnnotationFoundSignal(static_cast<Annotation *>(part));

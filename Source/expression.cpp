@@ -49,6 +49,8 @@ namespace gfx {
             description << "{";
         else if(mType == Type::Hash)
             description << "#[";
+        else if(mType == Type::Subexpression)
+            description << "(";
         
         mSubexpressions->iterate(mSubexpressions->all(), [&description](Base *value, Index index, bool *stop) {
             AutoreleasePool pool;
@@ -64,6 +66,8 @@ namespace gfx {
             description << "}";
         else if(mType == Type::Hash)
             description << "]";
+        else if(mType == Type::Subexpression)
+            description << ")";
         
         return description.string();
     }

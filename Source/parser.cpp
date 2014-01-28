@@ -34,8 +34,8 @@ namespace gfx {
         kFunctionBegin = '{',
         kFunctionEnd = '}',
         
-        kWordApplyBegin = '(',
-        kWordApplyEnd = ')',
+        kSubexpressionBegin = '(',
+        kSubexpressionEnd = ')',
         
         kStringBegin = '"',
         kStringEnd = '"',
@@ -64,8 +64,8 @@ namespace gfx {
                 c != kFunctionEnd &&
                 c != kVectorBegin &&
                 c != kVectorEnd &&
-                c != kWordApplyBegin &&
-                c != kWordApplyEnd);
+                c != kSubexpressionBegin &&
+                c != kSubexpressionEnd);
     }
     
     static bool is_number(UniChar c, bool isFirstCharacter)
@@ -357,26 +357,12 @@ namespace gfx {
                 this->next();
                 continue;
             } else if(c == kCommentAnnotationBegin && peek(1) == kAnnotationMarker) {
-                    result = this->parseAnnotation();
+                result = this->parseAnnotation();
             } else if(c == kCommentAnnotationBegin && peek(1) == kCommentMarker) {
                 this->parseComment();
                 continue;
-            } else if(c == kWordApplyBegin) {
-                Index i = -1;
-                for (;;) {
-                    auto c = peek(i);
-                    if(c == 0) {
-                        break;
-                    } else if(is_whitespace(c)) {
-                        i--;
-                        continue;
-                    } else if(is_word(c, false)) {
-                        fail(str("Unexpected whitespace between parentheses and word."));
-                        break;
-                    }
-                }
-                
-                fail(str("Expressions enclosed in free-standing parentheses are not supported."));
+            } else if(c == kSubexpressionBegin) {
+                result = this->parseSubexpression(Expression::Type::Subexpression, kSubexpressionBegin, kSubexpressionEnd);
             } else if(c == kHashMarker && peek(1) == kHashBegin) {
                 next(); // kHashMarker
                 result = this->parseSubexpression(Expression::Type::Hash, kHashBegin, kHashEnd);
@@ -389,21 +375,16 @@ namespace gfx {
             } else if(is_word(c, true)) {
                 auto word = this->parseWord();
                 
-                if(this->current() == kWordApplyBegin) {
-                    if(this->peek(1) == kWordApplyEnd) {
-                        this->next(); // (
-                        this->next(); // )
-                    } else {
-                        auto exprs = this->accumulateSubexpressions(kWordApplyBegin, kWordApplyEnd);
-                        exprAccumulator->appendArray(exprs);
-                    }
+                if(this->current() == kSubexpressionBegin) {
+                    auto subexpr = this->parseSubexpression(Expression::Type::Subexpression, kSubexpressionBegin, kSubexpressionEnd);
                     
                     auto current = this->current();
                     if(current == kFunctionBegin || (current == ' ' && this->peek(1) == kFunctionBegin)) {
-                        this->parseExpression(exprAccumulator);
+                        this->parseExpression(subexpr->subexpressions());
                     }
                     
-                    exprAccumulator->append(word);
+                    subexpr->subexpressions()->append(word);
+                    exprAccumulator->append(subexpr);
                     return true;
                 } else {
                     result = word;

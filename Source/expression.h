@@ -31,6 +31,10 @@ namespace gfx {
             
             ///The expression is a function.
             Function,
+            
+            ///The expression is a nested expression that will
+            ///be evaluated like a regular expression sequence.
+            Subexpression,
         };
         
     protected:
