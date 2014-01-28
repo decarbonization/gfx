@@ -18,6 +18,7 @@
 #include "papertape.h"
 #include "filepolicy.h"
 #include "type.h"
+#include "json.h"
 
 #include "gfx_defines.h"
 
@@ -806,6 +807,18 @@ namespace gfx {
         frame->push(make<Number>(amountWritten));
     }
     
+#pragma mark - JSON Functions
+    
+    static void json_parse(StackFrame *frame)
+    {
+        /* str -- val */
+        
+        auto source = frame->popString();
+        
+        auto result = json::Reader(source).parse();
+        frame->push(result);
+    }
+    
 #pragma mark - Public API
     
     void CoreFunctions::addTo(StackFrame *frame)
@@ -979,6 +992,10 @@ namespace gfx {
         frame->createFunctionBinding(str("file/read-line"), &file_readLine);
         frame->createFunctionBinding(str("file/write"), &file_write);
         frame->createFunctionBinding(str("file/write-line"), &file_writeLine);
+        
+        
+        //JSON Functions
+        frame->createFunctionBinding(str("json/parse"), &json_parse);
     }
     
     StackFrame *CoreFunctions::sharedCoreFunctionFrame()
