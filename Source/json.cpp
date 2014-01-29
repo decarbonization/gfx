@@ -47,7 +47,7 @@ namespace gfx {
         
         static bool is_number(UniChar c, bool isFirstCharacter)
         {
-            return (isnumber(c) || (!isFirstCharacter && c == '.'));
+            return (isnumber(c) || c == '-' || (!isFirstCharacter && (c == '.' || c == '+' || c == 'e' || c == 'E')));
         }
         
 #pragma mark - Lifecycle
@@ -184,45 +184,51 @@ namespace gfx {
             while (this->more() && this->next() != kStringEnd) {
                 if(this->current() == kStringEscape) {
                     switch (this->next()) {
-                        case 'a':
-                            accumulator << "\a";
-                            break;
-                            
-                        case 'b':
-                            accumulator << "\b";
-                            break;
-                            
-                        case 'f':
-                            accumulator << "\f";
-                            break;
-                            
-                        case 'n':
-                            accumulator << "\n";
-                            break;
-                            
-                        case 'r':
-                            accumulator << "\r";
-                            break;
-                            
-                        case 't':
-                            accumulator << "\t";
-                            break;
-                            
-                        case 'v':
-                            accumulator << "\v";
-                            break;
-                            
-                        case '\'':
-                            accumulator << "\'";
-                            break;
-                            
-                        case '"':
+                        case '"': {
                             accumulator << "\"";
                             break;
+                        }
                             
-                        case '\\':
+                        case '\\': {
                             accumulator << "\\";
                             break;
+                        }
+                            
+                        case '/': {
+                            accumulator << "/";
+                            break;
+                        }
+                            
+                        case 'b': {
+                            accumulator << "\b";
+                            break;
+                        }
+                            
+                        case 'f': {
+                            accumulator << "\f";
+                            break;
+                        }
+                            
+                        case 'n': {
+                            accumulator << "\n";
+                            break;
+                        }
+                            
+                        case 'r': {
+                            accumulator << "\r";
+                            break;
+                        }
+                            
+                        case 't': {
+                            accumulator << "\t";
+                            break;
+                        }
+                            
+                        case 'u': {
+                            fail(str("unicode codepoints currently unsupported."));
+                            
+                            break;
+                        }
                             
                         default:
                             fail(str("unexpected escape character"));

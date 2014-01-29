@@ -218,7 +218,7 @@ namespace gfx {
     {
         size_t amount = std::fwrite(buffer, 1, bufferSize, mFile);
         if(long errorCode = std::ferror(mFile)) {
-            throw Exception((String::Builder() << "opening file failed with error " << errorCode), nullptr);
+            throw Exception((String::Builder() << "writing to file failed with error " << errorCode), nullptr);
         }
         return amount;
     }

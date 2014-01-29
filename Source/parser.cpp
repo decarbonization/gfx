@@ -70,7 +70,7 @@ namespace gfx {
     
     static bool is_number(UniChar c, bool isFirstCharacter)
     {
-        return (isnumber(c) || (!isFirstCharacter && (c == kDecimalSeparator || c == kNumberDivider)));
+        return (isnumber(c) || c == '-' || (!isFirstCharacter && (c == kDecimalSeparator || c == kNumberDivider || c == '+' || c == 'e' || c == 'E')));
     }
     
     static bool is_string(UniChar c, bool isFirstCharacter)
